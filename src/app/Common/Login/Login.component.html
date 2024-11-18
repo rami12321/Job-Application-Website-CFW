@@ -1,3 +1,63 @@
-<p>
-  Login works!
-</p>
+<div class="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+    <div class="mb-6">
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-200">
+        <button
+          *ngFor="let tab of tabs; let i = index"
+          (click)="setActiveTab(i)"
+          [ngClass]="{
+            'text-blue-600 border-blue-600': activeTabIndex === i,
+            'text-gray-500': activeTabIndex !== i
+          }"
+          class="w-1/2 py-2 text-center border-b-2 font-medium"
+        >
+          Sign in as {{ tab }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <!-- <h3 class="text-xl font-semibold text-center mb-6">
+      Login as {{ tabs[activeTabIndex] }}
+    </h3> -->
+    <form (ngSubmit)="onSubmit()">
+      <!-- Email input -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 sm:text-sm"
+          id="email"
+          placeholder="Enter your email"
+        >
+      </div>
+      <!-- Password input -->
+      <div class="mb-6">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 sm:text-sm"
+          id="password"
+          placeholder="Enter your password"
+        >
+      </div>
+      <!-- Error Message -->
+      <div *ngIf="loginError" class="text-red-500 mb-4">{{ loginError }}</div>
+      <!-- Submit button -->
+      <div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
