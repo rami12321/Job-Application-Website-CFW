@@ -18,7 +18,6 @@ export class SignUpYouthComponent implements OnInit {
   requiredDocumentsForm: FormGroup;
   step: number = 1;
 
-  // Labels for stepper navigation
   stepLabels: string[] = [
     "Introduction",
     "Personal Info",
@@ -29,7 +28,6 @@ export class SignUpYouthComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder) {
-    // Initialize all forms with validation rules
     this.introForm = this.fb.group({
       confirm: ['', Validators.required]
     });
@@ -77,8 +75,6 @@ export class SignUpYouthComponent implements OnInit {
  
   
 
-
-  // Check if the current step's form is valid
   isStepValid(): boolean {
     switch (this.step) {
       case 1:
@@ -98,32 +94,28 @@ export class SignUpYouthComponent implements OnInit {
     }
   }
 
-  // Navigate to the next step
   nextStep(): void {
     if (this.isStepValid() && this.step < this.stepLabels.length) {
       this.step++;
     }
   }
 
-  // Navigate to the previous step
   previousStep(): void {
     if (this.step > 1) {
       this.step--;
     }
   }
-      // Utility method to easily check form errors in the template
-  // Custom validator to check age range
   ageRangeValidator(min: number, max: number) {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if (value === null || value === undefined || value === '') {
-        return null; // Don't validate empty value (it will be caught by `required` validator)
+        return null; 
       }
       const age = Number(value);
       if (isNaN(age) || age < min || age > max) {
-        return { invalidAge: true }; // Error key
+        return { invalidAge: true }; 
       }
-      return null; // Valid
+      return null;
     };
   }
 

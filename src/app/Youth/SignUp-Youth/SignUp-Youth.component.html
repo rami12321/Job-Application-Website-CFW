@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sign Up - Youth</title>
 
-  <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -20,7 +19,6 @@
   </header>
 
   <div class="container mx-auto mt-8">
-    <!-- Stepper Navigation -->
     <ol class="flex justify-center text-gray-500 text-sm space-x-4">
       <ng-container *ngFor="let stepLabel of stepLabels; let i = index">
         <li [class.text-blue-600]="step === i + 1" class="flex items-center">
@@ -32,10 +30,10 @@
       </ng-container>
     </ol>
 
-    <!-- Step Content -->
+
+
     <div *ngIf="step === 1">
       <form [formGroup]="introForm" class="mt-8 space-y-6">
-        <!-- Project Introduction -->
         <div class="text-gray-700 space-y-3 text-sm md:text-base">
           <p>
             Are you a young Palestine refugee (male or female) aged between 18 and 30 and looking for a short-term job opportunity?
@@ -53,10 +51,8 @@
           </p>
         </div>
         
-        <!-- Understanding Question -->
         <p class="text-lg font-semibold text-gray-800">Have you read and understood the project aim and criteria?*</p>
         
-        <!-- Yes/No Options -->
         <div class="space-y-4">
           <label class="flex items-center">
             <input type="radio" formControlName="confirm" value="yes" class="mr-3 w-5 h-5">
@@ -68,12 +64,10 @@
           </label>
         </div>
     
-        <!-- Error Message -->
         <div *ngIf="introForm.get('confirm')?.value === 'no'" class="text-red-600 text-sm mt-2">
           <p>You must read and accept the terms to proceed.</p>
         </div>
     
-        <!-- Navigation Buttons -->
         <div class="flex justify-between mt-6">
           <button 
           type="button" 
@@ -95,7 +89,6 @@
       <form [formGroup]="personalInfoForm" class="mt-8 space-y-4">
         <h2 class="text-xl font-semibold">Personal Information</h2>
     
-        <!-- Name Fields in English -->
         <div>
           <label for="firstNameEn">First Name (in English) *</label>
           <input id="firstNameEn" formControlName="firstNameEn" type="text" class="border p-2 rounded w-full" required />
@@ -111,7 +104,6 @@
           <input id="lastNameEn" formControlName="lastNameEn" type="text" class="border p-2 rounded w-full" required />
         </div>
     
-        <!-- Name Fields in Arabic -->
         <div>
           <label for="firstNameAr">First Name (in Arabic) *</label>
           <input id="firstNameAr" formControlName="firstNameAr" type="text" class="border p-2 rounded w-full" required />
@@ -127,7 +119,6 @@
           <input id="lastNameAr" formControlName="lastNameAr" type="text" class="border p-2 rounded w-full" required />
         </div>
     
-        <!-- Gender -->
         <div>
           <label for="gender">Gender *</label>
           <select id="gender" formControlName="gender" class="border p-2 rounded w-full" required>
@@ -137,7 +128,6 @@
           </select>
         </div>
     
-        <!-- Age -->
         <div>
           <label for="age">Age *</label>
           <input
@@ -160,14 +150,12 @@
 
         </div>
     
-        <!-- Date of Birth -->
         <div>
           <label for="dob">Date of Birth *</label>
           <small class="block text-gray-600">Please match the same date of birth on the registration card</small>
           <input id="dob" formControlName="dob" type="date" class="border p-2 rounded w-full" required />
         </div>
     
-        <!-- Nationality -->
         <div>
           <label for="nationality">Nationality *</label>
           <select id="nationality" formControlName="nationality" class="border p-2 rounded w-full" required>
@@ -178,7 +166,6 @@
         </div>
     
 
-            <!-- Registration Status -->
     <div>
       <label for="registrationStatus">Registration Status *</label>
       <small class="block text-gray-600">Do you have an UNRWA Registration Card?</small>
@@ -189,7 +176,6 @@
       </select>
     </div>
     
-        <!-- Mobile Phone -->
         <div>
           <label for="mobilePhone">Mobile Phone *</label>
           <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
@@ -205,7 +191,6 @@
         </div>
         </div>
     
-        <!-- WhatsApp Number -->
         <div>
           <label for="whatsapp">WhatsApp Number *</label>
           <input id="whatsapp" formControlName="whatsapp" type="tel" class="border p-2 rounded w-full" required />
@@ -220,7 +205,6 @@
         </div>
         </div>
     
-        <!-- Emergency Phone Number -->
         <div>
           <label for="emergencyPhone">Emergency Phone Number *</label>
           <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
@@ -236,7 +220,6 @@
         </div>
         </div>
     
-        <!-- Relation to Emergency Phone Number -->
         <div>
           <label for="emergencyRelation">Relation to Emergency Phone Number *</label>
           <select id="emergencyRelation" formControlName="emergencyRelation" class="border p-2 rounded w-full" required>
@@ -247,13 +230,11 @@
           </select>
         </div>
     
-        <!-- Email Address -->
         <div>
           <label for="email">Email Address *</label>
           <input id="email" formControlName="email" type="email" class="border p-2 rounded w-full" required />
         </div>
     
-        <!-- Area -->
         <div>
           <label for="area">Area *</label>
           <select id="area" formControlName="area" class="border p-2 rounded w-full" required>
@@ -266,13 +247,11 @@
           </select>
         </div>
     
-        <!-- Full Address -->
         <div>
           <label for="fullAddress">Full Address *</label>
           <input id="fullAddress" formControlName="fullAddress" type="text" class="border p-2 rounded w-full" required />
         </div>
     
-        <!-- Buttons -->
         <div class="flex justify-between mt-4">
           <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
           <button
@@ -293,7 +272,6 @@
     
 
 
-    <!-- General Section -->
     <div *ngIf="step === 3" class="mt-8">
       <h2 class="text-xl font-semibold">General Section</h2>
       <p>Example content for the General Section.</p>
@@ -303,7 +281,6 @@
       </div>
     </div>
 
-    <!-- General Questions Section -->
     <div *ngIf="step === 4" class="mt-8">
       <h2 class="text-xl font-semibold">General Questions</h2>
       <p>Example content for the General Questions Section.</p>
@@ -313,7 +290,6 @@
       </div>
     </div>
 
-    <!-- Experience Details -->
     <div *ngIf="step === 5" class="mt-8">
       <h2 class="text-xl font-semibold">Experience Details</h2>
       <p>Example content for Experience Details Section.</p>
@@ -323,7 +299,6 @@
       </div>
     </div>
 
-    <!-- Required Documents -->
     <div *ngIf="step === 6" class="mt-8">
       <h2 class="text-xl font-semibold">Required Documents</h2>
       <p>Example content for Required Documents Section.</p>
