@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../AuthService/auth-service.service';
+import { AuthService } from '../../Services/AuthService/auth-service.service';
 import { FormsModule } from '@angular/forms';
-// import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';  // Import Router
 
 
@@ -30,6 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   email = '';
+  userName='';
   password = '';
   loginError = '';
   constructor(private authService: AuthService, private router: Router) {}
@@ -37,16 +37,22 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const role = this.tabs[this.activeTabIndex];
 
-    this.authService.login(this.email, this.password,role).subscribe(response => {
+    this.authService.login(this.userName, this.password, role).subscribe(response => {
       if (response.success) {
         console.log(`Login successful! Role: ${response.role}`);
+
+        // Save authentication details in localStorage
+        localStorage.setItem('authenticated', 'true'); // Store authentication status
+        localStorage.setItem('userRole', response.role); // Store the role (Employer/Youth)
+
+        // Redirect based on role
         if (response.role === 'Employer') {
-          this.router.navigate(['/main-employer']);  // Redirect to Employer dashboard
+          this.router.navigate(['/main-employer']); // Redirect to Employer dashboard
         } else if (response.role === 'Youth') {
-          this.router.navigate(['/main-youth']);  // Redirect to Youth dashboard
+          this.router.navigate(['/main-youth']); // Redirect to Youth dashboard
         }
       } else {
-        this.loginError = response.message;
+        this.loginError = response.message; // Display login error
       }
     });
   }

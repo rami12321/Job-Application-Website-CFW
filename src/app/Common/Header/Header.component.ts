@@ -11,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   isMenuOpen = false; // Tracks mobile menu state
 
+  role=localStorage.getItem("userRole")
+
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
