@@ -17,5 +17,7 @@ export const routes: Routes = [
     path:'main-youth',
     component: SignUpYouthComponent
   },
+  { path: 'signup', component: SignUpYouthComponent },
+
 
 ];

@@ -1,3 +1,338 @@
-<p>
-  SignUp-Youth works!
-</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign Up - Youth</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50">
+  <header class="bg-blue-600 text-white py-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-3xl font-semibold">Youth Program Registration</h1>
+      <p class="text-lg mt-2">Complete your sign-up to join our program!</p>
+    </div>
+  </header>
+
+  <div class="container mx-auto mt-8">
+    <!-- Stepper Navigation -->
+    <ol class="flex justify-center text-gray-500 text-sm space-x-4">
+      <ng-container *ngFor="let stepLabel of stepLabels; let i = index">
+        <li [class.text-blue-600]="step === i + 1" class="flex items-center">
+          <span class="w-6 h-6 flex items-center justify-center rounded-full border border-blue-600 mr-2">
+            <span>{{ i + 1 }}</span>
+          </span>
+          {{ stepLabel }}
+        </li>
+      </ng-container>
+    </ol>
+
+    <!-- Step Content -->
+    <div *ngIf="step === 1">
+      <form [formGroup]="introForm" class="mt-8 space-y-6">
+        <!-- Project Introduction -->
+        <div class="text-gray-700 space-y-3 text-sm md:text-base">
+          <p>
+            Are you a young Palestine refugee (male or female) aged between 18 and 30 and looking for a short-term job opportunity?
+            UNRWA will be launching job placement opportunities for the year 2024, funded by the KFW Development Bank and the European Union (EU).
+          </p>
+          <p>
+            This project will provide Palestine refugee youth with a short employment opportunity to work in the labor market for a 
+            minimum of 40 working days with daily remuneration of $15.
+          </p>
+          <p>
+            Placed youth will be guided through a journey of professional development, starting with life skills for employability, 
+            followed by life in the workplace and legal induction, continuing with close follow-up by the UNRWA employment services 
+            team for ongoing career development and guidance, aiming to equip youth with new skills and contribute to their job readiness 
+            and stabilization of livelihoods.
+          </p>
+        </div>
+        
+        <!-- Understanding Question -->
+        <p class="text-lg font-semibold text-gray-800">Have you read and understood the project aim and criteria?*</p>
+        
+        <!-- Yes/No Options -->
+        <div class="space-y-4">
+          <label class="flex items-center">
+            <input type="radio" formControlName="confirm" value="yes" class="mr-3 w-5 h-5">
+            <span class="text-sm md:text-base text-gray-700">Yes</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" formControlName="confirm" value="no" class="mr-3 w-5 h-5">
+            <span class="text-sm md:text-base text-gray-700">No</span>
+          </label>
+        </div>
+    
+        <!-- Error Message -->
+        <div *ngIf="introForm.get('confirm')?.value === 'no'" class="text-red-600 text-sm mt-2">
+          <p>You must read and accept the terms to proceed.</p>
+        </div>
+    
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between mt-6">
+          <button 
+          type="button" 
+          (click)="nextStep()" 
+          [disabled]="!isStepValid()" 
+          class="px-4 py-2 rounded text-sm md:text-base transition-colors duration-200"
+          [ngClass]="{
+            'bg-blue-600 text-white': isStepValid(),
+            'bg-gray-400 text-gray-200 cursor-not-allowed': !isStepValid()
+          }">
+          Next
+        </button>
+        </div>
+      </form>
+    </div>
+    
+    
+    <div *ngIf="step === 2">
+      <form [formGroup]="personalInfoForm" class="mt-8 space-y-4">
+        <h2 class="text-xl font-semibold">Personal Information</h2>
+    
+        <!-- Name Fields in English -->
+        <div>
+          <label for="firstNameEn">First Name (in English) *</label>
+          <input id="firstNameEn" formControlName="firstNameEn" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <div>
+          <label for="fatherNameEn">Father Name (in English) *</label>
+          <input id="fatherNameEn" formControlName="fatherNameEn" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <div>
+          <label for="lastNameEn">Family Name (in English) *</label>
+          <input id="lastNameEn" formControlName="lastNameEn" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <!-- Name Fields in Arabic -->
+        <div>
+          <label for="firstNameAr">First Name (in Arabic) *</label>
+          <input id="firstNameAr" formControlName="firstNameAr" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <div>
+          <label for="fatherNameAr">Father Name (in Arabic) *</label>
+          <input id="fatherNameAr" formControlName="fatherNameAr" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <div>
+          <label for="lastNameAr">Family Name (in Arabic) *</label>
+          <input id="lastNameAr" formControlName="lastNameAr" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <!-- Gender -->
+        <div>
+          <label for="gender">Gender *</label>
+          <select id="gender" formControlName="gender" class="border p-2 rounded w-full" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+    
+        <!-- Age -->
+        <div>
+          <label for="age">Age *</label>
+          <input
+            id="age"
+            formControlName="age"
+            type="number"
+            class="border p-2 rounded w-full"
+            required
+          />
+          <div
+          *ngIf="
+            hasError('age', 'required') ||
+            hasError('age', 'min') ||
+            hasError('age', 'max')
+          "
+          class="text-red-500 text-sm"
+        >
+          Unfortunately, this project targets youth aged between 18-30.
+        </div>
+
+        </div>
+    
+        <!-- Date of Birth -->
+        <div>
+          <label for="dob">Date of Birth *</label>
+          <small class="block text-gray-600">Please match the same date of birth on the registration card</small>
+          <input id="dob" formControlName="dob" type="date" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <!-- Nationality -->
+        <div>
+          <label for="nationality">Nationality *</label>
+          <select id="nationality" formControlName="nationality" class="border p-2 rounded w-full" required>
+            <option value="">Select</option>
+            <option value="Lebanese">Lebanese</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+    
+
+            <!-- Registration Status -->
+    <div>
+      <label for="registrationStatus">Registration Status *</label>
+      <small class="block text-gray-600">Do you have an UNRWA Registration Card?</small>
+      <select id="registrationStatus" formControlName="registrationStatus" class="border p-2 rounded w-full" required>
+        <option value="" disabled selected>Select Status</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </div>
+    
+        <!-- Mobile Phone -->
+        <div>
+          <label for="mobilePhone">Mobile Phone *</label>
+          <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
+          <input id="mobilePhone" formControlName="mobilePhone" type="tel" class="border p-2 rounded w-full" required/>
+          <div
+          *ngIf="
+            hasError('mobilePhone', 'required') ||
+            hasError('mobilePhone', 'pattern')
+          "
+          class="text-red-500 text-sm"
+        >
+          Please enter a valid phone number in the format: 96103000000
+        </div>
+        </div>
+    
+        <!-- WhatsApp Number -->
+        <div>
+          <label for="whatsapp">WhatsApp Number *</label>
+          <input id="whatsapp" formControlName="whatsapp" type="tel" class="border p-2 rounded w-full" required />
+          <div
+          *ngIf="
+            hasError('whatsapp', 'required') ||
+            hasError('whatsapp', 'pattern')
+          "
+          class="text-red-500 text-sm"
+        >
+          Please enter a valid number.
+        </div>
+        </div>
+    
+        <!-- Emergency Phone Number -->
+        <div>
+          <label for="emergencyPhone">Emergency Phone Number *</label>
+          <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
+          <input id="emergencyPhone" formControlName="emergencyPhone" type="tel" class="border p-2 rounded w-full" required />
+          <div
+          *ngIf="
+            hasError('emergencyPhone', 'required') ||
+            hasError('emergencyPhone', 'pattern')
+          "
+          class="text-red-500 text-sm"
+        >
+          Please enter a valid phone number in the format: 96103000000
+        </div>
+        </div>
+    
+        <!-- Relation to Emergency Phone Number -->
+        <div>
+          <label for="emergencyRelation">Relation to Emergency Phone Number *</label>
+          <select id="emergencyRelation" formControlName="emergencyRelation" class="border p-2 rounded w-full" required>
+            <option value="" disabled selected>Select Relation</option>
+            <option value="Parent">Parent</option>
+            <option value="Partner">Partner</option>
+            <option value="Sibling">Sibling</option>
+          </select>
+        </div>
+    
+        <!-- Email Address -->
+        <div>
+          <label for="email">Email Address *</label>
+          <input id="email" formControlName="email" type="email" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <!-- Area -->
+        <div>
+          <label for="area">Area *</label>
+          <select id="area" formControlName="area" class="border p-2 rounded w-full" required>
+            <option value="">Select</option>
+            <option value="Tyre">Tyre</option>
+            <option value="Saida">Saida</option>
+            <option value="North Lebanon">North Lebanon</option>
+            <option value="Beqaa">Beqaa</option>
+            <option value="Beirut and Mount Lebanon">Beirut and Mount Lebanon</option>
+          </select>
+        </div>
+    
+        <!-- Full Address -->
+        <div>
+          <label for="fullAddress">Full Address *</label>
+          <input id="fullAddress" formControlName="fullAddress" type="text" class="border p-2 rounded w-full" required />
+        </div>
+    
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+          <button
+            type="button"
+            (click)="nextStep()"
+            [disabled]="!isStepValid()"
+            class="px-4 py-2 rounded text-sm md:text-base transition-colors duration-200"
+            [ngClass]="{
+              'bg-blue-600 text-white': isStepValid(),
+              'bg-gray-400 text-gray-200 cursor-not-allowed': !isStepValid()
+            }"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
+    
+
+
+    <!-- General Section -->
+    <div *ngIf="step === 3" class="mt-8">
+      <h2 class="text-xl font-semibold">General Section</h2>
+      <p>Example content for the General Section.</p>
+      <div class="flex justify-between">
+        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+        <button type="button" (click)="nextStep()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+      </div>
+    </div>
+
+    <!-- General Questions Section -->
+    <div *ngIf="step === 4" class="mt-8">
+      <h2 class="text-xl font-semibold">General Questions</h2>
+      <p>Example content for the General Questions Section.</p>
+      <div class="flex justify-between">
+        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+        <button type="button" (click)="nextStep()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+      </div>
+    </div>
+
+    <!-- Experience Details -->
+    <div *ngIf="step === 5" class="mt-8">
+      <h2 class="text-xl font-semibold">Experience Details</h2>
+      <p>Example content for Experience Details Section.</p>
+      <div class="flex justify-between">
+        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+        <button type="button" (click)="nextStep()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+      </div>
+    </div>
+
+    <!-- Required Documents -->
+    <div *ngIf="step === 6" class="mt-8">
+      <h2 class="text-xl font-semibold">Required Documents</h2>
+      <p>Example content for Required Documents Section.</p>
+      <div class="flex justify-between">
+        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+        <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
