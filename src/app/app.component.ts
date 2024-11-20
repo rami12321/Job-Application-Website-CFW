@@ -12,5 +12,10 @@ import { HeaderComponent } from './Common/Header/Header.component';
 })
 export class AppComponent {
   title = 'KFW';
+
+  get showHeader(): boolean {
+    // Add your condition for showing the header
+    return !location.pathname.includes('login');
+  }
 }
 

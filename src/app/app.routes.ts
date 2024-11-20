@@ -6,6 +6,11 @@ import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.componen
 export const routes: Routes = [
 
   {
+    path:'',
+    redirectTo:'login',
+    pathMatch:'full'
+  },
+  {
     path:'login',
     component: LoginComponent
   },
