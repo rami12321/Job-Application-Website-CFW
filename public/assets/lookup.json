@@ -1,0 +1,145 @@
+{
+  "Tyre": {
+    "options": ["Outside Camp", "Inside Camp"],
+    "camps": [
+      "Rashidieh Palestinian Refugee Camp",
+      "El Buss Palestinian Refugee Camp",
+      "Burj El Shemali Palestinian Refugee Camp"
+    ]
+  },
+  "Saida": {
+    "options": ["Outside Camp", "Inside Camp"],
+    "camps": [
+      "Mieh Mieh Palestinian Refugee Camp",
+      "Ein El Hilweh Palestinian Refugee Camp"
+    ]
+  },
+  "North Lebanon": {
+    "options": ["Outside Camp", "Inside Camp"],
+    "camps": [
+      "Nahr El Bared Palestinian Refugee Camp",
+      "Baddawi Palestinian Refugee Camp"
+    ]
+  },
+  "Beqaa": {
+    "options": ["Outside Camp", "Inside Camp"],
+    "camps": ["Wavel Palestinian Refugee Camp"]
+  },
+  "Beirut and Mount Lebanon": {
+    "options": ["Outside Camp", "Inside Camp"],
+    "camps": [
+      "Shatila Palestinian Refugee Camp",
+      "Mar Elias Palestinian Refugee Camp",
+      "Dbayeh Palestinian Refugee Camp",
+      "Burj El Barajneh Palestinian Camp"
+    ]
+  },
+  "majors": [
+    "Translation",
+    "Theatre Arts",
+    "Teaching Diploma",
+    "Statistics",
+    "Speech Therapy",
+    "Special Education Diploma",
+    "Sociology",
+    "Religion",
+    "Radio Television",
+    "Public Relations",
+    "Public Health",
+    "Psychology",
+    "Political Science",
+    "Physiotherapy",
+    "Physics",
+    "Philosophy",
+    "Pharmacy",
+    "Occupational Therapy",
+    "Nursing",
+    "Medical Lab Sciences",
+    "Mechanical Engineering",
+    "Mathematics",
+    "Mass Communication",
+    "Marketing",
+    "Management Information Systems",
+    "Law",
+    "Journalism",
+    "International Relations Affairs",
+    "International Business Management",
+    "Interior Design",
+    "Interior Architecture",
+    "Industrial Engineering",
+    "Human Resources Management",
+    "Hospitality,Tourism, Travel",
+    "History",
+    "Graphic Design",
+    "Geography",
+    "French Literature",
+    "Food Science & Safety",
+    "Food Nutrition",
+    "Finance",
+    "Fashion Design",
+    "Environmental Science",
+    "English Literature",
+    "Electrical Engineering",
+    "Early Childhood Education",
+    "Design Visual Communications",
+    "Dentistry",
+    "Computer Science Programming",
+    "Computer Networking",
+    "Computer Engineering",
+    "Computer and Communication Engineering",
+    "Civil Engineering",
+    "Cinematography",
+    "Chemistry",
+    "Chemical Engineering",
+    "Business Administration Management",
+    "Biomedical Engineering",
+    "Biology",
+    "Biochemistry",
+    "Art History",
+    "Architectural Engineering",
+    "Arabic Literature",
+    "Agriculture Engineering",
+    "Accounting Information System",
+    "Accounting"
+  ],
+  "dropdownOptions": {
+    "genderOptions": [
+      { "value": "male", "label": "Male" },
+      { "value": "female", "label": "Female" }
+    ],
+    "nationalityOptions": [
+      { "value": "PL", "label": "Palestinian Refugee in Lebanon" },
+      { "value": "PS", "label": "Palestinian Refugee from Syria" },
+      { "value": "LB", "label": "Lebanese" },
+      { "value": "SR", "label": "Syrian" },
+      { "value": "ND", "label": "Non-ID" }
+    ],
+    "registrationStatusOptions": [
+      { "value": "Registered", "label": "Registered" },
+      { "value": "Not-Registered", "label": "Not Registered" },
+      { "value": "Palestinian-na", "label": "Palestinian Not-ID" }
+    ],
+    "headfaOptions": [
+      { "value": "Father", "label": "Father" },
+      { "value": "Mother", "label": "Mother" },
+      { "value": "Husband", "label": "Husband" },
+      { "value": "Brother", "label": "Brother" },
+      { "value": "Sister", "label": "Sister" },
+      { "value": "Me", "label": "Me" }
+    ],
+    "relationshipOptions": [
+      { "value": "Parent", "label": "Parent" },
+      { "value": "Partner", "label": "Partner" },
+      { "value": "Sibling", "label": "Sibling" }
+    ],
+
+    "employmentOpportunitiesOptions": [
+      { "value": "external", "label": "Short-term employment opportunities with external organizations" },
+      { "value": "unrwa", "label": "Short-term employment opportunities in UNRWA" },
+      { "value": "both", "label": "Both" }
+    ]
+
+    
+
+  }
+}
