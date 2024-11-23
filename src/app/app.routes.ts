@@ -4,25 +4,26 @@ import { MainEmployerComponent } from './Employer/main-employer/main-employer.co
 import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'main-employer',
+    component: MainEmployerComponent,
+  },
+  {
+    path: 'main-youth',
+    component: SignUpYouthComponent,
+  },
+  {
+    path: 'signup',
+    component: SignUpYouthComponent, // Parent for steps
 
-  {
-    path:'',
-    redirectTo:'login',
-    pathMatch:'full'
   },
-  {
-    path:'login',
-    component: LoginComponent
-  },
-  {
-    path:'main-employer',
-    component: MainEmployerComponent
-  },
-  {
-    path:'main-youth',
-    component: SignUpYouthComponent
-  },
-  { path: 'signup', component: SignUpYouthComponent },
-
-
 ];
