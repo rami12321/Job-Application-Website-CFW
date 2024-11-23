@@ -5,29 +5,34 @@ import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.componen
 import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
-
   {
-    path:'',
-    redirectTo:'login',
-    pathMatch:'full'
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
-    path:'login',
-    component: LoginComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path:'admin',
     component: AdminComponent
   },
   {
-    path:'main-employer',
-    component: MainEmployerComponent
+    path:'admin',
+    component: AdminComponent
   },
   {
-    path:'main-youth',
-    component: SignUpYouthComponent
+    path: 'main-employer',
+    component: MainEmployerComponent,
   },
-  { path: 'signup', component: SignUpYouthComponent },
+  {
+    path: 'main-youth',
+    component: SignUpYouthComponent,
+  },
+  {
+    path: 'signup',
+    component: SignUpYouthComponent, // Parent for steps
 
-
+  },
 ];
