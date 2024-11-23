@@ -42,9 +42,6 @@ export class LoginComponent implements OnInit {
       if (response.success) {
         console.log(`Login successful! Role: ${response.role}`);
 
-        // Save authentication details in localStorage
-        localStorage.setItem('authenticated', 'true'); // Store authentication status
-        localStorage.setItem('userRole', response.role); // Store the role (Employer/Youth)
 
         // Redirect based on role
         if (response.role === 'Employer') {
@@ -62,3 +59,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
