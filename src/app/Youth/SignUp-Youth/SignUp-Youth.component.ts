@@ -31,8 +31,7 @@ export class SignUpYouthComponent implements OnInit {
   allUsersData: any[] = [];
 
   trainingsAndSkillsForm: FormGroup;
-  skillOptions: string[];
-  computerSkills: string[];
+
   jobOpportunityOptions = [
     'WhatsApp Message from Employment Services Team',
     'WhatsApp Message from Area Offices',
@@ -89,6 +88,9 @@ export class SignUpYouthComponent implements OnInit {
 
   ];
   skills: any;
+computerSkillsOptions: any;
+skillOptions: any;
+computerSkills: any;
 
   constructor(private fb: FormBuilder, private youthService: YouthServiceService, private lookupService: LookupService, private http: HttpClient
   ) {
@@ -136,14 +138,6 @@ export class SignUpYouthComponent implements OnInit {
       },
     ];
     
-    this.skillOptions = ['Fluent', 'Good', 'Average', 'Null'];
-    this.computerSkills = [
-      'Nothing',
-      'MS Office (Word, Excel, PowerPoint)',
-      'AutoCad',
-      'Adobe Design Programs',
-      'Accounting System',
-    ];
 
     this.generalForm = this.fb.group({
       jobOpportunitySource: ['', Validators.required],
@@ -554,8 +548,19 @@ export class SignUpYouthComponent implements OnInit {
       this.formSubmitted = false;
     }, 3000);
   }
-  onSubmit(): void {
-    this.saveToJson();
+  onSubmit() {
+    const formData = this.collectFormData();
+
+    this.youthService.submitFormData(formData).subscribe(
+      (response) => {
+        console.log('Form data submitted successfully:', response);
+        alert('Form data saved successfully!');
+      },
+      (error) => {
+        console.error('Error submitting form data:', error);
+        alert('Failed to save form data.');
+      }
+    );
   }
 
 }
