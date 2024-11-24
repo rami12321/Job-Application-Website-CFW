@@ -7,9 +7,14 @@ import { map, Observable } from 'rxjs';
 })
 export class YouthServiceService {
   private areaData: any = {};
+  private apiUrl = 'http://localhost:3000/submit'; 
+
 
   constructor(private http: HttpClient) {}
-
+  
+  submitFormData(formData: any) {
+    return this.http.post(this.apiUrl, formData);
+  }
   fetchAreaData(): Observable<any> {
     return this.http.get<any>('assets/lookup.json');
   }
