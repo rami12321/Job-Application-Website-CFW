@@ -1,0 +1,80 @@
+<div class="flex">
+  <aside class="w-1/6 bg-gray-800 text-white min-h-screen p-4">
+    <div class="text-xl font-bold mb-6">Admin Panel</div>
+    <nav class="space-y-4">
+      <a
+        (click)="changeTab('dashboard')"
+        [class.bg-gray-700]="activeTab === 'dashboard'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+      >
+        <svg
+          class="h-5 w-5 mr-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 10h11M9 21v-6m6-9l-2 2-2-2M16 4h5v16h-5z"
+          />
+        </svg>
+        Dashboard
+      </a>
+      <a
+        (click)="changeTab('youth')"
+        [class.bg-gray-700]="activeTab === 'youth'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+      >
+        <svg
+          class="h-5 w-5 mr-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 4v16h18M3 10h18"
+          />
+        </svg>
+        Youth
+      </a>
+      <a
+        (click)="changeTab('employer')"
+        [class.bg-gray-700]="activeTab === 'employer'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+      >
+        <svg
+          class="h-5 w-5 mr-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M16 11V7a4 4 0 0 0-8 0v4m-2 9h12a2 2 0 0 0 2-2v-5H4v5a2 2 0 0 0 2 2z"
+          />
+        </svg>
+        Employer
+      </a>
+    </nav>
+  </aside>
+  <div class="w-5/6 overflow-x-auto border border-gray-300 p-4">
+    <div *ngIf="activeTab === 'dashboard'">
+      <h1 class="text-2xl">Dashboard</h1>
+      <app-admin-dashboard/>
+    </div>
+    <div *ngIf="activeTab === 'youth'">
+      <h1 class="text-2xl">Youth</h1>
+      <app-smart-table class="p-10"/>
+    </div>
+    <div *ngIf="activeTab === 'employer'">
+      <h1 class="text-2xl">Employer</h1>
+    </div>
+  </div>
+</div>
