@@ -8,7 +8,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,HeaderComponent, ],
-  
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -17,7 +17,7 @@ export class AppComponent {
 
   get showHeader(): boolean {
     // Add your condition for showing the header
-    return !location.pathname.includes('login');
+    return !location.pathname.includes('login') && !location.pathname.includes('signup-youth');
   }
 }
 

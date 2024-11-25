@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up - Youth</title>
-  
+
     <!-- Import Tailwind CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css"
       rel="stylesheet"
     >
-  
+
     <!-- Additional Styling -->
     <style>
       .header {
@@ -70,16 +70,16 @@
         </li>
       </ng-container>
     </ol>
-  
+
     <div *ngIf="step === 1" class="mt-8 px-4 md:px-8 lg:px-12">
       <!-- Responsive Image Section -->
       <div class="flex justify-center mb-6">
-        <img 
-          src="assets/images/IntroImageKFW-en.jpeg" 
-          alt="UNRWA and Partners Logo" 
+        <img
+          src="assets/images/IntroImageKFW-en.jpeg"
+          alt="UNRWA and Partners Logo"
           class="max-w-full h-auto object-contain w-3/4 md:w-2/3 lg:w-1/2">
       </div>
-    
+
       <!-- Form Content -->
       <form [formGroup]="introForm" class="space-y-6">
         <!-- Description Section -->
@@ -89,51 +89,51 @@
             UNRWA will be launching job placement opportunities for the year 2024, funded by the KFW Development Bank and the European Union (EU).
           </p>
           <p>
-            This project will provide Palestine refugee youth with a short employment opportunity to work in the labor market for a 
+            This project will provide Palestine refugee youth with a short employment opportunity to work in the labor market for a
             minimum of 40 working days with daily remuneration of $15.
           </p>
           <p>
-            Placed youth will be guided through a journey of professional development, starting with life skills for employability, 
-            followed by life in the workplace and legal induction, continuing with close follow-up by the UNRWA employment services 
-            team for ongoing career development and guidance, aiming to equip youth with new skills and contribute to their job readiness 
+            Placed youth will be guided through a journey of professional development, starting with life skills for employability,
+            followed by life in the workplace and legal induction, continuing with close follow-up by the UNRWA employment services
+            team for ongoing career development and guidance, aiming to equip youth with new skills and contribute to their job readiness
             and stabilization of livelihoods.
           </p>
         </div>
-    
+
         <!-- Question Section -->
         <p class="text-lg font-semibold text-gray-800">Have you read and understood the project aim and criteria?*</p>
-    
+
         <!-- Radio Buttons -->
         <div class="space-y-4">
           <label class="flex items-center space-x-3">
-            <input 
-              type="radio" 
-              formControlName="confirm" 
-              value="yes" 
+            <input
+              type="radio"
+              formControlName="confirm"
+              value="yes"
               class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-200 border-gray-300 rounded-md">
             <span class="text-sm md:text-base text-gray-700">Yes</span>
           </label>
           <label class="flex items-center space-x-3">
-            <input 
-              type="radio" 
-              formControlName="confirm" 
-              value="no" 
+            <input
+              type="radio"
+              formControlName="confirm"
+              value="no"
               class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-200 border-gray-300 rounded-md">
             <span class="text-sm md:text-base text-gray-700">No</span>
           </label>
         </div>
-    
+
         <!-- Error Message -->
         <div *ngIf="introForm.get('confirm')?.value === 'no'" class="text-red-600 text-sm mt-2">
           <p>You must read and accept the terms to proceed.</p>
         </div>
-    
+
         <!-- Button Section -->
         <div class="flex justify-end mt-6">
-          <button 
-            type="button" 
-            (click)="nextStep()" 
-            [disabled]="!isStepValid()" 
+          <button
+            type="button"
+            (click)="nextStep()"
+            [disabled]="!isStepValid()"
             class="px-6 py-3 rounded-lg text-sm md:text-base font-medium shadow-sm transition-colors duration-200"
             [ngClass]="{
               'bg-blue-600 text-white hover:bg-blue-700': isStepValid(),
@@ -144,43 +144,43 @@
         </div>
       </form>
     </div>
-    
-    
-    
+
+
+
     <div *ngIf="step === 2" class="mt-8">
       <form [formGroup]="personalInfoForm" class="mt-8 space-y-6">
         <h2 class="text-xl font-semibold">Personal Information</h2>
-    
+
         <div>
           <label for="firstNameEn">First Name (in English) *</label>
           <input id="firstNameEn" formControlName="firstNameEn" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="fatherNameEn">Father Name (in English) *</label>
           <input id="fatherNameEn" formControlName="fatherNameEn" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="lastNameEn">Family Name (in English) *</label>
           <input id="lastNameEn" formControlName="lastNameEn" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="firstNameAr">First Name (in Arabic) *</label>
           <input id="firstNameAr" formControlName="firstNameAr" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="fatherNameAr">Father Name (in Arabic) *</label>
           <input id="fatherNameAr" formControlName="fatherNameAr" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="lastNameAr">Family Name (in Arabic) *</label>
           <input id="lastNameAr" formControlName="lastNameAr" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div>
           <label for="gender">Gender *</label>
           <select id="gender" formControlName="gender" class="border p-2 rounded w-full" required>
@@ -189,7 +189,7 @@
             </option>
           </select>
         </div>
-    
+
         <div>
           <label for="dob">Date of Birth *</label>
           <small class="block text-gray-600">
@@ -211,8 +211,8 @@
             Unfortunately, this project targets youth aged between 18-30.
           </div>
         </div>
-        
-    
+
+
         <div>
           <label for="nationality">Nationality *</label>
           <select id="nationality" formControlName="nationality" class="border p-2 rounded w-full" required>
@@ -221,7 +221,7 @@
             </option>
           </select>
         </div>
-    
+
 
     <div>
       <label for="registrationStatus">Registration Status *</label>
@@ -247,7 +247,7 @@
 
       </select>
     </div>
-    
+
         <div>
           <label for="mobilePhone">Mobile Phone *</label>
           <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
@@ -262,7 +262,7 @@
           Please enter a valid phone number in the format: 96103000000
         </div>
         </div>
-    
+
         <div>
           <label for="whatsapp">WhatsApp Number *</label>
           <input id="whatsapp" formControlName="whatsapp" type="tel" class="border p-2 rounded w-full" required />
@@ -276,7 +276,7 @@
           Please enter a valid number.
         </div>
         </div>
-    
+
         <div>
           <label for="emergencyPhone">Emergency Phone Number *</label>
           <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
@@ -291,7 +291,7 @@
           Please enter a valid phone number in the format: 96103000000
         </div>
         </div>
-    
+
         <div>
           <label for="emergencyRelation">Relation to Emergency Phone Number *</label>
           <select id="emergencyRelation" formControlName="emergencyRelation" class="border p-2 rounded w-full" required>
@@ -301,7 +301,7 @@
             </option>
           </select>
         </div>
-    
+
         <div>
           <label for="email">Email Address *</label>
           <input id="email" formControlName="email" type="email" class="border p-2 rounded w-full" required />
@@ -354,7 +354,7 @@
           <label for="fullAddress">Full Address *</label>
           <input id="fullAddress" formControlName="fullAddress" type="text" class="border p-2 rounded w-full" required />
         </div>
-    
+
         <div class="flex justify-between mt-4">
           <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
           <button
@@ -371,11 +371,11 @@
 
 
 
-    
+
     <div *ngIf="step === 3">
       <form [formGroup]="generalForm" class="mt-8 space-y-4">
         <h2 class="text-xl font-semibold">General Section</h2>
-    
+
         <!-- How did you hear about the job opportunity? -->
         <div>
           <label for="jobOpportunitySource">How did you hear about the job opportunity? *</label>
@@ -394,7 +394,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <!-- Are you a graduate and a holder of a Short Term Course, TVET, or University Degree? -->
         <div>
           <label for="educationGraduate">Are you a graduate and a holder of a Short Term Course, TVET, or University Degree? *</label>
@@ -412,7 +412,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <!-- Education Level -->
         <div>
           <label for="educationLevel">Education Level *</label>
@@ -431,7 +431,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <!-- Major -->
         <div>
           <label for="major">Major *</label>
@@ -448,7 +448,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <div>
           <label for="institution">School, University or Institution *</label>
           <input
@@ -480,7 +480,7 @@
             formControlName="graduationDate"
             type="date"
             class="border p-2 rounded w-full"
-            
+
           />
 
         </div>
@@ -521,7 +521,7 @@
       </div>
     </div>
 
-    
+
         <!-- Buttons -->
         <div class="flex justify-between mt-4">
           <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">
@@ -537,12 +537,12 @@
         </div>
       </form>
     </div>
-    
+
 
 
     <div *ngIf="step === 4" class="mt-8">
       <h2 class="text-xl font-semibold">General Questions</h2>
-    
+
       <form [formGroup]="generalQuestionsForm" class="space-y-4">
         <!-- Question 1: KFW CfW Placement -->
         <div>
@@ -567,7 +567,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <!-- Question 2: Siblin Vocational Training Center -->
         <div>
           <label>Are you a graduate of the Siblin Vocational Training Center (STC) in UNRWA?<span class="text-red-500">*</span></label>
@@ -583,7 +583,7 @@
             This field is required.
           </div>
         </div>
-    
+
         <!-- Question 3: PRCS Volunteer -->
         <div>
           <label>Are you a volunteer with Palestinian Red Crescent Society (PRCS)?*</label>
@@ -596,7 +596,7 @@
             </label>
           </div>
         </div>
-    
+
         <!-- Question 4: Fire Brigades Volunteer -->
         <div>
           <label>Are you a volunteer with the Palestinian Fire Brigades Lebanese Camps?*</label>
@@ -609,7 +609,7 @@
             </label>
           </div>
         </div>
-    
+
         <!-- Question 5: Al-Shifaa Volunteer -->
         <div>
           <label>Are you a volunteer with Al-Shifaa for Medical & Humanitarian Services?*</label>
@@ -622,7 +622,7 @@
             </label>
           </div>
         </div>
-    
+
         <!-- Question 6: UNRWA Innovation Lab Graduate -->
         <div>
           <label>Are you a graduate of the UNRWA Innovation Lab? <span class="text-red-500">*</span></label>
@@ -646,7 +646,7 @@
             </div>
           </div>
         </div>
-    
+
         <!-- Question 7: Disability -->
         <div>
           <label>Do you have any disability? <span class="text-red-500">*</span></label>
@@ -697,7 +697,7 @@
             </div>
           </div>
         </div>
-    
+
         <!-- Question 8: Employment -->
         <div>
           <label>Are you Currently Employed? <span class="text-red-500">*</span></label>
@@ -724,11 +724,11 @@
             </select>
           </div>
         </div>
-   
-    
-    
 
-    
+
+
+
+
         <!-- Navigation Buttons -->
         <div class="flex justify-between mt-4">
           <button type="button" (click)="previousStep()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
@@ -759,7 +759,7 @@
               <option value="Internship">Internship</option>
             </select>
           </div>
-    
+
           <div *ngIf="experience.get('type')?.value !== 'None'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label for="employerName" class="block text-sm font-medium text-gray-700">Employer (Company) Name*</label>
@@ -780,7 +780,7 @@
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
-    
+
             <div>
               <label for="area" class="block text-sm font-medium text-gray-700">Area*</label>
               <select
@@ -810,7 +810,7 @@
                 <option value="Daily">Daily</option>
               </select>
             </div>
-    
+
             <div>
               <label for="jobTitle" class="block text-sm font-medium text-gray-700">Job Title*</label>
               <input
@@ -857,7 +857,7 @@
               ></textarea>
             </div>
           </div>
-    
+
           <button
             type="button"
             (click)="removeExperience(i)"
@@ -867,7 +867,7 @@
           </button>
         </div>
       </ng-container>
-    
+
       <div class="flex items-center space-x-4">
         <p>Do you want to add any employment history?</p>
         <button
@@ -885,7 +885,7 @@
           No
         </button>
       </div>
-    
+
       <div class="flex justify-between mt-8">
         <button
           type="button"
@@ -905,7 +905,7 @@
     </div>
     <div *ngIf="step === 6" class="mt-8">
       <h2 class="text-xl font-semibold mb-4">Trainings and Skills</h2>
-    
+
       <div class="mb-8">
         <h3 class="text-lg font-medium mb-4">Training Profile</h3>
         <ng-container *ngFor="let training of trainings.controls; let i = index">
@@ -919,7 +919,7 @@
                 class="form-input"
               />
             </div>
-    
+
             <div>
               <label for="certificate-{{ i }}" class="block text-sm font-medium">Training Certificate*</label>
               <input
@@ -929,7 +929,7 @@
                 class="form-input"
               />
             </div>
-    
+
             <div>
               <label for="area-{{ i }}" class="block text-sm font-medium">Area*</label>
               <select id="area-{{ i }}" formControlName="area" class="form-select">
@@ -937,7 +937,7 @@
                 <option *ngFor="let option of areaOptions" [value]="option">{{ option }}</option>
               </select>
             </div>
-    
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="durationFrom-{{ i }}" class="block text-sm font-medium">Duration From*</label>
@@ -958,7 +958,7 @@
                 />
               </div>
             </div>
-    
+
             <button
               type="button"
               (click)="removeTraining(i)"
@@ -968,7 +968,7 @@
             </button>
           </div>
         </ng-container>
-    
+
         <div class="flex items-center space-x-4">
           <p>Do you want to add any training profile (from 1 day to 9 month)?</p>
           <button
@@ -980,7 +980,7 @@
           </button>
         </div>
       </div>
-    
+
       <!-- Skills Section -->
       <div class="mb-8">
         <h3 class="text-lg font-medium mb-4">Technical Skills</h3>
@@ -998,7 +998,7 @@
                   <option value="null">Null</option>
                 </select>
               </div>
-              
+
               <div>
                 <label for="english" class="block text-sm font-medium">English</label>
                 <select id="english" formControlName="english" class="form-select">
@@ -1009,7 +1009,7 @@
                   <option value="null">Null</option>
                 </select>
               </div>
-              
+
               <div>
                 <label for="french" class="block text-sm font-medium">French</label>
                 <select id="french" formControlName="french" class="form-select">
@@ -1020,10 +1020,10 @@
                   <option value="null">Null</option>
                 </select>
               </div>
-              
+
             </div>
           </div>
-    
+
           <div class="mt-4">
             <h4 class="text-sm font-semibold mb-2">Computer Skills</h4>
             <div>
@@ -1049,12 +1049,12 @@
               </label>
             </div>
           </div>
-          
-          
+
+
 
         </div>
       </div>
-    
+
       <!-- Navigation Buttons -->
       <div class="flex justify-between mt-8">
         <button
@@ -1076,7 +1076,7 @@
     </div>
     <div *ngIf="step === 7" class="mt-8">
       <h2 class="text-2xl font-semibold mb-6 text-gray-800">Required Documents</h2>
-    
+
       <form [formGroup]="requiredDocumentsForm" class="space-y-6">
         <!-- CV/Resume -->
         <div>
@@ -1091,7 +1091,7 @@
           />
           <span *ngIf="hasError3('cv', 'required')" class="text-red-500 text-sm mt-1 block">CV is required.</span>
         </div>
-    
+
         <!-- Cover Letter -->
         <div>
           <label class="block text-sm font-medium text-gray-800">
@@ -1104,7 +1104,7 @@
             accept=".pdf,.doc,.docx"
           />
         </div>
-    
+
         <!-- Identity Card -->
         <div>
           <label class="block text-sm font-medium text-gray-800">
@@ -1118,7 +1118,7 @@
           />
           <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
         </div>
-    
+
         <!-- UNRWA Registration Card -->
         <div>
           <label class="block text-sm font-medium text-gray-800">
@@ -1132,7 +1132,7 @@
           />
           <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
         </div>
-    
+
         <!-- Educational Degree -->
         <div>
           <label class="block text-sm font-medium text-gray-800">
@@ -1146,7 +1146,7 @@
           />
           <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
         </div>
-    
+
         <!-- Conditional Volunteer Documents -->
         <!-- PRCS Proof -->
         <div *ngIf="isPrcsVolunteer()">
@@ -1161,7 +1161,7 @@
           />
           <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
         </div>
-    
+
         <!-- Fire Brigades Proof -->
         <div *ngIf="isFireBrigadesVolunteer()">
           <label class="block text-sm font-medium text-gray-800">
@@ -1175,7 +1175,7 @@
           />
           <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
         </div>
-    
+
         <!-- Al-Shifaa Proof -->
         <div *ngIf="isAlShifaaVolunteer()">
           <label class="block text-sm font-medium text-gray-800">
@@ -1189,7 +1189,7 @@
           />
           <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
         </div>
-    
+
         <div>
           <label class="block text-sm font-medium text-gray-800">
             Are you sure that all information provided is true and accurate?<span class="text-red-500">*</span>
@@ -1216,14 +1216,14 @@
               />
               No
             </label>
-            
-            
+
+
           </div>
           <span *ngIf="requiredDocumentsForm.get('confirmation')?.value === 'no'" class="text-red-600 text-sm mt-2">This field is required.</span>
         </div>
-        
+
       </form>
-    
+
       <!-- Navigation Buttons -->
       <div class="flex justify-between mt-8">
         <button
@@ -1237,10 +1237,10 @@
         <div *ngIf="formSubmitted" class="alert alert-success mt-3">
           Form submitted successfully!
         </div>
-        
+
       </div>
     </div>
-    
+
 
   </div>
 

@@ -15,18 +15,20 @@ import { HttpClient } from '@angular/common/http';
 export class SignUpYouthComponent implements OnInit {
   introForm: FormGroup;
   personalInfoForm: FormGroup;
-  lookupData: any = {};
   generalForm: FormGroup;
   generalQuestionsForm: FormGroup;
   experienceDetailsForm: FormGroup;
   requiredDocumentsForm: FormGroup;
   formSubmitted: boolean = false;
 
+  private areaData: any;
+
+  lookupData: any = {};
+
   step: number = 1;
   areaOptions: string[] = [];
   campTypeOptions: string[] = [];
   campOptions: string[] = [];
-  private areaData: any;
   majors: string[] = [];
   allUsersData: any[] = [];
 
@@ -39,7 +41,7 @@ export class SignUpYouthComponent implements OnInit {
     'NGOs',
     'Friends',
   ];
-  
+
   educationLevels = [
     'University Degree, Technical Licence (LT), University Diploma',
     'Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center',
@@ -73,26 +75,26 @@ export class SignUpYouthComponent implements OnInit {
       controlName: 'question8',
     },
   ];
-  
-  
 
-  
   stepLabels: string[] = [
     'Introduction',
     'Personal Info',
     'General Section',
     'General Questions',
     'Experience Details',
-    'Trainings and Skills', 
+    'Trainings and Skills',
     'Required Documents',
 
   ];
   skills: any;
-computerSkillsOptions: any;
-skillOptions: any;
-computerSkills: any;
+  computerSkillsOptions: any;
+  skillOptions: any;
+  computerSkills: any;
 
-  constructor(private fb: FormBuilder, private youthService: YouthServiceService, private lookupService: LookupService, private http: HttpClient
+  constructor(private fb: FormBuilder,
+    private youthService: YouthServiceService,
+    private lookupService: LookupService,
+    private http: HttpClient
   ) {
     this.introForm = this.fb.group({
       confirm: ['', Validators.required],
@@ -137,7 +139,7 @@ computerSkills: any;
         includePreferNotToState: false,
       },
     ];
-    
+
 
     this.generalForm = this.fb.group({
       jobOpportunitySource: ['', Validators.required],
@@ -150,19 +152,19 @@ computerSkills: any;
       employmentOpportunities: ['', Validators.required],
       aboutYourself: ['', Validators.required],
     });
-        
+
 
     this.generalQuestionsForm = this.fb.group({
       placedByKfw: ['', Validators.required],
-      kfwYear: [''], 
+      kfwYear: [''],
       question2 : ['', Validators.required],
-    
+
       innovationLabGraduate: ['', Validators.required],
       socialEntrepreneurship: [false],
-      digitalSkills: [false], 
+      digitalSkills: [false],
 
       disability: ['', Validators.required],
-      disabilitySupport: [''], 
+      disabilitySupport: [''],
       disabilityTypes: this.fb.group({
         speech: [false],
         psychosocial: [false],
@@ -181,7 +183,7 @@ computerSkills: any;
       isAlShifaaVolunteer: ['', Validators.required],
     });
 
-  
+
 
 
 
@@ -192,17 +194,17 @@ computerSkills: any;
 
 
     this.trainingsAndSkillsForm = this.fb.group({
-      trainings: this.fb.array([]), 
+      trainings: this.fb.array([]),
       skills: this.fb.group({
-        arabic: ['', Validators.required], 
+        arabic: ['', Validators.required],
         english: ['', Validators.required],
         french: ['', Validators.required],
         computerSkills: this.fb.array([]),
       }),
     });
-    
 
-    
+
+
 
 
     this.requiredDocumentsForm = this.fb.group({
@@ -216,28 +218,28 @@ computerSkills: any;
       alShifaaProof: ['', this.isAlShifaaVolunteer() ? Validators.required : []],
       confirmation: ['', Validators.required],
     });
-    
-    
 
-    this.areaData = this.youthService.getAreaData();
+
+
+    this.areaData = this.lookupService.getAreaData();
   }
 
   ngOnInit(): void {
     this.lookupService.getLookupData().subscribe((data) => {
       this.lookupData = data;
     });
-    this.youthService.fetchAreaData().subscribe((data) => {
-      this.youthService.setAreaData(data);
-      this.areaData = this.youthService.getAreaData();
-      this.areaOptions = this.youthService.getAreaOptions();
+    this.lookupService.fetchAreaData().subscribe((data) => {
+      this.lookupService.setAreaData(data);
+      this.areaData = this.lookupService.getAreaData();
+      this.areaOptions = this.lookupService.getAreaOptions();
     });
-    
-  
-    this.youthService.getMajors().subscribe((data) => {
+
+
+    this.lookupService.getMajors().subscribe((data) => {
       this.majors = data;
     });
-    
-  
+
+
     this.onChanges();
     this.setupDynamicValidation();
 
@@ -299,7 +301,7 @@ computerSkills: any;
     });
   }
 
-  
+
 
   ageRangeValidator(min: number, max: number) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -371,7 +373,7 @@ computerSkills: any;
   }
 
 
-  
+
 
   createExperience(): FormGroup {
     return this.fb.group({
@@ -427,15 +429,15 @@ computerSkills: any;
   isPrcsVolunteer(): boolean {
     return this.generalQuestionsForm.get('isPrcsVolunteer')?.value === 'yes';
   }
-  
+
   isFireBrigadesVolunteer(): boolean {
     return this.generalQuestionsForm.get('isFireBrigadesVolunteer')?.value === 'yes';
   }
-  
+
   isAlShifaaVolunteer(): boolean {
     return this.generalQuestionsForm.get('isAlShifaaVolunteer')?.value === 'yes';
   }
-  
+
 
   nextStep(): void {
     if ( this.step < this.stepLabels.length) {
@@ -452,13 +454,13 @@ computerSkills: any;
   hasError(controlName: string, errorCode: string): boolean {
     const control = this.personalInfoForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
-    
+
   }
   hasError1(controlName: string, errorType: string): boolean {
     const control = this.generalForm.get(controlName);
     return !!control?.touched && control.hasError(errorType);
   }
-  
+
   hasError2(controlName: string, errorCode: string): boolean {
     const control = this.generalQuestionsForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
@@ -467,7 +469,7 @@ computerSkills: any;
     const control = this.requiredDocumentsForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
   }
-  
+
   collectFormData() {
     const personalInfo = this.personalInfoForm.value;
     const generalInfo = this.generalForm.value;
@@ -477,7 +479,7 @@ computerSkills: any;
     const requiredDocuments = this.requiredDocumentsForm.value;
 
     const formData = {
-      id: this.generateUniqueId(), 
+      id: this.generateUniqueId(),
       personalInformation: {
         firstNameEn: personalInfo.firstNameEn,
         lastNameEn: personalInfo.lastNameEn,
@@ -514,30 +516,30 @@ computerSkills: any;
         isFireBrigadesVolunteer: generalQuestions.isFireBrigadesVolunteer,
         isAlShifaaVolunteer: generalQuestions.isAlShifaaVolunteer,
       },
-      experienceDetails: experienceDetails.experiences, 
-      trainingsAndSkills: trainingsAndSkills.trainings, 
-      requiredDocuments: requiredDocuments, 
+      experienceDetails: experienceDetails.experiences,
+      trainingsAndSkills: trainingsAndSkills.trainings,
+      requiredDocuments: requiredDocuments,
     };
 
     return formData;
   }
 
   generateUniqueId() {
-    return 'user_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+    return  new Date().getTime() + Math.floor(Math.random() * 1000);
   }
 
   saveToJson(): void {
     const formData = this.collectFormData();
     this.allUsersData.push(formData);
 
-    const json = JSON.stringify(this.allUsersData, null, 2); 
+    const json = JSON.stringify(this.allUsersData, null, 2);
 
     const blob = new Blob([json], { type: 'application/json' });
 
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'youthdb.json'; 
+    link.download = 'youthdb.json';
 
     link.click();
 
