@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Common/Login/Login.component';
-import { MainEmployerComponent } from './Employer/main-employer/main-employer.component';
 import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.component';
-import { AdminComponent } from './admin/admin.component';
+import { MainEmployerComponent } from './Employer/Main-Employer/Main-Employer.component';
+import { MainAdminComponent } from './Admin/Main-Admin/Main-Admin.component';
+import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Employer.component';
 
 export const routes: Routes = [
   {
@@ -15,12 +16,8 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path:'admin',
-    component: AdminComponent
-  },
-  {
-    path:'admin',
-    component: AdminComponent
+    path:'main-admin',
+    component: MainAdminComponent
   },
   {
     path: 'main-employer',
@@ -31,8 +28,11 @@ export const routes: Routes = [
     component: SignUpYouthComponent,
   },
   {
-    path: 'signup',
+    path: 'signup-youth',
     component: SignUpYouthComponent, // Parent for steps
-
+  },
+  {
+    path: 'signup-employer',
+    component: SignUpEmployerComponent, // Parent for steps
   },
 ];

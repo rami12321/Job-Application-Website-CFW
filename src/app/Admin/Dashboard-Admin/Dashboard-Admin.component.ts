@@ -4,8 +4,8 @@ import { AccordionModule } from 'primeng/accordion';
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [AccordionModule],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css'
+  templateUrl: './Dashboard-Admin.component.html',
+  styleUrl: './Dashboard-Admin.component.css'
 })
 export class AdminDashboardComponent {
 

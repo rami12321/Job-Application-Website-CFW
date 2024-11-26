@@ -102,6 +102,11 @@
     "Accounting Information System",
     "Accounting"
   ],
+  "Role":[
+    "Admin",
+    "Employer",
+    "Youth"
+  ],
   "dropdownOptions": {
     "genderOptions": [
       { "value": "male", "label": "Male" },
@@ -139,7 +144,7 @@
       { "value": "both", "label": "Both" }
     ]
 
-    
+
 
   }
 }
