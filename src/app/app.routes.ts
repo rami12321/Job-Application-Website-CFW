@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Common/Login/Login.component';
 import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.component';
-import { MainEmployerComponent } from './Employer/Main-Employer/Main-Employer.component';
+import { MainEmployerComponent } from './Employer/main-employer/main-employer.component';
 import { MainAdminComponent } from './Admin/Main-Admin/Main-Admin.component';
 import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Employer.component';
 

@@ -1,55 +1,54 @@
 [
   {
-    "id": "user_1732439828401_504",
-    "personalInformation": {
-      "firstNameEn": "fasd",
-      "lastNameEn": "fasd",
-      "gender": "male",
-      "dob": "2002-02-19",
-      "nationality": "PS",
-      "mobilePhone": "96134567889",
-      "whatsapp": "96134567889",
-      "email": "bashar.alsayyed.20@gmail.com",
-      "area": "Saida",
-      "fullAddress": "jkjj",
-      "campType": "Inside Camp",
-      "camp": "Mieh Mieh Palestinian Refugee Camp"
-    },
-    "generalInformation": {
-      "jobOpportunitySource": "WhatsApp Message from Employment Services Team",
-      "educationLevel": "Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center",
-      "major": "Physiotherapy",
-      "institution": "adf",
-      "graduationDate": "2024-10-17",
-      "gradplace": "adsf",
-      "employmentOpportunities": "external",
-      "aboutYourself": "adfasdf asdf asdf  asdf asd"
-    },
-    "generalQuestions": {
-      "placedByKfw": "no",
-      "kfwYear": "",
-      "innovationLabGraduate": "no",
-      "disability": "no",
-      "disabilitySupport": "",
-      "employed": "no",
-      "seekingEmploymentDuration": "threeToSixMonths",
-      "isPrcsVolunteer": "no",
-      "isFireBrigadesVolunteer": "no",
-      "isAlShifaaVolunteer": "no"
-    },
-    "experienceDetails": [
-      {
-        "type": "Volunteer",
-        "employerName": "fasdf",
-        "employerPhone": "5234234234",
-        "area": "Saida",
-        "employmentType": "Seasonal",
-        "jobTitle": "asdf",
-        "startDate": "2024-11-20",
-        "endDate": "2024-11-20",
-        "salary": 12,
-        "tasks": "fasdfasdf"
-      },
+    "id": "43234267",
+    "username": "",
+    "password": "123123",
+    "role": "Youth",
+    "firstNameEn": "",
+    "fatherNameEn": "",
+    "lastNameEn": "",
+    "firstNameAr": "",
+    "fatherNameAr": "",
+    "lastNameAr": "",
+    "gender": "",
+    "dob": "",
+    "nationality": "",
+    "registrationStatus": "",
+    "familyRegistrationNumber": "",
+    "personalRegistrationNumber": "",
+    "mobilePhone": "",
+    "whatsapp": "",
+    "emergencyPhone": "",
+    "emergencyRelation": "",
+    "email": "",
+    "area": "",
+    "fullAddress": "",
+    "headfa": "",
+    "campType": "",
+    "camp": "",
+    "jobOpportunitySource": "",
+    "educationGraduate": "",
+    "educationLevel": "",
+    "major": "",
+    "institution": "",
+    "graduationDate": "",
+    "gradplace": "",
+    "employmentOpportunities": "",
+    "aboutYourself": "",
+    "placedByKfw": "",
+    "kfwYear": "",
+    "question2": "",
+    "innovationLabGraduate": "",
+    "innovationLabGradtype": [],
+    "disability": "",
+    "disabilitySupport": "",
+    "disabilityTypes": [],
+    "employed": "",
+    "seekingEmploymentDuration": "",
+    "isPrcsVolunteer": "",
+    "isFireBrigadesVolunteer": "",
+    "isAlShifaaVolunteer": "",
+    "experiences": [
       {
         "type": "",
         "employerName": "",
@@ -63,46 +62,19 @@
         "tasks": ""
       }
     ],
-    "trainingsAndSkills": [
-      {
-        "institution": "",
-        "certificate": "",
-        "area": "",
-        "durationFrom": "",
-        "durationTo": ""
-      },
-      {
-        "institution": "",
-        "certificate": "",
-        "area": "",
-        "durationFrom": "",
-        "durationTo": ""
-      },
-      {
-        "institution": "",
-        "certificate": "",
-        "area": "",
-        "durationFrom": "",
-        "durationTo": ""
-      },
-      {
-        "institution": "",
-        "certificate": "",
-        "area": "",
-        "durationFrom": "",
-        "durationTo": ""
-      }
-    ],
-    "requiredDocuments": {
-      "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-      "coverLetter": "C:\\fakepath\\Bashar's Resume.pdf",
-      "identityCard": "C:\\fakepath\\Bashar's Resume.pdf",
-      "registrationCard": "C:\\fakepath\\Bashar's Resume.pdf",
-      "degree": "C:\\fakepath\\Bashar's Resume.pdf",
-      "prcsProof": "",
-      "fireProof": "",
-      "alShifaaProof": "",
-      "confirmation": "yes"
-    }
+    "trainings": [],
+    "arabic": "",
+    "english": "",
+    "french": "",
+    "cv": "",
+    "coverLetter": "",
+    "identityCard": "",
+    "registrationCard": "",
+    "degree": "",
+    "prcsProof": "",
+    "fireProof": "",
+    "alShifaaProof": "",
+    "confirmation": "",
+    "confirmPassword": "123123"
   }
 ]

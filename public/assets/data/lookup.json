@@ -1,39 +1,47 @@
 {
-  "Tyre": {
-    "options": ["Outside Camp", "Inside Camp"],
-    "camps": [
-      "Rashidieh Palestinian Refugee Camp",
-      "El Buss Palestinian Refugee Camp",
-      "Burj El Shemali Palestinian Refugee Camp"
-    ]
-  },
-  "Saida": {
-    "options": ["Outside Camp", "Inside Camp"],
-    "camps": [
-      "Mieh Mieh Palestinian Refugee Camp",
-      "Ein El Hilweh Palestinian Refugee Camp"
-    ]
-  },
-  "North Lebanon": {
-    "options": ["Outside Camp", "Inside Camp"],
-    "camps": [
-      "Nahr El Bared Palestinian Refugee Camp",
-      "Baddawi Palestinian Refugee Camp"
-    ]
-  },
-  "Beqaa": {
-    "options": ["Outside Camp", "Inside Camp"],
-    "camps": ["Wavel Palestinian Refugee Camp"]
-  },
-  "Beirut and Mount Lebanon": {
-    "options": ["Outside Camp", "Inside Camp"],
-    "camps": [
-      "Shatila Palestinian Refugee Camp",
-      "Mar Elias Palestinian Refugee Camp",
-      "Dbayeh Palestinian Refugee Camp",
-      "Burj El Barajneh Palestinian Camp"
-    ]
-  },
+
+  "areas": [
+    {
+      "name": "Tyre",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Rashidieh Palestinian Refugee Camp",
+        "El Buss Palestinian Refugee Camp",
+        "Burj El Shemali Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "Saida",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Mieh Mieh Palestinian Refugee Camp",
+        "Ein El Hilweh Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "North Lebanon",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Nahr El Bared Palestinian Refugee Camp",
+        "Baddawi Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "Beqaa",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": ["Wavel Palestinian Refugee Camp"]
+    },
+    {
+      "name": "Beirut and Mount Lebanon",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Shatila Palestinian Refugee Camp",
+        "Mar Elias Palestinian Refugee Camp",
+        "Dbayeh Palestinian Refugee Camp",
+        "Burj El Barajneh Palestinian Camp"
+      ]
+    }
+  ],
   "majors": [
     "Translation",
     "Theatre Arts",
@@ -107,44 +115,41 @@
     "Employer",
     "Youth"
   ],
-  "dropdownOptions": {
-    "genderOptions": [
-      { "value": "male", "label": "Male" },
-      { "value": "female", "label": "Female" }
-    ],
-    "nationalityOptions": [
-      { "value": "PL", "label": "Palestinian Refugee in Lebanon" },
-      { "value": "PS", "label": "Palestinian Refugee from Syria" },
-      { "value": "LB", "label": "Lebanese" },
-      { "value": "SR", "label": "Syrian" },
-      { "value": "ND", "label": "Non-ID" }
-    ],
-    "registrationStatusOptions": [
-      { "value": "Registered", "label": "Registered" },
-      { "value": "Not-Registered", "label": "Not Registered" },
-      { "value": "Palestinian-na", "label": "Palestinian Not-ID" }
-    ],
-    "headfaOptions": [
-      { "value": "Father", "label": "Father" },
-      { "value": "Mother", "label": "Mother" },
-      { "value": "Husband", "label": "Husband" },
-      { "value": "Brother", "label": "Brother" },
-      { "value": "Sister", "label": "Sister" },
-      { "value": "Me", "label": "Me" }
-    ],
-    "relationshipOptions": [
-      { "value": "Parent", "label": "Parent" },
-      { "value": "Partner", "label": "Partner" },
-      { "value": "Sibling", "label": "Sibling" }
-    ],
-
-    "employmentOpportunitiesOptions": [
-      { "value": "external", "label": "Short-term employment opportunities with external organizations" },
-      { "value": "unrwa", "label": "Short-term employment opportunities in UNRWA" },
-      { "value": "both", "label": "Both" }
-    ]
+  "genderOptions": ["Male", "Female"],
+  "nationalityOptions": [
+    "Palestinian Refugee in Lebanon",
+    "Palestinian Refugee from Syria",
+    "Lebanese",
+    "Syrian",
+    "Non-ID"
+  ],
+  "registrationStatusOptions": [
+    "Registered",
+    "Not Registered",
+    "Palestinian Not-ID"
+  ],
+  "headfaOptions": ["Father", "Mother", "Husband", "Brother", "Sister", "Me"],
+  "relationshipOptions": ["Parent", "Partner", "Sibling"],
+  "employmentOpportunitiesOptions": [
+    "Short-term employment opportunities with external organizations",
+    "Short-term employment opportunities in UNRWA",
+    "Both"
+  ],
+  "jobOpportunityOptions": [
+    "WhatsApp Message from Employment Services Team",
+    "WhatsApp Message from Area Offices",
+    "UNRWA's Facebook Page",
+    "NGOs",
+    "Friends"
+  ],
+  "educationLevels": [
+    "University Degree, Technical Licence (LT), University Diploma",
+    "Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center",
+    "Technical Baccalaureate (BT) or equivalent from Siblin Training Center (STC)",
+    "Higher Technical Degree (TS) or equivalent from Siblin Training Center (STC)"
+  ]
 
 
 
   }
-}
+
