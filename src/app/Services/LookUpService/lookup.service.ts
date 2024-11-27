@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 })
 export class LookupService {
 
-  private lookupUrl = 'assets/lookup.json'; // Update this path if needed
+  private lookupUrl = 'assets/data/lookup.json';  // Relative path to the JSON file
   private areaData: any = {};
 
   constructor(private http: HttpClient) {}
@@ -16,10 +16,10 @@ export class LookupService {
     return this.http.get<any>(this.lookupUrl);
   }
   getMajors(): Observable<string[]> {
-    return this.http.get<any>('assets/lookup.json').pipe(map((data) => data.majors));
+    return this.http.get<any>('assets/data/lookup.json').pipe(map((data) => data.majors));
   }
   fetchAreaData(): Observable<any> {
-    return this.http.get<any>('assets/lookup.json');
+    return this.http.get<any>('assets/data/lookup.json');
   }
 
   setAreaData(data: any): void {
