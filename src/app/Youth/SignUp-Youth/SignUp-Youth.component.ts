@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import {  YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { Youth} from '../../Model/Youth';
@@ -14,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-sign-up-youth',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule,PasswordModule,StepperModule, ButtonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this line
+
   templateUrl: './SignUp-Youth.component.html',
   styleUrls: ['./SignUp-Youth.component.css']
 })
@@ -483,9 +485,9 @@ export class SignUpYouthComponent implements OnInit {
   }
   
   goToStep(step: number) {
+    console.log('Changing to step:', step); // Check if this is triggered
     this.step = step;
   }
-  
   get disabilityTypes(): FormArray {
     return this.generalQuestionsForm.get('disabilityTypes') as FormArray;
   }
@@ -571,6 +573,15 @@ isCheckedL(value: string): boolean {
   return this.languageSkills.value.includes(value);
 }
 
+// Example method in your component class
+onFileChange(event: Event, fileNameId: string): void {
+  const input = event.target as HTMLInputElement;
+  const fileName = input?.files?.[0]?.name || "No file chosen";
+  const fileNameElement = document.getElementById(fileNameId);
+  if (fileNameElement) {
+    fileNameElement.textContent = fileName;
+  }
+}
 
 
 
