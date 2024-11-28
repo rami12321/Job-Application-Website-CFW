@@ -35,4 +35,8 @@ export const routes: Routes = [
     path: 'signup-employer',
     component: SignUpEmployerComponent, // Parent for steps
   },
+  {
+    path: 'admin',
+    component: MainAdminComponent, // Parent for steps
+  }
 ];

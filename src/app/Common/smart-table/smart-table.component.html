@@ -1,4 +1,14 @@
-<p-table class="p-10" [value]="paginatedProducts" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table
+  class="p-10"
+  [value]="paginatedProducts"
+  [tableStyle]="{
+    'min-width': '50rem',
+    background: 'black',
+    border: '1px solid #ddd',
+    'border-radius': '8px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+  }"
+>
   <ng-template pTemplate="caption">
     <p-multiSelect
       display="chip"
@@ -6,32 +16,74 @@
       [(ngModel)]="_selectedColumns"
       optionLabel="header"
       selectedItemsLabel="{0} columns selected"
-      [style]="{ 'min-width': '200px' }"
-      placeholder="Choose Columns">
+      [style]="{
+        background: 'white',
+        border: '1px solid #ddd',
+        'border-radius': '8px',
+        'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+      }"
+      placeholder="Choose Columns"
+    >
     </p-multiSelect>
   </ng-template>
 
-  <ng-template pTemplate="header" let-columns>
+  <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let col of _selectedColumns" class="min-w-56" pSortableColumn="{{ col.field }}">
-        {{ col.header }}
-        <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+      <th
+        *ngFor="let col of _selectedColumns"
+        class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
+        pSortableColumn="{{ col.field }}"
+      >
+        <!-- Container for Header Content -->
+        <div class="flex flex-col">
+          <!-- Header Label and Sort Icon -->
+          <div class="flex justify-between items-center mb-2">
+            <span>{{ col.header }}</span>
+            <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
+          </div>
+          <!-- Column Filter -->
+        </div>
       </th>
     </tr>
     <tr>
-      <th *ngFor="let col of _selectedColumns">
-        <p-columnFilter
-          [type]="'text'"
-          [field]="col.field"
-          [showClearButton]="true">
-        </p-columnFilter>
+      <th
+        *ngFor="let col of _selectedColumns"
+        class="border-b border-r px-2 py-1 text-sm text-gray-600"
+      >
+        <!-- Using @if for conditional rendering -->
+        @if (col.header === 'Gender') {
+          <!-- MultiSelect for Gender -->
+          <p-multiSelect
+            [ngModel]="selectedGender"
+            [options]="representatives"
+            placeholder="Any"
+            (ngModelChange)="filterByGender($event)"
+            optionLabel="name"
+          >
+            <ng-template let-option pTemplate="item">
+              <div class="flex items-center">
+                               {{ option.name }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+        } @else {
+          <!-- Text filter for other columns -->
+          <p-columnFilter
+            [type]="'text'"
+            [field]="col.field"
+            [showClearButton]="true"
+          ></p-columnFilter>
+        }
       </th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-product>
-    <tr>
-      <td *ngFor="let col of _selectedColumns">
+    <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
+      <td
+        *ngFor="let col of _selectedColumns"
+        class="px-4 py-2 text-sm border-b border-r border-gray-300"
+      >
         {{ product[col.field] }}
       </td>
     </tr>
@@ -39,8 +91,10 @@
 </p-table>
 
 <p-paginator
+  class="bg-white border-t border-gray-300"
   [rows]="10"
   [totalRecords]="products.length"
   [rowsPerPageOptions]="[5, 10, 20]"
-  (onPageChange)="paginate($event)">
+  (onPageChange)="paginate($event)"
+>
 </p-paginator>

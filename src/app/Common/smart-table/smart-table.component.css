@@ -1,0 +1,39 @@
+/* p-table.p-10 table {
+  background: white !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+p-table.p-10 th {
+  background: #f7f7f7 !important;
+  color: #333 !important;
+  font-weight: 600 !important;
+  padding: 10px !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+p-table.p-10 td {
+  padding: 10px !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+p-table.p-10 tr:nth-child(odd) {
+  background: #fafafa !important;
+}
+
+p-table.p-10 tr:hover {
+  background: #f1f1f1 !important;
+}
+
+p-table.p-10 .p-paginator {
+  background: white !important;
+  border-top: 1px solid #ddd !important;
+  padding: 10px !important;
+} */
+::ng-deep p-columnfilter input {
+  border: 2px solid #ddd; /* Adjust the border color and size */
+  border-radius: 4px;    /* Optional: Rounded corners */
+  padding: 4px;          /* Add spacing inside the input */
+  box-shadow: none;      /* Remove any shadow if present */
+}

@@ -35,23 +35,17 @@ export class SmartTableComponent implements OnInit{
 
   title = 'employee-leave-man';
 
-  cars = [
-    { vin: 'A1234', year: 2020, brand: 'Toyota' },
-    { vin: 'B5678', year: 2021, brand: 'Honda' },
-    { vin: 'C9101', year: 2019, brand: 'Ford' },
-    { vin: 'D1121', year: 2022, brand: 'Chevrolet' },
-    { vin: 'E3141', year: 2023, brand: 'Tesla' },
-  ];
+
 
   products = [
     { code: 'P001', name: 'Laptop', quantity: 50, price: 1000,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Male',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Male',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -60,11 +54,11 @@ export class SmartTableComponent implements OnInit{
     { code: 'P002', name: 'Mobile Phone', quantity: 200, price: 500,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Male',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Male',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -73,11 +67,11 @@ export class SmartTableComponent implements OnInit{
     { code: 'P003', name: 'Tablet', quantity: 100, price: 300 ,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Female',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Male',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -86,11 +80,11 @@ export class SmartTableComponent implements OnInit{
     { code: 'P004', name: 'Monitor', quantity: 150, price: 200,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Male',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Female',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -99,11 +93,11 @@ export class SmartTableComponent implements OnInit{
     { code: 'P005', name: 'Keyboard', quantity: 300, price: 50 ,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Female',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Female',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -112,11 +106,11 @@ export class SmartTableComponent implements OnInit{
     { code: 'P006', name: 'Keyboardd', quantity: 300, price: 50 ,column1: 'Value 1',
       column2: 'Value 2',
       column3: 'Value 3',
-      column4: 'Value 4',
+      column4: 'Male',
       column5: 'Value 5',
       column6: 'Value 6',
       column7: 'Value 7',
-      column8: 'Value 8',
+      gender: 'Female',
       column9: 'Value 9',
       column10: 'Value 10',
       column11: 'Value 11',
@@ -127,7 +121,7 @@ export class SmartTableComponent implements OnInit{
 
     // No need to fetch products, using mock data
     this.cols = [
-      { field: 'code', header: 'Personal Registration Number' },
+      { field: 'code', header: 'Personal Number' },
       { field: 'name', header: 'First Name' },
       { field: 'quantity', header: 'Father Name' },
       { field: 'price', header: 'Last Name' },
@@ -138,7 +132,7 @@ export class SmartTableComponent implements OnInit{
       { field: 'column5', header: 'Age' },
       { field: 'column6', header: 'Nationality' },
       { field: 'column7', header: 'phone' },
-      { field: 'column8', header: 'number' },
+      { field: 'gender', header: 'number' },
       { field: 'column9', header: 'Email' },
       { field: 'column10', header: 'Area' },
       { field: 'column11', header: 'Major' },
@@ -146,6 +140,8 @@ export class SmartTableComponent implements OnInit{
     ];
 
   this._selectedColumns = this.cols;
+  this.paginatedProducts = this.products.slice(0, this.rowsPerPage);
+
 
   }
 
@@ -168,12 +164,26 @@ export class SmartTableComponent implements OnInit{
 
     return n !== Infinity && String(n) === str && n >= 0;
   }
+  selectedGender: any[] = []; // Initialize as an empty array
+
+  // Define the representatives data (gender options)
+  representatives = [
+    { name: 'Male' },
+    { name: 'Female' },
+  ];
+  filterByGender(selectedOptions: any[]) {
+    const selectedGenders = selectedOptions.map(option => option.name);
+    this.paginatedProducts = this.products.filter(product =>
+      selectedGenders.includes(product.gender)
+    );
+  }
   paginatedProducts: any[] = [];
+  rowsPerPage = 10
 
   paginate(event: any) {
     const { first, rows } = event;
     this.paginatedProducts = this.products.slice(first, first + rows);
   }
-  selectedColumns: string[] = ['code', 'name', 'quantity', 'price', 'column1', 'column2', 'column3', 'column4', 'column5', 'column6', 'column7', 'column8', 'column9', 'column10', 'column11', 'column12'];
+  selectedColumns: string[] = ['code', 'name', 'quantity', 'price', 'column1', 'column2', 'column3', 'column4', 'column5', 'column6', 'column7', 'gender','column9','column10',  'column10', 'column11', 'column12'];
 
 }
