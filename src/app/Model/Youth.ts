@@ -1,40 +1,32 @@
-export interface PersonalInformation {
-
-}
-
-export interface GeneralInformation {
-
-}
-
-export interface GeneralQuestions {
-
-}
-
-export interface ExperienceDetails {
-  experiences: any[]; // Define the structure based on your needs
-}
-
-export interface TrainingsAndSkills {
-  trainings: any[]; // Define the structure based on your needs
-}
 
 export interface Youth {
   id: string;
-  username : string;
-  password : string;
-  role : string;
+  username: string;
+  password: string;
+  role: string;
+
+  // Personal Information
   firstNameEn: string;
+  fatherNameEn?: string;
   lastNameEn: string;
+  firstNameAr: string;
+  fatherNameAr?: string;
+  lastNameAr: string;
   gender: string;
   dob: string;
   nationality: string;
+  registrationStatus: string;
+  familyRegistrationNumber?: string;
+  personalRegistrationNumber: string;
   mobilePhone: string;
   whatsapp: string;
   email: string;
   area: string;
-  fullAddress: string;
   campType: string;
-  camp: string;
+  camp?: string;
+  fullAddress: string;
+
+  // General Information
   jobOpportunitySource: string;
   educationLevel: string;
   major: string;
@@ -43,17 +35,42 @@ export interface Youth {
   gradplace: string;
   employmentOpportunities: string;
   aboutYourself: string;
+
+  // General Questions
   placedByKfw: boolean;
-  kfwYear: string;
+  kfwYear?: string;
   innovationLabGraduate: boolean;
+  innovationLabGradtype: string[];
   disability: boolean;
-  disabilitySupport: string;
+  disabilitySupport?: string;
+  disabilityTypes: string[];
   employed: boolean;
-  seekingEmploymentDuration: string;
+  
+  seekingEmploymentDuration?: string;
   isPrcsVolunteer: boolean;
   isFireBrigadesVolunteer: boolean;
   isAlShifaaVolunteer: boolean;
-  experienceDetails: ExperienceDetails;
-  trainingsAndSkills: TrainingsAndSkills;
-  requiredDocuments: any[]; // Define the structure based on your needs
+
+  // Experience Details
+  experiences: any[];
+
+  // Trainings and Skills
+  trainings: any[];
+  computerSkills: string[];
+  skills?: {
+    arabic: string;
+    english: string;
+    french: string;
+  };
+
+  // Required Documents
+  cv: string;
+  coverLetter?: string;
+  identityCard: string;
+  registrationCard: string;
+  degree: string;
+  prcsProof?: string;
+  fireProof?: string;
+  alShifaaProof?: string;
+  confirmation: string;
 }

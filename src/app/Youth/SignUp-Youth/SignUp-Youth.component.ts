@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormArray } from '@angular/forms';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import {  YouthServiceService } from '../../Services/YouthService/youth-service.service';
+import { Youth} from '../../Model/Youth';
+import { PasswordModule } from 'primeng/password';
+import { StepperModule } from 'primeng/stepper';
+import { ButtonModule } from 'primeng/button';
+
 import { CommonModule } from '@angular/common';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +13,9 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-sign-up-youth',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ],
+  imports: [ReactiveFormsModule, CommonModule,PasswordModule,StepperModule, ButtonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this line
+
   templateUrl: './SignUp-Youth.component.html',
   styleUrls: ['./SignUp-Youth.component.css']
 })
@@ -34,48 +41,6 @@ export class SignUpYouthComponent implements OnInit {
 
   trainingsAndSkillsForm: FormGroup;
 
-  jobOpportunityOptions = [
-    'WhatsApp Message from Employment Services Team',
-    'WhatsApp Message from Area Offices',
-    "UNRWA's Facebook Page",
-    'NGOs',
-    'Friends',
-  ];
-
-  educationLevels = [
-    'University Degree, Technical Licence (LT), University Diploma',
-    'Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center',
-    'Technical Baccalaureate (BT) or equivalent from Siblin Training Center (STC)',
-    'Higher Technical Degree (TS) or equivalent from Siblin Training Center (STC)',
-  ];
-  additionalQuestions = [
-    {
-      label: 'Are you a volunteer with Palestinian Red Crescent Society (PRCS)?',
-      controlName: 'question3',
-    },
-    {
-      label: 'Are you a volunteer with the Palestinian Fire Brigades Lebanese Camps?',
-      controlName: 'question4',
-    },
-    {
-      label: 'Are you a volunteer with Al-Shifaa for Medical & Humanitarian Services?',
-      controlName: 'question5',
-    },
-    {
-      label: 'Are you a graduate of the UNRWA Innovation Lab?',
-      controlName: 'question6',
-    },
-    {
-      label: 'Do you have any disability?',
-      controlName: 'question7',
-      includePreferNotToState: true,
-    },
-    {
-      label: 'Are you Currently Employed?',
-      controlName: 'question8',
-    },
-  ];
-
   stepLabels: string[] = [
     'Introduction',
     'Personal Info',
@@ -89,7 +54,10 @@ export class SignUpYouthComponent implements OnInit {
   skills: any;
   computerSkillsOptions: any;
   skillOptions: any;
-  computerSkills: any;
+  selectedStatus: string = '';
+  jobOpportunityOptions: string[] = [];
+  educationLevels: string[] = [];
+  additionalQuestions: any[] = [];
 
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
@@ -111,6 +79,14 @@ export class SignUpYouthComponent implements OnInit {
       dob: ['', [Validators.required, this.ageRangeValidator(18, 30)]],
       nationality: ['', Validators.required],
       registrationStatus: ['', Validators.required],
+      familyRegistrationNumber: [
+        '',
+        [Validators.pattern(/^1-\d{8}$/)] 
+      ],
+      personalRegistrationNumber: [
+        '',
+        [Validators.required, Validators.pattern(/^2-\d{8}$/)] 
+      ],
       mobilePhone: ['', [Validators.required, Validators.pattern(/^961\d{8}$/)]],
       whatsapp: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       emergencyPhone: ['', [Validators.required, Validators.pattern(/^961\d{8}$/)]],
@@ -160,20 +136,14 @@ export class SignUpYouthComponent implements OnInit {
       question2 : ['', Validators.required],
 
       innovationLabGraduate: ['', Validators.required],
-      socialEntrepreneurship: [false],
-      digitalSkills: [false],
+      innovationLabGradtype: this.fb.array([]),
+
+
 
       disability: ['', Validators.required],
       disabilitySupport: [''],
-      disabilityTypes: this.fb.group({
-        speech: [false],
-        psychosocial: [false],
-        physical: [false],
-        neurodivergent: [false],
-        deaf: [false],
-        cognitive: [false],
-        blind: [false],
-      }),
+      disabilityTypes: this.fb.array([]),
+
 
       employed: ['', Validators.required],
       seekingEmploymentDuration: [''],
@@ -192,14 +162,15 @@ export class SignUpYouthComponent implements OnInit {
     });
 
 
-
     this.trainingsAndSkillsForm = this.fb.group({
       trainings: this.fb.array([]),
+
       skills: this.fb.group({
         arabic: ['', Validators.required],
         english: ['', Validators.required],
         french: ['', Validators.required],
-        computerSkills: this.fb.array([]),
+        computerSkills: this.fb.array([]) 
+
       }),
     });
 
@@ -217,7 +188,11 @@ export class SignUpYouthComponent implements OnInit {
       fireProof: ['', this.isFireBrigadesVolunteer() ? Validators.required : []],
       alShifaaProof: ['', this.isAlShifaaVolunteer() ? Validators.required : []],
       confirmation: ['', Validators.required],
-    });
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+
+      
+        },{ validators: this.passwordsMatch });
 
 
 
@@ -225,9 +200,18 @@ export class SignUpYouthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.lookupService.getLookupData().subscribe((data) => {
-      this.lookupData = data;
-    });
+    this.lookupService.getLookupData().subscribe(
+      (data) => {
+        this.lookupData = data;
+        this.areaOptions = this.lookupData.areas.map((area: any) => area.name); 
+
+
+        console.log('Lookup data loaded:', this.lookupData); // Debugging log
+      },
+      (error) => {
+        console.error('Error loading lookup data:', error);
+      });
+
     this.lookupService.fetchAreaData().subscribe((data) => {
       this.lookupService.setAreaData(data);
       this.areaData = this.lookupService.getAreaData();
@@ -245,6 +229,7 @@ export class SignUpYouthComponent implements OnInit {
 
 
   }
+  
   private setupDynamicValidation() {
     this.generalQuestionsForm.get('placedByKfw')?.valueChanges.subscribe((value) => {
       const kfwYearControl = this.generalQuestionsForm.get('kfwYear');
@@ -300,8 +285,15 @@ export class SignUpYouthComponent implements OnInit {
       seekingEmploymentDurationControl?.updateValueAndValidity();
     });
   }
-
-
+  passwordsMatch(group: FormGroup): { [key: string]: boolean } | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    
+    // Return error if passwords don't match
+    return password && confirmPassword && password === confirmPassword ? null : { 'passwordsMismatch': true };
+  }
+  
+  
 
   ageRangeValidator(min: number, max: number) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -331,26 +323,35 @@ export class SignUpYouthComponent implements OnInit {
     return this.trainingsAndSkillsForm.get('trainings') as FormArray<FormGroup>;
   }
 
+  
   onChanges(): void {
     this.personalInfoForm.get('area')?.valueChanges.subscribe((selectedArea) => {
       if (selectedArea) {
-        const selectedData = this.areaData[selectedArea];
-        this.campTypeOptions = selectedData.options || [];
+        const selectedAreaData = this.lookupData.areas.find((area: any) => area.name === selectedArea);
+  
+        this.campTypeOptions = selectedAreaData ? selectedAreaData.options : [];
         this.campOptions = [];
         this.personalInfoForm.get('campType')?.reset();
         this.personalInfoForm.get('camp')?.reset();
+      } else {
+        this.campTypeOptions = [];
+        this.campOptions = [];
       }
     });
-
+  
     this.personalInfoForm.get('campType')?.valueChanges.subscribe((selectedType) => {
       if (selectedType === 'Inside Camp') {
         const selectedArea = this.personalInfoForm.get('area')?.value;
-        this.campOptions = this.areaData[selectedArea]?.camps || [];
+  
+        const selectedAreaData = this.lookupData.areas.find((area: any) => area.name === selectedArea);
+        this.campOptions = selectedAreaData ? selectedAreaData.camps : [];
       } else {
         this.campOptions = [];
         this.personalInfoForm.get('camp')?.reset();
       }
     });
+  
+  
   }
   addTraining(): void {
     const trainingGroup = this.fb.group({
@@ -373,7 +374,10 @@ export class SignUpYouthComponent implements OnInit {
   }
 
 
-
+  get skillsForm(): FormGroup {
+    return this.trainingsAndSkillsForm.get('skills') as FormGroup;
+  }
+  
 
   createExperience(): FormGroup {
     return this.fb.group({
@@ -444,7 +448,9 @@ export class SignUpYouthComponent implements OnInit {
       this.step++;
     }
   }
-
+  onStepChange(index: number): void {
+    this.step = index + 1;
+  }
   previousStep(): void {
     if (this.step > 1) {
       this.step--;
@@ -469,101 +475,193 @@ export class SignUpYouthComponent implements OnInit {
     const control = this.requiredDocumentsForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
   }
+  
 
-  collectFormData() {
-    const personalInfo = this.personalInfoForm.value;
-    const generalInfo = this.generalForm.value;
-    const generalQuestions = this.generalQuestionsForm.value;
-    const experienceDetails = this.experienceDetailsForm.value;
-    const trainingsAndSkills = this.trainingsAndSkillsForm.value;
-    const requiredDocuments = this.requiredDocumentsForm.value;
-
-    const formData = {
-      id: this.generateUniqueId(),
-      personalInformation: {
-        firstNameEn: personalInfo.firstNameEn,
-        lastNameEn: personalInfo.lastNameEn,
-        gender: personalInfo.gender,
-        dob: personalInfo.dob,
-        nationality: personalInfo.nationality,
-        mobilePhone: personalInfo.mobilePhone,
-        whatsapp: personalInfo.whatsapp,
-        email: personalInfo.email,
-        area: personalInfo.area,
-        fullAddress: personalInfo.fullAddress,
-        campType: personalInfo.campType,
-        camp: personalInfo.camp,
-      },
-      generalInformation: {
-        jobOpportunitySource: generalInfo.jobOpportunitySource,
-        educationLevel: generalInfo.educationLevel,
-        major: generalInfo.major,
-        institution: generalInfo.institution,
-        graduationDate: generalInfo.graduationDate,
-        gradplace: generalInfo.gradplace,
-        employmentOpportunities: generalInfo.employmentOpportunities,
-        aboutYourself: generalInfo.aboutYourself,
-      },
-      generalQuestions: {
-        placedByKfw: generalQuestions.placedByKfw,
-        kfwYear: generalQuestions.kfwYear,
-        innovationLabGraduate: generalQuestions.innovationLabGraduate,
-        disability: generalQuestions.disability,
-        disabilitySupport: generalQuestions.disabilitySupport,
-        employed: generalQuestions.employed,
-        seekingEmploymentDuration: generalQuestions.seekingEmploymentDuration,
-        isPrcsVolunteer: generalQuestions.isPrcsVolunteer,
-        isFireBrigadesVolunteer: generalQuestions.isFireBrigadesVolunteer,
-        isAlShifaaVolunteer: generalQuestions.isAlShifaaVolunteer,
-      },
-      experienceDetails: experienceDetails.experiences,
-      trainingsAndSkills: trainingsAndSkills.trainings,
-      requiredDocuments: requiredDocuments,
-    };
-
-    return formData;
+  onNextStep() {
+    if (this.step < this.stepLabels.length) {
+      this.step++;
+      console.log('Navigated to step:', this.step); // Debug
+    }
   }
-
-  generateUniqueId() {
-    return  new Date().getTime() + Math.floor(Math.random() * 1000);
+  
+  goToStep(step: number) {
+    console.log('Changing to step:', step); // Check if this is triggered
+    this.step = step;
   }
-
-  saveToJson(): void {
-    const formData = this.collectFormData();
-    this.allUsersData.push(formData);
-
-    const json = JSON.stringify(this.allUsersData, null, 2);
-
-    const blob = new Blob([json], { type: 'application/json' });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'youthdb.json';
-
-    link.click();
-
-    URL.revokeObjectURL(url);
-    this.formSubmitted = true;
-
-    setTimeout(() => {
-      this.formSubmitted = false;
-    }, 3000);
+  get disabilityTypes(): FormArray {
+    return this.generalQuestionsForm.get('disabilityTypes') as FormArray;
   }
-  onSubmit() {
-    const formData = this.collectFormData();
-
-    this.youthService.submitFormData(formData).subscribe(
-      (response) => {
-        console.log('Form data submitted successfully:', response);
-        alert('Form data saved successfully!');
-      },
-      (error) => {
-        console.error('Error submitting form data:', error);
-        alert('Failed to save form data.');
-      }
-    );
+  isCheckedDisabilityType(value: string): boolean {
+    return this.disabilityTypes.value.includes(value);
   }
-
+  toggleDisabilityType(value: string): void {
+    const disabilityArray = this.disabilityTypes;
+  
+    if (disabilityArray.value.includes(value)) {
+      // Remove the value if already selected
+      const index = disabilityArray.value.indexOf(value);
+      disabilityArray.removeAt(index);
+    } else {
+      // Add the value if not selected
+      disabilityArray.push(this.fb.control(value));
+    }
+  }
+      
+  
+// Get the FormArray for computerSkills
+get computerSkills(): FormArray {
+  return this.trainingsAndSkillsForm.get('skills.computerSkills') as FormArray;
 }
+
+// Check if a value is selected
+isCheckedCs(value: string): boolean {
+  return this.computerSkills.value.includes(value); 
+}
+
+get innovationLabGradtype(): FormArray {
+  return this.generalQuestionsForm.get('innovationLabGradtype') as FormArray;
+}
+
+isCheckedLabType(value: string): boolean {
+  return this.innovationLabGradtype.value.includes(value);
+}
+
+
+// Toggle the checkbox selection
+toggleCheckbox(value: string): void {
+  const skillsArray = this.computerSkills;
+
+  if (skillsArray.value.includes(value)) {
+    // If it's already selected, remove it
+    const index = skillsArray.value.indexOf(value);
+    skillsArray.removeAt(index);
+  } else {
+    // If it's not selected, add it
+    skillsArray.push(this.fb.control(value));
+  }
+}
+// Toggle the checkbox selection
+toggleLabType(value: string): void {
+  const labTypeArray = this.innovationLabGradtype;
+
+  if (labTypeArray.value.includes(value)) {
+    // Remove the value if already selected
+    const index = labTypeArray.value.indexOf(value);
+    labTypeArray.removeAt(index);
+  } else {
+    // Add the value if not selected
+    labTypeArray.push(this.fb.control(value));
+  }
+}
+
+get arabicControl(): FormControl {
+  return this.languageSkills.get('arabic') as FormControl;
+}
+
+get englishControl(): FormControl {
+  return this.languageSkills.get('english') as FormControl;
+}
+
+get frenchControl(): FormControl {
+  return this.languageSkills.get('french') as FormControl;
+}
+
+get languageSkills(): FormGroup {
+  return this.trainingsAndSkillsForm.get('skills') as FormGroup;
+}
+isCheckedL(value: string): boolean {
+  return this.languageSkills.value.includes(value);
+}
+
+// Example method in your component class
+onFileChange(event: Event, fileNameId: string): void {
+  const input = event.target as HTMLInputElement;
+  const fileName = input?.files?.[0]?.name || "No file chosen";
+  const fileNameElement = document.getElementById(fileNameId);
+  if (fileNameElement) {
+    fileNameElement.textContent = fileName;
+  }
+}
+
+
+
+
+
+
+    saveToJson(): void {
+      const youth = this.createYouthModel();
+      this.allUsersData.push(youth);
+  
+      const json = JSON.stringify(this.allUsersData, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+  
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+  
+      link.click();
+      URL.revokeObjectURL(url);
+      this.formSubmitted = true;
+  
+      setTimeout(() => {
+        this.formSubmitted = false;
+      }, 3000);
+    }
+    createYouthModel(): Youth {
+      return {
+        id: this.generateUniqueId(),
+        username: this.personalInfoForm.value.personalRegistrationNumber,
+        password: this.requiredDocumentsForm.value.password,
+        role: 'Youth',
+    
+        // Personal Information
+        ...this.personalInfoForm.value,
+    
+        // General Information
+        ...this.generalForm.value,
+    
+        // General Questions
+        ...this.generalQuestionsForm.value,
+        innovationLabGradtype: this.generalQuestionsForm.value.innovationLabGradtype,
+        disabilityTypes: this.generalQuestionsForm.value.disabilityTypes,
+
+    
+        // Experience Details
+        experiences: this.experienceDetailsForm.value.experiences,
+    
+        // Trainings and Skills
+        trainings: this.trainingsAndSkillsForm.value.trainings,
+        computerSkills: this.trainingsAndSkillsForm.value.computerSkills,
+        arabic: this.skillsForm.value.arabic,
+        english: this.skillsForm.value.english,
+        french: this.skillsForm.value.french,    
+        // Required Documents
+        ...this.requiredDocumentsForm.value,
+      };
+    }
+    
+    onSubmit(): void {
+      const youth = this.createYouthModel();
+  
+      this.youthService.submitFormData(youth).subscribe(
+        (response) => {
+          console.log('Form data submitted successfully:', response);
+          alert('Form data saved successfully!');
+        },
+        (error) => {
+          console.error('Error submitting form data:', error);
+          alert('Failed to save form data.');
+        }
+      );
+    }
+
+    generateUniqueId(): string {
+      return Math.floor(10000000 + Math.random() * 90000000).toString();
+        
+    }
+
+    
+  }
+  
+
 
