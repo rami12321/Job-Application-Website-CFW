@@ -45,7 +45,7 @@ export interface Youth {
   disabilitySupport?: string;
   disabilityTypes: string[];
   employed: boolean;
-  
+
   seekingEmploymentDuration?: string;
   isPrcsVolunteer: boolean;
   isFireBrigadesVolunteer: boolean;
@@ -73,4 +73,5 @@ export interface Youth {
   fireProof?: string;
   alShifaaProof?: string;
   confirmation: string;
+  
 }

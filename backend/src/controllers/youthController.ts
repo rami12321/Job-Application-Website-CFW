@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { Youth } from '../../../public/Model/Youth';
+import { Youth } from '../models/youth';
 
 const filePath = path.join(__dirname, '../../../public/assets/data/youthdb.json');
 

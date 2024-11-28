@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { Employer } from '../../../public/Model/Employer';
+import { Employer } from '../models/employer';
 
 const filePath = path.join(__dirname, '../../../public/assets/data/employers.json');
 
