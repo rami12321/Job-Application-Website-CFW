@@ -49,7 +49,7 @@
   </div>
 
   <div class="card">
-    <p-stepper orientation="vertical">
+    <p-stepper orientation="vertical" [activeIndex]="step">
 
               <p-stepperPanel header="Introduction">
                   <ng-template pTemplate="content" let-nextCallback="nextCallback">
@@ -79,30 +79,26 @@
                               </div>
       
                               <!-- Question Section -->
-                              <div>
-                                  <p class="text-lg font-semibold text-gray-800">
-                                      Have you read and understood the project aim and criteria?*
-                                  </p>
-                                                          <!-- Radio Buttons -->
-                              <div class="space-y-4">
-                                <label class="flex items-center space-x-3">
-                                  <input
-                                    type="radio"
-                                    formControlName="confirm"
-                                    value="yes"
-                                    class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-200 border-gray-300 rounded-md">
-                                  <span class="text-sm md:text-base text-gray-700">Yes</span>
-                                </label>
-                                <label class="flex items-center space-x-3">
-                                  <input
-                                    type="radio"
-                                    formControlName="confirm"
-                                    value="no"
-                                    class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-200 border-gray-300 rounded-md">
-                                  <span class="text-sm md:text-base text-gray-700">No</span>
-                                </label>
-                              </div>
-
+                              <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                <p class="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                                  Have you read and understood the project aim and criteria? <span class="text-red-500">*</span>
+                                </p>
+                              
+                                <!-- Radio Buttons -->
+                                <div class="space-y-4">
+                                  <label class="flex items-center space-x-3">
+                                    <input type="radio" formControlName="confirm" value="yes"
+                                           class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-500 border-gray-300 rounded-md">
+                                    <span class="text-sm md:text-base text-gray-700 dark:text-gray-300">Yes</span>
+                                  </label>
+                              
+                                  <label class="flex items-center space-x-3">
+                                    <input type="radio" formControlName="confirm" value="no"
+                                           class="w-5 h-5 text-blue-600 focus:ring focus:ring-blue-500 border-gray-300 rounded-md">
+                                    <span class="text-sm md:text-base text-gray-700 dark:text-gray-300">No</span>
+                                  </label>
+                                </div>
+                              
                               <!-- Error Message -->
                               <div *ngIf="introForm.get('confirm')?.value === 'no'" class="text-red-600 text-sm mt-2">
                                 <p>You must read and accept the terms to proceed.</p>
@@ -124,879 +120,960 @@
                           </p-stepperPanel>
 
 
+                          <p-stepperPanel header="Personal Information">
+                            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                              <div>
+                                <form [formGroup]="personalInfoForm" class="space-y-6">
+                                  <!-- First Name (English) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="firstNameEn" class="block text-sm font-medium mb-2">First Name (in English)*</label>
+                                    <input
+                                      id="firstNameEn"
+                                      type="text"
+                                      formControlName="firstNameEn"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                      />
+                                  </div>
+                          
+                                  <!-- Father Name (English) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="fatherNameEn" class="block text-sm font-medium mb-2">Father Name (in English)*</label>
+                                    <input
+                                      id="fatherNameEn"
+                                      type="text"
+                                      formControlName="fatherNameEn"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                  </div>
+                          
+                                  <!-- Family Name (English) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="lastNameEn" class="block text-sm font-medium mb-2">Family Name (in English)*</label>
+                                    <input
+                                      id="lastNameEn"
+                                      type="text"
+                                      formControlName="lastNameEn"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                  </div>
+                          
+                                  <!-- First Name (Arabic) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="firstNameAr" class="block text-sm font-medium mb-2">First Name (in Arabic)*</label>
+                                    <input
+                                      id="firstNameAr"
+                                      type="text"
+                                      formControlName="firstNameAr"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                  </div>
+                          
+                                  <!-- Father Name (Arabic) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="fatherNameAr" class="block text-sm font-medium mb-2">Father Name (in Arabic)*</label>
+                                    <input
+                                      id="fatherNameAr"
+                                      type="text"
+                                      formControlName="fatherNameAr"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                  </div>
+                          
+                                  <!-- Family Name (Arabic) -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="lastNameAr" class="block text-sm font-medium mb-2">Family Name (in Arabic)*</label>
+                                    <input
+                                      id="lastNameAr"
+                                      type="text"
+                                      formControlName="lastNameAr"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                  </div>
+                          
+                                  <!-- Gender -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="gender" class="block text-sm font-medium mb-2">Gender*</label>
+                                    <select
+                                      id="gender"
+                                      formControlName="gender"
+                                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                      <option value="" disabled>Select Gender</option>
+                                      <option *ngFor="let option of lookupData.genderOptions" [value]="option">{{ option }}</option>
+                                    </select>
+                                  </div>
+                          
+                                  <!-- Date of Birth -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="dob" class="block text-sm font-medium mb-2">Date of Birth*</label>
+                                    <input
+                                      id="dob"
+                                      type="date"
+                                      formControlName="dob"
+                                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    />
+                                    <div
+                                      *ngIf="hasError('dob', 'required') || hasError('dob', 'invalidAge')"
+                                      class="text-red-500 text-sm"
+                                    >
+                                      Unfortunately, this project targets youth aged between 18-30.
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Nationality -->
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <label for="nationality" class="block text-sm font-medium mb-2">Nationality*</label>
+                                    <select
+                                      id="nationality"
+                                      formControlName="nationality"
+                                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                      <option value="" disabled>Select Nationality</option>
+                                      <option *ngFor="let option of lookupData.nationalityOptions" [value]="option">{{ option }}</option>
+                                    </select>
+                                  </div>
+                                  <div class="space-y-6 border-b border-gray-300 pb-6">
+                                    <!-- Registration Status -->
+                                    <div>
+                                      <label for="registrationStatus" class="block text-sm font-medium mb-2">Registration Status *</label>
+                                      <small class="block text-gray-600 mb-2">Do you have an UNRWA Registration Card?</small>
+                                      <select
+                                        id="registrationStatus"
+                                        formControlName="registrationStatus"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                        [(ngModel)]="selectedStatus"
+                                      >
+                                        <option value="" disabled selected>Select Status</option>
+                                        <option *ngFor="let option of lookupData.registrationStatusOptions" [value]="option">
+                                          {{ option }}
+                                        </option>
+                                      </select>
+                                    </div>
 
+                                    <!-- Conditional: Registration Details -->
+                                    <div *ngIf="selectedStatus === 'Registered'" class="space-y-6 border-b border-gray-300 pb-6">
+                                      <div class="space-y-6 border-b border-gray-300 pb-6">
+                                        <label for="familyRegistrationNumber" class="block text-sm font-medium mb-2">Family Registration Number</label>
+                                        <input
+                                          type="text"
+                                          id="familyRegistrationNumber"
+                                          formControlName="familyRegistrationNumber"
+                                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                          placeholder="1-XXXXXXXX"
+                                        />
+                                        <div *ngIf="hasError('familyRegistrationNumber', 'pattern')" class="text-red-500 text-sm">
+                                          Must be in the format 1-XXXXXXXX.
+                                        </div>
+                                      </div>
+                                      <div class="space-y-6 border-b border-gray-300 pb-6">
+                                        <label for="personalRegistrationNumber" class="block text-sm font-medium mb-2">Personal Registration Number *</label>
+                                        <input
+                                          type="text"
+                                          id="personalRegistrationNumber"
+                                          formControlName="personalRegistrationNumber"
+                                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                          placeholder="2-XXXXXXXX"
+                                          required
+                                        />
+                                        <div *ngIf="hasError('personalRegistrationNumber', 'required')" class="text-red-500 text-sm">
+                                          This field is required.
+                                        </div>
+                                        <div *ngIf="hasError('personalRegistrationNumber', 'pattern')" class="text-red-500 text-sm">
+                                          Must be in the format 2-XXXXXXXX.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  
+                                    <!-- Head of Family -->
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="headfa" class="block text-sm font-medium mb-2">Who is the head of the family?</label>
+                                      <small class="block text-gray-600 mb-2">Head of Family on the Registration Card (or household if no card).</small>
+                                      <select
+                                        id="headfa"
+                                        formControlName="headfa"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      >
+                                        <option value="">Select</option>
+                                        <option *ngFor="let option of lookupData.headfaOptions" [value]="option">
+                                          {{ option }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  
+                                    <!-- Contact Information -->
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="mobilePhone" class="block text-sm font-medium mb-2">Mobile Phone *</label>
+                                      <small class="block text-gray-600 mb-2">Please insert a Lebanese phone number example: 96103000000</small>
+                                      <input
+                                        id="mobilePhone"
+                                        formControlName="mobilePhone"
+                                        type="tel"
+                                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        required
+                                      />
+                                      <div *ngIf="hasError('mobilePhone', 'required') || hasError('mobilePhone', 'pattern')" class="text-red-500 text-sm">
+                                        Please enter a valid phone number in the format: 96103000000.
+                                      </div>
+                                    </div>
+                                  
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="whatsapp" class="block text-sm font-medium mb-2">WhatsApp Number *</label>
+                                      <input
+                                        id="whatsapp"
+                                        formControlName="whatsapp"
+                                        type="tel"
+                                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        required
+                                      />
+                                      <div *ngIf="hasError('whatsapp', 'required') || hasError('whatsapp', 'pattern')" class="text-red-500 text-sm">
+                                        Please enter a valid number.
+                                      </div>
+                                    </div>
+                                  
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="emergencyPhone" class="block text-sm font-medium mb-2">Emergency Phone Number *</label>
+                                      <small class="block text-gray-600 mb-2">Please insert a Lebanese phone number example: 96103000000</small>
+                                      <input
+                                        id="emergencyPhone"
+                                        formControlName="emergencyPhone"
+                                        type="tel"
+                                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        required
+                                      />
+                                      <div *ngIf="hasError('emergencyPhone', 'required') || hasError('emergencyPhone', 'pattern')" class="text-red-500 text-sm">
+                                        Please enter a valid phone number in the format: 96103000000.
+                                      </div>
+                                    </div>
+                                  
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="emergencyRelation" class="block text-sm font-medium mb-2">Relation to Emergency Phone Number *</label>
+                                      <select
+                                        id="emergencyRelation"
+                                        formControlName="emergencyRelation"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                      >
+                                        <option value="" disabled selected>Select Relation</option>
+                                        <option *ngFor="let option of lookupData.relationshipOptions" [value]="option">
+                                          {{ option }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="email" class="block text-sm font-medium mb-2">Email Address *</label>
+                                      <input
+                                        id="email"
+                                        formControlName="email"
+                                        type="email"
+                                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        required
+                                      />
+                                    </div>
+                                  
+                                    <!-- Location -->
+                                    <div class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="area" class="block text-sm font-medium mb-2">Area *</label>
+                                      <select
+                                        id="area"
+                                        formControlName="area"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                      >
+                                        <option value="">Select</option>
+                                        <option *ngFor="let area of lookupData.areas" [value]="area.name">
+                                          {{ area.name }}
+                                        </option>
+                                      </select>
+                                    </div>                                    
 
-        <p-stepperPanel header="Personal Information" >
-          <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-            <form [formGroup]="personalInfoForm" class="mt-8 space-y-6">
+                                  
+                                    <div *ngIf="campTypeOptions.length > 0" class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="campType" class="block text-sm font-medium mb-2">Location *</label>
+                                      <select
+                                        id="campType"
+                                        formControlName="campType"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                      >
+                                        <option value="">Select</option>
+                                        <option *ngFor="let type of campTypeOptions" [value]="type">
+                                          {{ type }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  
+                                    <div *ngIf="campOptions.length > 0" class="space-y-6 border-b border-gray-300 pb-6">
+                                      <label for="camp" class="block text-sm font-medium mb-2">Camp Name *</label>
+                                      <select
+                                        id="camp"
+                                        formControlName="camp"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                      >
+                                        <option value="">Select</option>
+                                        <option *ngFor="let camp of campOptions" [value]="camp">
+                                          {{ camp }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  
+                                    <div class="space-y-6 border-gray-300 pb-6">
+                                     <label for="fullAddress" class="block text-sm font-medium mb-2">Full Address *</label>
+                                      <input
+                                        id="fullAddress"
+                                        formControlName="fullAddress"
+                                        type="text"
+                                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  
+                          
+                                </form>
+                          
+                                <!-- Navigation Buttons -->
+                                <div class="flex py-6 gap-4 justify-between mt-8">
+                                  <p-button
+                                    label="Back"
+                                    severity="secondary"
+                                    (onClick)="prevCallback.emit()"
+                                    class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 text-sm"
+                                  ></p-button>
+                                  <p-button
+                                    label="Next"
+                                    (onClick)="nextCallback.emit()"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+                                  ></p-button>
+                                </div>
 
+                              </div>
+                            </ng-template>
+                          </p-stepperPanel>
+                          
 
-          <div>
-            <div>
-              <label for="firstNameEn">First Name (in English) *</label>
-              <input id="firstNameEn" formControlName="firstNameEn" type="text" class="border p-2 rounded w-full" required />
-            </div>
+                          <p-stepperPanel header="General Section">
+                            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                              <form [formGroup]="generalForm" class="space-y-6">
+                                
+                                <!-- Job Opportunity Source -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="jobOpportunitySource" class="block text-sm font-medium mb-2">How did you hear about this job opportunity? *</label>
+                                  <select
+                                    id="jobOpportunitySource"
+                                    formControlName="jobOpportunitySource"
+                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  >
+                                    <option value="">Select</option>
+                                    <option *ngFor="let option of lookupData.jobOpportunityOptions" [value]="option">{{ option }}</option>
+                                  </select>
+                                  <div *ngIf="hasError1('jobOpportunitySource', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Education Graduate -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="educationGraduate" class="block text-sm font-medium mb-2">Are you a graduate with a Short Term Course, TVET, or University Degree? *</label>
+                                  <select
+                                    id="educationGraduate"
+                                    formControlName="educationGraduate"
+                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  >
+                                    <option value="" disabled selected>Select an option</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                  </select>
+                                  <div *ngIf="hasError1('educationGraduate', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Education Level -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="educationLevel" class="block text-sm font-medium mb-2">Education Level *</label>
+                                  <select
+                                    id="educationLevel"
+                                    formControlName="educationLevel"
+                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  >
+                                    <option value="" disabled selected>Select Education Level</option>
+                                    <option *ngFor="let level of lookupData.educationLevels" [value]="level">{{ level }}</option>
+                                  </select>
+                                  <div *ngIf="hasError1('educationLevel', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Major -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="major" class="block text-sm font-medium mb-2">Major *</label>
+                                  <small class="block text-gray-600 mb-2">
+                                    Please select the major that you have a certificate for or a proof of completion. If you cannot find your exact degree, please choose the degree most relevant to yours.
+                                  </small>
+                                  <select
+                                    id="major"
+                                    formControlName="major"
+                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  >
+                                    <option value="" disabled selected>Select Major</option>
+                                    <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+                                  </select>
+                                  <div *ngIf="hasError1('major', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Institution -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="institution" class="block text-sm font-medium mb-2">School, University, or Institution *</label>
+                                  <input
+                                    id="institution"
+                                    formControlName="institution"
+                                    type="text"
+                                    class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  />
+                                  <div *ngIf="hasError1('institution', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Place/Country -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="gradplace" class="block text-sm font-medium mb-2">Place/Country *</label>
+                                  <input
+                                    id="gradplace"
+                                    formControlName="gradplace"
+                                    type="text"
+                                    class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  />
+                                  <div *ngIf="hasError1('gradplace', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Date of Graduation -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="graduationDate" class="block text-sm font-medium mb-2">Date of Graduation *</label>
+                                  <input
+                                    id="graduationDate"
+                                    formControlName="graduationDate"
+                                    type="date"
+                                    class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  />
+                                  <div *ngIf="hasError1('graduationDate', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Employment Opportunities -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="employmentOpportunities" class="block text-sm font-medium mb-2">Are you interested in short-term employment opportunities within UNRWA, external employers, or both? *</label>
+                                  <select
+                                    id="employmentOpportunities"
+                                    formControlName="employmentOpportunities"
+                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  >
+                                    <option value="" disabled selected>Select</option>
+                                    <option *ngFor="let option of lookupData.employmentOpportunitiesOptions" [value]="option">{{ option }}</option>
+                                  </select>
+                                  <div *ngIf="hasError1('employmentOpportunities', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Tell Us About Yourself -->
+                                <div class="space-y-6 border-b border-gray-300 pb-6">
+                                  <label for="aboutYourself" class="block text-sm font-medium mb-2">Tell us about yourself (Background, Experiences, Skills, and Motivation) *</label>
+                                  <small class="block text-gray-600 mb-2">
+                                    Briefly describe your background, skills, and why you are interested in this internship opportunity.
+                                  </small>
+                                  <textarea
+                                    id="aboutYourself"
+                                    formControlName="aboutYourself"
+                                    rows="5"
+                                    class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  ></textarea>
+                                  <div *ngIf="hasError1('aboutYourself', 'required')" class="text-red-500 text-sm">This field is required.</div>
+                                </div>
+                          
+                                <!-- Navigation Buttons -->
+                                <div class="flex py-6 gap-4 justify-between">
+                                  <p-button
+                                    label="Back"
+                                    severity="secondary"
+                                    (onClick)="prevCallback.emit()"
+                                    class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 text-sm"
+                                  ></p-button>
+                                  <p-button
+                                    label="Next"
+                                    (onClick)="nextCallback.emit()"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+                                  ></p-button>
+                                </div>
+                              </form>
+                            </ng-template>
+                          </p-stepperPanel>
+                          
 
-            <div>
-              <label for="fatherNameEn">Father Name (in English) *</label>
-              <input id="fatherNameEn" formControlName="fatherNameEn" type="text" class="border p-2 rounded w-full" required />
-            </div>
+                          <p-stepperPanel header="General Questions">
+                            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                              <div class="flex flex-col">
+                                <form [formGroup]="generalQuestionsForm" class="w-full max-w-4xl space-y-6">
+                                  
+                                  <!-- Question 1 -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Have you ever been placed by KFW CfW before? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="placedByKfw" value="yes" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="placedByKfw" value="no" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                    <div *ngIf="generalQuestionsForm.get('placedByKfw')?.value === 'yes'" class="mt-4">
+                                      <label class="block text-gray-600 dark:text-gray-400">
+                                        Please provide the year that you benefited from KFW Cash for Work:
+                                      </label>
+                                      <input type="text" formControlName="kfwYear" 
+                                             class="block w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600">
+                                    </div>
+                                    <div *ngIf="hasError2('placedByKfw', 'required')" class="text-sm text-red-500 mt-2">
+                                      This field is required.
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Question 2 -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you a graduate of the Siblin Vocational Training Center (STC) in UNRWA? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="question2" value="yes" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="question2" value="no" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                    <div *ngIf="hasError2('question2', 'required')" class="text-sm text-red-500 mt-2">
+                                      This field is required.
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Question 3 -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you a volunteer with Palestinian Red Crescent Society (PRCS)? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isPrcsVolunteer" value="yes" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isPrcsVolunteer" value="no" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Question 4 -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you a volunteer with the Palestinian Fire Brigades Lebanese Camps? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isFireBrigadesVolunteer" value="yes" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isFireBrigadesVolunteer" value="no" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Question 5 -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you a volunteer with Al-Shifaa for Medical & Humanitarian Services? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isAlShifaaVolunteer" value="yes" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="isAlShifaaVolunteer" value="no" 
+                                               class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                                            
+                                  <!-- Question 6: UNRWA Innovation Lab Graduate -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you a graduate of the UNRWA Innovation Lab? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="innovationLabGraduate" value="yes" 
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="innovationLabGraduate" value="no" 
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                    <div *ngIf="generalQuestionsForm.get('innovationLabGraduate')?.value === 'yes'" class="mt-4">
+                                      <label class="block text-gray-600 dark:text-gray-400">
+                                        Which Type of Innovation Lab Trainings did You Complete?
+                                      </label>
+                                      <div class="mt-4 space-y-2">
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedLabType('Social Entrepreneurship')" (change)="toggleLabType('Social Entrepreneurship')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Social Entrepreneurship</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedLabType('Digital Skills')" (change)="toggleLabType('Digital Skills')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Digital Skills</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
 
-            <div>
-              <label for="lastNameEn">Family Name (in English) *</label>
-              <input id="lastNameEn" formControlName="lastNameEn" type="text" class="border p-2 rounded w-full" required />
-            </div>
+                                  <!-- Question 7: Disability -->
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Do you have any disability? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="disability" value="yes" 
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="disability" value="no" 
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="disability" value="preferNotToState" 
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Prefer not to state</span>
+                                      </label>
+                                    </div>
+                                    <div *ngIf="generalQuestionsForm.get('disability')?.value === 'yes'" class="mt-4">
+                                      <label class="block text-gray-600 dark:text-gray-400">
+                                        If Yes, Do you need support to perform your task?
+                                      </label>
+                                      <div class="flex gap-6 mt-2">
+                                        <label class="flex items-center">
+                                          <input type="radio" formControlName="disabilitySupport" value="yes" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="radio" formControlName="disabilitySupport" value="no" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                        </label>
+                                      </div>
+                                      <label class="block mt-4 text-gray-600 dark:text-gray-400">Please specify the type of disability:</label>
+                                      <div class="flex flex-wrap gap-4 mt-2">
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Speech / communication')" (change)="toggleDisabilityType('Speech / communication')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Speech / communication</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Psychosocial / Mental Health')" (change)="toggleDisabilityType('Psychosocial / Mental Health')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Psychosocial / Mental Health</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Physical')" (change)="toggleDisabilityType('Physical')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Physical</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Neurodivergent')" (change)="toggleDisabilityType('Neurodivergent')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Neurodivergent</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Deaf or hard of hearing')" (change)="toggleDisabilityType('Deaf or hard of hearing')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Deaf or hard of hearing</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Cognitive')" (change)="toggleDisabilityType('Cognitive')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Cognitive</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                          <input type="checkbox" [checked]="isCheckedDisabilityType('Blind or low vision')" (change)="toggleDisabilityType('Blind or low vision')" 
+                                                class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                          <span class="ml-2 text-gray-700 dark:text-gray-300">Blind or low vision</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
 
-            <div>
-              <label for="firstNameAr">First Name (in Arabic) *</label>
-              <input id="firstNameAr" formControlName="firstNameAr" type="text" class="border p-2 rounded w-full" required />
-            </div>
+                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                    <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
+                                      Are you Currently Employed? <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-6">
+                                      <!-- Yes Radio Button -->
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="employed" value="yes"
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                                      </label>
+                                      
+                                      <!-- No Radio Button -->
+                                      <label class="flex items-center">
+                                        <input type="radio" formControlName="employed" value="no"
+                                              class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                                      </label>
+                                    </div>
+                                    
+                                    <div *ngIf="generalQuestionsForm.get('employed')?.value === 'no'" class="mt-4">
+                                      <label class="block text-gray-600 dark:text-gray-400">
+                                        For how long have you been seeking employment? *
+                                      </label>
+                                      <select formControlName="seekingEmploymentDuration"
+                                      class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                      >
+                                        <option value="notSeeking">I haven't been seeking employment</option>
+                                        <option value="lessThanMonth">Less than a month</option>
+                                        <option value="oneToThreeMonths">1 Month to 3 Months</option>
+                                        <option value="threeToSixMonths">3 Months to 6 Months</option>
+                                        <option value="sixMonthsToYear">6 Months to a Year</option>
+                                        <option value="moreThanYear">More Than a Year</option>
+                                      </select>
+                                    </div>
+                                  </div>
 
-            <div>
-              <label for="fatherNameAr">Father Name (in Arabic) *</label>
-              <input id="fatherNameAr" formControlName="fatherNameAr" type="text" class="border p-2 rounded w-full" required />
-            </div>
-
-            <div>
-              <label for="lastNameAr">Family Name (in Arabic) *</label>
-              <input id="lastNameAr" formControlName="lastNameAr" type="text" class="border p-2 rounded w-full" required />
-            </div>
-
-
-            <div>
-              <label for="gender">Gender *</label>
-              <select id="gender" formControlName="gender" class="border p-2 rounded w-full" required>
-                <option *ngFor="let option of lookupData.genderOptions" [value]="option">
-                  {{ option }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label for="dob">Date of Birth *</label>
-              <small class="block text-gray-600">
-                Please match the same date of birth on the registration card
-              </small>
-              <input
-                id="dob"
-                formControlName="dob"
-                type="date"
-                class="border p-2 rounded w-full"
-                required
-              />
-              <div
-                *ngIf="
-                  hasError('dob', 'required') || hasError('dob', 'invalidAge')
-                "
-                class="text-red-500 text-sm"
-              >
-                Unfortunately, this project targets youth aged between 18-30.
-              </div>
-            </div>
-
-
-            <div>
-              <label for="nationality">Nationality *</label>
-              <select id="nationality" formControlName="nationality" class="border p-2 rounded w-full" required>
-                <option *ngFor="let option of lookupData.nationalityOptions" [value]="option">
-                  {{ option }}
-                </option>
-              </select>
-            </div>
-
-
-        <div>
-          <label for="registrationStatus">Registration Status *</label>
-          <small class="block text-gray-600">Do you have an UNRWA Registration Card?</small>
-          <select id="registrationStatus" formControlName="registrationStatus" class="border p-2 rounded w-full" required [(ngModel)]="selectedStatus">
-            <option value="" disabled selected>Select Status</option>
-            <option *ngFor="let option of lookupData.registrationStatusOptions" [value]="option">
-              {{ option }}
-            </option>
-
-          </select>
-        </div>
-        <div *ngIf="selectedStatus === 'Registered'">
-            <div>
-              <label for="familyRegistrationNumber">Family Registration Number</label>
-              <input
-                type="text"
-                id="familyRegistrationNumber"
-                formControlName="familyRegistrationNumber"
-                class="border p-2 rounded w-full"
-                placeholder="1-XXXXXXXX"
-              />
-              <div *ngIf="hasError('familyRegistrationNumber', 'pattern')" class="text-red-500 text-sm">
-                Must be in the format 1-XXXXXXXX.
-              </div>
-            </div>
-          
-            <!-- Personal Registration Number -->
-            <div>
-              <label for="personalRegistrationNumber">Personal Registration Number *</label>
-              <input
-                type="text"
-                id="personalRegistrationNumber"
-                formControlName="personalRegistrationNumber"
-                class="border p-2 rounded w-full"
-                placeholder="2-XXXXXXXX"
-                required
-              />
-              <div *ngIf="hasError('personalRegistrationNumber', 'required')" class="text-red-500 text-sm">
-                This field is required.
-              </div>
-              <div *ngIf="hasError('personalRegistrationNumber', 'pattern')" class="text-red-500 text-sm">
-                Must be in the format 2-XXXXXXXX.
-              </div>
-            </div>
-          </div>
-          
-
-        <div>
-          <label for="headfa">Who is the head of the family?</label>
-          <small class="block text-gray-600"> Head of Family on the Registration Card (in the household if you don't have a registration card)</small>
-
-          <select id="headfa" formControlName="headfa" class="border p-2 rounded w-full">
-            <option value="">Select</option>
-            <option *ngFor="let option of lookupData.headfaOptions" [value]="option">
-              {{ option }}
-            </option>
-
-          </select>
-        </div>
-
-            <div>
-              <label for="mobilePhone">Mobile Phone *</label>
-              <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
-              <input id="mobilePhone" formControlName="mobilePhone" type="tel" class="border p-2 rounded w-full" required/>
-              <div
-              *ngIf="
-                hasError('mobilePhone', 'required') ||
-                hasError('mobilePhone', 'pattern')
-              "
-              class="text-red-500 text-sm"
-            >
-              Please enter a valid phone number in the format: 96103000000
-            </div>
-            </div>
-
-            <div>
-              <label for="whatsapp">WhatsApp Number *</label>
-              <input id="whatsapp" formControlName="whatsapp" type="tel" class="border p-2 rounded w-full" required />
-              <div
-              *ngIf="
-                hasError('whatsapp', 'required') ||
-                hasError('whatsapp', 'pattern')
-              "
-              class="text-red-500 text-sm"
-            >
-              Please enter a valid number.
-            </div>
-            </div>
-
-            <div>
-              <label for="emergencyPhone">Emergency Phone Number *</label>
-              <small class="block text-gray-600">Please insert a Lebanese phone number example: 96103000000</small>
-              <input id="emergencyPhone" formControlName="emergencyPhone" type="tel" class="border p-2 rounded w-full" required />
-              <div
-              *ngIf="
-                hasError('emergencyPhone', 'required') ||
-                hasError('emergencyPhone', 'pattern')
-              "
-              class="text-red-500 text-sm"
-            >
-              Please enter a valid phone number in the format: 96103000000
-            </div>
-            </div>
-
-            <div>
-              <label for="emergencyRelation">Relation to Emergency Phone Number *</label>
-              <select id="emergencyRelation" formControlName="emergencyRelation" class="border p-2 rounded w-full" required>
-                <option value="" disabled selected>Select Relation</option>
-                <option *ngFor="let option of lookupData.relationshipOptions" [value]="option">
-                  {{ option }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label for="email">Email Address *</label>
-              <input id="email" formControlName="email" type="email" class="border p-2 rounded w-full" required />
-            </div>
-                <!-- Area Dropdown -->
-                <!-- Area Dropdown -->
-          <!-- Area Dropdown -->
-          <div>
-            <label for="area">Area *</label>
-            <select
-              id="area"
-              formControlName="area"
-              class="border p-2 rounded w-full"
-              required
-            >
-              <option value="">Select</option>
-              <option *ngFor="let area of lookupData.areas" [value]="area.name">
-                {{ area.name }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Camp Type Dropdown -->
-          <div *ngIf="campTypeOptions.length > 0">
-            <label for="campType">Location *</label>
-            <select
-              id="campType"
-              formControlName="campType"
-              class="border p-2 rounded w-full"
-              required
-            >
-              <option value="">Select</option>
-              <option *ngFor="let type of campTypeOptions" [value]="type">
-                {{ type }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Camp Dropdown -->
-          <div *ngIf="campOptions.length > 0">
-            <label for="camp">Camp Name *</label>
-            <select
-              id="camp"
-              formControlName="camp"
-              class="border p-2 rounded w-full"
-              required
-            >
-              <option value="">Select</option>
-              <option *ngFor="let camp of campOptions" [value]="camp">
-                {{ camp }}
-              </option>
-            </select>
-          </div>
-
-            <div>
-              <label for="fullAddress">Full Address *</label>
-              <input id="fullAddress" formControlName="fullAddress" type="text" class="border p-2 rounded w-full" required />
-            </div>
-
-          </div>
-
-        </form>
-        <div class="flex py-4 gap-2 justify-between mt-4">
-          <p-button 
-          label="Back" 
-          severity="secondary" 
-          (onClick)="prevCallback.emit()" 
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        />
-        <p-button 
-        label="Next" 
-        (onClick)="nextCallback.emit()" 
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      />
-      </div>
-      </ng-template>
-    </p-stepperPanel>
-
-
-
-    <p-stepperPanel header="General Section">
-      <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-         <form [formGroup]="generalForm" class="mt-8 space-y-4">
-   
-
-        <!-- How did you hear about the job opportunity? -->
-        <div>
-          <label for="jobOpportunitySource">How did you hear about this job opportunity? *</label>
-          <select
-            id="jobOpportunitySource"
-            formControlName="jobOpportunitySource"
-            class="border p-2 rounded w-full"
-            required
-          >
-            <option value="">Select</option>
-            <option *ngFor="let option of lookupData.jobOpportunityOptions" [value]="option">
-              {{ option }}
-            </option>
-          </select>
-                
-          <div *ngIf="hasError1('jobOpportunitySource', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <!-- Are you a graduate and a holder of a Short Term Course, TVET, or University Degree? -->
-        <div>
-          <label for="educationGraduate">Are you a graduate and a holder of a Short Term Course, TVET, or University Degree? *</label>
-          <select
-            id="educationGraduate"
-            formControlName="educationGraduate"
-            class="border p-2 rounded w-full"
-            required
-          >
-            <option value="" disabled selected>Select an option</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <div *ngIf="hasError1('educationGraduate', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <!-- Education Level -->
-        <div>
-          <label for="educationLevel">Education Level *</label>
-          <select
-            id="educationLevel"
-            formControlName="educationLevel"
-            class="border p-2 rounded w-full"
-            required
-          >
-            <option value="" disabled selected>Select Education Level</option>
-            <option *ngFor="let level of lookupData.educationLevels" [value]="level">
-              {{ level }}
-            </option>
-          </select>
-          <div *ngIf="hasError1('educationLevel', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <!-- Major -->
-        <div>
-          <label for="major">Major *</label>
-          <small class="block text-gray-600">
-            Please select the major that you have a certificate for or a proof of completio. If you are unable to find your exact degree, please chose the degree that is most relevant to yours.
-                    </small>
-          <select id="major" formControlName="major" class="border p-2 rounded w-full" required>
-            <option value="" disabled selected>Select Major</option>
-            <option *ngFor="let major of majors" [value]="major">
-              {{ major }}
-            </option>
-          </select>
-          <div *ngIf="hasError1('major', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <div>
-          <label for="institution">School, University or Institution *</label>
-          <input
-            id="institution"
-            formControlName="institution"
-            type="text"
-            class="border p-2 rounded w-full"
-            required
-          />
-          <div *ngIf="hasError1('institution', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-        <div>
-          <label for="gradplace">Place/Country</label>
-          <input
-            id="gradplace"
-            formControlName="gradplace"
-            type="text"
-            class="border p-2 rounded w-full"
-            required
-          />
-        </div>
-        <!-- Date of Graduation -->
-        <div>
-          <label for="graduationDate">Date of Graduation </label>
-          <input
-            id="graduationDate"
-            formControlName="graduationDate"
-            type="date"
-            class="border p-2 rounded w-full"
-
-          />
-
-        </div>
-            <!-- Short-Term Employment Opportunities -->
-    <div>
-      <label for="employmentOpportunities">Are you interested in short-term employment opportunities within UNRWA, with external employers, or both? *</label>
-      <select id="employmentOpportunities" formControlName="employmentOpportunities" class="border p-2 rounded w-full" required>
-        <option value="" disabled selected>Select</option>
-        <option *ngFor="let option of lookupData.employmentOpportunitiesOptions" [value]="option">
-          {{ option }}
-        </option>
-      </select>
-      <div
-        *ngIf="hasError1('employmentOpportunities', 'required')"
-        class="text-red-500 text-sm"
-      >
-        This field is required.
-      </div>
-    </div>
-
-    <!-- Tell Us About Yourself -->
-    <div>
-      <label for="aboutYourself" >Tell us about yourself (Background, Experiences, Skills, and Motivation) *</label>
-      <small class="block text-gray-600">In this section, briefly describe your background, skills, and why you are interested in this internship opportunity.
-      </small>
-      <textarea
-        id="aboutYourself"
-        formControlName="aboutYourself"
-        rows="5"
-        class="border p-2 rounded w-full"
-        required
-      ></textarea>
-      <div
-        *ngIf="hasError1( 'aboutYourself', 'required')"
-        class="text-red-500 text-sm"
-      >
-        This field is required.
-      </div>
-    </div>
-
-
-        <!-- Buttons -->
-        <div class="flex py-4 gap-2 justify-between mt-4">
-          <p-button 
-          label="Back" 
-          severity="secondary" 
-          (onClick)="prevCallback.emit()" 
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        />
-        <p-button 
-        label="Next" 
-        (onClick)="nextCallback.emit()" 
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      />
-      </div>
-      </form>
-  </ng-template>
-</p-stepperPanel>
-    
-
-
-
-<p-stepperPanel header="General Questions">
-  <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-      <div class="flex flex-column">
-
-      <form [formGroup]="generalQuestionsForm" class="space-y-4">
-        <div>
-          <label>Have you ever been placed by KFW CfW before?<span class="text-red-500">*</span></label>
-          <div>
-            <label>
-              <input type="radio" formControlName="placedByKfw" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="placedByKfw" value="no" /> No
-            </label>
-          </div>
-          <div *ngIf="generalQuestionsForm.get('placedByKfw')?.value === 'yes'" class="mt-2">
-            <label>Please provide the year that you benefited from KFW Cash for Work*</label>
-            <input
-              type="text"
-              formControlName="kfwYear"
-              class="block w-full mt-2 border border-gray-300 rounded-lg"
-            />
-          </div>
-          <div *ngIf="hasError2('placedByKfw', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <!-- Question 2: Siblin Vocational Training Center -->
-        <div>
-          <label>Are you a graduate of the Siblin Vocational Training Center (STC) in UNRWA?<span class="text-red-500">*</span></label>
-          <div>
-            <label>
-              <input type="radio" formControlName="question2" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="question2" value="no" /> No
-            </label>
-          </div>
-          <div *ngIf="hasError2('question2', 'required')" class="text-red-500 text-sm">
-            This field is required.
-          </div>
-        </div>
-
-        <!-- Question 3: PRCS Volunteer -->
-        <div>
-          <label>Are you a volunteer with Palestinian Red Crescent Society (PRCS)?*</label>
-          <div>
-            <label>
-              <input type="radio" formControlName="isPrcsVolunteer" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="isPrcsVolunteer" value="no" /> No
-            </label>
-          </div>
-        </div>
-
-        <!-- Question 4: Fire Brigades Volunteer -->
-        <div>
-          <label>Are you a volunteer with the Palestinian Fire Brigades Lebanese Camps?*</label>
-          <div>
-            <label>
-              <input type="radio" formControlName="isFireBrigadesVolunteer" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="isFireBrigadesVolunteer" value="no" /> No
-            </label>
-          </div>
-        </div>
-
-        <!-- Question 5: Al-Shifaa Volunteer -->
-        <div>
-          <label>Are you a volunteer with Al-Shifaa for Medical & Humanitarian Services?*</label>
-          <div>
-            <label>
-              <input type="radio" formControlName="isAlShifaaVolunteer" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="isAlShifaaVolunteer" value="no" /> No
-            </label>
-          </div>
-        </div>
-
-        <!-- Question 6: UNRWA Innovation Lab Graduate -->
-        <div>
-          <label>Are you a graduate of the UNRWA Innovation Lab? <span>*</span></label>
-          <div>
-            <label>
-              <input type="radio" formControlName="innovationLabGraduate" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="innovationLabGraduate" value="no" /> No
-            </label>
-          </div>
-          <div *ngIf="generalQuestionsForm.get('innovationLabGraduate')?.value === 'yes'" class="mt-2">
-            <label>Which Type of Innovation Lab Trainings did You Complete?</label>
-            <div class="mt-4">
-              <h4 class="text-sm font-semibold mb-2">Innovation Lab Graduate Type</h4>
-              <label class="block">
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedLabType('Social Entrepreneurship')"
-                  (change)="toggleLabType('Social Entrepreneurship')"
-                  class="mr-2"
-                />
-                <span>Social Entrepreneurship</span>
-              </label>
-              <label class="block">
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedLabType('Digital Skills')"
-                  (change)="toggleLabType('Digital Skills')"
-                  class="mr-2"
-                />
-                <span>Digital Skills</span>
-              </label>
-            </div>
-            
-          </div>
-        </div>
-
-        <!-- Question 7: Disability -->
-        <div>
-          <label>Do you have any disability? <span>*</span></label>
-          <div>
-            <label>
-              <input type="radio" formControlName="disability" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="disability" value="no" /> No
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="disability" value="preferNotToState" /> Prefer not to state
-            </label>
-          </div>
-          <div *ngIf="generalQuestionsForm.get('disability')?.value === 'yes'" class="mt-2">
-            <label>If Yes, Do you need support to perform your task?</label>
-            <div class="mt-2">
-              <label>
-                <input type="radio" formControlName="disabilitySupport" value="yes" /> Yes
-              </label>
-              <label class="ml-4">
-                <input type="radio" formControlName="disabilitySupport" value="no" /> No
-              </label>
-            </div>
-            <label class="block mt-4">Please specify the type of disability:</label>
-            <div class="flex flex-wrap space-x-4 mt-2">
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Speech / communication')"
-                  (change)="toggleDisabilityType('Speech / communication')"
-                />
-                Speech / communication
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Psychosocial / Mental Health')"
-                  (change)="toggleDisabilityType('Psychosocial / Mental Health')"
-                />
-                Psychosocial / Mental Health
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Physical')"
-                  (change)="toggleDisabilityType('Physical')"
-                />
-                Physical
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Neurodivergent')"
-                  (change)="toggleDisabilityType('Neurodivergent')"
-                />
-                Neurodivergent
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Deaf or hard of hearing')"
-                  (change)="toggleDisabilityType('Deaf or hard of hearing')"
-                />
-                Deaf or hard of hearing
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Cognitive')"
-                  (change)="toggleDisabilityType('Cognitive')"
-                />
-                Cognitive
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="isCheckedDisabilityType('Blind or low vision')"
-                  (change)="toggleDisabilityType('Blind or low vision')"
-                />
-                Blind or low vision
-              </label>
-            </div>
-          </div>
-          
-        </div>
-
-        <!-- Question 8: Employment -->
-        <div>
-          <label>Are you Currently Employed? <span class="text-red-500">*</span></label>
-          <div>
-            <label>
-              <input type="radio" formControlName="employed" value="yes" /> Yes
-            </label>
-            <label class="ml-4">
-              <input type="radio" formControlName="employed" value="no" /> No
-            </label>
-          </div>
-          <div *ngIf="generalQuestionsForm.get('employed')?.value === 'no'" class="mt-2">
-            <label>For how long have you been seeking employment?</label>
-            <select
-              formControlName="seekingEmploymentDuration"
-              class="block w-full mt-2 border border-gray-300 rounded-lg"
-            >
-              <option value="notSeeking">I haven't been seeking employment</option>
-              <option value="lessThanMonth">Less than a month</option>
-              <option value="oneToThreeMonths">1 Month to 3 Months</option>
-              <option value="threeToSixMonths">3 Months to 6 Months</option>
-              <option value="sixMonthsToYear">6 Months to a Year</option>
-              <option value="moreThanYear">More Than a Year</option>
-            </select>
-          </div>
-        </div>
-
-
-
-
-
-        <!-- Navigation Buttons -->
-        <div class="flex py-4 gap-2 justify-between mt-4">
-          <p-button 
-          label="Back" 
-          severity="secondary" 
-          (onClick)="prevCallback.emit()" 
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        />
-        <p-button 
-        label="Next" 
-        (onClick)="nextCallback.emit()" 
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      />
-      </div>
-      </form>
-    </div>
-  </ng-template>
-</p-stepperPanel>
-
+                          
+                                  <div class="flex justify-between mt-6">
+                                    <button 
+                                      type="button" 
+                                      (click)="prevCallback.emit()" 
+                                      class="px-6 py-3 bg-gray-500 text-white rounded-md hover:bg-gray-600">
+                                      Back
+                                    </button>
+                                    <button 
+                                      type="submit" 
+                                      (click)="nextCallback.emit()" 
+                                      class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                      Next
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </ng-template>
+                          </p-stepperPanel>
+                          
 
 
 <p-stepperPanel header="Experience Details">
   <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-      <div >
-              <ng-container *ngFor="let experience of experiences.controls; let i = index">
-                <div [formGroup]="experience" class="space-y-4 border-b border-gray-300 pb-4 mb-4">
-                  <div>
-                    <label for="experienceType" class="block text-sm font-medium text-gray-700 mb-1">Type of Work Experience*</label>
-                    <select
-                      id="experienceType"
-                      formControlName="type"
-                      (change)="onExperienceTypeChange(i)"
-                      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    >
-                      <option value="" disabled>Select an option</option>
-                      <option value="Volunteer">Volunteer</option>
-                      <option value="Self Employed - Freelancer">Self Employed - Freelancer</option>
-                      <option value="Paid Job">Paid Job</option>
-                      <option value="None">None</option>
-                      <option value="Internship">Internship</option>
-                    </select>
-                  </div>
-
-                  <div *ngIf="experience.get('type')?.value !== 'None'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label for="employerName" class="block text-sm font-medium text-gray-700">Employer (Company) Name*</label>
-                      <input
-                        id="employerName"
-                        type="text"
-                        formControlName="employerName"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label for="employerPhone" class="block text-sm font-medium text-gray-700">Employer (Company) Phone*</label>
-                      <input
-                        id="employerPhone"
-                        type="text"
-                        formControlName="employerPhone"
-                        placeholder="96103000000"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div>
-                      <label for="area" class="block text-sm font-medium text-gray-700">Area*</label>
-                      <select
-                        id="area"
-                        formControlName="area"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      >
-                        <option value="" disabled>Select an area</option>
-                        <option value="Tyre">Tyre</option>
-                        <option value="Saida">Saida</option>
-                        <option value="Online">Online</option>
-                        <option value="North Lebanon">North Lebanon</option>
-                        <option value="Beqaa">Beqaa</option>
-                        <option value="Beirut and Mount Lebanon">Beirut and Mount Lebanon</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label for="employmentType" class="block text-sm font-medium text-gray-700">Employment Type*</label>
-                      <select
-                        id="employmentType"
-                        formControlName="employmentType"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      >
-                        <option value="" disabled>Select an option</option>
-                        <option value="Seasonal">Seasonal</option>
-                        <option value="Monthly">Monthly</option>
-                        <option value="Daily">Daily</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label for="jobTitle" class="block text-sm font-medium text-gray-700">Job Title*</label>
-                      <input
-                        id="jobTitle"
-                        type="text"
-                        formControlName="jobTitle"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date*</label>
-                      <input
-                        id="startDate"
-                        type="date"
-                        formControlName="startDate"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label for="endDate" class="block text-sm font-medium text-gray-700">End Date*</label>
-                      <input
-                        id="endDate"
-                        type="date"
-                        formControlName="endDate"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label for="salary" class="block text-sm font-medium text-gray-700">Salary Per Month*</label>
-                      <input
-                        id="salary"
-                        type="number"
-                        formControlName="salary"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    <div class="col-span-2">
-                      <label for="tasks" class="block text-sm font-medium text-gray-700">Main Tasks and Responsibilities*</label>
-                      <textarea
-                        id="tasks"
-                        formControlName="tasks"
-                        rows="3"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      ></textarea>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    (click)="removeExperience(i)"
-                    class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600"
+    <div>
+      <ng-container *ngFor="let experience of experiences.controls; let i = index">
+        <div [formGroup]="experience" class="border-b border-gray-300 pb-4 mb-4 space-y-4">
+          <!-- Type of Work Experience -->
+          <div class="p-6 bg-white rounded-lg shadow-lg">
+            <div class="space-y-8">
+              <!-- Type of Work Experience and Employer Name -->
+              <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+                <!-- Type of Work Experience -->
+                <div class="flex-1">
+                  <label for="experienceType" class="block text-sm font-medium text-gray-700 mb-2">Type of Work Experience*</label>
+                  <select
+                    id="experienceType"
+                    formControlName="type"
+                    (change)="onExperienceTypeChange(i)"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
-                    Remove Experience
-                  </button>
+                    <option value="" disabled>Select an option</option>
+                    <option value="Volunteer">Volunteer</option>
+                    <option value="Self Employed - Freelancer">Self Employed - Freelancer</option>
+                    <option value="Paid Job">Paid Job</option>
+                    <option value="None">None</option>
+                    <option value="Internship">Internship</option>
+                  </select>
                 </div>
-              </ng-container>
-
-              <div class="flex items-center space-x-4">
-                <p>Do you want to add any employment history?</p>
-                <button
-                  type="button"
-                  (click)="addExperience()"
-                  class="bg-green-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-green-600"
-                >
-                  Yes
-                </button>
-                <button
-                  type="button"
-                  (click)="finishExperience()"
-                  class="bg-gray-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-gray-600"
-                >
-                  No
-                </button>
+          
+                <!-- Employer Name -->
+                <div class="flex-1">
+                  <label for="employerName" class="block text-sm font-medium text-gray-700 mb-2">Employer (Company) Name*</label>
+                  <input
+                    id="employerName"
+                    type="text"
+                    formControlName="employerName"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-
+          
+              <!-- Employer Phone and Area -->
+              <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+                <!-- Employer Phone -->
+                <div class="flex-1">
+                  <label for="employerPhone" class="block text-sm font-medium text-gray-700 mb-2">Employer Phone*</label>
+                  <input
+                    id="employerPhone"
+                    type="text"
+                    formControlName="employerPhone"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+          
+                <!-- Area -->
+                <div class="flex-1">
+                  <label for="area" class="block text-sm font-medium text-gray-700 mb-2">Area*</label>
+                  <select
+                    id="area"
+                    formControlName="area"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    <option value="" disabled>Select an area</option>
+                    <option value="Tyre">Tyre</option>
+                    <option value="Saida">Saida</option>
+                    <option value="Online">Online</option>
+                    <option value="North Lebanon">North Lebanon</option>
+                    <option value="Beqaa">Beqaa</option>
+                    <option value="Beirut and Mount Lebanon">Beirut and Mount Lebanon</option>
+                  </select>
+                </div>
+              </div>
+          
+              <!-- Employment Type and Job Title -->
+              <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+                <!-- Employment Type -->
+                <div class="flex-1">
+                  <label for="employmentType" class="block text-sm font-medium text-gray-700 mb-2">Employment Type*</label>
+                  <select
+                    id="employmentType"
+                    formControlName="employmentType"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    <option value="" disabled>Select an option</option>
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Daily">Daily</option>
+                  </select>
+                </div>
+          
+                <!-- Job Title -->
+                <div class="flex-1">
+                  <label for="jobTitle" class="block text-sm font-medium text-gray-700 mb-2">Job Title*</label>
+                  <input
+                    id="jobTitle"
+                    type="text"
+                    formControlName="jobTitle"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+          
+              <!-- Start Date, End Date, and Salary -->
+              <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+                <!-- Start Date -->
+                <div class="flex-1">
+                  <label for="startDate" class="block text-sm font-medium text-gray-700 mb-2">Start Date*</label>
+                  <input
+                    id="startDate"
+                    type="date"
+                    formControlName="startDate"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+          
+                <!-- End Date -->
+                <div class="flex-1">
+                  <label for="endDate" class="block text-sm font-medium text-gray-700 mb-2">End Date*</label>
+                  <input
+                    id="endDate"
+                    type="date"
+                    formControlName="endDate"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+          
+                <!-- Salary -->
+                <div class="flex-1">
+                  <label for="salary" class="block text-sm font-medium text-gray-700 mb-2">Salary Per Month*</label>
+                  <input
+                    id="salary"
+                    type="number"
+                    formControlName="salary"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+          
+              <!-- Tasks -->
+              <div>
+                <label for="tasks" class="block text-sm font-medium text-gray-700 mb-2">Main Tasks and Responsibilities*</label>
+                <textarea
+                  id="tasks"
+                  formControlName="tasks"
+                  rows="3"
+                  class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                ></textarea>
+              </div>
             </div>
-
-            <div class="flex py-4 gap-2 justify-between mt-4">
-              <p-button 
-              label="Back" 
-              severity="secondary" 
-              (onClick)="prevCallback.emit()" 
-              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-            />
-            <p-button 
-            label="Next" 
-            (onClick)="nextCallback.emit()" 
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          />
           </div>
-          </ng-template>
-        </p-stepperPanel>
+          
+          <!-- Remove Button -->
+          <button
+            type="button"
+            (click)="removeExperience(i)"
+            class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600"
+          >
+            Remove Experience
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Add Experience Buttons -->
+      <div class="flex items-center space-x-4">
+        <p>Do you want to add any employment history?</p>
+        <button type="button" (click)="addExperience()" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-green-600">
+          Yes
+        </button>
+        <button type="button" (click)="finishExperience()" class="bg-gray-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-gray-600">
+          No
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex py-4 gap-2 justify-between mt-4">
+      <button (click)="prevCallback.emit()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
+        Back
+      </button>
+      <button (click)="nextCallback.emit()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+        Next
+      </button>
+    </div>
+  </ng-template>
+</p-stepperPanel>
+
 
 
 
@@ -1007,88 +1084,101 @@
 
 
             <div>
-
-              <h3 class="text-lg font-medium mb-4">Training Profile</h3>
+              <h3 class="text-lg font-semibold mb-6">Training Profile</h3>
               <ng-container *ngFor="let training of trainings.controls; let i = index">
-                <div [formGroup]="training" class="space-y-4 border-b border-gray-300 pb-4 mb-4">
+                <div [formGroup]="training" class="space-y-6 border-b border-gray-300 pb-6 mb-6">
+                  <!-- Training Institution -->
                   <div>
-                    <label for="institution-{{ i }}" class="block text-sm font-medium">Training Institution*</label>
+                    <label for="institution-{{ i }}" class="block text-sm font-medium mb-2">Training Institution*</label>
                     <input
                       id="institution-{{ i }}"
                       type="text"
                       formControlName="institution"
-                      class="form-input"
+                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     />
                   </div>
-      
+            
+                  <!-- Training Certificate -->
                   <div>
-                    <label for="certificate-{{ i }}" class="block text-sm font-medium">Training Certificate*</label>
+                    <label for="certificate-{{ i }}" class="block text-sm font-medium mb-2">Training Certificate*</label>
                     <input
                       id="certificate-{{ i }}"
                       type="text"
                       formControlName="certificate"
-                      class="form-input"
-                    />
+                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
                   </div>
-      
+            
+                  <!-- Area -->
                   <div>
-                    <label for="area-{{ i }}" class="block text-sm font-medium">Area*</label>
-                    <select id="area-{{ i }}" formControlName="area" class="form-select">
+                    <label for="area-{{ i }}" class="block text-sm font-medium mb-2">Area*</label>
+                    <select
+                      id="area-{{ i }}"
+                      formControlName="area"
+                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
                       <option value="" disabled>Select an area</option>
-                      <option *ngFor="let area of lookupData.areas" [value]="area.name">
-                {{ area.name }}</option>
+                      <option *ngFor="let area of lookupData.areas" [value]="area.name">{{ area.name }}</option>
                     </select>
                   </div>
-      
+            
+                  <!-- Duration -->
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label for="durationFrom-{{ i }}" class="block text-sm font-medium">Duration From*</label>
+                      <label for="durationFrom-{{ i }}" class="block text-sm font-medium mb-2">Duration From*</label>
                       <input
                         id="durationFrom-{{ i }}"
                         type="date"
                         formControlName="durationFrom"
-                        class="form-input"
-                      />
+                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        />
                     </div>
                     <div>
-                      <label for="durationTo-{{ i }}" class="block text-sm font-medium">Duration To*</label>
+                      <label for="durationTo-{{ i }}" class="block text-sm font-medium mb-2">Duration To*</label>
                       <input
                         id="durationTo-{{ i }}"
                         type="date"
                         formControlName="durationTo"
-                        class="form-input"
-                      />
+                        class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        />
                     </div>
                   </div>
-      
+            
+                  <!-- Remove Training Button -->
                   <button
                     type="button"
                     (click)="removeTraining(i)"
-                    class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                    class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 text-sm"
                   >
                     Remove Training
                   </button>
                 </div>
               </ng-container>
-      
+            
+              <!-- Add Training Button -->
               <div class="flex items-center space-x-4">
-                <p>Do you want to add any training profile (from 1 day to 9 month)?</p>
+                <p class="text-sm">Do you want to add any training profile (from 1 day to 9 months)?</p>
                 <button
                   type="button"
                   (click)="addTraining()"
-                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 text-sm"
                 >
                   Yes
                 </button>
               </div>
-
-
-              <div>
-                <h4 class="text-sm font-semibold mb-2">Language Skills</h4>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+              <!-- Language Skills -->
+              <div class="mt-8">
+                <h4 class="text-sm font-semibold mb-4">Language Skills</h4>
+                <div class="space-y-4">
                   <div>
-                    <label for="arabic" class="block text-sm font-medium">Arabic</label>
-                    <select id="arabic" [formControl]="arabicControl" class="form-select">
+                    <label for="arabic" class="block text-sm font-medium mb-2">Arabic</label>
+                    <select
+                      id="arabic"
+                      [formControl]="arabicControl"
+                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+
                       <option value="" disabled>Select your level</option>
                       <option value="fluent">Fluent</option>
                       <option value="good">Good</option>
@@ -1096,10 +1186,13 @@
                       <option value="null">Null</option>
                     </select>
                   </div>
-              
                   <div>
-                    <label for="english" class="block text-sm font-medium">English</label>
-                    <select id="english" [formControl]="englishControl" class="form-select">
+                    <label for="english" class="block text-sm font-medium mb-2">English</label>
+                    <select
+                      id="english"
+                      [formControl]="englishControl"
+                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
                       <option value="" disabled>Select your level</option>
                       <option value="fluent">Fluent</option>
                       <option value="good">Good</option>
@@ -1107,10 +1200,13 @@
                       <option value="null">Null</option>
                     </select>
                   </div>
-              
                   <div>
-                    <label for="french" class="block text-sm font-medium">French</label>
-                    <select id="french" [formControl]="frenchControl" class="form-select">
+                    <label for="french" class="block text-sm font-medium mb-2">French</label>
+                    <select
+                      id="french"
+                      [formControl]="frenchControl"
+                      class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
                       <option value="" disabled>Select your level</option>
                       <option value="fluent">Fluent</option>
                       <option value="good">Good</option>
@@ -1121,83 +1217,75 @@
                 </div>
               </div>
               
-              
-              <div class="mt-4">
-                <h3 class="text-sm font-semibold mb-2">Computer Skills</h3>
-                <div>
-                  <label class="block">
+            
+              <!-- Computer Skills -->
+              <div class="mt-8">
+                <h4 class="text-sm font-semibold mb-4">Computer Skills</h4>
+                <div class="space-y-3">
+                  <label class="flex items-center">
                     <input
                       type="checkbox"
                       [checked]="isCheckedCs('Nothing')"
                       (change)="toggleCheckbox('Nothing')"
-                      class="mr-2"
+                      class="form-checkbox h-4 w-4 text-blue-600 mr-2"
                     />
-                    <span>Nothing</span>
+                    <span class="text-sm">Nothing</span>
                   </label>
-              
-                  <label class="block">
+                  <label class="flex items-center">
                     <input
                       type="checkbox"
                       [checked]="isCheckedCs('MS Office')"
                       (change)="toggleCheckbox('MS Office')"
-                      class="mr-2"
+                      class="form-checkbox h-4 w-4 text-blue-600 mr-2"
                     />
-                    <span>MS Office (Word, Excel, PowerPoint)</span>
+                    <span class="text-sm">MS Office (Word, Excel, PowerPoint)</span>
                   </label>
-              
-                  <label class="block">
+                  <label class="flex items-center">
                     <input
                       type="checkbox"
                       [checked]="isCheckedCs('AutoCAD')"
                       (change)="toggleCheckbox('AutoCAD')"
-                      class="mr-2"
+                      class="form-checkbox h-4 w-4 text-blue-600 mr-2"
                     />
-                    <span>AutoCAD</span>
+                    <span class="text-sm">AutoCAD</span>
                   </label>
-              
-                  <label class="block">
+                  <label class="flex items-center">
                     <input
                       type="checkbox"
                       [checked]="isCheckedCs('Adobe Design Programs')"
                       (change)="toggleCheckbox('Adobe Design Programs')"
-                      class="mr-2"
+                      class="form-checkbox h-4 w-4 text-blue-600 mr-2"
                     />
-                    <span>Adobe Design Programs</span>
+                    <span class="text-sm">Adobe Design Programs</span>
                   </label>
-              
-                  <label class="block">
+                  <label class="flex items-center">
                     <input
                       type="checkbox"
                       [checked]="isCheckedCs('Accounting System')"
                       (change)="toggleCheckbox('Accounting System')"
-                      class="mr-2"
+                      class="form-checkbox h-4 w-4 text-blue-600 mr-2"
                     />
-                    <span>Accounting System</span>
+                    <span class="text-sm">Accounting System</span>
                   </label>
                 </div>
               </div>
-              
             </div>
-
-
-
-
-
-
-
-            <div class="flex py-4 gap-2 justify-between mt-4">
-              <p-button 
-              label="Back" 
-              severity="secondary" 
-              (onClick)="prevCallback.emit()" 
-              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-            />
-            <p-button 
-            label="Next" 
-            (onClick)="nextCallback.emit()" 
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          />
-          </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex py-6 gap-4 justify-between mt-8">
+              <p-button
+                label="Back"
+                severity="secondary"
+                (onClick)="prevCallback.emit()"
+                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 text-sm"
+              ></p-button>
+              <p-button
+                label="Next"
+                (onClick)="nextCallback.emit()"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+              ></p-button>
+            </div>
+            
       </ng-template>
     </p-stepperPanel>
 
@@ -1207,172 +1295,274 @@
     
           <form [formGroup]="requiredDocumentsForm" class="space-y-6">
             <!-- CV/Resume -->
+                <!-- Required Documents Section -->
+                <div class="space-y-6">
+                  <!-- CV/Resume -->
+                  <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Please attach your CV/Resume <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <!-- Styled label as button -->
+                      <label
+                        for="cv_input"
+                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      >
+                        Choose File
+                      </label>
+                      <!-- Hidden input for functionality -->
+                      <input
+                        id="cv_input"
+                        type="file"
+                        formControlName="cv"
+                        class="sr-only"
+                        accept=".pdf,.doc,.docx"
+                        (change)="onFileChange($event, 'cvFileName')"
+
+                      />
+                      <!-- Display file name -->
+                      <span class="ml-4 text-sm text-gray-500" id="cvFileName">No file chosen</span>
+                    </div>
+                    <span *ngIf="hasError3('cv', 'required')" class="text-red-500 text-sm mt-1 block">CV is required.</span>
+                  </div>
+                
+                  <!-- Cover Letter -->
+                  <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Please attach your cover letter
+                    </label>
+                    <div class="relative">
+                      <label
+                        for="coverLetter_input"
+                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      >
+                        Choose File
+                      </label>
+                      <input
+                        id="coverLetter_input"
+                        type="file"
+                        formControlName="coverLetter"
+                        class="sr-only"
+                        accept=".pdf,.doc,.docx"
+                        (change)="onFileChange($event, 'coverLetterFileName')"
+
+                        
+                      />
+                      <span class="ml-4 text-sm text-gray-500" id="coverLetterFileName">No file chosen</span>
+                    </div>
+                  </div>
+
+
+                  <!-- Identity Card -->
+                  <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Please attach your identity card (2-sides) <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <label
+                        for="identityCard_input"
+                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      >
+                        Choose File
+                      </label>
+                      <input
+                        id="identityCard_input"
+                        type="file"
+                        formControlName="identityCard"
+                        class="sr-only"
+                        accept=".pdf,.jpg,.png"
+                        (change)="onFileChange($event, 'identityCardFileName')"
+                      />
+                      <span class="ml-4 text-sm text-gray-500" id="identityCardFileName">No file chosen</span>
+                    </div>
+                    <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
+                  </div>
+
+                    <!-- UNRWA Registration Card -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Please attach your UNRWA registration card <span class="text-red-500">*</span>
+                      </label>
+                      <div class="relative">
+                        <label
+                          for="registrationCard_input"
+                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="registrationCard_input"
+                          type="file"
+                          formControlName="registrationCard"
+                          class="sr-only"
+                          accept=".pdf,.jpg,.png"
+                          (change)="onFileChange($event, 'registrationCardFileName')"
+                        />
+                        <span class="ml-4 text-sm text-gray-500" id="registrationCardFileName">No file chosen</span>
+                      </div>
+                      <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
+                    </div>
+                  
+                    <!-- Educational Degree -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Please attach your educational degree (certificate) <span class="text-red-500">*</span>
+                      </label>
+                      <div class="relative">
+                        <label
+                          for="degree_input"
+                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="degree_input"
+                          type="file"
+                          formControlName="degree"
+                          class="sr-only"
+                          accept=".pdf,.jpg,.png"
+                          (change)="onFileChange($event, 'degreeFileName')"
+                        />
+                        <span class="ml-4 text-sm text-gray-500" id="degreeFileName">No file chosen</span>
+                      </div>
+                      <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
+                    </div>
+                  
+                    <!-- PRCS Proof -->
+                    <div *ngIf="isPrcsVolunteer()">
+                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Please attach your PRCS proof of volunteering <span class="text-red-500">*</span>
+                      </label>
+                      <div class="relative">
+                        <label
+                          for="prcsProof_input"
+                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="prcsProof_input"
+                          type="file"
+                          formControlName="prcsProof"
+                          class="sr-only"
+                          accept=".pdf,.jpg,.png"
+                          (change)="onFileChange($event, 'prcsProofFileName')"
+                        />
+                        <span class="ml-4 text-sm text-gray-500" id="prcsProofFileName">No file chosen</span>
+                      </div>
+                      <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
+                    </div>
+                  
+                    <!-- Fire Brigades Proof -->
+                    <div *ngIf="isFireBrigadesVolunteer()">
+                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Please attach your Palestinian Fire Brigades proof of volunteering <span class="text-red-500">*</span>
+                      </label>
+                      <div class="relative">
+                        <label
+                          for="fireProof_input"
+                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="fireProof_input"
+                          type="file"
+                          formControlName="fireProof"
+                          class="sr-only"
+                          accept=".pdf,.jpg,.png"
+                          (change)="onFileChange($event, 'fireProofFileName')"
+                        />
+                        <span class="ml-4 text-sm text-gray-500" id="fireProofFileName">No file chosen</span>
+                      </div>
+                      <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
+                    </div>
+                  
+                    <!-- Al-Shifaa Proof -->
+                    <div *ngIf="isAlShifaaVolunteer()">
+                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Please attach your Al-Shifaa proof of volunteering <span class="text-red-500">*</span>
+                      </label>
+                      <div class="relative">
+                        <label
+                          for="alShifaaProof_input"
+                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="alShifaaProof_input"
+                          type="file"
+                          formControlName="alShifaaProof"
+                          class="sr-only"
+                          accept=".pdf,.jpg,.png"
+                          (change)="onFileChange($event, 'alShifaaProofFileName')"
+                        />
+                        <span class="ml-4 text-sm text-gray-500" id="alShifaaProofFileName">No file chosen</span>
+                      </div>
+                      <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
+                    </div>
+                  </div>
+                  
+
+    
             <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your CV/Resume<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="cv"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.doc,.docx"
-              />
-              <span *ngIf="hasError3('cv', 'required')" class="text-red-500 text-sm mt-1 block">CV is required.</span>
-            </div>
-    
-            <!-- Cover Letter -->
-            <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your cover letter
-              </label>
-              <input
-                type="file"
-                formControlName="coverLetter"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.doc,.docx"
-              />
-            </div>
-    
-            <!-- Identity Card -->
-            <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your identity card (2-sides)<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="identityCard"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
-            </div>
-    
-            <!-- UNRWA Registration Card -->
-            <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your UNRWA registration card<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="registrationCard"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
-            </div>
-    
-            <!-- Educational Degree -->
-            <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your educational degree (certificate)<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="degree"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
-            </div>
-    
-            <!-- Conditional Volunteer Documents -->
-            <!-- PRCS Proof -->
-            <div *ngIf="isPrcsVolunteer()">
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your PRCS proof of volunteering<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="prcsProof"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
-            </div>
-    
-            <!-- Fire Brigades Proof -->
-            <div *ngIf="isFireBrigadesVolunteer()">
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your Palestinian Fire Brigades proof of volunteering<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="fireProof"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
-            </div>
-    
-            <!-- Al-Shifaa Proof -->
-            <div *ngIf="isAlShifaaVolunteer()">
-              <label class="block text-sm font-medium text-gray-800">
-                Please attach your Al-Shifaa proof of volunteering<span class="text-red-500">*</span>
-              </label>
-              <input
-                type="file"
-                formControlName="alShifaaProof"
-                class="mt-2 block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                accept=".pdf,.jpg,.png"
-              />
-              <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
-            </div>
-    
-            <div>
-              <label class="block text-sm font-medium text-gray-800">
-                Are you sure that all information provided is true and accurate?<span class="text-red-500">*</span>
-                <small class="block text-gray-600">
-                  Please match the same date of birth on the registration card
-                </small>
-              </label>
-              <div class="flex items-center space-x-4 mt-2">
-                <label class="flex items-center">
-                  <input
-                    type="radio"
-                    formControlName="confirmation"
-                    value="yes"
-                    class="mr-2 text-blue-600 focus:ring-blue-500"
-                  />
-                  Yes
+              <div class="p-4 border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700 space-y-2">
+                <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                  Are you sure that all information provided is true and accurate? <span class="text-red-500">*</span>
+                  <small class="block text-xs text-gray-600 dark:text-gray-400">
+                    Any information that may not be true or accurate cannot be reviewed or edited after submission
+                  </small>
                 </label>
-                <label class="flex items-center">
-                  <input
-                    type="radio"
-                    formControlName="confirmation"
-                    value="no"
-                    class="mr-2 text-blue-600 focus:ring-blue-500"
-                  />
-                  No
-                </label>
-    
-    
+              
+                <div class="flex items-center space-x-3">
+                  <label class="flex items-center text-sm">
+                    <input type="radio" formControlName="confirmation" value="yes"
+                           class="mr-2 text-blue-600 focus:ring-blue-500 w-4 h-4">
+                    Yes
+                  </label>
+              
+                  <label class="flex items-center text-sm">
+                    <input type="radio" formControlName="confirmation" value="no"
+                           class="mr-2 text-blue-600 focus:ring-blue-500 w-4 h-4">
+                    No
+                  </label>
+                </div>
               </div>
+              
 
 
               <span *ngIf="requiredDocumentsForm.get('confirmation')?.value === 'no'" class="text-red-600 text-sm mt-2">This field is required.</span>
             </div>
 
-            <div class="p-fluid p-formgrid p-grid">
-              <div class="p-field p-col-12">
-                <label for="password">Password</label>
+
+
+            <div class="p-fluid p-formgrid p-grid space-y-6 border-b border-gray-300 pb-6">
+
+              <div class="p-field p-col-12" >
+                <label for="password" class="block text-sm font-medium mb-2">Password</label>
                 <p-password 
                   id="password"
                   formControlName="password" 
                   [feedback]="true" 
                   [toggleMask]="true" 
                   [styleClass]="requiredDocumentsForm.get('password')?.invalid && requiredDocumentsForm.get('password')?.touched ? 'ng-invalid' : ''" 
-                  placeholder="Enter your password"></p-password>
+                  placeholder="Enter your password"
+                  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
               </div>
             
-              <div class="p-field p-col-12">
-                <label for="confirmPassword">Confirm Password</label>
+              <div class="p-field p-col-12 " >
+                <label for="confirmPassword" class="block text-sm font-medium mb-2">Confirm Password</label>
                 <p-password 
                   id="confirmPassword"
                   formControlName="confirmPassword" 
                   [feedback]="true" 
                   [toggleMask]="true" 
                   [styleClass]="requiredDocumentsForm.get('confirmPassword')?.invalid && requiredDocumentsForm.get('confirmPassword')?.touched ? 'ng-invalid' : ''" 
-                  placeholder="Confirm your password"></p-password>
+                  placeholder="Confirm your password"
+                  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
                   <div *ngIf="requiredDocumentsForm.get('confirmPassword')?.invalid && requiredDocumentsForm.get('confirmPassword')?.touched">
                     <small class="text-danger" style="color: red" *ngIf="requiredDocumentsForm.get('confirmPassword')?.hasError('required')">Confirm password is required.</small>
                     <small class="text-danger" style="color: red" *ngIf="requiredDocumentsForm.hasError('passwordsMismatch') && requiredDocumentsForm.get('confirmPassword')?.touched">
@@ -1407,138 +1597,150 @@
 
       <p-stepperPanel header="Review">
         <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
-        <h2 class="text-xl font-semibold">Review Your Application</h2>
-        <p class="text-gray-600 mb-4">Please review all your details before submitting. Use the "Edit" button if any information is incorrect.</p>
+          <!-- Title -->
+          <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Review Your Application</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+              Please review all your details before submitting. Use the "Edit" button if any information is incorrect.
+            </p>
       
-        <!-- Intro Confirmation -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">Intro Confirmation</h3>
-          <p><strong>Confirm:</strong> {{ introForm.get('confirm')?.value }}</p>
-          <button (click)="goToStep(1)" class="text-blue-600 underline">Edit</button>
-        </div>
+            <!-- Intro Confirmation -->
+            <div class="mb-6 border-b pb-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Intro Confirmation</h3>
+              <p><strong>Confirm:</strong> {{ introForm.get('confirm')?.value }}</p>
+              <button (click)="goToStep(1)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
       
-        <!-- Personal Information -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">Personal Information</h3>
-          <p><strong>First Name (EN):</strong> {{ personalInfoForm.get('firstNameEn')?.value }}</p>
-          <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
-          <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
-          <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
-          <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
-          <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
-          <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
-          <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
-          <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
-          <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
-          <p><strong>Family Registration Number:</strong> {{ personalInfoForm.get('familyRegistrationNumber')?.value }}</p>
-          <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
-          <p><strong>Mobile Phone:</strong> {{ personalInfoForm.get('mobilePhone')?.value }}</p>
-          <p><strong>WhatsApp:</strong> {{ personalInfoForm.get('whatsapp')?.value }}</p>
-          <p><strong>Emergency Phone:</strong> {{ personalInfoForm.get('emergencyPhone')?.value }}</p>
-          <p><strong>Emergency Relation:</strong> {{ personalInfoForm.get('emergencyRelation')?.value }}</p>
-          <p><strong>Email:</strong> {{ personalInfoForm.get('email')?.value }}</p>
-          <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
-          <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
-          <p><strong>Head of Family:</strong> {{ personalInfoForm.get('headfa')?.value }}</p>
-          <p><strong>Camp Type:</strong> {{ personalInfoForm.get('campType')?.value }}</p>
-          <p><strong>Camp:</strong> {{ personalInfoForm.get('camp')?.value }}</p>
-          <button (click)="goToStep(2)" class="text-blue-600 underline">Edit</button>
-        </div>
+            <!-- Personal Information -->
+            <div class="mb-6 border-b pb-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Personal Information</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>First Name (EN):</strong> {{ personalInfoForm.get('firstNameEn')?.value }}</p>
+                <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
+                <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
+                <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
+                <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
+                <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
+                <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
+                <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
+                <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
+                <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
+                <p><strong>Family Registration Number:</strong> {{ personalInfoForm.get('familyRegistrationNumber')?.value }}</p>
+                <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
+                <p><strong>Mobile Phone:</strong> {{ personalInfoForm.get('mobilePhone')?.value }}</p>
+                <p><strong>WhatsApp:</strong> {{ personalInfoForm.get('whatsapp')?.value }}</p>
+                <p><strong>Emergency Phone:</strong> {{ personalInfoForm.get('emergencyPhone')?.value }}</p>
+                <p><strong>Emergency Relation:</strong> {{ personalInfoForm.get('emergencyRelation')?.value }}</p>
+                <p><strong>Email:</strong> {{ personalInfoForm.get('email')?.value }}</p>
+                <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
+                <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
+                <p><strong>Head of Family:</strong> {{ personalInfoForm.get('headfa')?.value }}</p>
+                <p><strong>Camp Type:</strong> {{ personalInfoForm.get('campType')?.value }}</p>
+                <p><strong>Camp:</strong> {{ personalInfoForm.get('camp')?.value }}</p>
+              </div>
+              <button (click)="goToStep(2)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
       
-        <!-- General Questions -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">General Questions</h3>
-          <p><strong>Placed by KFW CfW:</strong> {{ generalQuestionsForm.get('placedByKfw')?.value }}</p>
-          <p><strong>KFW Year:</strong> {{ generalQuestionsForm.get('kfwYear')?.value }}</p>
-          <p><strong>Innovation Lab Graduate:</strong> {{ generalQuestionsForm.get('innovationLabGraduate')?.value }}</p>
+            <!-- General Questions -->
+            <div class="mb-6 border-b pb-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">General Questions</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>Placed by KFW CfW:</strong> {{ generalQuestionsForm.get('placedByKfw')?.value }}</p>
+                <p><strong>KFW Year:</strong> {{ generalQuestionsForm.get('kfwYear')?.value }}</p>
+                <p><strong>Innovation Lab Graduate:</strong> {{ generalQuestionsForm.get('innovationLabGraduate')?.value }}</p>
+                <div *ngFor="let innovtyp of generalQuestionsForm.get('innovationLabGradtype')?.value">
+                  <p><strong>Innovation Lab Graduate Type:</strong> {{ innovtyp }}</p>
+                </div>
+                <p><strong>Digital Skills:</strong> {{ generalQuestionsForm.get('digitalSkills')?.value }}</p>
+                <p><strong>Disability:</strong> {{ generalQuestionsForm.get('disability')?.value }}</p>
+                <p><strong>Disability Support:</strong> {{ generalQuestionsForm.get('disabilitySupport')?.value }}</p>
+                <div *ngFor="let dis of generalQuestionsForm.get('disabilityTypes')?.value">
+                  <p><strong>Disability Type:</strong> {{ dis }}</p>
+                </div>
+                <p><strong>Employed:</strong> {{ generalQuestionsForm.get('employed')?.value }}</p>
+                <p><strong>Employment Duration:</strong> {{ generalQuestionsForm.get('seekingEmploymentDuration')?.value }}</p>
+                <p><strong>Volunteer with PRCS:</strong> {{ generalQuestionsForm.get('isPrcsVolunteer')?.value }}</p>
+                <p><strong>Volunteer with Fire Brigades:</strong> {{ generalQuestionsForm.get('isFireBrigadesVolunteer')?.value }}</p>
+                <p><strong>Volunteer with Al-Shifaa:</strong> {{ generalQuestionsForm.get('isAlShifaaVolunteer')?.value }}</p>
+              </div>
+              <button (click)="goToStep(3)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
+      
+            <!-- Experience Details -->
+            <div class="mb-6 border-b pb-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Experience Details</h3>
+              <div *ngFor="let experience of experienceDetailsForm.get('experiences')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
+                <p><strong>Experience {{ i + 1 }}:</strong></p>
+                <p><strong>Type:</strong> {{ experience.type }}</p>
+                <p><strong>Employer Name:</strong> {{ experience.employerName }}</p>
+                <p><strong>Employer Phone:</strong> {{ experience.employerPhone }}</p>
+                <p><strong>Area:</strong> {{ experience.area }}</p>
+                <p><strong>Employment Type:</strong> {{ experience.employmentType }}</p>
+                <p><strong>Job Title:</strong> {{ experience.jobTitle }}</p>
+                <p><strong>Start Date:</strong> {{ experience.startDate }}</p>
+                <p><strong>End Date:</strong> {{ experience.endDate }}</p>
+                <p><strong>Salary:</strong> {{ experience.salary }}</p>
+                <p><strong>Main Tasks:</strong> {{ experience.mainTasks }}</p>
+              </div>
+              <button (click)="goToStep(5)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
+      
+            <!-- Training and Skills -->
+            <div class="mb-6 border-b pb-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Training Details</h3>
+              <div *ngFor="let training of trainingsAndSkillsForm.get('trainings')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
+                <p><strong>Training {{ i + 1 }}:</strong></p>
+                <p><strong>Institution:</strong> {{ training.institution }}</p>
+                <p><strong>Certificate:</strong> {{ training.certificate }}</p>
+                <p><strong>Area:</strong> {{ training.area }}</p>
+                <p><strong>Duration From:</strong> {{ training.durationFrom }}</p>
+                <p><strong>Duration To:</strong> {{ training.durationTo }}</p>
+              </div>
 
-
-          <div *ngFor="let innovtyp of generalQuestionsForm.get('innovationLabGradtype')?.value">
-            <p><strong>Innovation Lab Graduate Type:</strong> {{ innovtyp }}</p>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>Arabic:</strong> {{ trainingsAndSkillsForm.get('skills.arabic')?.value }}</p>
+                <p><strong>English:</strong> {{ trainingsAndSkillsForm.get('skills.english')?.value }}</p>
+                <p><strong>French:</strong> {{ trainingsAndSkillsForm.get('skills.french')?.value }}</p>
+                <div *ngFor="let skill of trainingsAndSkillsForm.get('skills.computerSkills')?.value">
+                  <p><strong>Computer Skill:</strong> {{ skill }}</p>
+                </div>
+              </div>
+              <button (click)="goToStep(6)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
+      
+            <!-- Required Documents -->
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Documents</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <p><strong>CV:</strong> {{ requiredDocumentsForm.get('cv')?.value }}</p>
+                <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.get('coverLetter')?.value }}</p>
+                <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.get('identityCard')?.value }}</p>
+                <p><strong>Registration Card:</strong> {{ requiredDocumentsForm.get('registrationCard')?.value }}</p>
+                <p><strong>Degree:</strong> {{ requiredDocumentsForm.get('degree')?.value }}</p>
+                <p><strong>PRCS Proof:</strong> {{ requiredDocumentsForm.get('prcsProof')?.value }}</p>
+                <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.get('fireProof')?.value }}</p>
+                <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.get('alShifaaProof')?.value }}</p>
+              </div>
+              <p><strong>Password:</strong> (hidden for security)</p>
+              <button (click)="goToStep(7)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
+            </div>
+      
+            <!-- Navigation -->
+            <div class="flex justify-between items-center mt-8">
+              <p-button label="Back" severity="secondary" (onClick)="prevCallback.emit()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" />
+              <button type="button" (click)="onSubmit()" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+                Submit
+              </button>
+            </div>
+      
+            <!-- Success Message -->
+            <div *ngIf="formSubmitted" class="alert alert-success mt-3">
+              Form submitted successfully!
+            </div>
           </div>
-
-
-
-
-          <p><strong>Digital Skills:</strong> {{ generalQuestionsForm.get('digitalSkills')?.value }}</p>
-          <p><strong>Disability:</strong> {{ generalQuestionsForm.get('disability')?.value }}</p>
-          <p><strong>Disability Support:</strong> {{ generalQuestionsForm.get('disabilitySupport')?.value }}</p>
-          <div *ngFor="let dis of generalQuestionsForm.get('disabilityTypes')?.value">
-            <p><strong>Disability Type:</strong> {{ dis }}</p>
-          </div>
-
-          <p><strong>Employed:</strong> {{ generalQuestionsForm.get('employed')?.value }}</p>
-          <p><strong>Employment Duration:</strong> {{ generalQuestionsForm.get('seekingEmploymentDuration')?.value }}</p>
-          <p><strong>Volunteer with PRCS:</strong> {{ generalQuestionsForm.get('isPrcsVolunteer')?.value }}</p>
-          <p><strong>Volunteer with Fire Brigades:</strong> {{ generalQuestionsForm.get('isFireBrigadesVolunteer')?.value }}</p>
-          <p><strong>Volunteer with Al-Shifaa:</strong> {{ generalQuestionsForm.get('isAlShifaaVolunteer')?.value }}</p>
-          <button (click)="goToStep(3)" class="text-blue-600 underline">Edit</button>
-        </div>
-      
-        <!-- Experience Details -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">Experience Details</h3>
-          <div *ngFor="let experience of experienceDetailsForm.get('experiences')?.value; let i = index">
-            <p><strong>Experience {{ i + 1 }}:</strong></p>
-            <p><strong>Type:</strong> {{ experience.type }}</p>
-            <p><strong>Employer Name:</strong> {{ experience.employerName }}</p>
-            <p><strong>Employer Phone:</strong> {{ experience.employerPhone }}</p>
-            <p><strong>Area:</strong> {{ experience.area }}</p>
-            <p><strong>Employment Type:</strong> {{ experience.employmentType }}</p>
-            <p><strong>Job Title:</strong> {{ experience.jobTitle }}</p>
-            <p><strong>Start Date:</strong> {{ experience.startDate }}</p>
-            <p><strong>End Date:</strong> {{ experience.endDate }}</p>
-            <p><strong>Salary:</strong> {{ experience.salary }}</p>
-            <p><strong>Main Tasks:</strong> {{ experience.mainTasks }}</p>
-          </div>
-          <button (click)="goToStep(5)" class="text-blue-600 underline">Edit</button>
-        </div>
-      
-        <!-- Training and Skills -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">Trainings and Skills</h3>
-          <p><strong>Arabic:</strong> {{ trainingsAndSkillsForm.get('skills.arabic')?.value }}</p>
-          <p><strong>English:</strong> {{ trainingsAndSkillsForm.get('skills.english')?.value }}</p>
-          <p><strong>French:</strong> {{ trainingsAndSkillsForm.get('skills.french')?.value }}</p>
-          <div *ngFor="let skill of trainingsAndSkillsForm.get('skills.computerSkills')?.value">
-            <p><strong>Computer Skill:</strong> {{ skill }}</p>
-          </div>
-          <button (click)="goToStep(6)" class="text-blue-600 underline">Edit</button>
-        </div>
-      
-        <!-- Required Documents -->
-        <div class="mb-6">
-          <h3 class="text-lg font-medium">Required Documents</h3>
-          <p><strong>CV:</strong> {{ requiredDocumentsForm.get('cv')?.value }}</p>
-          <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.get('coverLetter')?.value }}</p>
-          <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.get('identityCard')?.value }}</p>
-          <p><strong>Registration Card:</strong> {{ requiredDocumentsForm.get('registrationCard')?.value }}</p>
-          <p><strong>Degree:</strong> {{ requiredDocumentsForm.get('degree')?.value }}</p>
-          <p><strong>PRCS Proof:</strong> {{ requiredDocumentsForm.get('prcsProof')?.value }}</p>
-          <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.get('fireProof')?.value }}</p>
-          <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.get('alShifaaProof')?.value }}</p>
-          <p><strong>Password:</strong> (hidden for security)</p>
-          <button (click)="goToStep(7)" class="text-blue-600 underline">Edit</button>
-        </div>
-      
-        <!-- Navigation -->
-        <div class="flex justify-between mt-8">
-          <p-button 
-          label="Back" 
-          severity="secondary" 
-          (onClick)="prevCallback.emit()" 
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        />
-        <button type="button" (click)="onSubmit()" class="btn btn-primary">Submit</button>
-        <div *ngIf="formSubmitted" class="alert alert-success mt-3">
-          Form submitted successfully!
-        </div>
-        
-        </div>
-        
-
-      </ng-template>
-    </p-stepperPanel>      
+        </ng-template>
+      </p-stepperPanel>
+         
     
     </p-stepper>
  </div>
