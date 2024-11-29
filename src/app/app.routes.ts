@@ -41,4 +41,8 @@ export const routes: Routes = [
   { path: 'test', component: TestComponent }, // Add this route
 
 
+  {
+    path: 'admin',
+    component: MainAdminComponent, // Parent for steps
+  }
 ];

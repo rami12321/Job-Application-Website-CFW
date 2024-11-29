@@ -7,173 +7,130 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
-
+import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 
 interface Column {
   field: string;
   header: string;
 }
+
 @Component({
   selector: 'app-smart-table',
   standalone: true,
-  imports: [MatTableModule, TableModule, InputTextModule, CommonModule,PaginatorModule ,MultiSelectModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    TableModule,
+    InputTextModule,
+    PaginatorModule,
+    MultiSelectModule,
+  ],
+  providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.css',
-  styles: [
-    `:host ::ng-deep .p-cell-editing {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }`,
-  ],
 })
-
-export class SmartTableComponent implements OnInit{
-
-
-  cols: Column[]=[];
-  _selectedColumns: Column[]=[];
-
-  title = 'employee-leave-man';
-
-  cars = [
-    { vin: 'A1234', year: 2020, brand: 'Toyota' },
-    { vin: 'B5678', year: 2021, brand: 'Honda' },
-    { vin: 'C9101', year: 2019, brand: 'Ford' },
-    { vin: 'D1121', year: 2022, brand: 'Chevrolet' },
-    { vin: 'E3141', year: 2023, brand: 'Tesla' },
-  ];
-
-  products = [
-    { code: 'P001', name: 'Laptop', quantity: 50, price: 1000,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13', },
-    { code: 'P002', name: 'Mobile Phone', quantity: 200, price: 500,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13', },
-    { code: 'P003', name: 'Tablet', quantity: 100, price: 300 ,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13'},
-    { code: 'P004', name: 'Monitor', quantity: 150, price: 200,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13', },
-    { code: 'P005', name: 'Keyboard', quantity: 300, price: 50 ,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13',},
-    { code: 'P006', name: 'Keyboardd', quantity: 300, price: 50 ,column1: 'Value 1',
-      column2: 'Value 2',
-      column3: 'Value 3',
-      column4: 'Value 4',
-      column5: 'Value 5',
-      column6: 'Value 6',
-      column7: 'Value 7',
-      column8: 'Value 8',
-      column9: 'Value 9',
-      column10: 'Value 10',
-      column11: 'Value 11',
-      column12: 'Value 12',
-      column13: 'Value 13',},
-  ];
-  ngOnInit() {
-
-    // No need to fetch products, using mock data
-    this.cols = [
-      { field: 'code', header: 'Personal Registration Number' },
-      { field: 'name', header: 'First Name' },
-      { field: 'quantity', header: 'Father Name' },
-      { field: 'price', header: 'Last Name' },
-      { field: 'column1', header: 'اسم الاول' },
-      { field: 'column2', header: 'اسم الأب' },
-      { field: 'column3', header: 'اسم العائلة' },
-      { field: 'column4', header: 'Gender' },
-      { field: 'column5', header: 'Age' },
-      { field: 'column6', header: 'Nationality' },
-      { field: 'column7', header: 'phone' },
-      { field: 'column8', header: 'number' },
-      { field: 'column9', header: 'Email' },
-      { field: 'column10', header: 'Area' },
-      { field: 'column11', header: 'Major' },
-      { field: 'column12', header: 'Education Level' },
-    ];
-
-  this._selectedColumns = this.cols;
-
-  }
-
-  onEdit(event: any) {
-    if (!this.isPositiveInteger(event.target.value)) {
-      event.stopPropagation();
-    }
-  }
-
-  isPositiveInteger(val: string): boolean {
-    let str = String(val).trim();
-    if (!str) {
-      return false;
-    }
-
-
-
-    str = str.replace(/^0+/, '') || '0';
-    const n = Math.floor(Number(str));
-
-    return n !== Infinity && String(n) === str && n >= 0;
-  }
+export class SmartTableComponent implements OnInit {
+  youthList: any[] = [];
+  cols: Column[] = [];
+  _selectedColumns: Column[] = [];
+  _selectedColumns1: Column[] = [];
   paginatedProducts: any[] = [];
+  rowsPerPage = 10;
+  selectedGender: string[] = [];
+  rowData: any = {}; // Or use the appropriate type for your data
 
-  paginate(event: any) {
-    const { first, rows } = event;
-    this.paginatedProducts = this.products.slice(first, first + rows);
+
+  excludedColumns: string[] = ['confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  filteredCols: Column[] = []; // New array to hold filtered columns
+
+  constructor(private youthService: YouthServiceService) {}
+
+  ngOnInit(): void {
+    this.fetchYouthData(); // Fetch data from the service
   }
-  selectedColumns: string[] = ['code', 'name', 'quantity', 'price', 'column1', 'column2', 'column3', 'column4', 'column5', 'column6', 'column7', 'column8', 'column9', 'column10', 'column11', 'column12'];
 
+
+
+
+  fetchYouthData(): void {
+    this.youthService.getAllYouth().subscribe(
+      (data: any[]) => {
+        console.log('Fetched Youth Data:', data);
+
+        if (data.length > 0) {
+          // Exclude unwanted columns
+          const filteredColumns = Object.keys(data[0]).filter(
+            (key) => !this.excludedColumns.includes(key)
+          );
+
+          // Map filtered columns to the format expected by PrimeNG
+          this.cols = filteredColumns.map((key) => ({
+            field: key,
+            header: this.capitalize(key),
+          }));
+
+          // Insert "Action" column at the desired position (e.g., 1st position)
+          const actionColumn = { field: 'action', header: 'Action' };
+          this.cols.unshift(actionColumn); // Add at the beginning
+
+          // Initialize _selectedColumns with all columns except "Action"
+          this._selectedColumns = this.cols.filter(col => col.field !== 'action');
+
+          // Initialize _selectedColumns1 which will be used in ngModel
+          this._selectedColumns1 = this.cols.filter(col => col.field !== 'action');
+        }
+
+        this.youthList = data;
+        this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage);
+      },
+      (error) => {
+        console.error('Error fetching youth data:', error);
+      }
+    );
+  }
+
+
+  // Capitalize column headers for display
+  capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1');
+  }
+
+  performAction(action: string, item: any): void {
+    if (action === 'edit') {
+      console.log('Edit action for:', item);
+    } else if (action === 'delete') {
+      console.log('Delete action for:', item);
+    }
+  }
+    representatives = [
+    { name: 'Male' },
+    { name: 'Female' },
+  ];
+filterByGender(selectedGenders: any[]): void {
+  this.youthService.getAllYouth().subscribe((data: any[]) => {
+    if (selectedGenders && selectedGenders.length > 0) {
+      this.paginatedProducts = data.filter(youth =>
+        selectedGenders.includes(youth.gender)
+      );
+    } else {
+      // Reset to show all data if no gender is selected
+      this.paginatedProducts = [...data];
+    }
+  });
+}
+editRow(rowData: any): void {
+  console.log('Edit action triggered for:', rowData);
+  // Add your logic for editing the row
+}
+
+deleteRow(rowData: any): void {
+  console.log('Delete action triggered for:', rowData);
+  // Add your logic for deleting the row
+}
+
+
+  paginate(event: any): void {
+    const { first, rows } = event;
+    this.paginatedProducts = this.youthList.slice(first, first + rows);
+  }
 }
