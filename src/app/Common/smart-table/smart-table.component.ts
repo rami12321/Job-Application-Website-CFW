@@ -123,10 +123,30 @@ performAction(action: string, item: any): void {
   if (action === 'view') {
     console.log('View action for:', item);
   } else if (action === 'pend') {
-    console.log('Pend action for:', item);
+    this.updateStatus(item.id, 'pending');
   } else if (action === 'accept') {
-    console.log('Accept action for:', item);
+    this.updateStatus(item.id, 'accepted');
   }
+}
+
+updateStatus(id: number, newStatus: string): void {
+  // Call the YouthService to update the status of the youth
+  this.youthService.updateYouthStatus(id, newStatus).subscribe(
+    (response) => {
+      console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
+
+      // Update the local youthList to reflect the status change
+      const updatedYouth = this.youthList.map((youth) =>
+        youth.id === id ? { ...youth, status: newStatus } : youth
+      );
+
+      this.youthList = updatedYouth; // Update the youthList to reflect changes
+      this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage); // Update pagination if needed
+    },
+    (error) => {
+      console.error('Error updating status:', error);
+    }
+  );
 }
     representatives = [
     { name: 'Male' },

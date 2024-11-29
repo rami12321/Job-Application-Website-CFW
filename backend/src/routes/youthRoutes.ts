@@ -7,6 +7,7 @@ import {
   // updateYouth,
   deleteYouth,
   getYouthById,
+  updateYouthStatus,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -30,5 +31,7 @@ router.post(
 // router.put('/:id', updateYouth);
 
 router.delete('/:id', deleteYouth);
+
+router.patch('/:id/status', updateYouthStatus);
 
 export default router;  // Correct export

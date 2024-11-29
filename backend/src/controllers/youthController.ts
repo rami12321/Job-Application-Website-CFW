@@ -95,3 +95,30 @@ export const updateYouth = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Youth with ID ${id} updated successfully.`, updatedYouth });
 };
+export const updateYouthStatus = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const { status } = req.body;  // Extract the new status from the request body
+  let youths: Youth[] = readFile();
+
+  // Check if status is provided
+  if (!status) {
+    res.status(400).json({ message: 'Status is required.' });
+    return;
+  }
+
+  // Find the youth by ID
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Update the status
+  youths[youthIndex].status = status;
+
+  // Save the updated youths array back to the file
+  writeFile(youths);
+
+  res.status(200).json({ message: `Youth with ID ${id} status updated successfully.`, updatedYouth: youths[youthIndex] });
+};

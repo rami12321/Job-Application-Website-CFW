@@ -52,4 +52,9 @@ export class YouthServiceService {
   deleteYouth(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  updateYouthStatus(id: number, status: string): Observable<any> {
+    // Send PATCH request to update the status
+    return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
+  }
 }
