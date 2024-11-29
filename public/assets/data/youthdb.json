@@ -97,7 +97,8 @@
     "fireProof": "C:\\fakepath\\SKM_80802021512020_0002.pdf",
     "alShifaaProof": "",
     "confirmation": "yes",
-    "confirmPassword": "123123.rR"
+    "confirmPassword": "123123.rR",
+    "status": "pending"
   },
   {
     "username": "mohammad S",
@@ -179,6 +180,91 @@
         "url": "http://example.com/documents/john_doe_cover_letter.pdf"
       }
     ],
-    "id": "47759249"
+    "id": "47759249",
+    "status": "accepted"
+  },
+  {
+    "username": "Rami",
+    "password": "password1234",
+    "role": "youth",
+    "firstNameEn": "",
+    "lastNameEn": "Doe",
+    "gender": "Male",
+    "dob": "1999-05-15",
+    "nationality": "American",
+    "mobilePhone": "+9613456789",
+    "whatsapp": "+123456789",
+    "email": "john.doe@example.com",
+    "area": "New York",
+    "fullAddress": "123 Main St, New York, NY, USA",
+    "campType": "Urban",
+    "camp": "NA",
+    "jobOpportunitySource": "Online",
+    "educationLevel": "Bachelor's Degree",
+    "major": "Computer Science",
+    "institution": "New York University",
+    "graduationDate": "2020-06-10",
+    "gradplace": "USA",
+    "employmentOpportunities": "Open to offers",
+    "aboutYourself": "Passionate about technology and innovation.",
+    "placedByKfw": false,
+    "kfwYear": "",
+    "innovationLabGraduate": true,
+    "disability": false,
+    "disabilitySupport": null,
+    "employed": true,
+    "seekingEmploymentDuration": null,
+    "isPrcsVolunteer": true,
+    "isFireBrigadesVolunteer": false,
+    "isAlShifaaVolunteer": false,
+    "experienceDetails": {
+      "experiences": [
+        {
+          "title": "Software Engineer",
+          "company": "TechCorp",
+          "startDate": "2021-01-01",
+          "endDate": "2023-05-01",
+          "description": "Developed web applications and managed cloud services."
+        },
+        {
+          "title": "Intern",
+          "company": "Startup Inc.",
+          "startDate": "2020-06-15",
+          "endDate": "2020-12-15",
+          "description": "Assisted in developing prototypes for AI solutions."
+        }
+      ]
+    },
+    "trainingsAndSkills": {
+      "trainings": [
+        {
+          "title": "Full-Stack Web Development",
+          "institution": "Code Academy",
+          "date": "2020-03-01",
+          "description": "Learned JavaScript, React, and Node.js."
+        },
+        {
+          "title": "Data Science Bootcamp",
+          "institution": "DataCamp",
+          "date": "2021-05-15",
+          "description": "Focused on Python, machine learning, and data visualization."
+        }
+      ]
+    },
+    "requiredDocuments": [
+      {
+        "name": "Resume",
+        "type": "PDF",
+        "url": "http://example.com/documents/john_doe_resume.pdf"
+      },
+      {
+        "name": "Cover Letter",
+        "type": "PDF",
+        "url": "http://example.com/documents/john_doe_cover_letter.pdf"
+      }
+    ],
+    "id": "53455722",
+    "status":"accepted"
+
   }
 ]

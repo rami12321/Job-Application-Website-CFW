@@ -29,55 +29,56 @@
 
   <ng-template pTemplate="header">
     <tr>
+      <th class="border-r"></th>
 
       <th
         *ngFor="let col of cols"
         class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
         pSortableColumn="{{ col.field }}"
       >
-@if(col.field !=='action'){
-  <div class="flex flex-col">
-    <!-- Header Label and Sort Icon -->
-    <div class="flex justify-between items-center mb-2">
-      <span>{{ col.header }}</span>
-      <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
-    </div>
-    <!-- Column Filter -->
-  </div>
-}
-
+        @if(col.field !=='action'){
+        <div class="flex flex-col">
+          <!-- Header Label and Sort Icon -->
+          <div class="flex justify-between items-center mb-2">
+            <span>{{ col.header }}</span>
+            <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
+          </div>
+          <!-- Column Filter -->
+        </div>
+        }
       </th>
     </tr>
     <tr>
+      <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
+        Actions
+      </th>
       <th
         *ngFor="let col of cols"
         class="border-b border-r px-2 py-1 text-sm text-gray-600"
       >
         <!-- Using @if for conditional rendering -->
         @if (col.header === 'Gender') {
-          <!-- MultiSelect for Gender -->
-          <p-multiSelect
-            [ngModel]="selectedGender"
-            [options]="representatives"
-            placeholder="Any"
-            (ngModelChange)="filterByGender($event)"
-            optionLabel="name"
-          >
-            <ng-template let-option pTemplate="item">
-              <div class="flex items-center">
-                               {{ option.name }}
-              </div>
-            </ng-template>
-          </p-multiSelect>
-        }@if(col.header === 'Action'){
-          <p class="text-center">Actions</p>
+        <!-- MultiSelect for Gender -->
+        <p-multiSelect
+          [ngModel]="selectedGender"
+          [options]="representatives"
+          placeholder="Any"
+          (ngModelChange)="filterByGender($event)"
+          optionLabel="name"
+        >
+          <ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option.name }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
         } @else {
-          <!-- Text filter for other columns -->
-          <p-columnFilter
-            [type]="'text'"
-            [field]="col.field"
-            [showClearButton]="true"
-          ></p-columnFilter>
+        <!-- Text filter for other columns -->
+        <p-columnFilter
+          [type]="'text'"
+          [field]="col.field"
+          [showClearButton]="true"
+        ></p-columnFilter>
         }
       </th>
     </tr>
@@ -85,36 +86,223 @@
 
   <ng-template pTemplate="body" let-product>
     <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
+      <td
+        class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
+      >
+        <div class="" *ngFor="let action of getActionsForRow(product.status)">
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog('view', product)"
+          >
+            View
+          </button>
 
+          <p-dialog header="Youth Details" [(visible)]="dialogVisible" [style]="{ width: '45rem' }">
+            <div *ngIf="selectedYouth">
+              <!-- Personal Information Section -->
+              <div class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-800">Personal Information</h2>
+
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Full Name:</span>
+                  <span class="text-sm text-gray-600">
+                    {{ selectedYouth.firstNameEn }} {{ selectedYouth.fatherNameEn }} {{ selectedYouth.lastNameEn }}
+                  </span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Gender:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.gender }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Date of Birth:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.dob }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Nationality:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.nationality }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Email:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.email }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Mobile Phone:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.mobilePhone }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">WhatsApp:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.whatsapp }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Full Address:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.fullAddress }}</span>
+                </div>
+              </div>
+
+              <!-- General Information Section -->
+              <div class="space-y-4 mt-6">
+                <h2 class="text-xl font-semibold text-gray-800">General Information</h2>
+
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Education Level:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.educationLevel }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Major:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.major }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Institution:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.institution }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Graduation Date:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.graduationDate }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Employment Opportunities:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.employmentOpportunities }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">About Yourself:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.aboutYourself || 'N/A' }}</span>
+                </div>
+              </div>
+
+              <!-- Volunteer & Disability Information Section -->
+              <div class="space-y-4 mt-6">
+                <h2 class="text-xl font-semibold text-gray-800">Volunteer & Disability Information</h2>
+
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">KFW Placement:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.placedByKfw ? 'Yes' : 'No' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Innovation Lab Graduate:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.innovationLabGraduate ? 'Yes' : 'No' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Disability:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.disability ? 'Yes' : 'No' }}</span>
+                </div>
+                <div *ngIf="selectedYouth.disability" class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Disability Type(s):</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.disabilityTypes.join(', ') }}</span>
+                </div>
+              </div>
+
+              <!-- Experience Details Section -->
+              <div class="space-y-4 mt-6">
+                <h2 class="text-xl font-semibold text-gray-800">Experience Details</h2>
+                <div *ngIf="selectedYouth.experiences?.length > 0; else noExperience" class="space-y-4">
+                  <div *ngFor="let experience of selectedYouth.experiences">
+                    <div class="flex justify-between">
+                      <span class="font-semibold text-gray-700">Company:</span>
+                      <span class="text-sm text-gray-600">{{ experience.company }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="font-semibold text-gray-700">Role:</span>
+                      <span class="text-sm text-gray-600">{{ experience.role }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="font-semibold text-gray-700">Duration:</span>
+                      <span class="text-sm text-gray-600">{{ experience.duration }}</span>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #noExperience>
+                  <span class="text-sm text-gray-600">No experience available</span>
+                </ng-template>
+              </div>
+
+              <!-- Required Documents Section -->
+              <div class="space-y-4 mt-6">
+                <h2 class="text-xl font-semibold text-gray-800">Required Documents</h2>
+
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">CV:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.cv || 'N/A' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Identity Card:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.identityCard || 'N/A' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Registration Card:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.registrationCard || 'N/A' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Degree:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.degree || 'N/A' }}</span>
+                </div>
+                <div *ngIf="selectedYouth.prcsProof" class="flex justify-between">
+                  <span class="font-semibold text-gray-700">PRCS Proof:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.prcsProof || 'N/A' }}</span>
+                </div>
+                <div *ngIf="selectedYouth.fireProof" class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Fire Proof:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.fireProof || 'N/A' }}</span>
+                </div>
+                <div *ngIf="selectedYouth.alShifaaProof" class="flex justify-between">
+                  <span class="font-semibold text-gray-700">Al Shifaa Proof:</span>
+                  <span class="text-sm text-gray-600">{{ selectedYouth.alShifaaProof || 'N/A' }}</span>
+                </div>
+              </div>
+
+              <!-- Status Section -->
+              <div class="flex justify-between mt-6">
+                <span class="font-semibold text-gray-700">Status:</span>
+                <span class="text-sm text-gray-600">{{ selectedYouth.status }}</span>
+              </div>
+            </div>
+          </p-dialog>
+
+
+          <button
+            *ngIf="action === 'pend'"
+            type="button"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="performAction('pend', product)"
+          >
+            Pend
+          </button>
+          <button
+            *ngIf="action === 'accept'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="performAction('accept', product)"
+          >
+            Accept
+          </button>
+        </div>
+      </td>
       <td
         *ngFor="let col of cols"
         class="px-4 py-2 text-sm border-b border-r border-gray-300"
       >
-      <ng-container *ngIf="col.field === 'action'">
-        <div class="flex flex-row justify-between items-center px-5">
+        <ng-container *ngIf="col.field === 'action'">
+          <div class="flex flex-row justify-between items-center px-5">
+            <button
+              type="button"
+              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              (click)="performAction('edit', product)"
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              (click)="performAction('delete', product)"
+            >
+              Delete
+            </button>
+          </div>
+        </ng-container>
 
-        <button
-          type="button"
-          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          (click)="performAction('edit', product)"
-        >
-          Edit
-        </button>
-        <button
-          type="button"
-          class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          (click)="performAction('delete', product)"
-        >
-          Delete
-        </button>
-      </div>
-
-      </ng-container>
-
-
-        {{ col.field !== 'action' ? (product[col.field] || 'N/A') : '' }}
-
-    </td>
+        {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
+      </td>
     </tr>
   </ng-template>
 </p-table>

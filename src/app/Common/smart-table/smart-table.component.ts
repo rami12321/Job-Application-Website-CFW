@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
@@ -7,7 +7,9 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DialogModule } from 'primeng/dialog';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
+import { ButtonModule } from 'primeng/button';
 
 interface Column {
   field: string;
@@ -23,13 +25,14 @@ interface Column {
     TableModule,
     InputTextModule,
     PaginatorModule,
-    MultiSelectModule,
-  ],
+    MultiSelectModule,DialogModule, ButtonModule  ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.css',
 })
 export class SmartTableComponent implements OnInit {
+  @Input() status: string | undefined;
+
   youthList: any[] = [];
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
@@ -40,7 +43,7 @@ export class SmartTableComponent implements OnInit {
   rowData: any = {}; // Or use the appropriate type for your data
 
 
-  excludedColumns: string[] = ['confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  excludedColumns: string[] = ['status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
   constructor(private youthService: YouthServiceService) {}
@@ -57,9 +60,14 @@ export class SmartTableComponent implements OnInit {
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
 
-        if (data.length > 0) {
+        // Filter youthList by status if the `status` input is provided
+        const filteredData = this.status
+          ? data.filter((item) => item.status === this.status)
+          : data;
+
+        if (filteredData.length > 0) {
           // Exclude unwanted columns
-          const filteredColumns = Object.keys(data[0]).filter(
+          const filteredColumns = Object.keys(filteredData[0]).filter(
             (key) => !this.excludedColumns.includes(key)
           );
 
@@ -70,17 +78,17 @@ export class SmartTableComponent implements OnInit {
           }));
 
           // Insert "Action" column at the desired position (e.g., 1st position)
-          const actionColumn = { field: 'action', header: 'Action' };
-          this.cols.unshift(actionColumn); // Add at the beginning
+          // const actionColumn = { field: 'action', header: 'Action' };
+          // this.cols.unshift(actionColumn); // Add at the beginning
 
           // Initialize _selectedColumns with all columns except "Action"
           this._selectedColumns = this.cols.filter(col => col.field !== 'action');
 
           // Initialize _selectedColumns1 which will be used in ngModel
-          this._selectedColumns1 = this.cols.filter(col => col.field !== 'action');
+          // this._selectedColumns1 = this.cols.filter(col => col.field !== 'action');
         }
 
-        this.youthList = data;
+        this.youthList = filteredData;
         this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage);
       },
       (error) => {
@@ -90,18 +98,36 @@ export class SmartTableComponent implements OnInit {
   }
 
 
+
   // Capitalize column headers for display
   capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1');
   }
 
-  performAction(action: string, item: any): void {
-    if (action === 'edit') {
-      console.log('Edit action for:', item);
-    } else if (action === 'delete') {
-      console.log('Delete action for:', item);
+  getActionsForRow(status: string): string[] {
+    // Return different actions based on the row's status
+    switch (status) {
+      case 'accepted':
+        return ['view', 'pend'];
+      case 'rejected':
+        return ['view', 'pend'];
+      case 'pending':
+        return ['view', 'accept'];
+      default:
+        return ['view', 'pend'];
     }
   }
+
+
+performAction(action: string, item: any): void {
+  if (action === 'view') {
+    console.log('View action for:', item);
+  } else if (action === 'pend') {
+    console.log('Pend action for:', item);
+  } else if (action === 'accept') {
+    console.log('Accept action for:', item);
+  }
+}
     representatives = [
     { name: 'Male' },
     { name: 'Female' },
@@ -133,4 +159,16 @@ deleteRow(rowData: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);
   }
+
+  visible: boolean = false;
+  selectedYouth: any;  // Store selected youth's data
+  dialogVisible: boolean = false;  // To show/hide the dialog
+  showDialog(action: string, product: any) {
+    if (action === 'view') {
+      this.selectedYouth = { ...product };  // Assign the selected product's data to selectedYouth
+      this.dialogVisible = true;  // Open the dialog
+    }
+  }
 }
+
+
