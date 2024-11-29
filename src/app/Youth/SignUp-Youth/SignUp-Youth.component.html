@@ -1598,53 +1598,66 @@
       <p-stepperPanel header="Review">
         <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
           <!-- Title -->
-          <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <div class="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg space-y-6">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Review Your Application</h2>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
               Please review all your details before submitting. Use the "Edit" button if any information is incorrect.
             </p>
       
             <!-- Intro Confirmation -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
+
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Intro Confirmation</h3>
               <p><strong>Confirm:</strong> {{ introForm.get('confirm')?.value }}</p>
               <button (click)="goToStep(1)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
-            <!-- Personal Information -->
-            <div class="mb-6 border-b pb-4">
+            <!-- Personal Information -->  
+
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Personal Information</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
                 <p><strong>First Name (EN):</strong> {{ personalInfoForm.get('firstNameEn')?.value }}</p>
-                <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
-                <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
-                <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
-                <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
-                <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
-                <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
-                <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
-                <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
-                <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
                 <p><strong>Family Registration Number:</strong> {{ personalInfoForm.get('familyRegistrationNumber')?.value }}</p>
-                <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
+              
+                <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
                 <p><strong>Mobile Phone:</strong> {{ personalInfoForm.get('mobilePhone')?.value }}</p>
+              
+                <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
                 <p><strong>WhatsApp:</strong> {{ personalInfoForm.get('whatsapp')?.value }}</p>
+              
+                <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
                 <p><strong>Emergency Phone:</strong> {{ personalInfoForm.get('emergencyPhone')?.value }}</p>
+              
+                <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
                 <p><strong>Emergency Relation:</strong> {{ personalInfoForm.get('emergencyRelation')?.value }}</p>
+              
+                <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
                 <p><strong>Email:</strong> {{ personalInfoForm.get('email')?.value }}</p>
-                <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
-                <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
+              
+                <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
                 <p><strong>Head of Family:</strong> {{ personalInfoForm.get('headfa')?.value }}</p>
+              
+                <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
+                <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
+              
+                <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
                 <p><strong>Camp Type:</strong> {{ personalInfoForm.get('campType')?.value }}</p>
+              
+                <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
                 <p><strong>Camp:</strong> {{ personalInfoForm.get('camp')?.value }}</p>
+              
+                <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
+                <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
               </div>
+              
               <button (click)="goToStep(2)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- General Questions -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">General Questions</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>Placed by KFW CfW:</strong> {{ generalQuestionsForm.get('placedByKfw')?.value }}</p>
                 <p><strong>KFW Year:</strong> {{ generalQuestionsForm.get('kfwYear')?.value }}</p>
                 <p><strong>Innovation Lab Graduate:</strong> {{ generalQuestionsForm.get('innovationLabGraduate')?.value }}</p>
@@ -1667,7 +1680,7 @@
             </div>
       
             <!-- Experience Details -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Experience Details</h3>
               <div *ngFor="let experience of experienceDetailsForm.get('experiences')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
                 <p><strong>Experience {{ i + 1 }}:</strong></p>
@@ -1686,7 +1699,7 @@
             </div>
       
             <!-- Training and Skills -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Training Details</h3>
               <div *ngFor="let training of trainingsAndSkillsForm.get('trainings')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
                 <p><strong>Training {{ i + 1 }}:</strong></p>
@@ -1697,7 +1710,7 @@
                 <p><strong>Duration To:</strong> {{ training.durationTo }}</p>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>Arabic:</strong> {{ trainingsAndSkillsForm.get('skills.arabic')?.value }}</p>
                 <p><strong>English:</strong> {{ trainingsAndSkillsForm.get('skills.english')?.value }}</p>
                 <p><strong>French:</strong> {{ trainingsAndSkillsForm.get('skills.french')?.value }}</p>
@@ -1709,9 +1722,9 @@
             </div>
       
             <!-- Required Documents -->
-            <div class="mb-6">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Documents</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>CV:</strong> {{ requiredDocumentsForm.get('cv')?.value }}</p>
                 <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.get('coverLetter')?.value }}</p>
                 <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.get('identityCard')?.value }}</p>
@@ -1721,7 +1734,11 @@
                 <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.get('fireProof')?.value }}</p>
                 <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.get('alShifaaProof')?.value }}</p>
               </div>
+              <div class="grid grid-cols-2 gap-6 mt-4">
+
               <p><strong>Password:</strong> (hidden for security)</p>
+              </div>
+
               <button (click)="goToStep(7)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
