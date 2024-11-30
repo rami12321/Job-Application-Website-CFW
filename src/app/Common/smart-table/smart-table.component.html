@@ -57,22 +57,104 @@
         class="border-b border-r px-2 py-1 text-sm text-gray-600"
       >
         <!-- Using @if for conditional rendering -->
-        @if (col.header === 'Gender') {
+        @if (col.header === 'Major') {
         <!-- MultiSelect for Gender -->
         <p-multiSelect
-          [ngModel]="selectedGender"
-          [options]="representatives"
-          placeholder="Any"
-          (ngModelChange)="filterByGender($event)"
-          optionLabel="name"
+          [options]="majors"
+          [(ngModel)]="selectedMajors"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Majors"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
         >
           <ng-template let-option pTemplate="item">
             <div class="flex items-center">
-              {{ option.name }}
+              {{ option }}
             </div>
           </ng-template>
         </p-multiSelect>
-        } @else {
+        }@else if(col.header=="Gender"){
+        <p-multiSelect
+          [options]="genders"
+          [(ngModel)]="selectedGender"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Gender"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Area"){
+          <p-multiSelect
+            [options]="areas"
+            [(ngModel)]="selectedAreas"
+            [showClear]="true"
+            (onChange)="fetchYouthData()"
+            placeholder="Select Area"
+            [style]="{
+              background: 'white',
+              border: '1px solid #ddd',
+              'border-radius': '8px',
+              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            }"
+            ><ng-template let-option pTemplate="item">
+              <div class="flex items-center">
+                {{ option.name }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+          }@else if(col.header=="Education Level"){
+            <p-multiSelect
+              [options]="educationLevels"
+              [(ngModel)]="selectedEducationLevels"
+              [showClear]="true"
+              (onChange)="fetchYouthData()"
+              placeholder="Select Education Level"
+              [style]="{
+                background: 'white',
+                border: '1px solid #ddd',
+                'border-radius': '8px',
+                'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+              }"
+              ><ng-template let-option pTemplate="item">
+                <div class="flex items-center">
+                  {{ option }}
+                </div>
+              </ng-template>
+            </p-multiSelect>
+            }@else if(col.header=="Nationality"){
+              <p-multiSelect
+                [options]="nationalityOptions"
+                [(ngModel)]="selectedNationalities"
+                [showClear]="true"
+                (onChange)="fetchYouthData()"
+                placeholder="Select Nationality"
+                [style]="{
+                  background: 'white',
+                  border: '1px solid #ddd',
+                  'border-radius': '8px',
+                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+                }"
+                ><ng-template let-option pTemplate="item">
+                  <div class="flex items-center">
+                    {{ option }}
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+              }@else {
         <!-- Text filter for other columns -->
         <p-columnFilter
           [type]="'text'"
@@ -89,176 +171,289 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
-        <div class="" *ngFor="let action of getActionsForRow(product.status)">
+        <div class=" " *ngFor="let action of getActionsForRow(product.status)">
           <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
             (click)="showDialog('view', product)"
           >
-            View
+            <i class="pi pi-eye"></i>
           </button>
 
-          <p-dialog header="Youth Details" [(visible)]="dialogVisible" [style]="{ width: '45rem' }">
+          <p-dialog
+            header="Youth Details"
+            [(visible)]="dialogVisible"
+            [style]="{ width: '45rem' }"
+          >
             <div *ngIf="selectedYouth">
               <!-- Personal Information Section -->
               <div class="space-y-4">
-                <h2 class="text-xl font-semibold text-gray-800">Personal Information</h2>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  Personal Information
+                </h2>
 
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Full Name:</span>
                   <span class="text-sm text-gray-600">
-                    {{ selectedYouth.firstNameEn }} {{ selectedYouth.fatherNameEn }} {{ selectedYouth.lastNameEn }}
+                    {{ selectedYouth.firstNameEn }}
+                    {{ selectedYouth.fatherNameEn }}
+                    {{ selectedYouth.lastNameEn }}
                   </span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Gender:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.gender }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.gender
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Date of Birth:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.dob }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Date of Birth:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.dob
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Nationality:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.nationality }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.nationality
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Email:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.email }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.email
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Mobile Phone:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.mobilePhone }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.mobilePhone
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">WhatsApp:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.whatsapp }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.whatsapp
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Full Address:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.fullAddress }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.fullAddress
+                  }}</span>
                 </div>
               </div>
 
               <!-- General Information Section -->
               <div class="space-y-4 mt-6">
-                <h2 class="text-xl font-semibold text-gray-800">General Information</h2>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  General Information
+                </h2>
 
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Education Level:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.educationLevel }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Education Level:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.educationLevel
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Major:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.major }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.major
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Institution:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.institution }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.institution
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Graduation Date:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.graduationDate }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Graduation Date:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.graduationDate
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Employment Opportunities:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.employmentOpportunities }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Employment Opportunities:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.employmentOpportunities
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">About Yourself:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.aboutYourself || 'N/A' }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >About Yourself:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.aboutYourself || "N/A"
+                  }}</span>
                 </div>
               </div>
 
               <!-- Volunteer & Disability Information Section -->
               <div class="space-y-4 mt-6">
-                <h2 class="text-xl font-semibold text-gray-800">Volunteer & Disability Information</h2>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  Volunteer & Disability Information
+                </h2>
 
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">KFW Placement:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.placedByKfw ? 'Yes' : 'No' }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >KFW Placement:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.placedByKfw ? "Yes" : "No"
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Innovation Lab Graduate:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.innovationLabGraduate ? 'Yes' : 'No' }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Innovation Lab Graduate:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.innovationLabGraduate ? "Yes" : "No"
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Disability:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.disability ? 'Yes' : 'No' }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.disability ? "Yes" : "No"
+                  }}</span>
                 </div>
-                <div *ngIf="selectedYouth.disability" class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Disability Type(s):</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.disabilityTypes.join(', ') }}</span>
+                <div
+                  *ngIf="selectedYouth.disability"
+                  class="flex justify-between"
+                >
+                  <span class="font-semibold text-gray-700"
+                    >Disability Type(s):</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.disabilityTypes.join(", ")
+                  }}</span>
                 </div>
               </div>
 
               <!-- Experience Details Section -->
               <div class="space-y-4 mt-6">
-                <h2 class="text-xl font-semibold text-gray-800">Experience Details</h2>
-                <div *ngIf="selectedYouth.experiences?.length > 0; else noExperience" class="space-y-4">
+                <h2 class="text-xl font-semibold text-gray-800">
+                  Experience Details
+                </h2>
+                <div
+                  *ngIf="
+                    selectedYouth.experiences?.length > 0;
+                    else noExperience
+                  "
+                  class="space-y-4"
+                >
                   <div *ngFor="let experience of selectedYouth.experiences">
                     <div class="flex justify-between">
                       <span class="font-semibold text-gray-700">Company:</span>
-                      <span class="text-sm text-gray-600">{{ experience.company }}</span>
+                      <span class="text-sm text-gray-600">{{
+                        experience.company
+                      }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span class="font-semibold text-gray-700">Role:</span>
-                      <span class="text-sm text-gray-600">{{ experience.role }}</span>
+                      <span class="text-sm text-gray-600">{{
+                        experience.role
+                      }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span class="font-semibold text-gray-700">Duration:</span>
-                      <span class="text-sm text-gray-600">{{ experience.duration }}</span>
+                      <span class="text-sm text-gray-600">{{
+                        experience.duration
+                      }}</span>
                     </div>
                   </div>
                 </div>
                 <ng-template #noExperience>
-                  <span class="text-sm text-gray-600">No experience available</span>
+                  <span class="text-sm text-gray-600"
+                    >No experience available</span
+                  >
                 </ng-template>
               </div>
 
               <!-- Required Documents Section -->
               <div class="space-y-4 mt-6">
-                <h2 class="text-xl font-semibold text-gray-800">Required Documents</h2>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  Required Documents
+                </h2>
 
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">CV:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.cv || 'N/A' }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.cv || "N/A"
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Identity Card:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.identityCard || 'N/A' }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Identity Card:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.identityCard || "N/A"
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Registration Card:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.registrationCard || 'N/A' }}</span>
+                  <span class="font-semibold text-gray-700"
+                    >Registration Card:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.registrationCard || "N/A"
+                  }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="font-semibold text-gray-700">Degree:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.degree || 'N/A' }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.degree || "N/A"
+                  }}</span>
                 </div>
-                <div *ngIf="selectedYouth.prcsProof" class="flex justify-between">
+                <div
+                  *ngIf="selectedYouth.prcsProof"
+                  class="flex justify-between"
+                >
                   <span class="font-semibold text-gray-700">PRCS Proof:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.prcsProof || 'N/A' }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.prcsProof || "N/A"
+                  }}</span>
                 </div>
-                <div *ngIf="selectedYouth.fireProof" class="flex justify-between">
+                <div
+                  *ngIf="selectedYouth.fireProof"
+                  class="flex justify-between"
+                >
                   <span class="font-semibold text-gray-700">Fire Proof:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.fireProof || 'N/A' }}</span>
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.fireProof || "N/A"
+                  }}</span>
                 </div>
-                <div *ngIf="selectedYouth.alShifaaProof" class="flex justify-between">
-                  <span class="font-semibold text-gray-700">Al Shifaa Proof:</span>
-                  <span class="text-sm text-gray-600">{{ selectedYouth.alShifaaProof || 'N/A' }}</span>
+                <div
+                  *ngIf="selectedYouth.alShifaaProof"
+                  class="flex justify-between"
+                >
+                  <span class="font-semibold text-gray-700"
+                    >Al Shifaa Proof:</span
+                  >
+                  <span class="text-sm text-gray-600">{{
+                    selectedYouth.alShifaaProof || "N/A"
+                  }}</span>
                 </div>
               </div>
 
               <!-- Status Section -->
               <div class="flex justify-between mt-6">
                 <span class="font-semibold text-gray-700">Status:</span>
-                <span class="text-sm text-gray-600">{{ selectedYouth.status }}</span>
+                <span class="text-sm text-gray-600">{{
+                  selectedYouth.status
+                }}</span>
               </div>
             </div>
           </p-dialog>
-
 
           <button
             *ngIf="action === 'pend'"
@@ -266,7 +461,7 @@
             class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
             (click)="performAction('pend', product)"
           >
-            Pend
+            <i class="pi pi-clock"></i>
           </button>
           <button
             *ngIf="action === 'accept'"
@@ -274,7 +469,15 @@
             class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             (click)="performAction('accept', product)"
           >
-            Accept
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'reject'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="performAction('reject', product)"
+          >
+            <i class="pi pi-times"></i>
           </button>
         </div>
       </td>

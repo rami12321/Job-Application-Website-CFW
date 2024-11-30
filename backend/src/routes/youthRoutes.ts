@@ -8,6 +8,7 @@ import {
   deleteYouth,
   getYouthById,
   updateYouthStatus,
+  checkRegistrationNumber,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -33,5 +34,6 @@ router.post(
 router.delete('/:id', deleteYouth);
 
 router.patch('/:id/status', updateYouthStatus);
+router.post('/check-registration', checkRegistrationNumber);
 
 export default router;  // Correct export

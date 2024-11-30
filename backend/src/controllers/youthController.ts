@@ -122,3 +122,17 @@ export const updateYouthStatus = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Youth with ID ${id} status updated successfully.`, updatedYouth: youths[youthIndex] });
 };
+
+export const checkRegistrationNumber = (req: Request, res: Response): void => {
+  const { personalRegistrationNumber } = req.body; // Extract registration number from the request body
+  const youths: Youth[] = readFile();
+
+  // Check if registration number exists
+  const isInUse = youths.some((youth) => youth.personalRegistrationNumber === personalRegistrationNumber);
+
+  if (isInUse) {
+    res.status(200).json({ inUse: true, message: `Registration number ${personalRegistrationNumber} is already in use.` });
+  } else {
+    res.status(200).json({ inUse: false, message: `Registration number ${personalRegistrationNumber} is available.` });
+  }
+};

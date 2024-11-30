@@ -57,4 +57,10 @@ export class YouthServiceService {
     // Send PATCH request to update the status
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
   }
+
+   checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
+    return this.http.post<{ inUse: boolean; message: string }>(`${this.apiUrl}/check-registration`, {
+      personalRegistrationNumber,
+    });
+  }
 }

@@ -94,6 +94,13 @@
         >
           Pending
         </button>
+        <button
+          (click)="changeYouthTab('waiting')"
+          [class.bg-cyan-500]="activeYouthTab === 'waiting'"
+          class="px-4 py-2 rounded-md hover:bg-cyan-500 cursor-pointer"
+        >
+          Waiting-List
+        </button>
       </div>
 
       <!-- Content for selected Youth Tab -->
@@ -105,6 +112,9 @@
       </div>
       <div *ngIf="activeYouthTab === 'pending'">
         <app-smart-table class="p-10"  [status]="'pending'"/>
+      </div>
+      <div *ngIf="activeYouthTab === 'waiting'">
+        <app-smart-table class="p-10"  [status]="'waiting'"/>
       </div>
     </div>
 

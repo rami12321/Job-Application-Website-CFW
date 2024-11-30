@@ -10,7 +10,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DialogModule } from 'primeng/dialog';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { ButtonModule } from 'primeng/button';
-
+import { LookupService } from '../../Services/LookUpService/lookup.service';
 interface Column {
   field: string;
   header: string;
@@ -41,15 +41,45 @@ export class SmartTableComponent implements OnInit {
   rowsPerPage = 10;
   selectedGender: string[] = [];
   rowData: any = {}; // Or use the appropriate type for your data
-
-
-  excludedColumns: string[] = ['status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  areas: any[] = [];
+  majors: string[] = [];
+  genders: string[] = [];
+  educationLevels: string[] = [];
+  selectedMajors: string[] = []; // Define selectedMajors
+  selectedAreas: string[] = []; // Define selectedMajors
+  selectedEducationLevels: string[] = []; // Define selectedMajors
+  nationalityOptions:string[]=[];
+  selectedNationalities:string[]=[]
+  excludedColumns: string[] = ['headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
-  constructor(private youthService: YouthServiceService) {}
+  constructor(private youthService: YouthServiceService,
+    private lookupService: LookupService
+
+  ) {}
 
   ngOnInit(): void {
     this.fetchYouthData(); // Fetch data from the service
+    this.lookupService.getLookupData().subscribe(
+      (data) => {
+        console.log('Lookup Data:', data); // Log the entire response
+
+        this.areas = data.areas || [];
+        this.majors = data.majors || [];
+        this.genders = data.genderOptions || [];
+        this.educationLevels = data.educationLevels || [];
+        this.nationalityOptions = data.nationalityOptions || [];
+
+        console.log('Areas:', this.areas);
+        console.log('Majors:', this.majors);
+        console.log('Genders:', this.genders);
+        console.log('educationLevels:', this.educationLevels);
+        console.log('nationalityOptions:', this.nationalityOptions);
+      },
+      (error) => {
+        console.error('Error fetching lookup data:', error);
+      }
+    );
   }
 
 
@@ -60,11 +90,28 @@ export class SmartTableComponent implements OnInit {
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
 
-        // Filter youthList by status if the `status` input is provided
-        const filteredData = this.status
+        // Step 1: Filter by `status` if provided
+        let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
 
+        // Step 2: Apply filters for gender, major, and area
+        filteredData = filteredData.filter((item) => {
+          const matchesGender =
+            this.selectedGender.length === 0 || this.selectedGender.includes(item.gender);
+          const matchesMajor =
+            this.selectedMajors.length === 0 || this.selectedMajors.includes(item.major);
+          const matchesArea =
+            this.selectedAreas.length === 0 || this.selectedAreas.includes(item.area.name);
+          const matchesEducationLevels =
+            this.selectedEducationLevels.length === 0 || this.selectedEducationLevels.includes(item.educationLevels);
+          const matchesNationalityOptions =
+            this.selectedNationalities.length === 0 || this.selectedNationalities.includes(item.nationalityOptions);
+
+          return matchesGender && matchesMajor && matchesArea && matchesEducationLevels && matchesNationalityOptions;
+        });
+
+        // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
           const filteredColumns = Object.keys(filteredData[0]).filter(
@@ -77,17 +124,11 @@ export class SmartTableComponent implements OnInit {
             header: this.capitalize(key),
           }));
 
-          // Insert "Action" column at the desired position (e.g., 1st position)
-          // const actionColumn = { field: 'action', header: 'Action' };
-          // this.cols.unshift(actionColumn); // Add at the beginning
-
           // Initialize _selectedColumns with all columns except "Action"
           this._selectedColumns = this.cols.filter(col => col.field !== 'action');
-
-          // Initialize _selectedColumns1 which will be used in ngModel
-          // this._selectedColumns1 = this.cols.filter(col => col.field !== 'action');
         }
 
+        // Step 4: Update youth list and paginated products
         this.youthList = filteredData;
         this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage);
       },
@@ -96,8 +137,6 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
-
-
 
   // Capitalize column headers for display
   capitalize(str: string): string {
@@ -112,68 +151,42 @@ export class SmartTableComponent implements OnInit {
       case 'rejected':
         return ['view', 'pend'];
       case 'pending':
-        return ['view', 'accept'];
+        return ['view', 'accept','reject'];
+      case 'waiting':
+        return ['view', 'accept','reject','pend'];
       default:
         return ['view', 'pend'];
     }
   }
 
 
-performAction(action: string, item: any): void {
-  if (action === 'view') {
-    console.log('View action for:', item);
-  } else if (action === 'pend') {
-    this.updateStatus(item.id, 'pending');
-  } else if (action === 'accept') {
-    this.updateStatus(item.id, 'accepted');
+  performAction(action: string, item: any): void {
+    if (action === 'view') {
+      console.log('View action for:', item);
+    } else if (action === 'pend') {
+      this.updateStatus(item.id, 'pending');
+    } else if (action === 'accept') {
+      this.updateStatus(item.id, 'accepted');
+
+    } else if (action === 'reject') {
+      this.updateStatus(item.id, 'rejected');
+    }
   }
-}
 
-updateStatus(id: number, newStatus: string): void {
-  // Call the YouthService to update the status of the youth
-  this.youthService.updateYouthStatus(id, newStatus).subscribe(
-    (response) => {
-      console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
 
-      // Update the local youthList to reflect the status change
-      const updatedYouth = this.youthList.map((youth) =>
-        youth.id === id ? { ...youth, status: newStatus } : youth
-      );
+  updateStatus(id: number, newStatus: string): void {
+    this.youthService.updateYouthStatus(id, newStatus).subscribe(
+      (response) => {
+        console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
 
-      this.youthList = updatedYouth; // Update the youthList to reflect changes
-      this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage); // Update pagination if needed
-    },
-    (error) => {
-      console.error('Error updating status:', error);
-    }
-  );
-}
-    representatives = [
-    { name: 'Male' },
-    { name: 'Female' },
-  ];
-filterByGender(selectedGenders: any[]): void {
-  this.youthService.getAllYouth().subscribe((data: any[]) => {
-    if (selectedGenders && selectedGenders.length > 0) {
-      this.paginatedProducts = data.filter(youth =>
-        selectedGenders.includes(youth.gender)
-      );
-    } else {
-      // Reset to show all data if no gender is selected
-      this.paginatedProducts = [...data];
-    }
-  });
-}
-editRow(rowData: any): void {
-  console.log('Edit action triggered for:', rowData);
-  // Add your logic for editing the row
-}
-
-deleteRow(rowData: any): void {
-  console.log('Delete action triggered for:', rowData);
-  // Add your logic for deleting the row
-}
-
+        // Re-fetch the data to reflect changes
+        this.fetchYouthData();
+      },
+      (error) => {
+        console.error('Error updating status:', error);
+      }
+    );
+  }
 
   paginate(event: any): void {
     const { first, rows } = event;
@@ -189,6 +202,17 @@ deleteRow(rowData: any): void {
       this.dialogVisible = true;  // Open the dialog
     }
   }
+
+  loadLookupData(): void {
+    this.lookupService.getLookupData().subscribe((data) => {
+      this.areas = data.areas || [];
+      this.majors = data.majors || [];
+      this.genders = data.genderOptions || [];
+      this.educationLevels = data.educationLevels || [];
+      this.nationalityOptions = data.nationalityOptions || [];
+    });
+  }
+
 }
 
 

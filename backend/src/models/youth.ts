@@ -1,4 +1,3 @@
-
 export interface Youth {
   id: string;
   username: string;
@@ -74,5 +73,5 @@ export interface Youth {
   alShifaaProof?: string;
   confirmation: string;
 
-  status: 'accepted' | 'rejected' | 'pending';
+  status: 'accepted' | 'rejected' | 'pending' | 'waiting';
 }

@@ -10,7 +10,7 @@
     "firstNameAr": "",
     "fatherNameAr": "",
     "lastNameAr": "",
-    "gender": "",
+    "gender": "Female",
     "dob": "",
     "nationality": "",
     "registrationStatus": "Registered",
@@ -98,7 +98,7 @@
     "alShifaaProof": "",
     "confirmation": "yes",
     "confirmPassword": "123123.rR",
-    "status": "pending"
+    "status": "accepted"
   },
   {
     "username": "mohammad S",
