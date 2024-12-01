@@ -4,8 +4,8 @@
     <nav class="space-y-4">
       <a
         (click)="changeTab('dashboard')"
-        [class.bg-gray-700]="activeTab === 'dashboard'"
-        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+        [class.bg-gray-500]="activeTab === 'dashboard'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-500 cursor-pointer"
       >
         <svg
           class="h-5 w-5 mr-3"
@@ -24,8 +24,8 @@
       </a>
       <a
         (click)="changeTab('youth')"
-        [class.bg-gray-700]="activeTab === 'youth'"
-        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+        [class.bg-gray-500]="activeTab === 'youth'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-500 cursor-pointer"
       >
         <svg
           class="h-5 w-5 mr-3"
@@ -44,8 +44,8 @@
       </a>
       <a
         (click)="changeTab('employer')"
-        [class.bg-gray-700]="activeTab === 'employer'"
-        class="flex items-center p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+        [class.bg-gray-500]="activeTab === 'employer'"
+        class="flex items-center p-3 rounded-md hover:bg-gray-500 cursor-pointer"
       >
         <svg
           class="h-5 w-5 mr-3"
@@ -70,9 +70,54 @@
       <app-admin-dashboard/>
     </div>
     <div *ngIf="activeTab === 'youth'">
-      <h1 class="text-2xl">Youth</h1>
-      <app-smart-table class="p-10"/>
+
+      <!-- Youth Sub-tabs -->
+      <div class="flex space-x-4 mb-6 border-b border-spacing-2 py-2">
+        <button
+          (click)="changeYouthTab('accepted')"
+          [class.bg-green-500]="activeYouthTab === 'accepted'"
+          class="px-4 py-2 rounded-md hover:bg-green-500 cursor-pointer"
+        >
+          Accepted
+        </button>
+        <button
+          (click)="changeYouthTab('rejected')"
+          [class.bg-red-500]="activeYouthTab === 'rejected'"
+          class="px-4 py-2 rounded-md hover:bg-gray-red cursor-pointer"
+        >
+          Rejected
+        </button>
+        <button
+          (click)="changeYouthTab('pending')"
+          [class.bg-yellow-500]="activeYouthTab === 'pending'"
+          class="px-4 py-2 rounded-md hover:bg-yellow-500 cursor-pointer"
+        >
+          Pending
+        </button>
+        <button
+          (click)="changeYouthTab('waiting')"
+          [class.bg-cyan-500]="activeYouthTab === 'waiting'"
+          class="px-4 py-2 rounded-md hover:bg-cyan-500 cursor-pointer"
+        >
+          Waiting-List
+        </button>
+      </div>
+
+      <!-- Content for selected Youth Tab -->
+      <div *ngIf="activeYouthTab === 'accepted'">
+        <app-smart-table class="p-10" [status]="'accepted'"/>
+      </div>
+      <div *ngIf="activeYouthTab === 'rejected'">
+        <app-smart-table class="p-10" [status]="'rejected'"/>
+      </div>
+      <div *ngIf="activeYouthTab === 'pending'">
+        <app-smart-table class="p-10"  [status]="'pending'"/>
+      </div>
+      <div *ngIf="activeYouthTab === 'waiting'">
+        <app-smart-table class="p-10"  [status]="'waiting'"/>
+      </div>
     </div>
+
     <div *ngIf="activeTab === 'employer'">
       <h1 class="text-2xl">Employer</h1>
     </div>

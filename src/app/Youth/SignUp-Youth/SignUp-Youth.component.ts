@@ -5,12 +5,14 @@ import { Youth} from '../../Model/Youth';
 import { PasswordModule } from 'primeng/password';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-sign-up-youth',
   standalone: true,
@@ -331,24 +333,24 @@ export class SignUpYouthComponent implements OnInit {
     return this.trainingsAndSkillsForm.get('trainings') as FormArray<FormGroup>;
   }
 
-  registrationNumberValidator(control: AbstractControl) {
+  registrationNumberValidator(control: AbstractControl): Observable<any> {
     const value = control.value;
-  
-    // Check format before querying the database
+
     if (!value || !/^2-\d{8}$/.test(value)) {
-      return of(null); // Return valid if the format is incorrect
+      return of(null); 
     }
-  
-    return this.youthService.getAllYouth().pipe(
-      switchMap((data) => {
-        const isTaken = data.some(
-          (entry) => entry.personalRegistrationNumber === value
-        );
-        return of(isTaken ? { alreadyExists: true } : null);
+
+    return this.youthService.checkPersonalRegistrationNumber(value).pipe(
+      switchMap((response) => {
+        if (response.inUse) {
+          return of({ alreadyExists: true });  
+        }
+        return of(null);  
       }),
-      catchError(() => of(null)) // Handle errors gracefully
+      catchError(() => of(null)) 
     );
   }
+  
   onChanges(): void {
     this.personalInfoForm.get('area')?.valueChanges.subscribe((selectedArea) => {
       if (selectedArea) {
@@ -618,11 +620,10 @@ updatePatternError() {
   const control = this.personalInfoForm.get('personalRegistrationNumber');
   if (control?.errors?.['pattern']) {
     setTimeout(() => {
-      // Show the error only if the control still has the error
       this.showPatternError = control.errors?.['pattern'] ? true : false;
-    }, 300); // Delay to allow user to complete typing
+    }, 300); 
   } else {
-    this.showPatternError = false; // Hide the error if there are no pattern issues
+    this.showPatternError = false; 
   }
 }
 
@@ -645,6 +646,7 @@ updatePatternError() {
         this.formSubmitted = false;
       }, 3000);
     }
+
     createYouthModel(): Youth {
       return {
         id: this.generateUniqueId(),

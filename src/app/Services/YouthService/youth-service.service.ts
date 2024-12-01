@@ -18,14 +18,14 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class YouthServiceService {
   private apiUrl = 'http://localhost:3000/youth'; 
-  private dbUrl = 'assets/data/youthdb.json';
+  private youthDbUrl = 'assets/data/youthdb.json';
   constructor(private http: HttpClient) {}
 
 
@@ -34,7 +34,7 @@ export class YouthServiceService {
   }
 
   getAllYouth(): Observable<any[]> {
-    return this.http.get<any[]>(this.dbUrl);
+    return this.http.get<any[]>(this.youthDbUrl);
   }
 
 
@@ -51,4 +51,20 @@ export class YouthServiceService {
   deleteYouth(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  updateYouthStatus(id: number, status: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
+  }
+  checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
+    return this.http.get<any[]>(this.youthDbUrl).pipe(
+      map((data) => {
+        const isInUse = data.some(entry => entry.personalRegistrationNumber === personalRegistrationNumber);
+        return {
+          inUse: isInUse,
+          message: isInUse ? 'This registration number is already taken.' : ''
+        };
+      })
+    );
+  }
+  
 }

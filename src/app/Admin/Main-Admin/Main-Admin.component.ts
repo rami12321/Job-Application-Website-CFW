@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SmartTableComponent } from '../../Common/smart-table/smart-table.component';
 import { CommonModule } from '@angular/common';
 import { AdminDashboardComponent } from '../Dashboard-Admin/Dashboard-Admin.component';
@@ -11,14 +11,19 @@ import { AdminDashboardComponent } from '../Dashboard-Admin/Dashboard-Admin.comp
   styleUrls: ['./Main-Admin.component.css']
 })
 export class MainAdminComponent implements OnInit {
+  @Input() status: string | undefined;
 
-  activeTab: string = 'dashboard'; // Default tab
+  activeTab: string = 'dashboard';
+  activeYouthTab: string = 'accepted';
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  changeYouthTab(tab: string): void {
+    this.activeYouthTab = tab;
+  }
   changeTab(tab: string): void {
     this.activeTab = tab;
   }
