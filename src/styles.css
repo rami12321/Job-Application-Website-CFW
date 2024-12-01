@@ -1,11 +1,6 @@
-@layer utilities {
-    .custom-tab-title {
-      @apply text-lg font-semibold text-gray-800 dark:text-gray-200;
-    }
-    .custom-tab-content {
-      @apply bg-gray-50 dark:bg-gray-100 p-4 rounded-lg;
-    }
-  }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
   
 @layer tailwind-base, primeng, tailwind-utilities;
 

@@ -5,16 +5,17 @@ import { Youth} from '../../Model/Youth';
 import { PasswordModule } from 'primeng/password';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
-
+import { of } from 'rxjs';
+import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { HttpClient } from '@angular/common/http';
-
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-sign-up-youth',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,PasswordModule,StepperModule, ButtonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this line
+  imports: [ReactiveFormsModule, CommonModule,PasswordModule,StepperModule, ButtonModule, HttpClientModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './SignUp-Youth.component.html',
   styleUrls: ['./SignUp-Youth.component.css']
@@ -27,6 +28,7 @@ export class SignUpYouthComponent implements OnInit {
   experienceDetailsForm: FormGroup;
   requiredDocumentsForm: FormGroup;
   formSubmitted: boolean = false;
+  showPatternError = false; // Controls when to display the pattern error
 
   private areaData: any;
 
@@ -85,7 +87,8 @@ export class SignUpYouthComponent implements OnInit {
       ],
       personalRegistrationNumber: [
         '',
-        [Validators.required, Validators.pattern(/^2-\d{8}$/)] 
+        [Validators.required, Validators.pattern(/^2-\d{8}$/)],
+        [this.registrationNumberValidator.bind(this)] 
       ],
       mobilePhone: ['', [Validators.required, Validators.pattern(/^961\d{8}$/)]],
       whatsapp: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -274,7 +277,12 @@ export class SignUpYouthComponent implements OnInit {
         disabilityTypesControl.get(type)?.updateValueAndValidity();
       });
     });
-
+    this.personalInfoForm
+      .get('personalRegistrationNumber')
+      ?.valueChanges.pipe(debounceTime(400)) // Wait 300ms after user stops typing
+      .subscribe(() => {
+        this.updatePatternError();
+      });
     this.generalQuestionsForm.get('employed')?.valueChanges.subscribe((value) => {
       const seekingEmploymentDurationControl = this.generalQuestionsForm.get('seekingEmploymentDuration');
       if (value === 'no') {
@@ -323,7 +331,24 @@ export class SignUpYouthComponent implements OnInit {
     return this.trainingsAndSkillsForm.get('trainings') as FormArray<FormGroup>;
   }
 
+  registrationNumberValidator(control: AbstractControl) {
+    const value = control.value;
   
+    // Check format before querying the database
+    if (!value || !/^2-\d{8}$/.test(value)) {
+      return of(null); // Return valid if the format is incorrect
+    }
+  
+    return this.youthService.getAllYouth().pipe(
+      switchMap((data) => {
+        const isTaken = data.some(
+          (entry) => entry.personalRegistrationNumber === value
+        );
+        return of(isTaken ? { alreadyExists: true } : null);
+      }),
+      catchError(() => of(null)) // Handle errors gracefully
+    );
+  }
   onChanges(): void {
     this.personalInfoForm.get('area')?.valueChanges.subscribe((selectedArea) => {
       if (selectedArea) {
@@ -425,6 +450,8 @@ export class SignUpYouthComponent implements OnInit {
       case 5:
         return this.experienceDetailsForm.valid;
       case 6:
+        return this.trainingsAndSkillsForm.valid;
+      case 7:
         return this.requiredDocumentsForm.valid;
       default:
         return false;
@@ -587,6 +614,17 @@ onFileChange(event: Event, fileNameId: string): void {
 
 
 
+updatePatternError() {
+  const control = this.personalInfoForm.get('personalRegistrationNumber');
+  if (control?.errors?.['pattern']) {
+    setTimeout(() => {
+      // Show the error only if the control still has the error
+      this.showPatternError = control.errors?.['pattern'] ? true : false;
+    }, 300); // Delay to allow user to complete typing
+  } else {
+    this.showPatternError = false; // Hide the error if there are no pattern issues
+  }
+}
 
     saveToJson(): void {
       const youth = this.createYouthModel();

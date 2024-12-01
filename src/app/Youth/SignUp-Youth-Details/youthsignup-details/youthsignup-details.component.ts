@@ -3,7 +3,7 @@ import { Youth } from '../../../Model/Youth';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs'; // Import MatTabsModule
+import { MatTabsModule } from '@angular/material/tabs'; 
 
 @Component({
   selector: 'app-youthsignup-details',

@@ -24,8 +24,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class YouthServiceService {
-  private apiUrl = 'http://localhost:3000/youth'; // Base URL for youth-related endpoints
-
+  private apiUrl = 'http://localhost:3000/youth'; 
+  private dbUrl = 'assets/data/youthdb.json';
   constructor(private http: HttpClient) {}
 
 
@@ -33,9 +33,8 @@ export class YouthServiceService {
     return this.http.post(this.apiUrl, formData);
   }
 
-
   getAllYouth(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.dbUrl);
   }
 
 

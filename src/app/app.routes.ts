@@ -5,7 +5,6 @@ import { MainEmployerComponent } from './Employer/main-employer/main-employer.co
 import { MainAdminComponent } from './Admin/Main-Admin/Main-Admin.component';
 import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Employer.component';
 import { YouthSignupDetailsComponent } from './Youth/SignUp-Youth-Details/youthsignup-details/youthsignup-details.component';
-import { TestComponent } from './Youth/test/test.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +37,6 @@ export const routes: Routes = [
     component: SignUpEmployerComponent, // Parent for steps
   },
   { path: 'youthsignup-details', component: YouthSignupDetailsComponent }, // Add this route
-  { path: 'test', component: TestComponent }, // Add this route
 
 
   {
