@@ -13,7 +13,7 @@
 
     <style>
       .header {
-        background: linear-gradient(90deg, #0056b3, #1e90ff); 
+        background: linear-gradient(90deg, #1e90ff, #39b2fd);
         border-radius: 10px; 
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         color: white;
@@ -48,20 +48,39 @@
     <p class="header-subtitle">Phase Four: Youth Component</p>
   </div>
 
-  <div class="card">
-    <p-stepper orientation="vertical" [activeIndex]="step">
+  <div class="card shadow-md bg-white rounded-lg">
+    <p-stepper orientation="vertical" [activeIndex]="step" class="step-form-container">
 
               <p-stepperPanel header="Introduction">
                   <ng-template pTemplate="content" let-nextCallback="nextCallback">
-                      <div class="flex flex-col gap-6">
-                          <!-- Responsive Image Section -->
-                          <div class="flex justify-center mb-4">
-                              <img
-                                  src="assets/images/IntroImageKFW-en.jpeg"
-                                  alt="UNRWA and Partners Logo"
-                                  class="w-3/4 md:w-2/3 lg:w-1/2 max-w-full h-auto object-contain"
-                              />
-                          </div>
+                    
+                    <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+                      <!-- Responsive Image Section -->
+                      <div class="flex flex-col items-center">
+                        <!-- Logos Section -->
+                        <div class="flex justify-center flex-wrap gap-6 p-6 w-full max-w-5xl">
+                          <img src="assets/images/unrwa_logo-removebg-preview.png" alt="UNRWA Logo" class="w-28 h-28 object-contain" />
+                          <img src="assets/images/germancooporation-removebg-preview.png" alt="German Cooperation Logo" class="w-28 h-28 object-contain" />
+                          <img src="assets/images/kfwlogo-removebg-preview.png" alt="KFW Logo" class="w-28 h-28 object-contain" />
+                          <img src="assets/images/euflag-removebg-preview.png" alt="EU Logo" class="w-28 h-28 object-contain" />
+                        </div>
+                    
+                        <!-- Text Section -->
+                        <div class="text-center mt-4">
+                          <h2 class="text-2xl sm:text-3xl font-bold text-blue-900">
+                            Cash for Work Phase 4: Youth Component
+                          </h2>
+                          <p class="text-base sm:text-lg font-medium text-gray-700 mt-2">
+                            Short-Term Employment Opportunity Application
+                          </p>
+                        </div>
+                    
+                        <!-- Divider Line -->
+                        <div class="w-[85%] h-[1px] bg-blue-400 rounded-full my-6"></div>
+                      </div>
+                    
+                          
+                          
       
                           <!-- Form Content -->
                           <form [formGroup]="introForm" class="space-y-4">
@@ -122,7 +141,7 @@
 
                           <p-stepperPanel header="Personal Information">
                             <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-                              <div>
+                              <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
                                 <form [formGroup]="personalInfoForm" class="space-y-6">
                                   <!-- First Name (English) -->
                                   <div class="space-y-6 border-b border-gray-300 pb-6">
@@ -267,7 +286,9 @@
                                         </div>
                                       </div>
                                       <div class="space-y-6 border-b border-gray-300 pb-6">
-                                        <label for="personalRegistrationNumber" class="block text-sm font-medium mb-2">Personal Registration Number *</label>
+                                        <label for="personalRegistrationNumber" class="block text-sm font-medium mb-2">
+                                          Personal Registration Number *
+                                        </label>
                                         <input
                                           type="text"
                                           id="personalRegistrationNumber"
@@ -279,10 +300,14 @@
                                         <div *ngIf="hasError('personalRegistrationNumber', 'required')" class="text-red-500 text-sm">
                                           This field is required.
                                         </div>
-                                        <div *ngIf="hasError('personalRegistrationNumber', 'pattern')" class="text-red-500 text-sm">
+                                        <div *ngIf="showPatternError" class="text-red-500 text-sm">
                                           Must be in the format 2-XXXXXXXX.
                                         </div>
+                                        <div *ngIf="hasError('personalRegistrationNumber', 'alreadyExists')" class="text-red-500 text-sm">
+                                          This registration number is already taken.
+                                        </div>
                                       </div>
+                                      
                                     </div>
                                   
                                     <!-- Head of Family -->
@@ -456,6 +481,8 @@
 
                           <p-stepperPanel header="General Section">
                             <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                              <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
                               <form [formGroup]="generalForm" class="space-y-6">
                                 
                                 <!-- Job Opportunity Source -->
@@ -598,17 +625,19 @@
                                   ></p-button>
                                 </div>
                               </form>
+                            </div>
+
                             </ng-template>
                           </p-stepperPanel>
                           
 
                           <p-stepperPanel header="General Questions">
                             <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-                              <div class="flex flex-col">
+                              <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
                                 <form [formGroup]="generalQuestionsForm" class="w-full max-w-4xl space-y-6">
                                   
                                   <!-- Question 1 -->
-                                  <div class="p-6 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
+                                  <div class="p-4 border border-gray-300 rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 space-y-4">
                                     <label class="block text-lg font-medium text-gray-700 dark:text-gray-300">
                                       Have you ever been placed by KFW CfW before? <span class="text-red-500">*</span>
                                     </label>
@@ -891,12 +920,10 @@
 
 <p-stepperPanel header="Experience Details">
   <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
-    <div>
       <ng-container *ngFor="let experience of experiences.controls; let i = index">
         <div [formGroup]="experience" class="border-b border-gray-300 pb-4 mb-4 space-y-4">
           <!-- Type of Work Experience -->
-          <div class="p-6 bg-white rounded-lg shadow-lg">
-            <div class="space-y-8">
+            <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
               <!-- Type of Work Experience and Employer Name -->
               <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
                 <!-- Type of Work Experience -->
@@ -1047,7 +1074,6 @@
           >
             Remove Experience
           </button>
-        </div>
       </ng-container>
 
       <!-- Add Experience Buttons -->
@@ -1060,7 +1086,6 @@
           No
         </button>
       </div>
-    </div>
 
     <!-- Navigation Buttons -->
     <div class="flex py-4 gap-2 justify-between mt-4">
@@ -1083,7 +1108,7 @@
           <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
 
 
-            <div>
+            <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
               <h3 class="text-lg font-semibold mb-6">Training Profile</h3>
               <ng-container *ngFor="let training of trainings.controls; let i = index">
                 <div [formGroup]="training" class="space-y-6 border-b border-gray-300 pb-6 mb-6">
@@ -1292,11 +1317,11 @@
 
  <p-stepperPanel header="Required Documents">
       <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
-    
+
           <form [formGroup]="requiredDocumentsForm" class="space-y-6">
             <!-- CV/Resume -->
                 <!-- Required Documents Section -->
-                <div class="space-y-6">
+                <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff] space-y-6" >
                   <!-- CV/Resume -->
                   <div>
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -1507,7 +1532,7 @@
 
     
             <div>
-              <div class="p-4 border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700 space-y-2">
+              <div class="p-4 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff] space-y-2">
                 <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
                   Are you sure that all information provided is true and accurate? <span class="text-red-500">*</span>
                   <small class="block text-xs text-gray-600 dark:text-gray-400">
@@ -1537,7 +1562,7 @@
 
 
 
-            <div class="p-fluid p-formgrid p-grid space-y-6 border-b border-gray-300 pb-6">
+            <div class="p-fluid p-formgrid p-grid space-y-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]  pb-6">
 
               <div class="p-field p-col-12" >
                 <label for="password" class="block text-sm font-medium mb-2">Password</label>
@@ -1591,6 +1616,7 @@
           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         />
         </div>
+
         </ng-template>
       </p-stepperPanel>
           
@@ -1598,53 +1624,66 @@
       <p-stepperPanel header="Review">
         <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
           <!-- Title -->
-          <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Review Your Application</h2>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
               Please review all your details before submitting. Use the "Edit" button if any information is incorrect.
             </p>
       
             <!-- Intro Confirmation -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
+
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Intro Confirmation</h3>
               <p><strong>Confirm:</strong> {{ introForm.get('confirm')?.value }}</p>
               <button (click)="goToStep(1)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
-            <!-- Personal Information -->
-            <div class="mb-6 border-b pb-4">
+            <!-- Personal Information -->  
+
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Personal Information</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
                 <p><strong>First Name (EN):</strong> {{ personalInfoForm.get('firstNameEn')?.value }}</p>
-                <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
-                <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
-                <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
-                <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
-                <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
-                <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
-                <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
-                <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
-                <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
                 <p><strong>Family Registration Number:</strong> {{ personalInfoForm.get('familyRegistrationNumber')?.value }}</p>
-                <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
+              
+                <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.get('fatherNameEn')?.value }}</p>
                 <p><strong>Mobile Phone:</strong> {{ personalInfoForm.get('mobilePhone')?.value }}</p>
+              
+                <p><strong>Last Name (EN):</strong> {{ personalInfoForm.get('lastNameEn')?.value }}</p>
                 <p><strong>WhatsApp:</strong> {{ personalInfoForm.get('whatsapp')?.value }}</p>
+              
+                <p><strong>First Name (AR):</strong> {{ personalInfoForm.get('firstNameAr')?.value }}</p>
                 <p><strong>Emergency Phone:</strong> {{ personalInfoForm.get('emergencyPhone')?.value }}</p>
+              
+                <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.get('fatherNameAr')?.value }}</p>
                 <p><strong>Emergency Relation:</strong> {{ personalInfoForm.get('emergencyRelation')?.value }}</p>
+              
+                <p><strong>Last Name (AR):</strong> {{ personalInfoForm.get('lastNameAr')?.value }}</p>
                 <p><strong>Email:</strong> {{ personalInfoForm.get('email')?.value }}</p>
-                <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
-                <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
+              
+                <p><strong>Gender:</strong> {{ personalInfoForm.get('gender')?.value }}</p>
                 <p><strong>Head of Family:</strong> {{ personalInfoForm.get('headfa')?.value }}</p>
+              
+                <p><strong>Date of Birth:</strong> {{ personalInfoForm.get('dob')?.value }}</p>
+                <p><strong>Area:</strong> {{ personalInfoForm.get('area')?.value }}</p>
+              
+                <p><strong>Nationality:</strong> {{ personalInfoForm.get('nationality')?.value }}</p>
                 <p><strong>Camp Type:</strong> {{ personalInfoForm.get('campType')?.value }}</p>
+              
+                <p><strong>Registration Status:</strong> {{ personalInfoForm.get('registrationStatus')?.value }}</p>
                 <p><strong>Camp:</strong> {{ personalInfoForm.get('camp')?.value }}</p>
+              
+                <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.get('personalRegistrationNumber')?.value }}</p>
+                <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
               </div>
+              
               <button (click)="goToStep(2)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- General Questions -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">General Questions</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>Placed by KFW CfW:</strong> {{ generalQuestionsForm.get('placedByKfw')?.value }}</p>
                 <p><strong>KFW Year:</strong> {{ generalQuestionsForm.get('kfwYear')?.value }}</p>
                 <p><strong>Innovation Lab Graduate:</strong> {{ generalQuestionsForm.get('innovationLabGraduate')?.value }}</p>
@@ -1667,7 +1706,7 @@
             </div>
       
             <!-- Experience Details -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Experience Details</h3>
               <div *ngFor="let experience of experienceDetailsForm.get('experiences')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
                 <p><strong>Experience {{ i + 1 }}:</strong></p>
@@ -1686,7 +1725,7 @@
             </div>
       
             <!-- Training and Skills -->
-            <div class="mb-6 border-b pb-4">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Training Details</h3>
               <div *ngFor="let training of trainingsAndSkillsForm.get('trainings')?.value; let i = index" class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-4">
                 <p><strong>Training {{ i + 1 }}:</strong></p>
@@ -1697,7 +1736,7 @@
                 <p><strong>Duration To:</strong> {{ training.durationTo }}</p>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>Arabic:</strong> {{ trainingsAndSkillsForm.get('skills.arabic')?.value }}</p>
                 <p><strong>English:</strong> {{ trainingsAndSkillsForm.get('skills.english')?.value }}</p>
                 <p><strong>French:</strong> {{ trainingsAndSkillsForm.get('skills.french')?.value }}</p>
@@ -1709,9 +1748,9 @@
             </div>
       
             <!-- Required Documents -->
-            <div class="mb-6">
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Documents</h3>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-6 mt-4">
                 <p><strong>CV:</strong> {{ requiredDocumentsForm.get('cv')?.value }}</p>
                 <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.get('coverLetter')?.value }}</p>
                 <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.get('identityCard')?.value }}</p>
@@ -1721,7 +1760,11 @@
                 <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.get('fireProof')?.value }}</p>
                 <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.get('alShifaaProof')?.value }}</p>
               </div>
+              <div class="grid grid-cols-2 gap-6 mt-4">
+
               <p><strong>Password:</strong> (hidden for security)</p>
+              </div>
+
               <button (click)="goToStep(7)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
