@@ -24,7 +24,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class YouthServiceService {
-  private apiUrl = 'http://localhost:3000/youth'; 
+  private apiUrl = 'http://localhost:3000/youth';
   private youthDbUrl = 'assets/data/youthdb.json';
   constructor(private http: HttpClient) {}
 
@@ -56,7 +56,7 @@ export class YouthServiceService {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
   }
   checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
-    return this.http.get<any[]>(this.youthDbUrl).pipe(
+    return this.http.get<any[]>(this.apiUrl).pipe(
       map((data) => {
         const isInUse = data.some(entry => entry.personalRegistrationNumber === personalRegistrationNumber);
         return {
@@ -66,5 +66,5 @@ export class YouthServiceService {
       })
     );
   }
-  
+
 }

@@ -43,7 +43,7 @@ export class SignUpEmployerComponent implements OnInit {
   passwordsMatch(group: FormGroup): { [key: string]: boolean } | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    
+
     return password === confirmPassword ? null : { 'passwordsMismatch': true };
   }
 
@@ -89,7 +89,7 @@ export class SignUpEmployerComponent implements OnInit {
       console.log('Submitting Form Data:', signupData);
       alert('Form data submitted successfully!');
       this.saveToJson();
-    } 
+    }
   ngOnInit() {
   }
 

@@ -1,23 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Youth } from '../../../Model/Youth';
+import { Youth } from '../../Model/Youth';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-youthsignup-details',
   standalone: true,
   imports: [CommonModule, TabViewModule, ReactiveFormsModule, MatTabsModule,],
-  templateUrl: './youthsignup-details.component.html',
-  styleUrls: ['./youthsignup-details.component.css'],
+  templateUrl: './Detailsyouth.component.html',
+  styleUrls: ['./Detailsyouth.component.css'],
 })
 export class YouthSignupDetailsComponent implements OnInit {
     // Mock Data
     introForm = {
       confirm: true,
     };
-  
+
     personalInfoForm = {
       firstNameEn: 'John',
       lastNameEn: 'Doe',
@@ -42,7 +42,7 @@ export class YouthSignupDetailsComponent implements OnInit {
       personalRegistrationNumber: '87654321',
       fullAddress: '1234 Elm Street, Some City, USA',
     };
-  
+
     generalQuestionsForm = {
       placedByKfw: 'Yes',
       kfwYear: '2020',
@@ -58,7 +58,7 @@ export class YouthSignupDetailsComponent implements OnInit {
       isFireBrigadesVolunteer: 'No',
       isAlShifaaVolunteer: 'Yes',
     };
-  
+
     experienceDetailsForm = {
       experiences: [
         {
@@ -87,7 +87,7 @@ export class YouthSignupDetailsComponent implements OnInit {
         },
       ],
     };
-  
+
     trainingsAndSkillsForm = {
       trainings: [
         {
@@ -112,7 +112,7 @@ export class YouthSignupDetailsComponent implements OnInit {
         computerSkills: ['JavaScript', 'Python', 'SQL', 'Docker'],
       },
     };
-  
+
     requiredDocumentsForm = {
       cv: 'Uploaded',
       coverLetter: 'Uploaded',
@@ -134,9 +134,11 @@ export class YouthSignupDetailsComponent implements OnInit {
         graduationDate: '2024-06-15',
         employmentOpportunities: 'UNRWA',
         aboutYourself: 'I am a dedicated and enthusiastic graduate with a strong background in software engineering. I am motivated to learn and grow while contributing to meaningful projects.',
-      
+
     };
     constructor() {}
-  
+
+    private youth : Youth | undefined;
+
     ngOnInit(): void {}
   }

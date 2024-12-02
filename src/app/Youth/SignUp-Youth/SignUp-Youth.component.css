@@ -41,6 +41,14 @@
   align-items: flex-start; /* Align stepper to the left */
 }
 
+
+::ng-deep input {
+  border: 2px solid #ddd; /* Adjust the border color and size */
+  border-radius: 4px;    /* Optional: Rounded corners */
+  padding: 4px;          /* Add spacing inside the input */
+  box-shadow: none;      /* Remove any shadow if present */
+}
+
 ::ng-deep .p-stepper .p-stepper-header {
   display: flex;
   flex-direction: row;

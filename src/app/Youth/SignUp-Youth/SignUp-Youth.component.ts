@@ -85,12 +85,12 @@ export class SignUpYouthComponent implements OnInit {
       registrationStatus: ['', Validators.required],
       familyRegistrationNumber: [
         '',
-        [Validators.pattern(/^1-\d{8}$/)] 
+        [Validators.pattern(/^1-\d{8}$/)]
       ],
       personalRegistrationNumber: [
         '',
         [Validators.required, Validators.pattern(/^2-\d{8}$/)],
-        [this.registrationNumberValidator.bind(this)] 
+        [this.registrationNumberValidator.bind(this)]
       ],
       mobilePhone: ['', [Validators.required, Validators.pattern(/^961\d{8}$/)]],
       whatsapp: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -174,7 +174,7 @@ export class SignUpYouthComponent implements OnInit {
         arabic: ['', Validators.required],
         english: ['', Validators.required],
         french: ['', Validators.required],
-        computerSkills: this.fb.array([]) 
+        computerSkills: this.fb.array([])
 
       }),
     });
@@ -196,7 +196,7 @@ export class SignUpYouthComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
 
-      
+
         },{ validators: this.passwordsMatch });
 
 
@@ -208,7 +208,7 @@ export class SignUpYouthComponent implements OnInit {
     this.lookupService.getLookupData().subscribe(
       (data) => {
         this.lookupData = data;
-        this.areaOptions = this.lookupData.areas.map((area: any) => area.name); 
+        this.areaOptions = this.lookupData.areas.map((area: any) => area.name);
 
 
         console.log('Lookup data loaded:', this.lookupData); // Debugging log
@@ -234,7 +234,7 @@ export class SignUpYouthComponent implements OnInit {
 
 
   }
-  
+
   private setupDynamicValidation() {
     this.generalQuestionsForm.get('placedByKfw')?.valueChanges.subscribe((value) => {
       const kfwYearControl = this.generalQuestionsForm.get('kfwYear');
@@ -298,12 +298,12 @@ export class SignUpYouthComponent implements OnInit {
   passwordsMatch(group: FormGroup): { [key: string]: boolean } | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    
+
     // Return error if passwords don't match
     return password && confirmPassword && password === confirmPassword ? null : { 'passwordsMismatch': true };
   }
-  
-  
+
+
 
   ageRangeValidator(min: number, max: number) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -337,25 +337,25 @@ export class SignUpYouthComponent implements OnInit {
     const value = control.value;
 
     if (!value || !/^2-\d{8}$/.test(value)) {
-      return of(null); 
+      return of(null);
     }
 
     return this.youthService.checkPersonalRegistrationNumber(value).pipe(
       switchMap((response) => {
         if (response.inUse) {
-          return of({ alreadyExists: true });  
+          return of({ alreadyExists: true });
         }
-        return of(null);  
+        return of(null);
       }),
-      catchError(() => of(null)) 
+      catchError(() => of(null))
     );
   }
-  
+
   onChanges(): void {
     this.personalInfoForm.get('area')?.valueChanges.subscribe((selectedArea) => {
       if (selectedArea) {
         const selectedAreaData = this.lookupData.areas.find((area: any) => area.name === selectedArea);
-  
+
         this.campTypeOptions = selectedAreaData ? selectedAreaData.options : [];
         this.campOptions = [];
         this.personalInfoForm.get('campType')?.reset();
@@ -365,11 +365,11 @@ export class SignUpYouthComponent implements OnInit {
         this.campOptions = [];
       }
     });
-  
+
     this.personalInfoForm.get('campType')?.valueChanges.subscribe((selectedType) => {
       if (selectedType === 'Inside Camp') {
         const selectedArea = this.personalInfoForm.get('area')?.value;
-  
+
         const selectedAreaData = this.lookupData.areas.find((area: any) => area.name === selectedArea);
         this.campOptions = selectedAreaData ? selectedAreaData.camps : [];
       } else {
@@ -377,8 +377,8 @@ export class SignUpYouthComponent implements OnInit {
         this.personalInfoForm.get('camp')?.reset();
       }
     });
-  
-  
+
+
   }
   addTraining(): void {
     const trainingGroup = this.fb.group({
@@ -404,7 +404,7 @@ export class SignUpYouthComponent implements OnInit {
   get skillsForm(): FormGroup {
     return this.trainingsAndSkillsForm.get('skills') as FormGroup;
   }
-  
+
 
   createExperience(): FormGroup {
     return this.fb.group({
@@ -504,7 +504,7 @@ export class SignUpYouthComponent implements OnInit {
     const control = this.requiredDocumentsForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
   }
-  
+
 
   onNextStep() {
     if (this.step < this.stepLabels.length) {
@@ -512,7 +512,7 @@ export class SignUpYouthComponent implements OnInit {
       console.log('Navigated to step:', this.step); // Debug
     }
   }
-  
+
   goToStep(step: number) {
     console.log('Changing to step:', step); // Check if this is triggered
     this.step = step;
@@ -525,7 +525,7 @@ export class SignUpYouthComponent implements OnInit {
   }
   toggleDisabilityType(value: string): void {
     const disabilityArray = this.disabilityTypes;
-  
+
     if (disabilityArray.value.includes(value)) {
       // Remove the value if already selected
       const index = disabilityArray.value.indexOf(value);
@@ -535,8 +535,8 @@ export class SignUpYouthComponent implements OnInit {
       disabilityArray.push(this.fb.control(value));
     }
   }
-      
-  
+
+
 // Get the FormArray for computerSkills
 get computerSkills(): FormArray {
   return this.trainingsAndSkillsForm.get('skills.computerSkills') as FormArray;
@@ -544,7 +544,7 @@ get computerSkills(): FormArray {
 
 // Check if a value is selected
 isCheckedCs(value: string): boolean {
-  return this.computerSkills.value.includes(value); 
+  return this.computerSkills.value.includes(value);
 }
 
 get innovationLabGradtype(): FormArray {
@@ -621,27 +621,27 @@ updatePatternError() {
   if (control?.errors?.['pattern']) {
     setTimeout(() => {
       this.showPatternError = control.errors?.['pattern'] ? true : false;
-    }, 300); 
+    }, 300);
   } else {
-    this.showPatternError = false; 
+    this.showPatternError = false;
   }
 }
 
     saveToJson(): void {
       const youth = this.createYouthModel();
       this.allUsersData.push(youth);
-  
+
       const json = JSON.stringify(this.allUsersData, null, 2);
       const blob = new Blob([json], { type: 'application/json' });
-  
+
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-  
+
       link.click();
       URL.revokeObjectURL(url);
       this.formSubmitted = true;
-  
+
       setTimeout(() => {
         this.formSubmitted = false;
       }, 3000);
@@ -653,36 +653,36 @@ updatePatternError() {
         username: this.personalInfoForm.value.personalRegistrationNumber,
         password: this.requiredDocumentsForm.value.password,
         role: 'Youth',
-    
+        status: 'waiting',
         // Personal Information
         ...this.personalInfoForm.value,
-    
+
         // General Information
         ...this.generalForm.value,
-    
+
         // General Questions
         ...this.generalQuestionsForm.value,
         innovationLabGradtype: this.generalQuestionsForm.value.innovationLabGradtype,
         disabilityTypes: this.generalQuestionsForm.value.disabilityTypes,
 
-    
+
         // Experience Details
         experiences: this.experienceDetailsForm.value.experiences,
-    
+
         // Trainings and Skills
         trainings: this.trainingsAndSkillsForm.value.trainings,
         computerSkills: this.trainingsAndSkillsForm.value.computerSkills,
         arabic: this.skillsForm.value.arabic,
         english: this.skillsForm.value.english,
-        french: this.skillsForm.value.french,    
+        french: this.skillsForm.value.french,
         // Required Documents
         ...this.requiredDocumentsForm.value,
       };
     }
-    
+
     onSubmit(): void {
       const youth = this.createYouthModel();
-  
+
       this.youthService.submitFormData(youth).subscribe(
         (response) => {
           console.log('Form data submitted successfully:', response);
@@ -697,11 +697,11 @@ updatePatternError() {
 
     generateUniqueId(): string {
       return Math.floor(10000000 + Math.random() * 90000000).toString();
-        
+
     }
 
-    
+
   }
-  
+
 
 

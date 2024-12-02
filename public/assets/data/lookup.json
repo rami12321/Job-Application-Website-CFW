@@ -142,13 +142,18 @@
     "NGOs",
     "Friends"
   ],
-  "educationLevels": [  
+  "educationLevels": [
     "University Degree, Technical Licence (LT), University Diploma",
     "Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center",
     "Technical Baccalaureate (BT) or equivalent from Siblin Training Center (STC)",
     "Higher Technical Degree (TS) or equivalent from Siblin Training Center (STC)"
+  ],
+  "youthStatus": [
+    "accepted",
+    "rejected",
+    "pending",
+    "waiting"
   ]
-
 
 
   }

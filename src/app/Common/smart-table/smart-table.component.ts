@@ -50,7 +50,7 @@ export class SmartTableComponent implements OnInit {
   selectedEducationLevels: string[] = []; // Define selectedMajors
   nationalityOptions:string[]=[];
   selectedNationalities:string[]=[]
-  excludedColumns: string[] = ['headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  excludedColumns: string[] = ['role','id','headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
   constructor(private youthService: YouthServiceService,
