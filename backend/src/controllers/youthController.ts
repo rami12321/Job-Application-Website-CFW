@@ -136,3 +136,52 @@ export const checkRegistrationNumber = (req: Request, res: Response): void => {
     res.status(200).json({ inUse: false, message: `Registration number ${personalRegistrationNumber} is available.` });
   }
 };
+
+export const updateYouthNotes = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const { notes } = req.body;  // Extract the new notes from the request body
+  let youths: Youth[] = readFile();
+
+  // Check if notes are provided
+  if (!notes) {
+    res.status(400).json({ message: 'Notes are required.' });
+    return;
+  }
+
+  // Find the youth by ID
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Update the notes
+  youths[youthIndex].notes = notes;
+
+  // Save the updated youths array back to the file
+  writeFile(youths);
+
+  res.status(200).json({ message: `Youth with ID ${id} notes updated successfully.`, updatedYouth: youths[youthIndex] });
+};
+export const getYouthNotesById = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract the ID from the request parameters
+  const youths: Youth[] = readFile(); // Read all youth data from the file
+
+  // Find the youth by ID
+  const youth = youths.find((y) => y.id === id);
+
+  if (!youth) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Check if the youth has notes
+  if (!youth.notes) {
+    res.status(404).json({ message: `No notes found for youth with ID ${id}.` });
+    return;
+  }
+
+  // Return the notes
+  res.status(200).json({ notes: youth.notes });
+};

@@ -88,7 +88,8 @@
     "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "confirmation": "yes",
     "confirmPassword": "qawsedrf12",
-    "status": "pending"
+    "status": "pending",
+    "notes": "asd"
   },
   {
     "id": "34285768",
@@ -179,14 +180,15 @@
     "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "confirmation": "yes",
     "confirmPassword": "qawsedrf12",
-    "status": "pending"
+    "status": "accepted",
+    "notes": "id required"
   },
   {
     "id": "14305200",
     "username": "2-00000000",
     "password": "123123.rR",
     "role": "Youth",
-    "status": "pending",
+    "status": "waiting",
     "firstNameEn": "kug",
     "fatherNameEn": "fhyf",
     "lastNameEn": "fhy",

@@ -14,7 +14,7 @@ export class MainAdminComponent implements OnInit {
   @Input() status: string | undefined;
 
   activeTab: string = 'dashboard';
-  activeYouthTab: string = 'accepted';
+  activeYouthTab: string = 'waiting';
 
   constructor() { }
 

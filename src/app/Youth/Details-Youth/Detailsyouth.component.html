@@ -1,78 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up - Youth</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css"
-    >
-
-    
-  </head>
-
-
-<body>
 
       <div class="tab-container">
 
   <p-tabView >
 
-  
+
     <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
             <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
               Personal Information
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-            
+
 
           <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
             <!-- Row 1 -->
-            <p><strong>First Name (EN):</strong> {{ personalInfoForm.firstNameEn }}</p>
-            <p><strong>Family Registration Number:</strong> {{ personalInfoForm.familyRegistrationNumber }}</p>
-            
+            <p><strong>First Name (EN):</strong> {{ youth?.firstNameEn }}</p>
+            <p><strong>Family Registration Number:</strong> {{ youth?.familyRegistrationNumber }}</p>
+
             <!-- Row 2 -->
-            <p><strong>Father's Name (EN):</strong> {{ personalInfoForm.fatherNameEn }}</p>
-            <p><strong>Mobile Phone:</strong> {{ personalInfoForm.mobilePhone }}</p>
-            
+            <p><strong>Father's Name (EN):</strong> {{ youth?.fatherNameEn }}</p>
+            <p><strong>Mobile Phone:</strong> {{ youth?.mobilePhone }}</p>
+
             <!-- Row 3 -->
-            <p><strong>Last Name (EN):</strong> {{ personalInfoForm.lastNameEn }}</p>
-            <p><strong>WhatsApp:</strong> {{ personalInfoForm.whatsapp }}</p>
-            
+            <p><strong>Last Name (EN):</strong> {{ youth?.lastNameEn }}</p>
+            <p><strong>WhatsApp:</strong> {{ youth?.whatsapp }}</p>
+
             <!-- Row 4 -->
-            <p><strong>First Name (AR):</strong> {{ personalInfoForm.firstNameAr }}</p>
-            <p><strong>Emergency Phone:</strong> {{ personalInfoForm.emergencyPhone }}</p>
-            
+            <p><strong>First Name (AR):</strong> {{ youth?.firstNameAr }}</p>
+            <!-- <p><strong>Emergency Phone:</strong> {{ youth?.emergencyPhone }}</p> -->
+
             <!-- Row 5 -->
-            <p><strong>Father's Name (AR):</strong> {{ personalInfoForm.fatherNameAr }}</p>
-            <p><strong>Emergency Relation:</strong> {{ personalInfoForm.emergencyRelation }}</p>
-            
+            <p><strong>Father's Name (AR):</strong> {{ youth?.fatherNameAr }}</p>
+            <!-- <p><strong>Emergency Relation:</strong> {{ youth?.emergencyRelation }}</p> -->
+
             <!-- Row 6 -->
-            <p><strong>Last Name (AR):</strong> {{ personalInfoForm.lastNameAr }}</p>
-            <p><strong>Email:</strong> {{ personalInfoForm.email }}</p>
-            
+            <p><strong>Last Name (AR):</strong> {{ youth?.lastNameAr }}</p>
+            <p><strong>Email:</strong> {{ youth?.email }}</p>
+
             <!-- Row 7 -->
-            <p><strong>Gender:</strong> {{ personalInfoForm.gender }}</p>
-            <p><strong>Head of Family:</strong> {{ personalInfoForm.headfa }}</p>
-            
+            <p><strong>Gender:</strong> {{ youth?.gender }}</p>
+            <!-- <p><strong>Head of Family:</strong> {{ youth?.headfa }}</p> -->
+
             <!-- Row 8 -->
-            <p><strong>Date of Birth:</strong> {{ personalInfoForm.dob }}</p>
-            <p><strong>Area:</strong> {{ personalInfoForm.area }}</p>
-            
+            <p><strong>Date of Birth:</strong> {{ youth?.dob }}</p>
+            <p><strong>Area:</strong> {{ youth?.area }}</p>
+
             <!-- Row 9 -->
-            <p><strong>Nationality:</strong> {{ personalInfoForm.nationality }}</p>
-            <p><strong>Camp Type:</strong> {{ personalInfoForm.campType }}</p>
-            
+            <p><strong>Nationality:</strong> {{ youth?.nationality }}</p>
+            <p><strong>Camp Type:</strong> {{ youth?.campType }}</p>
+
             <!-- Row 10 -->
-            <p><strong>Registration Status:</strong> {{ personalInfoForm.registrationStatus }}</p>
-            <p><strong>Camp:</strong> {{ personalInfoForm.camp }}</p>
-            
+            <p><strong>Registration Status:</strong> {{ youth?.registrationStatus }}</p>
+            <p><strong>Camp:</strong> {{ youth?.camp }}</p>
+
             <!-- Row 11 -->
-            <p><strong>Personal Registration Number:</strong> {{ personalInfoForm.personalRegistrationNumber }}</p>
-            <p><strong>Full Address:</strong> {{ personalInfoForm.fullAddress }}</p>
+            <p><strong>Personal Registration Number:</strong> {{ youth?.personalRegistrationNumber }}</p>
+            <p><strong>Full Address:</strong> {{ youth?.fullAddress }}</p>
           </div>
         </div>
     </div>
@@ -85,26 +69,26 @@
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>How did you hear about this job opportunity?</strong> {{ generalForm.jobOpportunitySource }}</p>
-            <p><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong> {{ generalForm.educationGraduate }}</p>
-            <p><strong>Education Level:</strong> {{ generalForm.educationLevel }}</p>
-            <p><strong>Major:</strong> {{ generalForm.major }}</p>
-            <p><strong>School, University, or Institution:</strong> {{ generalForm.institution }}</p>
-            <p><strong>Place/Country:</strong> {{ generalForm.gradplace }}</p>
-            <p><strong>Date of Graduation:</strong> {{ generalForm.graduationDate }}</p>
-            <p><strong>Are you interested in short-term employment opportunities?</strong> {{ generalForm.employmentOpportunities }}</p>
+            <p><strong>How did you hear about this job opportunity?</strong> {{ youth?.jobOpportunitySource }}</p>
+            <!-- <p><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong> {{ youth?.educationGraduate }}</p> -->
+            <p><strong>Education Level:</strong> {{ youth?.educationLevel }}</p>
+            <p><strong>Major:</strong> {{ youth?.major }}</p>
+            <p><strong>School, University, or Institution:</strong> {{ youth?.institution }}</p>
+            <p><strong>Place/Country:</strong> {{ youth?.gradplace }}</p>
+            <p><strong>Date of Graduation:</strong> {{ youth?.graduationDate }}</p>
+            <p><strong>Are you interested in short-term employment opportunities?</strong> {{ youth?.employmentOpportunities }}</p>
           </div>
           <div class="mt-6">
             <p><strong>Tell us about yourself (Background, Experiences, Skills, and Motivation):</strong></p>
-            <p>{{ generalForm.aboutYourself }}</p>
+            <p>{{ youth?.aboutYourself }}</p>
           </div>
         </div>
     </div>
 
       </p-tabPanel>
-      
-      
-  
+
+
+
     <!-- General Questions Tab -->
     <p-tabPanel header="General Questions" leftIcon="pi pi-question">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
@@ -112,40 +96,40 @@
               General Questions
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-          
+
 
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>Placed by KFW CfW:</strong> {{ generalQuestionsForm.placedByKfw }}</p>
-            <p><strong>KFW Year:</strong> {{ generalQuestionsForm.kfwYear }}</p>
-            <p><strong>Innovation Lab Graduate:</strong> {{ generalQuestionsForm.innovationLabGraduate }}</p>
-            <div *ngFor="let innovtyp of generalQuestionsForm.innovationLabGradtype">
+            <p><strong>Placed by KFW CfW:</strong> {{ youth?.placedByKfw }}</p>
+            <p><strong>KFW Year:</strong> {{ youth?.kfwYear }}</p>
+            <p><strong>Innovation Lab Graduate:</strong> {{ youth?.innovationLabGraduate }}</p>
+            <div *ngFor="let innovtyp of youth?.innovationLabGradtype">
               <p><strong>Innovation Lab Graduate Type:</strong> {{ innovtyp }}</p>
             </div>
-            <p><strong>Digital Skills:</strong> {{ generalQuestionsForm.digitalSkills }}</p>
-            <p><strong>Disability:</strong> {{ generalQuestionsForm.disability }}</p>
-            <p><strong>Disability Support:</strong> {{ generalQuestionsForm.disabilitySupport }}</p>
-            <div *ngFor="let dis of generalQuestionsForm.disabilityTypes">
+            <!-- <p><strong>Digital Skills:</strong> {{ youth?.digitalSkills }}</p> -->
+            <p><strong>Disability:</strong> {{ youth?.disability }}</p>
+            <p><strong>Disability Support:</strong> {{ youth?.disabilitySupport }}</p>
+            <div *ngFor="let dis of youth?.disabilityTypes">
               <p><strong>Disability Type:</strong> {{ dis }}</p>
             </div>
-            <p><strong>Employed:</strong> {{ generalQuestionsForm.employed }}</p>
-            <p><strong>Employment Duration:</strong> {{ generalQuestionsForm.seekingEmploymentDuration }}</p>
-            <p><strong>Volunteer with PRCS:</strong> {{ generalQuestionsForm.isPrcsVolunteer }}</p>
-            <p><strong>Volunteer with Fire Brigades:</strong> {{ generalQuestionsForm.isFireBrigadesVolunteer }}</p>
-            <p><strong>Volunteer with Al-Shifaa:</strong> {{ generalQuestionsForm.isAlShifaaVolunteer }}</p>
+            <p><strong>Employed:</strong> {{ youth?.employed }}</p>
+            <p><strong>Employment Duration:</strong> {{ youth?.seekingEmploymentDuration }}</p>
+            <p><strong>Volunteer with PRCS:</strong> {{ youth?.isPrcsVolunteer }}</p>
+            <p><strong>Volunteer with Fire Brigades:</strong> {{ youth?.isFireBrigadesVolunteer }}</p>
+            <p><strong>Volunteer with Al-Shifaa:</strong> {{ youth?.isAlShifaaVolunteer }}</p>
           </div>
         </div>
     </div>
 
       </p-tabPanel>
-      
-  
+
+
     <!-- Experience Details Tab -->
     <p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
             <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
               Experience Details
             </h3>
-            <div *ngFor="let experience of experienceDetailsForm.experiences; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+            <div *ngFor="let experience of youth?.experiences; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
             <p><strong>Experience {{ i + 1 }}:</strong></p>
             <p><strong>Type:</strong> {{ experience.type }}</p>
             <p><strong>Employer Name:</strong> {{ experience.employerName }}</p>
@@ -160,16 +144,16 @@
           </div>
         </div>
       </p-tabPanel>
-      
-  
+
+
     <!-- Training and Skills Tab -->
     <p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
             <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
               Training Details
             </h3>
-            <div *ngFor="let training of trainingsAndSkillsForm.trainings; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-             
+            <div *ngFor="let training of youth?.trainings; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
             <p><strong>Training {{ i + 1 }}:</strong></p>
             <p><strong>Institution:</strong> {{ training.institution }}</p>
             <p><strong>Certificate:</strong> {{ training.certificate }}</p>
@@ -179,20 +163,20 @@
           </div>
           <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
 
-          <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>Arabic:</strong> {{ trainingsAndSkillsForm.skills.arabic }}</p>
-            <p><strong>English:</strong> {{ trainingsAndSkillsForm.skills.english }}</p>
-            <p><strong>French:</strong> {{ trainingsAndSkillsForm.skills.french }}</p>
-            <div *ngFor="let skill of trainingsAndSkillsForm.skills.computerSkills">
+          <!-- <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>Arabic:</strong> {{ youth?.skills.arabic }}</p>
+            <p><strong>English:</strong> {{ youth?.skills.english }}</p>
+            <p><strong>French:</strong> {{ youth?.skills.french }}</p>
+            <div *ngFor="let skill of youth?.skills.computerSkills">
               <p><strong>Computer Skill:</strong> {{ skill }}</p>
             </div>
-          </div>
+          </div> -->
         </div>
 
         </div>
       </p-tabPanel>
-      
-      
+
+
     <!-- Required Documents Tab -->
     <p-tabPanel header="Required Documents" leftIcon="pi pi-file-import">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
@@ -200,16 +184,16 @@
               Required Documents
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-            
+
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>CV:</strong> {{ requiredDocumentsForm.cv }}</p>
-            <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.coverLetter }}</p>
-            <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.identityCard }}</p>
-            <p><strong>Registration Card:</strong> {{ requiredDocumentsForm.registrationCard }}</p>
-            <p><strong>Degree:</strong> {{ requiredDocumentsForm.degree }}</p>
-            <p><strong>PRCS Proof:</strong> {{ requiredDocumentsForm.prcsProof }}</p>
-            <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.fireProof }}</p>
-            <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.alShifaaProof }}</p>
+            <p><strong>CV:</strong> {{ youth?.cv }}</p>
+            <p><strong>Cover Letter:</strong> {{ youth?.coverLetter }}</p>
+            <p><strong>Identity Card:</strong> {{ youth?.identityCard }}</p>
+            <p><strong>Registration Card:</strong> {{ youth?.registrationCard }}</p>
+            <p><strong>Degree:</strong> {{ youth?.degree }}</p>
+            <p><strong>PRCS Proof:</strong> {{ youth?.prcsProof }}</p>
+            <p><strong>Fire Brigades Proof:</strong> {{ youth?.fireProof }}</p>
+            <p><strong>Al-Shifaa Proof:</strong> {{ youth?.alShifaaProof }}</p>
           </div>
           <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
 
@@ -222,15 +206,9 @@
 
         </div>
       </p-tabPanel>
-      
+
   </p-tabView>
 
     <!-- Required Documents Tab -->
 </div>
 
-</body>
-
-</html>
-
-
-  

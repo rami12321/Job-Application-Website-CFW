@@ -5,10 +5,34 @@
   padding: 4px;          /* Add spacing inside the input */
   box-shadow: none;      /* Remove any shadow if present */
 }
-::ng-deep .p-dropdown-items {
-  z-index: 9999; /* Ensure dropdown is above other elements */
-  position: absolute;
+::ng-deep .p-multiselect-panel {
+  position: absolute !important; /* Ensure proper positioning */
+  z-index: 1050 !important; /* Ensure it appears above other elements */
+  max-height: 300px; /* Prevent the panel from being too tall */
+  overflow-y: auto; /* Add scroll if needed */
 }
-p-table {
-  overflow: visible; /* Allow children to overflow */
+
+::ng-deep .p-multiselect-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+
+}
+
+::ng-deep .p-multiselect-item:hover {
+  background-color: #e0f7fa;
+
+}
+::ng-deep p-table {
+  overflow: visible !important;
+}
+
+::ng-deep .p-table-wrapper {
+  overflow: visible !important;
+}
+
+::ng-deep .p-table-wrapper {
+  overflow: visible !important;
+}
+.parent-container {
+  position: relative !important;
 }

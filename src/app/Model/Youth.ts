@@ -74,4 +74,5 @@ export interface Youth {
   alShifaaProof?: string;
   confirmation: string;
   status: 'accepted' | 'rejected' | 'pending';
+  notes?:string;
 }

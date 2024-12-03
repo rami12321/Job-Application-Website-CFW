@@ -25,6 +25,8 @@ export class AuthService {
           // Save authentication details in localStorage
           localStorage.setItem('authenticated', 'true'); // Store authentication status
           localStorage.setItem('userRole', user.role); // Store the role (Employer/Youth)
+          localStorage.setItem('firstName', user.firstNameEn); // Store the role (Employer/Youth)
+          localStorage.setItem('lastName', user.lastNameEn); // Store the role (Employer/Youth)
 
           // Return success response
           return { success: true, role: user.role, id: user.id };
@@ -33,5 +35,13 @@ export class AuthService {
         }
       })
     );
+  }
+
+  logout(): void {
+    // Clear all authentication-related data from localStorage
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('firstNameEn');
+    localStorage.removeItem('lastNameEn');
   }
 }

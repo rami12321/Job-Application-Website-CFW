@@ -1,21 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { map, Observable } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class YouthServiceService {
-//   private apiUrl = 'http://localhost:3000/submit';
-
-
-//   constructor(private http: HttpClient) {}
-
-//   submitFormData(formData: any) {
-//     return this.http.post(this.apiUrl, formData);
-//   }
-// }
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -66,5 +48,11 @@ export class YouthServiceService {
       })
     );
   }
+  updateYouthNotes(id: number, notes: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/notes`, { notes });
+  }
 
+  getYouthNotesById(id: number): Observable<{ notes: string }> {
+    return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
+  }
 }
