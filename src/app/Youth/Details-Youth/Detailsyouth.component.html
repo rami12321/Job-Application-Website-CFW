@@ -1,0 +1,214 @@
+
+
+      <div class="tab-container">
+
+  <p-tabView >
+
+
+    <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+              Personal Information
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+
+          <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+            <!-- Row 1 -->
+            <p><strong>First Name (EN):</strong> {{ youth?.firstNameEn }}</p>
+            <p><strong>Family Registration Number:</strong> {{ youth?.familyRegistrationNumber }}</p>
+
+            <!-- Row 2 -->
+            <p><strong>Father's Name (EN):</strong> {{ youth?.fatherNameEn }}</p>
+            <p><strong>Mobile Phone:</strong> {{ youth?.mobilePhone }}</p>
+
+            <!-- Row 3 -->
+            <p><strong>Last Name (EN):</strong> {{ youth?.lastNameEn }}</p>
+            <p><strong>WhatsApp:</strong> {{ youth?.whatsapp }}</p>
+
+            <!-- Row 4 -->
+            <p><strong>First Name (AR):</strong> {{ youth?.firstNameAr }}</p>
+            <!-- <p><strong>Emergency Phone:</strong> {{ youth?.emergencyPhone }}</p> -->
+
+            <!-- Row 5 -->
+            <p><strong>Father's Name (AR):</strong> {{ youth?.fatherNameAr }}</p>
+            <!-- <p><strong>Emergency Relation:</strong> {{ youth?.emergencyRelation }}</p> -->
+
+            <!-- Row 6 -->
+            <p><strong>Last Name (AR):</strong> {{ youth?.lastNameAr }}</p>
+            <p><strong>Email:</strong> {{ youth?.email }}</p>
+
+            <!-- Row 7 -->
+            <p><strong>Gender:</strong> {{ youth?.gender }}</p>
+            <!-- <p><strong>Head of Family:</strong> {{ youth?.headfa }}</p> -->
+
+            <!-- Row 8 -->
+            <p><strong>Date of Birth:</strong> {{ youth?.dob }}</p>
+            <p><strong>Area:</strong> {{ youth?.area }}</p>
+
+            <!-- Row 9 -->
+            <p><strong>Nationality:</strong> {{ youth?.nationality }}</p>
+            <p><strong>Camp Type:</strong> {{ youth?.campType }}</p>
+
+            <!-- Row 10 -->
+            <p><strong>Registration Status:</strong> {{ youth?.registrationStatus }}</p>
+            <p><strong>Camp:</strong> {{ youth?.camp }}</p>
+
+            <!-- Row 11 -->
+            <p><strong>Personal Registration Number:</strong> {{ youth?.personalRegistrationNumber }}</p>
+            <p><strong>Full Address:</strong> {{ youth?.fullAddress }}</p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+      <p-tabPanel header="General Section" leftIcon="pi pi-address-book">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+                General Section
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>How did you hear about this job opportunity?</strong> {{ youth?.jobOpportunitySource }}</p>
+            <!-- <p><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong> {{ youth?.educationGraduate }}</p> -->
+            <p><strong>Education Level:</strong> {{ youth?.educationLevel }}</p>
+            <p><strong>Major:</strong> {{ youth?.major }}</p>
+            <p><strong>School, University, or Institution:</strong> {{ youth?.institution }}</p>
+            <p><strong>Place/Country:</strong> {{ youth?.gradplace }}</p>
+            <p><strong>Date of Graduation:</strong> {{ youth?.graduationDate }}</p>
+            <p><strong>Are you interested in short-term employment opportunities?</strong> {{ youth?.employmentOpportunities }}</p>
+          </div>
+          <div class="mt-6">
+            <p><strong>Tell us about yourself (Background, Experiences, Skills, and Motivation):</strong></p>
+            <p>{{ youth?.aboutYourself }}</p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+
+
+
+    <!-- General Questions Tab -->
+    <p-tabPanel header="General Questions" leftIcon="pi pi-question">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+              General Questions
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>Placed by KFW CfW:</strong> {{ youth?.placedByKfw }}</p>
+            <p><strong>KFW Year:</strong> {{ youth?.kfwYear }}</p>
+            <p><strong>Innovation Lab Graduate:</strong> {{ youth?.innovationLabGraduate }}</p>
+            <div *ngFor="let innovtyp of youth?.innovationLabGradtype">
+              <p><strong>Innovation Lab Graduate Type:</strong> {{ innovtyp }}</p>
+            </div>
+            <!-- <p><strong>Digital Skills:</strong> {{ youth?.digitalSkills }}</p> -->
+            <p><strong>Disability:</strong> {{ youth?.disability }}</p>
+            <p><strong>Disability Support:</strong> {{ youth?.disabilitySupport }}</p>
+            <div *ngFor="let dis of youth?.disabilityTypes">
+              <p><strong>Disability Type:</strong> {{ dis }}</p>
+            </div>
+            <p><strong>Employed:</strong> {{ youth?.employed }}</p>
+            <p><strong>Employment Duration:</strong> {{ youth?.seekingEmploymentDuration }}</p>
+            <p><strong>Volunteer with PRCS:</strong> {{ youth?.isPrcsVolunteer }}</p>
+            <p><strong>Volunteer with Fire Brigades:</strong> {{ youth?.isFireBrigadesVolunteer }}</p>
+            <p><strong>Volunteer with Al-Shifaa:</strong> {{ youth?.isAlShifaaVolunteer }}</p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+
+
+    <!-- Experience Details Tab -->
+    <p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+              Experience Details
+            </h3>
+            <div *ngFor="let experience of youth?.experiences; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+            <p><strong>Experience {{ i + 1 }}:</strong></p>
+            <p><strong>Type:</strong> {{ experience.type }}</p>
+            <p><strong>Employer Name:</strong> {{ experience.employerName }}</p>
+            <p><strong>Employer Phone:</strong> {{ experience.employerPhone }}</p>
+            <p><strong>Area:</strong> {{ experience.area }}</p>
+            <p><strong>Employment Type:</strong> {{ experience.employmentType }}</p>
+            <p><strong>Job Title:</strong> {{ experience.jobTitle }}</p>
+            <p><strong>Start Date:</strong> {{ experience.startDate }}</p>
+            <p><strong>End Date:</strong> {{ experience.endDate }}</p>
+            <p><strong>Salary:</strong> {{ experience.salary }}</p>
+            <p><strong>Main Tasks:</strong> {{ experience.mainTasks }}</p>
+          </div>
+        </div>
+      </p-tabPanel>
+
+
+    <!-- Training and Skills Tab -->
+    <p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+              Training Details
+            </h3>
+            <div *ngFor="let training of youth?.trainings; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+            <p><strong>Training {{ i + 1 }}:</strong></p>
+            <p><strong>Institution:</strong> {{ training.institution }}</p>
+            <p><strong>Certificate:</strong> {{ training.certificate }}</p>
+            <p><strong>Area:</strong> {{ training.area }}</p>
+            <p><strong>Duration From:</strong> {{ training.durationFrom }}</p>
+            <p><strong>Duration To:</strong> {{ training.durationTo }}</p>
+          </div>
+          <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+          <!-- <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>Arabic:</strong> {{ youth?.skills.arabic }}</p>
+            <p><strong>English:</strong> {{ youth?.skills.english }}</p>
+            <p><strong>French:</strong> {{ youth?.skills.french }}</p>
+            <div *ngFor="let skill of youth?.skills.computerSkills">
+              <p><strong>Computer Skill:</strong> {{ skill }}</p>
+            </div>
+          </div> -->
+        </div>
+
+        </div>
+      </p-tabPanel>
+
+
+    <!-- Required Documents Tab -->
+    <p-tabPanel header="Required Documents" leftIcon="pi pi-file-import">
+        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+              Required Documents
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>CV:</strong> {{ youth?.cv }}</p>
+            <p><strong>Cover Letter:</strong> {{ youth?.coverLetter }}</p>
+            <p><strong>Identity Card:</strong> {{ youth?.identityCard }}</p>
+            <p><strong>Registration Card:</strong> {{ youth?.registrationCard }}</p>
+            <p><strong>Degree:</strong> {{ youth?.degree }}</p>
+            <p><strong>PRCS Proof:</strong> {{ youth?.prcsProof }}</p>
+            <p><strong>Fire Brigades Proof:</strong> {{ youth?.fireProof }}</p>
+            <p><strong>Al-Shifaa Proof:</strong> {{ youth?.alShifaaProof }}</p>
+          </div>
+          <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p><strong>Password:</strong> (hidden for security)</p>
+          </div>
+        </div>
+
+    </div>
+
+        </div>
+      </p-tabPanel>
+
+  </p-tabView>
+
+    <!-- Required Documents Tab -->
+</div>
+

@@ -19,6 +19,7 @@
 
     <form (ngSubmit)="onSubmit()">
       <!-- Email input -->
+      @if(activeTabIndex==0){
       <div class="mb-4">
         <label for="userName" class="block text-sm font-medium text-gray-700"
           >Personal Registration Number</label
@@ -29,9 +30,24 @@
           name="userName"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 sm:text-sm"
           id="userName"
-          placeholder="1-xxxxxxxx"
+          placeholder="2-xxxxxxxx"
         />
       </div>
+      }@else{
+      <div class="mb-4">
+        <label for="userName" class="block text-sm font-medium text-gray-700"
+          >User Name</label>
+        <input
+          type="text"
+          [(ngModel)]="userName"
+          name="userName"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 sm:text-sm"
+          id="userName"
+          placeholder="User Name"
+        />
+      </div>
+      }
+
       <!-- Password input -->
       <div class="mb-6">
         <label for="password" class="block text-sm font-medium text-gray-700"
@@ -54,20 +70,17 @@
           type="submit"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
-        @if (activeTabIndex==0){
-          Login as Youth
-        }
-        @else{
-          Login as Employer
-        }
-
+          @if (activeTabIndex==0){ Login as Youth } @else{ Login as Employer }
         </button>
       </div>
     </form>
 
     <div class="mt-6 text-center text-sm text-gray-600">
       Don’t have an account?
-      <a href="/signup-youth" class="text-blue-600 hover:underline font-medium cursor-pointer">
+      <a
+        href="/signup-youth"
+        class="text-blue-600 hover:underline font-medium cursor-pointer"
+      >
         Sign up
       </a>
     </div>

@@ -4,7 +4,7 @@ import { SignUpYouthComponent } from './Youth/SignUp-Youth/SignUp-Youth.componen
 import { MainEmployerComponent } from './Employer/main-employer/main-employer.component';
 import { MainAdminComponent } from './Admin/Main-Admin/Main-Admin.component';
 import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Employer.component';
-import { YouthSignupDetailsComponent } from './Youth/youthsignup-details/youthsignup-details.component';
+import { YouthSignupDetailsComponent } from './Youth/Details-Youth/Detailsyouth.component';
 
 export const routes: Routes = [
   {
@@ -29,7 +29,7 @@ export const routes: Routes = [
     path: 'signup-youth',
     component: SignUpYouthComponent, // Parent for steps
   },
-  
+
   {
     path: 'signup-employer',
     component: SignUpEmployerComponent, // Parent for steps

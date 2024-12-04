@@ -67,7 +67,7 @@ export class SignUpEmployerComponent implements AfterViewInit  {
   passwordsMatch(group: FormGroup): { [key: string]: boolean } | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    
+
     return password === confirmPassword ? null : { 'passwordsMismatch': true };
   }
 
@@ -171,6 +171,14 @@ export class SignUpEmployerComponent implements AfterViewInit  {
         alert('Error verifying the verification code.');
       }
     );
+      const signupData = this.createSignupModel();
+
+      // Simulate an HTTP submission
+      console.log('Submitting Form Data:', signupData);
+      alert('Form data submitted successfully!');
+      this.saveToJson();
+    }
+  ngOnInit() {
   }
   
   

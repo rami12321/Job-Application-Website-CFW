@@ -74,4 +74,5 @@ export interface Youth {
   confirmation: string;
 
   status: 'accepted' | 'rejected' | 'pending' | 'waiting';
+  notes?:string;
 }

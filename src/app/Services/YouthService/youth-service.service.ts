@@ -1,21 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { map, Observable } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class YouthServiceService {
-//   private apiUrl = 'http://localhost:3000/submit';
-
-
-//   constructor(private http: HttpClient) {}
-
-//   submitFormData(formData: any) {
-//     return this.http.post(this.apiUrl, formData);
-//   }
-// }
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -24,7 +6,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class YouthServiceService {
-  private apiUrl = 'http://localhost:3000/youth'; 
+  private apiUrl = 'http://localhost:3000/youth';
   private youthDbUrl = 'assets/data/youthdb.json';
   
   constructor(private http: HttpClient) {}
@@ -57,7 +39,7 @@ export class YouthServiceService {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
   }
   checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
-    return this.http.get<any[]>(this.youthDbUrl).pipe(
+    return this.http.get<any[]>(this.apiUrl).pipe(
       map((data) => {
         const isInUse = data.some(entry => entry.personalRegistrationNumber === personalRegistrationNumber);
         return {
@@ -67,5 +49,11 @@ export class YouthServiceService {
       })
     );
   }
-  
+  updateYouthNotes(id: number, notes: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/notes`, { notes });
+  }
+
+  getYouthNotesById(id: number): Observable<{ notes: string }> {
+    return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
+  }
 }

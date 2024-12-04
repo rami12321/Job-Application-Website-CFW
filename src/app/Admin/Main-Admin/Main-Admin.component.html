@@ -74,6 +74,13 @@
       <!-- Youth Sub-tabs -->
       <div class="flex space-x-4 mb-6 border-b border-spacing-2 py-2">
         <button
+          (click)="changeYouthTab('waiting')"
+          [class.bg-cyan-500]="activeYouthTab === 'waiting'"
+          class="px-4 py-2 rounded-md hover:bg-cyan-500 cursor-pointer"
+        >
+          Waiting-List
+        </button>
+        <button
           (click)="changeYouthTab('accepted')"
           [class.bg-green-500]="activeYouthTab === 'accepted'"
           class="px-4 py-2 rounded-md hover:bg-green-500 cursor-pointer"
@@ -94,13 +101,7 @@
         >
           Pending
         </button>
-        <button
-          (click)="changeYouthTab('waiting')"
-          [class.bg-cyan-500]="activeYouthTab === 'waiting'"
-          class="px-4 py-2 rounded-md hover:bg-cyan-500 cursor-pointer"
-        >
-          Waiting-List
-        </button>
+
       </div>
 
       <!-- Content for selected Youth Tab -->

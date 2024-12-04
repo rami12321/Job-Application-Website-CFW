@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { ButtonModule } from 'primeng/button';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
+import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyouth.component';
 interface Column {
   field: string;
   header: string;
@@ -25,7 +26,7 @@ interface Column {
     TableModule,
     InputTextModule,
     PaginatorModule,
-    MultiSelectModule,DialogModule, ButtonModule  ],
+    MultiSelectModule,DialogModule, ButtonModule,YouthSignupDetailsComponent  ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.css',
@@ -50,7 +51,7 @@ export class SmartTableComponent implements OnInit {
   selectedEducationLevels: string[] = []; // Define selectedMajors
   nationalityOptions:string[]=[];
   selectedNationalities:string[]=[]
-  excludedColumns: string[] = ['headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  excludedColumns: string[] = ['role','id','headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
   constructor(private youthService: YouthServiceService,
@@ -81,9 +82,6 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
-
-
-
 
   fetchYouthData(): void {
     this.youthService.getAllYouth().subscribe(
@@ -151,7 +149,7 @@ export class SmartTableComponent implements OnInit {
       case 'rejected':
         return ['view', 'pend'];
       case 'pending':
-        return ['view', 'accept','reject'];
+        return ['view', 'accept','reject','notes'];
       case 'waiting':
         return ['view', 'accept','reject','pend'];
       default:
@@ -173,6 +171,13 @@ export class SmartTableComponent implements OnInit {
     }
   }
 
+  note: string = '';
+  selectedYouth: any;
+  showNoteDialog(youth: any): void {
+    this.selectedYouth = youth;
+    this.note = youth.note || ''; // If there's an existing note, pre-fill the input
+    this.noteDialogVisible = true;
+  }
 
   updateStatus(id: number, newStatus: string): void {
     this.youthService.updateYouthStatus(id, newStatus).subscribe(
@@ -194,14 +199,9 @@ export class SmartTableComponent implements OnInit {
   }
 
   visible: boolean = false;
-  selectedYouth: any;  // Store selected youth's data
   dialogVisible: boolean = false;  // To show/hide the dialog
-  showDialog(action: string, product: any) {
-    if (action === 'view') {
-      this.selectedYouth = { ...product };  // Assign the selected product's data to selectedYouth
-      this.dialogVisible = true;  // Open the dialog
-    }
-  }
+  noteDialogVisible: boolean = false;  // To show/hide the dialog
+
 
   loadLookupData(): void {
     this.lookupService.getLookupData().subscribe((data) => {
@@ -212,7 +212,54 @@ export class SmartTableComponent implements OnInit {
       this.nationalityOptions = data.nationalityOptions || [];
     });
   }
+  selectedYouthId: number | null = null;
+  showDialog(youthId: number): void {
+    this.selectedYouthId = youthId; // Pass the selected youth ID
+    this.dialogVisible = true;
+  }
 
+  clearSelectedYouthId(): void {
+    this.selectedYouthId = null; // Reset when dialog is closed
+  }
+
+  updateNotes(youthId: number, newNotes: string): void {
+    // Check if new notes are not empty
+    if (newNotes.trim()) {
+      // Call the service to update notes for the specific youth
+      this.youthService.updateYouthNotes(youthId, newNotes).subscribe(
+        (response) => {
+          console.log(`Notes updated for youth with ID: ${youthId}`);
+          // Re-fetch the data to reflect the updated notes
+          this.fetchYouthData();
+          this.updateStatus(youthId, 'pending');
+        },
+        (error) => {
+          console.error('Error updating notes:', error);
+        }
+      );
+    } else {
+      console.warn('Notes cannot be empty');
+    }
+  }
+  fetchNotesById(youthId: number): void {
+    this.youthService.getYouthNotesById(youthId).subscribe(
+      (response) => {
+        console.log(`Notes for youth with ID ${youthId}:`, response.notes);
+
+        // You can perform additional operations here, such as displaying the notes in a dialog
+        this.note = response.notes || ''; // If a note exists, store it for display
+        this.noteDialogVisible = true;    // Open the dialog to show the note
+      },
+      (error) => {
+        console.error('Error fetching notes:', error);
+      }
+    );
+  }
+
+  displayNoteDialog(youth: any): void {
+    this.selectedYouth = youth;
+    this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
+  }
 }
 
 

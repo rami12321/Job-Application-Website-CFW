@@ -7,17 +7,17 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private usersUrl = 'assets/users.json'; // Path to JSON file
+  private usersUrl = 'http://localhost:3000/youth'; // Path to JSON file
 
   constructor(private http: HttpClient) {}
 
-  login(userName: string, password: string, role: string): Observable<any> {
+  login(username: string, password: string, role: string): Observable<any> {
     return this.http.get<any[]>(this.usersUrl).pipe(
       map((users) => {
-        // Find the user matching both userName and password and check the role
+        // Find the user matching both username and password and check the role
         const user = users.find(
           (u) =>
-            u.userName === userName &&
+            u.username === username &&
             u.password === password &&
             u.role === role
         );
@@ -25,13 +25,23 @@ export class AuthService {
           // Save authentication details in localStorage
           localStorage.setItem('authenticated', 'true'); // Store authentication status
           localStorage.setItem('userRole', user.role); // Store the role (Employer/Youth)
+          localStorage.setItem('firstName', user.firstNameEn); // Store the role (Employer/Youth)
+          localStorage.setItem('lastName', user.lastNameEn); // Store the role (Employer/Youth)
 
           // Return success response
           return { success: true, role: user.role, id: user.id };
         } else {
-          return { success: false, message: 'Invalid credentials or role' };
+          return { success: false, message: 'Invalid credentials' };
         }
       })
     );
+  }
+
+  logout(): void {
+    // Clear all authentication-related data from localStorage
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('firstNameEn');
+    localStorage.removeItem('lastNameEn');
   }
 }
