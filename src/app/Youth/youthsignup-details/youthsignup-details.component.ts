@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Youth } from '../../../Model/Youth';
+import { Youth } from '../../Model/Youth';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { ReactiveFormsModule, FormGroup, FormControl, FormArray } from '@angular/forms';

@@ -1,5 +1,7 @@
 
 export interface Youth {
+  [key: string]: any; // Add this line for dynamic indexing
+
   id: string;
   username: string;
   password: string;

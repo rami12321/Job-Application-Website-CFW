@@ -62,6 +62,31 @@ export class SignUpYouthComponent implements OnInit {
   jobOpportunityOptions: string[] = [];
   educationLevels: string[] = [];
   additionalQuestions: any[] = [];
+  isOtherMajorSelected = false; // To track if "Other" is selected
+  cvFileName: string | null = null;
+  cvFileUrl: string | null = null;
+  coverLetterFileName: string | null = null;
+  coverLetterFileUrl: string | null = null;
+  
+  identityCardFileName: string | null = null;
+  identityCardFileUrl: string | null = null;
+  
+  registrationCardFileName: string | null = null;
+  registrationCardFileUrl: string | null = null;
+  
+  degreeFileName: string | null = null;
+  degreeFileUrl: string | null = null;
+  
+  prcsProofFileName: string | null = null;
+  prcsProofFileUrl: string | null = null;
+  
+  fireProofFileName: string | null = null;
+  fireProofFileUrl: string | null = null;
+  
+  alShifaaProofFileName: string | null = null;
+  alShifaaProofFileUrl: string | null = null;
+
+
 
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
@@ -127,6 +152,8 @@ export class SignUpYouthComponent implements OnInit {
       educationGraduate: ['', Validators.required],
       educationLevel: ['', Validators.required],
       major: ['', Validators.required],
+      otherMajor: [''], 
+
       institution: ['', Validators.required],
       graduationDate: ['', Validators.required],
       gradplace: ['', Validators.required],
@@ -602,15 +629,83 @@ isCheckedL(value: string): boolean {
   return this.languageSkills.value.includes(value);
 }
 
-// Example method in your component class
-onFileChange(event: Event, fileNameId: string): void {
+
+
+onFileChange(event: Event, controlName: string): void {
   const input = event.target as HTMLInputElement;
-  const fileName = input?.files?.[0]?.name || "No file chosen";
-  const fileNameElement = document.getElementById(fileNameId);
-  if (fileNameElement) {
-    fileNameElement.textContent = fileName;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+
+    if (controlName === 'cv') {
+      this.cvFileName = file.name; // Extract file name
+      this.cvFileUrl = URL.createObjectURL(file); // Create a blob URL for preview
+  
+      // Update the form control value with the file name (not the blob URL)
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    }
+    
+      else if (controlName === 'cv') {
+      this.coverLetterFileName = file.name;
+      this.coverLetterFileUrl = URL.createObjectURL(file); // Optional: to display a preview
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name); // Store only the file name
+    } else if (controlName === 'identityCard') {
+      this.identityCardFileName = file.name;
+      this.identityCardFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    } else if (controlName === 'registrationCard') {
+      this.registrationCardFileName = file.name;
+      this.registrationCardFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    } else if (controlName === 'degree') {
+      this.degreeFileName = file.name;
+      this.degreeFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    } else if (controlName === 'prcsProof') {
+      this.prcsProofFileName = file.name;
+      this.prcsProofFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    } else if (controlName === 'fireProof') {
+      this.fireProofFileName = file.name;
+      this.fireProofFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    } else if (controlName === 'alShifaaProof') {
+      this.alShifaaProofFileName = file.name;
+      this.alShifaaProofFileUrl = URL.createObjectURL(file); 
+      this.requiredDocumentsForm.get(controlName)?.setValue(file.name);
+    }
+  } else {
+    if (controlName === 'cv'){
+    this.cvFileName = null;
+    this.cvFileUrl = null;
+    this.requiredDocumentsForm.get(controlName)?.setValue(null);}
+      else if (controlName === 'coverLetter') {
+      this.coverLetterFileName = null;
+      this.coverLetterFileUrl = null;
+    } else if (controlName === 'identityCard') {
+      this.identityCardFileName = null;
+      this.identityCardFileUrl = null;
+    } else if (controlName === 'registrationCard') {
+      this.registrationCardFileName = null;
+      this.registrationCardFileUrl = null;
+    } else if (controlName === 'degree') {
+      this.degreeFileName = null;
+      this.degreeFileUrl = null;
+    } else if (controlName === 'prcsProof') {
+      this.prcsProofFileName = null;
+      this.prcsProofFileUrl = null;
+    } else if (controlName === 'fireProof') {
+      this.fireProofFileName = null;
+      this.fireProofFileUrl = null;
+    } else if (controlName === 'alShifaaProof') {
+      this.alShifaaProofFileName = null;
+      this.alShifaaProofFileUrl = null;
+    }
+
+    this.requiredDocumentsForm.get(controlName)?.setValue(null);
   }
 }
+
+
 
 
 
@@ -646,8 +741,24 @@ updatePatternError() {
         this.formSubmitted = false;
       }, 3000);
     }
-
+    onMajorChange(event: any): void {
+      const selectedMajor = event.target.value;
+    
+      if (selectedMajor === 'other') {
+        this.isOtherMajorSelected = true;
+        this.generalForm.get('major')?.setValue(''); // Clear the major field before user input
+        this.generalForm.get('major')?.setValidators([Validators.required]); // Make major field required when custom input is provided
+        this.generalForm.get('major')?.updateValueAndValidity();
+      } else {
+        this.isOtherMajorSelected = false;
+        this.generalForm.get('major')?.setValidators([Validators.required]); // Keep it required when selecting a standard option
+        this.generalForm.get('major')?.updateValueAndValidity();
+      }
+    }
+    
+    
     createYouthModel(): Youth {
+
       return {
         id: this.generateUniqueId(),
         username: this.personalInfoForm.value.personalRegistrationNumber,
@@ -696,10 +807,12 @@ updatePatternError() {
     }
 
     generateUniqueId(): string {
-      return Math.floor(10000000 + Math.random() * 90000000).toString();
-        
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+      const randomLetter = letters[Math.floor(Math.random() * letters.length)]; 
+      const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+      return `${randomLetter}-${randomNumber}`; 
     }
-
+    
     
   }
   

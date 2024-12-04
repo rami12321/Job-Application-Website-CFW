@@ -11,10 +11,11 @@ import {
 const router: Router = Router();
 
 // Routes for employer CRUD operations
-router.get('/', getAllEmployers);          // Get all employers
-router.post('/', createEmployer);          // Create a new employer
-router.get('/:id', getEmployerById);      // Get employer by ID
-router.put('/:id', updateEmployer);       // Update employer by ID
-router.delete('/:id', deleteEmployer);    // Delete employer by ID
+router.get('/employer', getAllEmployers);          // Get all employers
+router.post('/employer', createEmployer);          // Create a new employer
+router.get('/employer/:id', getEmployerById);      // Get employer by ID
+router.put('/employer/:id', updateEmployer);       // Update employer by ID
+router.delete('/employer/:id', deleteEmployer);    // Delete employer by ID
+
 
 export default router;

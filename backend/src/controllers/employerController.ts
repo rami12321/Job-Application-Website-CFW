@@ -16,13 +16,14 @@ const readFile = (): Employer[] => {
 };
 
 const writeFile = (data: Employer[]): void => {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    console.log('Data written successfully.');
+  } catch (error) {
+    console.error('Error writing to file:', error);
+  }
 };
-const generateId = (): string => {
-  const min = 10000000;  // Minimum 8-digit number
-  const max = 99999999;  // Maximum 8-digit number
-  return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
-};
+
 
 // Get all employers
 export const getAllEmployers = (req: Request, res: Response): void => {
@@ -36,7 +37,6 @@ export const createEmployer = (req: Request, res: Response): void => {
   const newEmployer: Employer = req.body; // Ensure req.body adheres to Employer type
 
   // Generate the ID and assign it to the new employer
-  newEmployer.id = generateId();
 
   employers.push(newEmployer);
   writeFile(employers);
