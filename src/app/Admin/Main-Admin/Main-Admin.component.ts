@@ -36,7 +36,6 @@ export class MainAdminComponent implements OnInit {
         // The response will contain the generated code
         this.generatedCode = response.code;
         console.log('Verification code saved:', response);
-  activeYouthTab: string = 'waiting';
 
         // Add the generated code to the list of generated codes
         this.generatedCodes.push(this.generatedCode);
