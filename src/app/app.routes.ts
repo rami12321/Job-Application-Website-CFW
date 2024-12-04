@@ -24,10 +24,7 @@ export const routes: Routes = [
     path: 'main-employer',
     component: MainEmployerComponent,
   },
-  {
-    path: 'main-youth',
-    component: SignUpYouthComponent,
-  },
+
   {
     path: 'signup-youth',
     component: SignUpYouthComponent, // Parent for steps

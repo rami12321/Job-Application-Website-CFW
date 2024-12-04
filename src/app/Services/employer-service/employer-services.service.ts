@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { Employer } from '../../Model/Employer';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServicesService {
+export class EmployerService {
 
-  private employerDbUrl = 'assets/data/youthdb.json';
+  private employerDbUrl = 'http://localhost:3000/api/employer'; // Ensure this matches backend routes
   constructor(private http: HttpClient) {}
-  checkemployerid(id: string): Observable<{ inUse: boolean; message: string }> {
-    return this.http.get<any[]>(this.employerDbUrl).pipe(
-      map((data) => {
-        const isInUse = data.some(entry => entry.id === id);
-        return {
-          inUse: isInUse,
-          message: isInUse ? 'This ID number is already taken.' : ''
-        };
-      })
-    );
+
+  saveEmployerData(employer: Employer): Observable<any> {
+    return this.http.post(this.employerDbUrl, employer, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
+  
+
 
 }
