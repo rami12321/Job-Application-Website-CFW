@@ -1,9 +1,13 @@
-// public/Model/Employer.ts
 export interface Employer {
-  id: string;
-  name: string;
-  position: string;
-  company: string;
+  id?: string; 
+  username: string;
+  password: string;
+  organization: string;
+  fullNameEnglish: string;
+  fullNameArabic: string;
+  mobilePhone: string;
+  whatsappNumber?: string;
   email: string;
-  phone: string;
+  area: string;
+  signature: string | null;
 }

@@ -527,23 +527,40 @@
                                   </select>
                                   <div *ngIf="hasError1('educationLevel', 'required')" class="text-red-500 text-sm">This field is required.</div>
                                 </div>
-                          
-                                <!-- Major -->
-                                <div class="space-y-6 border-b border-gray-300 pb-6">
-                                  <label for="major" class="block text-sm font-medium mb-2">Major *</label>
-                                  <small class="block text-gray-600 mb-2">
-                                    Please select the major that you have a certificate for or a proof of completion. If you cannot find your exact degree, please choose the degree most relevant to yours.
-                                  </small>
-                                  <select
-                                    id="major"
-                                    formControlName="major"
-                                    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                  >
-                                    <option value="" disabled selected>Select Major</option>
-                                    <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
-                                  </select>
-                                  <div *ngIf="hasError1('major', 'required')" class="text-red-500 text-sm">This field is required.</div>
-                                </div>
+                                                            
+         <!-- Major -->
+<div class="space-y-6 border-b border-gray-300 pb-6">
+  <label for="major" class="block text-sm font-medium mb-2">Major *</label>
+  <small class="block text-gray-600 mb-2">
+    Please select the major that you have a certificate for or a proof of completion. If you cannot find your exact degree, please choose the degree most relevant to yours.
+  </small>
+  <select
+    id="major"
+    formControlName="major"
+    class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    (change)="onMajorChange($event)"
+  >
+    <option value="" disabled selected>Select Major</option>
+    <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+    <option value="other">Other</option>
+  </select>
+
+  <!-- Show input field only if "Other" is selected -->
+  <div *ngIf="isOtherMajorSelected">
+    <label for="major" class="block text-sm font-medium mb-2">Please specify your major</label>
+    <input
+      type="text"
+      id="major"
+      formControlName="major"
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      placeholder="Enter your major"
+    />
+  </div>
+
+  <div *ngIf="hasError1('major', 'required')" class="text-red-500 text-sm">This field is required.</div>
+</div>
+
+
                           
                                 <!-- Institution -->
                                 <div class="space-y-6 border-b border-gray-300 pb-6">
@@ -1342,192 +1359,268 @@
                         formControlName="cv"
                         class="sr-only"
                         accept=".pdf,.doc,.docx"
-                        (change)="onFileChange($event, 'cvFileName')"
-
+                        (change)="onFileChange($event, 'cv')"
                       />
-                      <!-- Display file name -->
-                      <span class="ml-4 text-sm text-gray-500" id="cvFileName">No file chosen</span>
+                      <!-- Display file name as link -->
+                      <span *ngIf="cvFileName" class="ml-4 text-sm text-gray-500">
+                        <a
+                          [href]="cvFileUrl"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-blue-600 hover:underline"
+                        >
+                          {{ cvFileName }}
+                        </a>
+                      </span>
+                      <span *ngIf="!cvFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
                     </div>
                     <span *ngIf="hasError3('cv', 'required')" class="text-red-500 text-sm mt-1 block">CV is required.</span>
                   </div>
-                
-                  <!-- Cover Letter -->
-                  <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Please attach your cover letter
-                    </label>
-                    <div class="relative">
-                      <label
-                        for="coverLetter_input"
-                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      >
-                        Choose File
-                      </label>
-                      <input
-                        id="coverLetter_input"
-                        type="file"
-                        formControlName="coverLetter"
-                        class="sr-only"
-                        accept=".pdf,.doc,.docx"
-                        (change)="onFileChange($event, 'coverLetterFileName')"
-
-                        
-                      />
-                      <span class="ml-4 text-sm text-gray-500" id="coverLetterFileName">No file chosen</span>
-                    </div>
-                  </div>
-
-
-                  <!-- Identity Card -->
-                  <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Please attach your identity card (2-sides) <span class="text-red-500">*</span>
-                    </label>
-                    <div class="relative">
-                      <label
-                        for="identityCard_input"
-                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      >
-                        Choose File
-                      </label>
-                      <input
-                        id="identityCard_input"
-                        type="file"
-                        formControlName="identityCard"
-                        class="sr-only"
-                        accept=".pdf,.jpg,.png"
-                        (change)="onFileChange($event, 'identityCardFileName')"
-                      />
-                      <span class="ml-4 text-sm text-gray-500" id="identityCardFileName">No file chosen</span>
-                    </div>
-                    <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
-                  </div>
-
-                    <!-- UNRWA Registration Card -->
-                    <div>
-                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
-                        Please attach your UNRWA registration card <span class="text-red-500">*</span>
-                      </label>
-                      <div class="relative">
-                        <label
-                          for="registrationCard_input"
-                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          Choose File
-                        </label>
-                        <input
-                          id="registrationCard_input"
-                          type="file"
-                          formControlName="registrationCard"
-                          class="sr-only"
-                          accept=".pdf,.jpg,.png"
-                          (change)="onFileChange($event, 'registrationCardFileName')"
-                        />
-                        <span class="ml-4 text-sm text-gray-500" id="registrationCardFileName">No file chosen</span>
-                      </div>
-                      <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
-                    </div>
                   
-                    <!-- Educational Degree -->
-                    <div>
-                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
-                        Please attach your educational degree (certificate) <span class="text-red-500">*</span>
-                      </label>
-                      <div class="relative">
-                        <label
-                          for="degree_input"
-                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          Choose File
-                        </label>
-                        <input
-                          id="degree_input"
-                          type="file"
-                          formControlName="degree"
-                          class="sr-only"
-                          accept=".pdf,.jpg,.png"
-                          (change)="onFileChange($event, 'degreeFileName')"
-                        />
-                        <span class="ml-4 text-sm text-gray-500" id="degreeFileName">No file chosen</span>
-                      </div>
-                      <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
-                    </div>
-                  
-                    <!-- PRCS Proof -->
-                    <div *ngIf="isPrcsVolunteer()">
-                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
-                        Please attach your PRCS proof of volunteering <span class="text-red-500">*</span>
-                      </label>
-                      <div class="relative">
-                        <label
-                          for="prcsProof_input"
-                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          Choose File
-                        </label>
-                        <input
-                          id="prcsProof_input"
-                          type="file"
-                          formControlName="prcsProof"
-                          class="sr-only"
-                          accept=".pdf,.jpg,.png"
-                          (change)="onFileChange($event, 'prcsProofFileName')"
-                        />
-                        <span class="ml-4 text-sm text-gray-500" id="prcsProofFileName">No file chosen</span>
-                      </div>
-                      <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
-                    </div>
-                  
-                    <!-- Fire Brigades Proof -->
-                    <div *ngIf="isFireBrigadesVolunteer()">
-                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
-                        Please attach your Palestinian Fire Brigades proof of volunteering <span class="text-red-500">*</span>
-                      </label>
-                      <div class="relative">
-                        <label
-                          for="fireProof_input"
-                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          Choose File
-                        </label>
-                        <input
-                          id="fireProof_input"
-                          type="file"
-                          formControlName="fireProof"
-                          class="sr-only"
-                          accept=".pdf,.jpg,.png"
-                          (change)="onFileChange($event, 'fireProofFileName')"
-                        />
-                        <span class="ml-4 text-sm text-gray-500" id="fireProofFileName">No file chosen</span>
-                      </div>
-                      <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
-                    </div>
-                  
-                    <!-- Al-Shifaa Proof -->
-                    <div *ngIf="isAlShifaaVolunteer()">
-                      <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
-                        Please attach your Al-Shifaa proof of volunteering <span class="text-red-500">*</span>
-                      </label>
-                      <div class="relative">
-                        <label
-                          for="alShifaaProof_input"
-                          class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          Choose File
-                        </label>
-                        <input
-                          id="alShifaaProof_input"
-                          type="file"
-                          formControlName="alShifaaProof"
-                          class="sr-only"
-                          accept=".pdf,.jpg,.png"
-                          (change)="onFileChange($event, 'alShifaaProofFileName')"
-                        />
-                        <span class="ml-4 text-sm text-gray-500" id="alShifaaProofFileName">No file chosen</span>
-                      </div>
-                      <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
-                    </div>
-                  </div>
+<!-- Cover Letter -->
+<div>
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+    Please attach your cover letter
+  </label>
+  <div class="relative">
+    <label
+      for="coverLetter_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="coverLetter_input"
+      type="file"
+      formControlName="coverLetter"
+      class="sr-only"
+      accept=".pdf,.doc,.docx"
+      (change)="onFileChange($event, 'coverLetter')"
+    />
+    <span *ngIf="coverLetterFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="coverLetterFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ coverLetterFileName }}
+      </a>
+    </span>
+    <span *ngIf="!coverLetterFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+</div>
+
+<!-- Identity Card -->
+<div>
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+    Please attach your identity card (2-sides) <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="identityCard_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="identityCard_input"
+      type="file"
+      formControlName="identityCard"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'identityCard')"
+    />
+    <span *ngIf="identityCardFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="identityCardFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ identityCardFileName }}
+      </a>
+    </span>
+    <span *ngIf="!identityCardFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
+</div>
+
+<!-- UNRWA Registration Card -->
+<div>
+  <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+    Please attach your UNRWA registration card <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="registrationCard_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="registrationCard_input"
+      type="file"
+      formControlName="registrationCard"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'registrationCard')"
+    />
+    <span *ngIf="registrationCardFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="registrationCardFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ registrationCardFileName }}
+      </a>
+    </span>
+    <span *ngIf="!registrationCardFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
+</div>
+
+<!-- Educational Degree -->
+<div>
+  <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+    Please attach your educational degree (certificate) <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="degree_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="degree_input"
+      type="file"
+      formControlName="degree"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'degree')"
+    />
+    <span *ngIf="degreeFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="degreeFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ degreeFileName }}
+      </a>
+    </span>
+    <span *ngIf="!degreeFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
+</div>
+<!-- PRCS Proof -->
+<div *ngIf="isPrcsVolunteer()">
+  <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+    Please attach your PRCS proof of volunteering <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="prcsProof_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="prcsProof_input"
+      type="file"
+      formControlName="prcsProof"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'prcsProof')"
+    />
+    <span *ngIf="prcsProofFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="prcsProofFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ prcsProofFileName }}
+      </a>
+    </span>
+    <span *ngIf="!prcsProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
+</div>
+
+<!-- Fire Brigades Proof -->
+<div *ngIf="isFireBrigadesVolunteer()">
+  <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+    Please attach your Palestinian Fire Brigades proof of volunteering <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="fireProof_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="fireProof_input"
+      type="file"
+      formControlName="fireProof"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'fireProof')"
+    />
+    <span *ngIf="fireProofFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="fireProofFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ fireProofFileName }}
+      </a>
+    </span>
+    <span *ngIf="!fireProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
+</div>
+
+<!-- Al-Shifaa Proof -->
+<div *ngIf="isAlShifaaVolunteer()">
+  <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
+    Please attach your Al-Shifaa proof of volunteering <span class="text-red-500">*</span>
+  </label>
+  <div class="relative">
+    <label
+      for="alShifaaProof_input"
+      class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      Choose File
+    </label>
+    <input
+      id="alShifaaProof_input"
+      type="file"
+      formControlName="alShifaaProof"
+      class="sr-only"
+      accept=".pdf,.jpg,.png"
+      (change)="onFileChange($event, 'alShifaaProof')"
+    />
+    <span *ngIf="alShifaaProofFileName" class="ml-4 text-sm text-gray-500">
+      <a
+        [href]="alShifaaProofFileUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-600 hover:underline"
+      >
+        {{ alShifaaProofFileName }}
+      </a>
+    </span>
+    <span *ngIf="!alShifaaProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+  </div>
+  <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
+</div>
+</div>
+
                   
 
     
@@ -1564,38 +1657,36 @@
 
             <div class="p-fluid p-formgrid p-grid space-y-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]  pb-6">
 
-              <div class="p-field p-col-12" >
-                <label for="password" class="block text-sm font-medium mb-2">Password</label>
-                <p-password 
+  
+              <div class="space-y-6 border-b border-gray-300 pb-6 pl-1 ml-3 mt-3" >
+                <label for="password" class="block text-sm font-medium mb-2">Password *</label>
+                <input
+                  type="password"
                   id="password"
-                  formControlName="password" 
-                  [feedback]="true" 
-                  [toggleMask]="true" 
-                  [styleClass]="requiredDocumentsForm.get('password')?.invalid && requiredDocumentsForm.get('password')?.touched ? 'ng-invalid' : ''" 
+                  formControlName="password"
                   placeholder="Enter your password"
                   class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
+                />
+                <div *ngIf="requiredDocumentsForm.get('password')?.invalid && requiredDocumentsForm.get('password')?.touched">
+                  <small class="text-danger" style="color: red" *ngIf="requiredDocumentsForm.get('password')?.hasError('required')">
+                    Password is required.
+                  </small>
+                </div>
               </div>
-            
-              <div class="p-field p-col-12 " >
-                <label for="confirmPassword" class="block text-sm font-medium mb-2">Confirm Password</label>
-                <p-password 
+              
+              <div class="space-y-6 border-b border-gray-300 pb-6 pl-1 ml-3" >
+                <label for="confirmPassword" class="block text-sm font-medium mb-2">Confirm Password *</label>
+                <input
+                  type="password"
                   id="confirmPassword"
-                  formControlName="confirmPassword" 
-                  [feedback]="true" 
-                  [toggleMask]="true" 
-                  [styleClass]="requiredDocumentsForm.get('confirmPassword')?.invalid && requiredDocumentsForm.get('confirmPassword')?.touched ? 'ng-invalid' : ''" 
+                  formControlName="confirmPassword"
                   placeholder="Confirm your password"
                   class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                  <div *ngIf="requiredDocumentsForm.get('confirmPassword')?.invalid && requiredDocumentsForm.get('confirmPassword')?.touched">
-                    <small class="text-danger" style="color: red" *ngIf="requiredDocumentsForm.get('confirmPassword')?.hasError('required')">Confirm password is required.</small>
-                    <small class="text-danger" style="color: red" *ngIf="requiredDocumentsForm.hasError('passwordsMismatch') && requiredDocumentsForm.get('confirmPassword')?.touched">
-                      Passwords do not match!
-                    </small>
-                  </div>
+                />
+                <div *ngIf="requiredDocumentsForm.get('confirmPassword')?.touched && requiredDocumentsForm.hasError('passwordsMismatch')">
+                  <small class="text-danger" style="color: red">Passwords do not match!</small>
+                </div>
               </div>
-
               
             </div>
             
@@ -1751,14 +1842,84 @@
             <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Documents</h3>
               <div class="grid grid-cols-2 gap-6 mt-4">
-                <p><strong>CV:</strong> {{ requiredDocumentsForm.get('cv')?.value }}</p>
-                <p><strong>Cover Letter:</strong> {{ requiredDocumentsForm.get('coverLetter')?.value }}</p>
-                <p><strong>Identity Card:</strong> {{ requiredDocumentsForm.get('identityCard')?.value }}</p>
-                <p><strong>Registration Card:</strong> {{ requiredDocumentsForm.get('registrationCard')?.value }}</p>
-                <p><strong>Degree:</strong> {{ requiredDocumentsForm.get('degree')?.value }}</p>
-                <p><strong>PRCS Proof:</strong> {{ requiredDocumentsForm.get('prcsProof')?.value }}</p>
-                <p><strong>Fire Brigades Proof:</strong> {{ requiredDocumentsForm.get('fireProof')?.value }}</p>
-                <p><strong>Al-Shifaa Proof:</strong> {{ requiredDocumentsForm.get('alShifaaProof')?.value }}</p>
+                <p>
+                  <strong>CV:</strong>
+                  <span *ngIf="cvFileName">
+                    <a
+                      [href]="cvFileUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-blue-600 hover:underline"
+                    >
+                      {{ cvFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!cvFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Cover Letter:</strong> 
+                  <span *ngIf="coverLetterFileName">
+                    <a [href]="coverLetterFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ coverLetterFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!coverLetterFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Identity Card:</strong> 
+                  <span *ngIf="identityCardFileName">
+                    <a [href]="identityCardFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ identityCardFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!identityCardFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Registration Card:</strong> 
+                  <span *ngIf="registrationCardFileName">
+                    <a [href]="registrationCardFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ registrationCardFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!registrationCardFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Degree:</strong> 
+                  <span *ngIf="degreeFileName">
+                    <a [href]="degreeFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ degreeFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!degreeFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>PRCS Proof:</strong> 
+                  <span *ngIf="prcsProofFileName">
+                    <a [href]="prcsProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ prcsProofFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!prcsProofFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Fire Brigades Proof:</strong> 
+                  <span *ngIf="fireProofFileName">
+                    <a [href]="fireProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ fireProofFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!fireProofFileName">No file uploaded.</span>
+                </p>
+                
+                <p><strong>Al-Shifaa Proof:</strong> 
+                  <span *ngIf="alShifaaProofFileName">
+                    <a [href]="alShifaaProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                      {{ alShifaaProofFileName }}
+                    </a>
+                  </span>
+                  <span *ngIf="!alShifaaProofFileName">No file uploaded.</span>
+                </p>
+                
               </div>
               <div class="grid grid-cols-2 gap-6 mt-4">
 

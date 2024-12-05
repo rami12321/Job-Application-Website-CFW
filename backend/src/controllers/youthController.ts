@@ -25,19 +25,13 @@ export const getAllYouth = (req: Request, res: Response): void => {
   res.status(200).json(youths);
 };
 
-// Function to generate an 8-digit ID
-const generateId = (): string => {
-  const min = 10000000;  // Minimum 8-digit number
-  const max = 99999999;  // Maximum 8-digit number
-  return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
-};
+
 
 export const createYouth = (req: Request, res: Response): void => {
   const youths: Youth[] = readFile();
   const newYouth: Youth = req.body;
 
   // Generate the ID and assign it to the new youth
-  newYouth.id = generateId(); // Ensure req.body adheres to Youth type and includes id field
 
   youths.push(newYouth);
   writeFile(youths);
