@@ -77,12 +77,22 @@
 
     <div class="mt-6 text-center text-sm text-gray-600">
       Don’t have an account?
-      <a
+      @if (activeTabIndex==0){
+
+        <a
         href="/signup-youth"
         class="text-blue-600 hover:underline font-medium cursor-pointer"
-      >
+        >
         Sign up
       </a>
+    }@else {
+      <a
+      href="/signup-employer"
+      class="text-blue-600 hover:underline font-medium cursor-pointer"
+      >
+      Sign up
+    </a>
+    }
     </div>
   </div>
 </div>

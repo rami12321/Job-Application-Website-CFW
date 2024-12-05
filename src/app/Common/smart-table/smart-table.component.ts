@@ -37,7 +37,7 @@ export class SmartTableComponent implements OnInit {
   youthList: any[] = [];
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
-  _selectedColumns1: Column[] = [];
+  savedColumns: Column[] = [];
   paginatedProducts: any[] = [];
   rowsPerPage = 10;
   selectedGender: string[] = [];
@@ -51,7 +51,7 @@ export class SmartTableComponent implements OnInit {
   selectedEducationLevels: string[] = []; // Define selectedMajors
   nationalityOptions:string[]=[];
   selectedNationalities:string[]=[]
-  excludedColumns: string[] = ['role','id','headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  excludedColumns: string[] = ['disability','disabilityTypes','disabilitySupport','notes','role','id','headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
   constructor(private youthService: YouthServiceService,
@@ -60,7 +60,19 @@ export class SmartTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchYouthData(); // Fetch data from the service
+    this.loadSelectedColumnsFromLocalStorage();
+
+    const savedColumns = localStorage.getItem('selectedColumns');
+    if (savedColumns) {
+      this._selectedColumns = JSON.parse(savedColumns);
+      this.cols = [...this._selectedColumns]; // Synchronize `cols`
+    } else {
+      // Default to all columns if no saved state
+      this._selectedColumns = this.cols.filter(col => col.field !== 'action');
+      this.cols = [...this._selectedColumns];
+    }
+
+    this.fetchYouthData();
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -83,6 +95,16 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
+  loadSelectedColumnsFromLocalStorage() {
+    const storedColumns = JSON.parse(localStorage.getItem('selectedColumns') || '[]');
+    if (storedColumns.length) {
+      this.cols = storedColumns;
+    }
+  }
+
+  saveSelectedColumnsToLocalStorage() {
+    localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
+  }
   fetchYouthData(): void {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
@@ -123,7 +145,7 @@ export class SmartTableComponent implements OnInit {
           }));
 
           // Initialize _selectedColumns with all columns except "Action"
-          this._selectedColumns = this.cols.filter(col => col.field !== 'action');
+          this._selectedColumns = this.cols;
         }
 
         // Step 4: Update youth list and paginated products
@@ -135,8 +157,22 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  onColumnChange(selectedColumns: Column[]): void {
+    this.selectedColumns = selectedColumns;
+  }
 
-  // Capitalize column headers for display
+  set selectedColumns(columns: Column[]) {
+    this._selectedColumns = columns;
+    this.saveSelectedColumnsToLocalStorage();  // Ensure the columns are saved
+  }
+
+  get selectedColumns(): Column[] {
+    return this._selectedColumns;
+  }
+
+  // saveSelectedColumnsToLocalStorage(): void {
+  //   localStorage.setItem('selectedColumns', JSON.stringify(this._selectedColumns));  // Save to localStorage
+  // }
   capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1');
   }

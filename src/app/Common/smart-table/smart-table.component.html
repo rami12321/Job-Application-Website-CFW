@@ -23,6 +23,7 @@
         'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
       }"
       placeholder="Choose Columns"
+      (onChange)="saveSelectedColumnsToLocalStorage()"
     >
     </p-multiSelect>
   </ng-template>
@@ -36,7 +37,6 @@
         class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
         pSortableColumn="{{ col.field }}"
       >
-
         @if(col.field !=='action'){
         <div class="flex flex-col">
           <!-- Header Label and Sort Icon -->
@@ -47,7 +47,6 @@
           <!-- Column Filter -->
         </div>
         }
-
       </th>
     </tr>
     <tr>
@@ -58,7 +57,6 @@
         *ngFor="let col of cols"
         class="border-b border-r px-2 py-1 text-sm text-gray-600"
       >
-
         <!-- Using @if for conditional rendering -->
         @if (col.header === 'Major') {
         <p-multiSelect
@@ -72,6 +70,7 @@
             border: '1px solid #ddd',
             'border-radius': '8px',
             'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            
           }"
         >
           <ng-template let-option pTemplate="item">
@@ -100,64 +99,64 @@
           </ng-template>
         </p-multiSelect>
         }@else if(col.header=="Area"){
-          <p-multiSelect
-            [options]="areas"
-            [(ngModel)]="selectedAreas"
-            [showClear]="true"
-            (onChange)="fetchYouthData()"
-            placeholder="Select Area"
-            appendTo="body"
-            [style]="{
-              background: 'white',
-              border: '1px solid #ddd',
-              'border-radius': '8px',
-              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-            }"
-            ><ng-template let-option pTemplate="item">
-              <div class="flex items-center absolute z-50">
-                {{ option.name }}
-              </div>
-            </ng-template>
-          </p-multiSelect>
-          }@else if(col.header=="Education Level"){
-            <p-multiSelect
-              [options]="educationLevels"
-              [(ngModel)]="selectedEducationLevels"
-              [showClear]="true"
-              (onChange)="fetchYouthData()"
-              placeholder="Select Education Level"
-              [style]="{
-                background: 'white',
-                border: '1px solid #ddd',
-                'border-radius': '8px',
-                'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-              }"
-              ><ng-template let-option pTemplate="item">
-                <div class="flex items-center">
-                  {{ option }}
-                </div>
-              </ng-template>
-            </p-multiSelect>
-            }@else if(col.header=="Nationality"){
-              <p-multiSelect
-                [options]="nationalityOptions"
-                [(ngModel)]="selectedNationalities"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Nationality"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-                ><ng-template let-option pTemplate="item">
-                  <div class="flex items-center">
-                    {{ option }}
-                  </div>
-                </ng-template>
-              </p-multiSelect>
-              }@else {
+        <p-multiSelect
+          [options]="areas"
+          [(ngModel)]="selectedAreas"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Area"
+          appendTo="body"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center absolute z-50">
+              {{ option.name }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Education Level"){
+        <p-multiSelect
+          [options]="educationLevels"
+          [(ngModel)]="selectedEducationLevels"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Education Level"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Nationality"){
+        <p-multiSelect
+          [options]="nationalityOptions"
+          [(ngModel)]="selectedNationalities"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Nationality"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else {
         <!-- Text filter for other columns -->
         <p-columnFilter
           [type]="'text'"
@@ -180,45 +179,97 @@
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
             (click)="showDialog(product.id)"
-            >
+          >
             <i class="pi pi-eye"></i>
           </button>
 
           <p-dialog
-          header="Youth Details"
-          [(visible)]="dialogVisible"
-          [style]="{ width: '80rem' }"
-          (onHide)="clearSelectedYouthId()"
-        >
-          <app-youthsignup-details *ngIf="selectedYouthId" [youthId]="selectedYouthId"/>
-        </p-dialog>
+            header="Youth Details"
+            [(visible)]="dialogVisible"
+            [style]="{ width: '80rem' }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-youthsignup-details
+              *ngIf="selectedYouthId"
+              [youthId]="selectedYouthId"
+            />
+          </p-dialog>
 
+          <button
+            *ngIf="action === 'pend'"
+            type="button"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="showNoteDialog(product)"
+          >
+            <i class="pi pi-clock"></i>
+          </button>
+          <button
+            *ngIf="action === 'notes'"
+            type="button"
+            class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="displayNoteDialog(product)"
+          >
+            <i class="pi pi-file"></i>
+          </button>
 
-        <button
-        *ngIf="action === 'pend'"
-        type="button"
-        class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-        (click)="showNoteDialog(product)"
-      >
-        <i class="pi pi-clock"></i>
-      </button>
-        <button
-        *ngIf="action === 'notes'"
-        type="button"
-        class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-yellow-600"
-        (click)="displayNoteDialog(product)"
-      >
-      <i class="pi pi-file"></i>
-    </button>
+          <p-dialog
+            [(visible)]="noteDialogVisible"
+            [closable]="false"
+            [style]="{ width: '500px', borderRadius: '12px' }"
+          >
+            <!-- Header -->
+            <ng-template pTemplate="header">
+              <div
+                class="flex justify-between items-center bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 py-3 rounded-t-lg shadow-lg"
+              >
+                <span class="text-xl font-semibold">Update Notes</span>
+                <button
+                  pButton
+                  icon="pi pi-times"
+                  class="p-button-rounded p-button-text text-white hover:text-gray-200 transition-all"
+                  type="button"
+                  (click)="noteDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
 
-      <p-dialog [(visible)]="noteDialogVisible" [closable]="false" [style]="{ width: '500px' }">
-        <p-header>Update Notes</p-header>
-        <textarea [(ngModel)]="note" rows="5" cols="30" placeholder="Enter notes..."></textarea>
-        <p-footer class="flex flex-row justify-end gap-7">
-          <button pButton class="bg-green-500 px-5 py-2 text-white" type="button" label="Save" (click)="updateNotes(selectedYouth.id, note);noteDialogVisible=false"></button>
-          <button pButton class="bg-black px-5 py-2 text-white" type="button" label="Cancel" (click)="noteDialogVisible = false"></button>
-        </p-footer>
-      </p-dialog>
+            <!-- Content -->
+            <div class="p-6">
+              <textarea
+                rows="6"
+                pInputTextarea
+                [(ngModel)]="note"
+                placeholder="Enter your notes here..."
+                class="w-full p-4 border border-gray-300 rounded-lg shadow-md focus:ring-4 focus:ring-blue-400 focus:outline-none transition-all duration-200"
+              ></textarea>
+            </div>
+
+            <!-- Footer -->
+            <ng-template pTemplate="footer">
+              <div
+                class="flex justify-end gap-4 p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg"
+              >
+                <button
+                  pButton
+                  class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg px-6 py-2 transition duration-300 transform hover:scale-105"
+                  type="button"
+                  label="Save"
+                  (click)="
+                    updateNotes(selectedYouth.id, note);
+                    noteDialogVisible = false
+                  "
+                ></button>
+                <button
+                  pButton
+                  class="bg-gray-500 hover:bg-gray-600 text-white rounded-lg px-6 py-2 transition-all duration-300"
+                  type="button"
+                  label="Cancel"
+                  (click)="noteDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
+          </p-dialog>
+
           <button
             *ngIf="action === 'accept'"
             type="button"
@@ -241,25 +292,6 @@
         *ngFor="let col of cols"
         class="px-4 py-2 text-sm border-b border-r border-gray-300"
       >
-        <!-- <ng-container *ngIf="col.field === 'action'">
-          <div class="flex flex-row justify-between items-center px-5">
-            <button
-              type="button"
-              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              (click)="performAction('edit', product)"
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-              (click)="performAction('delete', product)"
-            >
-              Delete
-            </button>
-          </div>
-        </ng-container> -->
-
         {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
       </td>
     </tr>

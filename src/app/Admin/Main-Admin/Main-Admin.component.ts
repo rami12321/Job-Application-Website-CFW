@@ -6,7 +6,7 @@ import { AdminDashboardComponent } from '../Dashboard-Admin/Dashboard-Admin.comp
 @Component({
   selector: 'app-Main-Admin',
   standalone: true,
-  imports: [SmartTableComponent,CommonModule,AdminDashboardComponent],
+  imports: [SmartTableComponent, CommonModule, AdminDashboardComponent],
   templateUrl: './Main-Admin.component.html',
   styleUrls: ['./Main-Admin.component.css']
 })
@@ -16,16 +16,28 @@ export class MainAdminComponent implements OnInit {
   activeTab: string = 'dashboard';
   activeYouthTab: string = 'waiting';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    // Load saved tab states from localStorage on initialization
+    const savedTab = localStorage.getItem('activeTab');
+    const savedYouthTab = localStorage.getItem('activeYouthTab');
+
+    if (savedTab) {
+      this.activeTab = savedTab;
+    }
+    if (savedYouthTab) {
+      this.activeYouthTab = savedYouthTab;
+    }
   }
 
   changeYouthTab(tab: string): void {
     this.activeYouthTab = tab;
-  }
-  changeTab(tab: string): void {
-    this.activeTab = tab;
+    localStorage.setItem('activeYouthTab', tab); // Save youth tab state to localStorage
   }
 
+  changeTab(tab: string): void {
+    this.activeTab = tab;
+    localStorage.setItem('activeTab', tab); // Save main tab state to localStorage
+  }
 }
