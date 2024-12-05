@@ -30,8 +30,9 @@
   overflow: visible !important;
 }
 
-::ng-deep .p-table-wrapper {
+::ng-deep .p-multiselect-panel {
   overflow: visible !important;
+  z-index: 1050 !important;
 }
 .parent-container {
   position: relative !important;
