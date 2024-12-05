@@ -1,3 +1,5 @@
+@if(paginatedProducts && paginatedProducts.length > 0){
+
 <p-table
   class="p-10"
   [value]="paginatedProducts"
@@ -12,7 +14,7 @@
   <ng-template pTemplate="caption">
     <p-multiSelect
       display="chip"
-      [options]="_selectedColumns"
+      [options]="savedColumns"
       [(ngModel)]="cols"
       optionLabel="header"
       selectedItemsLabel="{0} columns selected"
@@ -26,6 +28,7 @@
       (onChange)="saveSelectedColumnsToLocalStorage()"
     >
     </p-multiSelect>
+    <button (click)="resetSelectedColumns()" class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500">Reset columns</button>
   </ng-template>
 
   <ng-template pTemplate="header">
@@ -70,7 +73,7 @@
             border: '1px solid #ddd',
             'border-radius': '8px',
             'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-            
+
           }"
         >
           <ng-template let-option pTemplate="item">
@@ -215,12 +218,12 @@
           <p-dialog
             [(visible)]="noteDialogVisible"
             [closable]="false"
-            [style]="{ width: '500px', borderRadius: '12px' }"
+            [style]="{ width: '500px', borderRadius: '12px', padding: '0'}"
           >
             <!-- Header -->
             <ng-template pTemplate="header">
               <div
-                class="flex justify-between items-center bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 py-3 rounded-t-lg shadow-lg"
+                class="flex justify-between w-full items-center bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 py-3 rounded-t-lg shadow-lg"
               >
                 <span class="text-xl font-semibold">Update Notes</span>
                 <button
@@ -305,3 +308,12 @@
   (onPageChange)="paginate($event)"
 >
 </p-paginator>
+}@else{
+
+  <div class="flex flex-col justify-center items-center text-gray-500 py-10 bg-gradient-to-b from-gray-100 to-gray-50 rounded-lg shadow-md">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mb-4" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M3 4a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5l-4 4V4z" clip-rule="evenodd" />
+    </svg>
+    <p class="text-lg font-semibold">No Data Available</p>
+  </div>
+}

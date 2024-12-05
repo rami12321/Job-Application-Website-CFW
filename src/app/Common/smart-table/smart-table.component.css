@@ -36,3 +36,12 @@
 .parent-container {
   position: relative !important;
 }
+:host ::ng-deep .p-dialog .p-dialog-header {
+  padding: 0 !important;
+}
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 0 !important;
+}
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 0 !important;
+}
