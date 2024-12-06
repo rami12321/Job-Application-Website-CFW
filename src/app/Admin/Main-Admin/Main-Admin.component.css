@@ -1,0 +1,6 @@
+@media (max-width: 1024px) {
+  /* Sidebar collapses on smaller screens */
+  .lg\:hidden {
+    display: none;
+  }
+}

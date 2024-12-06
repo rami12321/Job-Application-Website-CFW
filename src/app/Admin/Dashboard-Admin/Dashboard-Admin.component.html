@@ -1,40 +1,40 @@
-<div class="container mx-auto my-4">
-  <p-accordion [activeIndex]="0">
+<div class="container mx-auto my-4 px-4 w-full">
+  <p-accordion [activeIndex]="0" class="w-full">
     <p-accordionTab header="Youth">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="bg-green-600 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Registered Youth</h4>
-          <p class="text-2xl font-bold mt-2">{{ youthData.accepted }}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Registered Youth</h4>
+          <p class="text-3xl font-bold mt-2">{{ youthData.accepted }}</p>
         </div>
-        <div class="bg-red-400 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Rejected Youth</h4>
-          <p class="text-2xl font-bold mt-2">{{ youthData.rejected }}</p>
+        <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Rejected Youth</h4>
+          <p class="text-3xl font-bold mt-2">{{ youthData.rejected }}</p>
         </div>
-        <div class="bg-yellow-500 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Pending Youth</h4>
-          <p class="text-2xl font-bold mt-2">{{ youthData.pending }}</p>
+        <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Pending Youth</h4>
+          <p class="text-3xl font-bold mt-2">{{ youthData.pending }}</p>
         </div>
 
-        <div class="bg-blue-500 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Waiting-Lists</h4>
-          <p class="text-2xl font-bold mt-2">{{ youthData.waiting }}</p>
+        <div class="bg-blue-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Waiting-Lists</h4>
+          <p class="text-3xl font-bold mt-2">{{ youthData.waiting }}</p>
         </div>
       </div>
     </p-accordionTab>
 
-    <p-accordionTab header="Employee">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-green-600 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Registered Employee</h4>
-          <p class="text-2xl font-bold mt-2" id="totalEmployees">54</p>
+    <p-accordionTab header="Employee" class="w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Registered Employee</h4>
+          <p class="text-3xl font-bold mt-2" id="totalEmployees">54</p>
         </div>
-        <div class="bg-red-400 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Rejected Employee</h4>
-          <p class="text-2xl font-bold mt-2" id="totalProjects">21</p>
+        <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Rejected Employee</h4>
+          <p class="text-3xl font-bold mt-2" id="totalProjects">21</p>
         </div>
-        <div class="bg-yellow-500 text-white p-4 rounded-md shadow">
-          <h4 class="font-medium text-white">Pending Employee</h4>
-          <p class="text-2xl font-bold mt-2" id="activeEmployees">70</p>
+        <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
+          <h4 class="font-medium text-white text-lg">Pending Employee</h4>
+          <p class="text-3xl font-bold mt-2"id="activeEmployees">70</p>
         </div>
       </div>
     </p-accordionTab>
