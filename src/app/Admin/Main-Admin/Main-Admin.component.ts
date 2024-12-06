@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-Main-Admin',
   standalone: true,
-  imports: [SmartTableComponent,CommonModule,AdminDashboardComponent],
+  imports: [SmartTableComponent, CommonModule, AdminDashboardComponent],
   templateUrl: './Main-Admin.component.html',
   styleUrls: ['./Main-Admin.component.css']
 })
@@ -63,7 +63,7 @@ export class MainAdminComponent implements OnInit {
       },
     });
   }
-  
+
   closeModal() {
     this.showModal = false;  // Close the modal
   }
@@ -75,13 +75,25 @@ export class MainAdminComponent implements OnInit {
     return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
   }
   ngOnInit() {
+    // Load saved tab states from localStorage on initialization
+    const savedTab = localStorage.getItem('activeTab');
+    const savedYouthTab = localStorage.getItem('activeYouthTab');
+
+    if (savedTab) {
+      this.activeTab = savedTab;
+    }
+    if (savedYouthTab) {
+      this.activeYouthTab = savedYouthTab;
+    }
   }
 
   changeYouthTab(tab: string): void {
     this.activeYouthTab = tab;
-  }
-  changeTab(tab: string): void {
-    this.activeTab = tab;
+    localStorage.setItem('activeYouthTab', tab); // Save youth tab state to localStorage
   }
 
+  changeTab(tab: string): void {
+    this.activeTab = tab;
+    localStorage.setItem('activeTab', tab); // Save main tab state to localStorage
+  }
 }

@@ -30,9 +30,19 @@
   overflow: visible !important;
 }
 
-::ng-deep .p-table-wrapper {
+::ng-deep .p-multiselect-panel {
   overflow: visible !important;
+  z-index: 1050 !important;
 }
 .parent-container {
   position: relative !important;
+}
+:host ::ng-deep .p-dialog .p-dialog-header {
+  padding: 0 !important;
+}
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 0 !important;
+}
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 0 !important;
 }

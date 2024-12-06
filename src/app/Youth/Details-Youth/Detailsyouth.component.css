@@ -112,40 +112,39 @@
 }
 
 
-  
+
   /* Styles for inner content */
   div.mb-6 {
     margin-bottom: 1.5rem;
   }
-  
+
   div.border-b {
     border-bottom-width: 1px;
   }
-  
+
   div.rounded-lg {
     border-radius: 0.75rem; /* Consistent border radius */
   }
-  
+
   div.shadow-md {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }
-  
+
   div.bg-white {
     background-color: #ffffff; /* Maintain a clean white background */
   }
-  
+
   div.dark\:bg-gray-800 {
     background-color: #1f2937; /* Dark mode styling */
   }
-  
+
   h3.text-lg {
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 1rem;
   }
-  
+
   p {
     margin: 0.5rem 0;
     color: #4b5563; /* Medium gray text color */
   }
-  

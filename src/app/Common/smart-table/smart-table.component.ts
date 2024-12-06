@@ -12,6 +12,7 @@ import { YouthServiceService } from '../../Services/YouthService/youth-service.s
 import { ButtonModule } from 'primeng/button';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyouth.component';
+import { EmployerService } from '../../Services/employer-service/employer-services.service';
 interface Column {
   field: string;
   header: string;
@@ -26,18 +27,24 @@ interface Column {
     TableModule,
     InputTextModule,
     PaginatorModule,
-    MultiSelectModule,DialogModule, ButtonModule,YouthSignupDetailsComponent  ],
+    MultiSelectModule,
+    DialogModule,
+    ButtonModule,
+    YouthSignupDetailsComponent,
+  ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.css',
 })
 export class SmartTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() fetchedData: string | undefined;
 
   youthList: any[] = [];
+  employerList: any[] = [];
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
-  _selectedColumns1: Column[] = [];
+  savedColumns: Column[] = [];
   paginatedProducts: any[] = [];
   rowsPerPage = 10;
   selectedGender: string[] = [];
@@ -49,18 +56,57 @@ export class SmartTableComponent implements OnInit {
   selectedMajors: string[] = []; // Define selectedMajors
   selectedAreas: string[] = []; // Define selectedMajors
   selectedEducationLevels: string[] = []; // Define selectedMajors
-  nationalityOptions:string[]=[];
-  selectedNationalities:string[]=[]
-  excludedColumns: string[] = ['role','id','headfa','question2','status','confirmation','arabic','english','french','trainings','coverLetter','identityCard','registrationCard','degree','experienceDetails','experiences','requiredDocuments','seekingEmploymentDuration','trainingsAndSkills','password','confirmPassword', 'cv', 'alShifaaProof', 'fireProof', 'prcsProof'];
+  nationalityOptions: string[] = [];
+  selectedNationalities: string[] = [];
+  excludedColumns: string[] = [
+    'signature',
+    'disability',
+    'disabilityTypes',
+    'disabilitySupport',
+    'notes',
+    'role',
+    'id',
+    'headfa',
+    'question2',
+    'status',
+    'confirmation',
+    'arabic',
+    'english',
+    'french',
+    'trainings',
+    'coverLetter',
+    'identityCard',
+    'registrationCard',
+    'degree',
+    'experienceDetails',
+    'experiences',
+    'requiredDocuments',
+    'seekingEmploymentDuration',
+    'trainingsAndSkills',
+    'password',
+    'confirmPassword',
+    'cv',
+    'alShifaaProof',
+    'fireProof',
+    'prcsProof',
+  ];
   filteredCols: Column[] = []; // New array to hold filtered columns
 
-  constructor(private youthService: YouthServiceService,
+  constructor(
+    private youthService: YouthServiceService,
+    private employerService: EmployerService,
     private lookupService: LookupService
-
   ) {}
 
   ngOnInit(): void {
-    this.fetchYouthData(); // Fetch data from the service
+    this.loadSelectedColumnsFromLocalStorage();
+
+    console.log(this.savedColumns);
+    if (this.fetchedData == 'employer') {
+      this.fetchEmployerData();
+    } else {
+      this.fetchYouthData();
+    }
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -82,7 +128,26 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  resetSelectedColumns() {
+    localStorage.removeItem('selectedColumns');
+    if (this.fetchedData == 'employer') {
+      this.fetchEmployerData();
+    } else {
+      this.fetchYouthData();
+    }
+  }
+  loadSelectedColumnsFromLocalStorage() {
+    const storedColumns = JSON.parse(
+      localStorage.getItem('selectedColumns') || '[]'
+    );
+    if (storedColumns.length) {
+      this.cols = storedColumns;
+    }
+  }
 
+  saveSelectedColumnsToLocalStorage() {
+    localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
+  }
   fetchYouthData(): void {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
@@ -96,17 +161,28 @@ export class SmartTableComponent implements OnInit {
         // Step 2: Apply filters for gender, major, and area
         filteredData = filteredData.filter((item) => {
           const matchesGender =
-            this.selectedGender.length === 0 || this.selectedGender.includes(item.gender);
+            this.selectedGender.length === 0 ||
+            this.selectedGender.includes(item.gender);
           const matchesMajor =
-            this.selectedMajors.length === 0 || this.selectedMajors.includes(item.major);
+            this.selectedMajors.length === 0 ||
+            this.selectedMajors.includes(item.major);
           const matchesArea =
-            this.selectedAreas.length === 0 || this.selectedAreas.includes(item.area.name);
+            this.selectedAreas.length === 0 ||
+            this.selectedAreas.includes(item.area.name);
           const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 || this.selectedEducationLevels.includes(item.educationLevels);
+            this.selectedEducationLevels.length === 0 ||
+            this.selectedEducationLevels.includes(item.educationLevels);
           const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 || this.selectedNationalities.includes(item.nationalityOptions);
+            this.selectedNationalities.length === 0 ||
+            this.selectedNationalities.includes(item.nationalityOptions);
 
-          return matchesGender && matchesMajor && matchesArea && matchesEducationLevels && matchesNationalityOptions;
+          return (
+            matchesGender &&
+            matchesMajor &&
+            matchesArea &&
+            matchesEducationLevels &&
+            matchesNationalityOptions
+          );
         });
 
         // Step 3: Configure columns dynamically if filtered data is available
@@ -121,9 +197,22 @@ export class SmartTableComponent implements OnInit {
             field: key,
             header: this.capitalize(key),
           }));
+          const savedColumns = localStorage.getItem('selectedColumns');
+          if (savedColumns) {
+            this._selectedColumns = JSON.parse(savedColumns);
+            this.cols = [...this._selectedColumns]; // Synchronize `cols`
+          } else {
+            // Default to all columns if no saved state
+            this._selectedColumns = this.cols;
+            this.cols = [...this._selectedColumns];
+          }
 
           // Initialize _selectedColumns with all columns except "Action"
-          this._selectedColumns = this.cols.filter(col => col.field !== 'action');
+          if (this.savedColumns) {
+            this.savedColumns = this.cols;
+          } else {
+            this._selectedColumns = this.cols;
+          }
         }
 
         // Step 4: Update youth list and paginated products
@@ -135,10 +224,99 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  fetchEmployerData(): void {
+    this.employerService.getAllEmployers().subscribe(
+      (data: any[]) => {
+        console.log('Fetched Employer Data:', data);
 
-  // Capitalize column headers for display
+        // Step 1: Filter by `status` if provided
+        let filteredData = this.status
+          ? data.filter((item) => item.status === this.status)
+          : data;
+
+        // Step 2: Apply filters for gender, major, and area
+        filteredData = filteredData.filter((item) => {
+          const matchesGender =
+            this.selectedGender.length === 0 ||
+            this.selectedGender.includes(item.gender);
+          const matchesMajor =
+            this.selectedMajors.length === 0 ||
+            this.selectedMajors.includes(item.major);
+          const matchesArea =
+            this.selectedAreas.length === 0 ||
+            this.selectedAreas.includes(item.area.name);
+          const matchesEducationLevels =
+            this.selectedEducationLevels.length === 0 ||
+            this.selectedEducationLevels.includes(item.educationLevels);
+          const matchesNationalityOptions =
+            this.selectedNationalities.length === 0 ||
+            this.selectedNationalities.includes(item.nationalityOptions);
+
+          return (
+            matchesGender &&
+            matchesMajor &&
+            matchesArea &&
+            matchesEducationLevels &&
+            matchesNationalityOptions
+          );
+        });
+
+        // Step 3: Configure columns dynamically if filtered data is available
+        if (filteredData.length > 0) {
+          // Exclude unwanted columns
+          const filteredColumns = Object.keys(filteredData[0]).filter(
+            (key) => !this.excludedColumns.includes(key)
+          );
+
+          // Map filtered columns to the format expected by PrimeNG
+          this.cols = filteredColumns.map((key) => ({
+            field: key,
+            header: this.capitalize(key),
+          }));
+          const savedColumns = localStorage.getItem('selectedColumns');
+          if (savedColumns) {
+            this._selectedColumns = JSON.parse(savedColumns);
+            this.cols = [...this._selectedColumns]; // Synchronize `cols`
+          } else {
+            // Default to all columns if no saved state
+            this._selectedColumns = this.cols;
+            this.cols = [...this._selectedColumns];
+          }
+
+          // Initialize _selectedColumns with all columns except "Action"
+          if (this.savedColumns) {
+            this.savedColumns = this.cols;
+          } else {
+            this._selectedColumns = this.cols;
+          }
+        }
+
+        // Step 4: Update youth list and paginated products
+        this.employerList = filteredData;
+        this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
+      },
+      (error) => {
+        console.error('Error fetching youth data:', error);
+      }
+    );
+  }
+  onColumnChange(selectedColumns: Column[]): void {
+    this.selectedColumns = selectedColumns;
+  }
+
+  set selectedColumns(columns: Column[]) {
+    this._selectedColumns = columns;
+    this.saveSelectedColumnsToLocalStorage(); // Ensure the columns are saved
+  }
+
+  get selectedColumns(): Column[] {
+    return this._selectedColumns;
+  }
+
   capitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1');
+    return (
+      str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1')
+    );
   }
 
   getActionsForRow(status: string): string[] {
@@ -149,14 +327,13 @@ export class SmartTableComponent implements OnInit {
       case 'rejected':
         return ['view', 'pend'];
       case 'pending':
-        return ['view', 'accept','reject','notes'];
+        return ['view', 'accept', 'reject', 'notes'];
       case 'waiting':
-        return ['view', 'accept','reject','pend'];
+        return ['view', 'accept', 'reject', 'pend'];
       default:
         return ['view', 'pend'];
     }
   }
-
 
   performAction(action: string, item: any): void {
     if (action === 'view') {
@@ -165,7 +342,6 @@ export class SmartTableComponent implements OnInit {
       this.updateStatus(item.id, 'pending');
     } else if (action === 'accept') {
       this.updateStatus(item.id, 'accepted');
-
     } else if (action === 'reject') {
       this.updateStatus(item.id, 'rejected');
     }
@@ -199,9 +375,8 @@ export class SmartTableComponent implements OnInit {
   }
 
   visible: boolean = false;
-  dialogVisible: boolean = false;  // To show/hide the dialog
-  noteDialogVisible: boolean = false;  // To show/hide the dialog
-
+  dialogVisible: boolean = false; // To show/hide the dialog
+  noteDialogVisible: boolean = false; // To show/hide the dialog
 
   loadLookupData(): void {
     this.lookupService.getLookupData().subscribe((data) => {
@@ -248,7 +423,7 @@ export class SmartTableComponent implements OnInit {
 
         // You can perform additional operations here, such as displaying the notes in a dialog
         this.note = response.notes || ''; // If a note exists, store it for display
-        this.noteDialogVisible = true;    // Open the dialog to show the note
+        this.noteDialogVisible = true; // Open the dialog to show the note
       },
       (error) => {
         console.error('Error fetching notes:', error);
@@ -261,5 +436,3 @@ export class SmartTableComponent implements OnInit {
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
 }
-
-
