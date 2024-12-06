@@ -1361,22 +1361,37 @@
                         accept=".pdf,.doc,.docx"
                         (change)="onFileChange($event, 'cv')"
                       />
-                      <!-- Display file name as link -->
-                      <span *ngIf="cvFileName" class="ml-4 text-sm text-gray-500">
-                        <a
-                          [href]="cvFileUrl"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="text-blue-600 hover:underline"
-                        >
-                          {{ cvFileName }}
-                        </a>
-                      </span>
-                      <span *ngIf="!cvFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
-                    </div>
-                    <span *ngIf="hasError3('cv', 'required')" class="text-red-500 text-sm mt-1 block">CV is required.</span>
+                     <!-- Display file name as link -->
+<span *ngIf="cvFileName" class="ml-4 text-sm text-gray-500">
+  <a
+    href="javascript:void(0)"
+    (click)="openPdfModal()"
+    class="text-blue-600 hover:underline"
+  >
+    {{ cvFileName }}
+  </a>
+</span>
+<span *ngIf="!cvFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+
+<!-- Modal for File Preview -->
+<div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+  <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+    <button
+      (click)="closePdfModal()"
+      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2  hover:bg-red-700 p-3 rounded-full transition-all"
+    >
+    <span class="text-xl font-bold">&times;</span>
+  </button>
+    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+    <!-- PDF viewer with some padding -->
+    <pdf-viewer *ngIf="storedPdfUrl" [src]="storedPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+  </div>
+</div>
+
+</div>
+
                   </div>
-                  
+
 <!-- Cover Letter -->
 <div>
   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -1395,22 +1410,37 @@
       formControlName="coverLetter"
       class="sr-only"
       accept=".pdf,.doc,.docx"
-      (change)="onFileChange($event, 'coverLetter')"
+      (change)="onFileChangecl($event, 'coverLetter')"
     />
-    <span *ngIf="coverLetterFileName" class="ml-4 text-sm text-gray-500">
-      <a
-        [href]="coverLetterFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-blue-600 hover:underline"
-      >
-        {{ coverLetterFileName }}
-      </a>
-    </span>
-    <span *ngIf="!coverLetterFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+                      <!-- Display file name as link -->
+<span *ngIf="coverLetterFileName" class="ml-4 text-sm text-gray-500">
+  <a
+    href="javascript:void(0)"
+    (click)="openPdfModalcl()"
+    class="text-blue-600 hover:underline"
+  >
+    {{ coverLetterFileName }}
+  </a>
+</span>
+<span *ngIf="!coverLetterFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
+
+<!-- Modal for File Preview -->
+<div *ngIf="isPdfModalclOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+  <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+    <button
+      (click)="closePdfModalcl()"
+      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2  hover:bg-red-700 p-3 rounded-full transition-all"
+    >
+    <span class="text-xl font-bold">&times;</span>
+  </button>
+    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+    <!-- PDF viewer with some padding -->
+    <pdf-viewer *ngIf="coverLetterFileUrl" [src]="coverLetterFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
   </div>
 </div>
+</div>
 
+</div>
 <!-- Identity Card -->
 <div>
   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -1429,13 +1459,13 @@
       formControlName="identityCard"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'identityCard')"
+      (change)="onFileChangeIdentityCard($event, 'identityCard')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="identityCardFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="identityCardFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalIdentityCard()"
         class="text-blue-600 hover:underline"
       >
         {{ identityCardFileName }}
@@ -1444,8 +1474,24 @@
     <span *ngIf="!identityCardFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('identityCard', 'required')" class="text-red-500 text-sm mt-1 block">Identity card is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalIdentityCardOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalIdentityCard()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <!-- PDF viewer with some padding -->
+      <pdf-viewer *ngIf="identityCardFileUrl" [src]="identityCardFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
 
+<!-- UNRWA Registration Card -->
 <!-- UNRWA Registration Card -->
 <div>
   <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
@@ -1464,13 +1510,13 @@
       formControlName="registrationCard"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'registrationCard')"
+      (change)="onFileChangeRegistrationCard($event, 'registrationCard')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="registrationCardFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="registrationCardFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalRegistrationCard()"
         class="text-blue-600 hover:underline"
       >
         {{ registrationCardFileName }}
@@ -1479,8 +1525,24 @@
     <span *ngIf="!registrationCardFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('registrationCard', 'required')" class="text-red-500 text-sm mt-1 block">UNRWA registration card is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalRegistrationCardOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalRegistrationCard()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <pdf-viewer *ngIf="registrationCardFileUrl" [src]="registrationCardFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
 
+
+<!-- Educational Degree -->
 <!-- Educational Degree -->
 <div>
   <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
@@ -1499,13 +1561,13 @@
       formControlName="degree"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'degree')"
+      (change)="onFileChangeDegree($event, 'degree')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="degreeFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="degreeFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalDegree()"
         class="text-blue-600 hover:underline"
       >
         {{ degreeFileName }}
@@ -1514,7 +1576,23 @@
     <span *ngIf="!degreeFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('degree', 'required')" class="text-red-500 text-sm mt-1 block">Educational degree is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalDegreeOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalDegree()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <pdf-viewer *ngIf="degreeFileUrl" [src]="degreeFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
+
+<!-- PRCS Proof -->
 <!-- PRCS Proof -->
 <div *ngIf="isPrcsVolunteer()">
   <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
@@ -1533,13 +1611,13 @@
       formControlName="prcsProof"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'prcsProof')"
+      (change)="onFileChangePrcsProof($event, 'prcsProof')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="prcsProofFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="prcsProofFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalPrcsProof()"
         class="text-blue-600 hover:underline"
       >
         {{ prcsProofFileName }}
@@ -1548,8 +1626,24 @@
     <span *ngIf="!prcsProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('prcsProof', 'required')" class="text-red-500 text-sm mt-1 block">PRCS proof is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalPrcsProofOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalPrcsProof()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <pdf-viewer *ngIf="prcsProofFileUrl" [src]="prcsProofFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
 
+
+<!-- Fire Brigades Proof -->
 <!-- Fire Brigades Proof -->
 <div *ngIf="isFireBrigadesVolunteer()">
   <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
@@ -1568,13 +1662,13 @@
       formControlName="fireProof"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'fireProof')"
+      (change)="onFileChangeFireProof($event, 'fireProof')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="fireProofFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="fireProofFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalFireProof()"
         class="text-blue-600 hover:underline"
       >
         {{ fireProofFileName }}
@@ -1583,8 +1677,23 @@
     <span *ngIf="!fireProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('fireProof', 'required')" class="text-red-500 text-sm mt-1 block">Fire Brigades proof is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalFireProofOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalFireProof()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <pdf-viewer *ngIf="fireProofFileUrl" [src]="fireProofFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
 
+<!-- Al-Shifaa Proof -->
 <!-- Al-Shifaa Proof -->
 <div *ngIf="isAlShifaaVolunteer()">
   <label class="block text-sm font-medium text-gray-800 dark:text-gray-300">
@@ -1603,13 +1712,13 @@
       formControlName="alShifaaProof"
       class="sr-only"
       accept=".pdf,.jpg,.png"
-      (change)="onFileChange($event, 'alShifaaProof')"
+      (change)="onFileChangeAlShifaaProof($event, 'alShifaaProof')"
     />
+    <!-- Display file name as link -->
     <span *ngIf="alShifaaProofFileName" class="ml-4 text-sm text-gray-500">
       <a
-        [href]="alShifaaProofFileUrl"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="javascript:void(0)"
+        (click)="openPdfModalAlShifaaProof()"
         class="text-blue-600 hover:underline"
       >
         {{ alShifaaProofFileName }}
@@ -1618,7 +1727,22 @@
     <span *ngIf="!alShifaaProofFileName" class="ml-4 text-sm text-gray-500">No file chosen</span>
   </div>
   <span *ngIf="hasError3('alShifaaProof', 'required')" class="text-red-500 text-sm mt-1 block">Al-Shifaa proof is required.</span>
+
+  <!-- Modal for File Preview -->
+  <div *ngIf="isPdfModalAlShifaaProofOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+      <button
+        (click)="closePdfModalAlShifaaProof()"
+        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+      >
+        <span class="text-xl font-bold">&times;</span>
+      </button>
+      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+      <pdf-viewer *ngIf="alShifaaProofFileUrl" [src]="alShifaaProofFileUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+    </div>
+  </div>
 </div>
+
 </div>
 
                   
@@ -1726,7 +1850,6 @@
 
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Intro Confirmation</h3>
               <p><strong>Confirm:</strong> {{ introForm.get('confirm')?.value }}</p>
-              <button (click)="goToStep(1)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- Personal Information -->  
@@ -1768,9 +1891,25 @@
                 <p><strong>Full Address:</strong> {{ personalInfoForm.get('fullAddress')?.value }}</p>
               </div>
               
-              <button (click)="goToStep(2)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
-      
+            <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">General Section</h3>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+                <p><strong>Job Opportunity Source:</strong> {{ generalForm.get('jobOpportunitySource')?.value }}</p>
+                <p><strong>Are you a graduate?:</strong> {{ generalForm.get('educationGraduate')?.value }}</p>
+                <p><strong>Education Level:</strong> {{ generalForm.get('educationLevel')?.value }}</p>
+                <p><strong>Major:</strong> {{ generalForm.get('major')?.value }}</p>
+                <p *ngIf="isOtherMajorSelected">
+                  <strong>Specified Major:</strong> {{ generalForm.get('majorDetails')?.value }}
+                </p>
+                <p><strong>Institution:</strong> {{ generalForm.get('institution')?.value }}</p>
+                <p><strong>Place/Country:</strong> {{ generalForm.get('gradplace')?.value }}</p>
+                <p><strong>Date of Graduation:</strong> {{ generalForm.get('graduationDate')?.value | date }}</p>
+                <p><strong>Employment Opportunities:</strong> {{ generalForm.get('employmentOpportunities')?.value }}</p>
+                <p><strong>About Yourself:</strong> {{ generalForm.get('aboutYourself')?.value }}</p>
+              </div>
+            </div>
+            
             <!-- General Questions -->
             <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">General Questions</h3>
@@ -1793,7 +1932,6 @@
                 <p><strong>Volunteer with Fire Brigades:</strong> {{ generalQuestionsForm.get('isFireBrigadesVolunteer')?.value }}</p>
                 <p><strong>Volunteer with Al-Shifaa:</strong> {{ generalQuestionsForm.get('isAlShifaaVolunteer')?.value }}</p>
               </div>
-              <button (click)="goToStep(3)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- Experience Details -->
@@ -1812,7 +1950,6 @@
                 <p><strong>Salary:</strong> {{ experience.salary }}</p>
                 <p><strong>Main Tasks:</strong> {{ experience.mainTasks }}</p>
               </div>
-              <button (click)="goToStep(5)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- Training and Skills -->
@@ -1835,90 +1972,114 @@
                   <p><strong>Computer Skill:</strong> {{ skill }}</p>
                 </div>
               </div>
-              <button (click)="goToStep(6)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- Required Documents -->
             <div class="mb-6 border-b pb-4 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">  
               <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Required Documents</h3>
               <div class="grid grid-cols-2 gap-6 mt-4">
-                <p>
-                  <strong>CV:</strong>
-                  <span *ngIf="cvFileName">
-                    <a
-                      [href]="cvFileUrl"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-blue-600 hover:underline"
-                    >
-                      {{ cvFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!cvFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Cover Letter:</strong> 
-                  <span *ngIf="coverLetterFileName">
-                    <a [href]="coverLetterFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ coverLetterFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!coverLetterFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Identity Card:</strong> 
-                  <span *ngIf="identityCardFileName">
-                    <a [href]="identityCardFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ identityCardFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!identityCardFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Registration Card:</strong> 
-                  <span *ngIf="registrationCardFileName">
-                    <a [href]="registrationCardFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ registrationCardFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!registrationCardFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Degree:</strong> 
-                  <span *ngIf="degreeFileName">
-                    <a [href]="degreeFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ degreeFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!degreeFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>PRCS Proof:</strong> 
-                  <span *ngIf="prcsProofFileName">
-                    <a [href]="prcsProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ prcsProofFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!prcsProofFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Fire Brigades Proof:</strong> 
-                  <span *ngIf="fireProofFileName">
-                    <a [href]="fireProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ fireProofFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!fireProofFileName">No file uploaded.</span>
-                </p>
-                
-                <p><strong>Al-Shifaa Proof:</strong> 
-                  <span *ngIf="alShifaaProofFileName">
-                    <a [href]="alShifaaProofFileUrl" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                      {{ alShifaaProofFileName }}
-                    </a>
-                  </span>
-                  <span *ngIf="!alShifaaProofFileName">No file uploaded.</span>
-                </p>
+                <!-- CV -->
+<p>
+  <strong>CV:</strong>
+  <span *ngIf="cvFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('cv')" class="text-blue-600 hover:underline">
+      {{ cvFileName }}
+    </a>
+  </span>
+  <span *ngIf="!cvFileName">No file uploaded.</span>
+</p>
+
+<!-- Cover Letter -->
+<p>
+  <strong>Cover Letter:</strong>
+  <span *ngIf="coverLetterFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('coverLetter')" class="text-blue-600 hover:underline">
+      {{ coverLetterFileName }}
+    </a>
+  </span>
+  <span *ngIf="!coverLetterFileName">No file uploaded.</span>
+</p>
+
+<!-- Identity Card -->
+<p>
+  <strong>Identity Card:</strong>
+  <span *ngIf="identityCardFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('identityCard')" class="text-blue-600 hover:underline">
+      {{ identityCardFileName }}
+    </a>
+  </span>
+  <span *ngIf="!identityCardFileName">No file uploaded.</span>
+</p>
+
+<!-- Registration Card -->
+<p>
+  <strong>Registration Card:</strong>
+  <span *ngIf="registrationCardFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('registrationCard')" class="text-blue-600 hover:underline">
+      {{ registrationCardFileName }}
+    </a>
+  </span>
+  <span *ngIf="!registrationCardFileName">No file uploaded.</span>
+</p>
+
+<!-- Degree -->
+<p>
+  <strong>Degree:</strong>
+  <span *ngIf="degreeFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('degree')" class="text-blue-600 hover:underline">
+      {{ degreeFileName }}
+    </a>
+  </span>
+  <span *ngIf="!degreeFileName">No file uploaded.</span>
+</p>
+
+<!-- PRCS Proof -->
+<p>
+  <strong>PRCS Proof:</strong>
+  <span *ngIf="prcsProofFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('prcsProof')" class="text-blue-600 hover:underline">
+      {{ prcsProofFileName }}
+    </a>
+  </span>
+  <span *ngIf="!prcsProofFileName">No file uploaded.</span>
+</p>
+
+<!-- Fire Brigades Proof -->
+<p>
+  <strong>Fire Brigades Proof:</strong>
+  <span *ngIf="fireProofFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('fireProof')" class="text-blue-600 hover:underline">
+      {{ fireProofFileName }}
+    </a>
+  </span>
+  <span *ngIf="!fireProofFileName">No file uploaded.</span>
+</p>
+
+<!-- Al-Shifaa Proof -->
+<p>
+  <strong>Al-Shifaa Proof:</strong>
+  <span *ngIf="alShifaaProofFileName">
+    <a href="javascript:void(0)" (click)="openPdfModalr('alShifaaProof')" class="text-blue-600 hover:underline">
+      {{ alShifaaProofFileName }}
+    </a>
+  </span>
+  <span *ngIf="!alShifaaProofFileName">No file uploaded.</span>
+</p>
+
+<!-- Modal -->
+<div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+  <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+    <button
+      (click)="closePdfModalr()"
+      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+    >
+      <span class="text-xl font-bold">&times;</span>
+    </button>
+    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+    <pdf-viewer *ngIf="currentPdfUrl" [src]="currentPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+  </div>
+</div>
+
                 
               </div>
               <div class="grid grid-cols-2 gap-6 mt-4">
@@ -1926,7 +2087,6 @@
               <p><strong>Password:</strong> (hidden for security)</p>
               </div>
 
-              <button (click)="goToStep(7)" class="text-blue-600 dark:text-blue-400 underline">Edit</button>
             </div>
       
             <!-- Navigation -->

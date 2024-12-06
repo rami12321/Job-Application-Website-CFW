@@ -6,6 +6,7 @@ import { MainAdminComponent } from './Admin/Main-Admin/Main-Admin.component';
 import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Employer.component';
 import { YouthSignupDetailsComponent } from './Youth/Details-Youth/Detailsyouth.component';
 import { MainYouthComponent } from './Youth/Main-Youth/Main-Youth.component';
+import { DetailsEmployerComponent } from './Employer/Details-Employer/details-employer.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,7 @@ export const routes: Routes = [
     component: SignUpEmployerComponent, // Parent for steps
   },
   { path: 'youthsignup-details', component: YouthSignupDetailsComponent }, // Add this route
+  { path: 'details-employer', component: DetailsEmployerComponent },
 
 
   {
