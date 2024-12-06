@@ -9,7 +9,10 @@ import { deleteCode } from './controllers/VerificationCodeController';
 const app = express();
 const PORT = 3000;
 
+
+
 app.use(cors());
+
 app.use(express.json()); // For parsing JSON request bodies
 app.use(express.static('public'));    // Serve static files
 

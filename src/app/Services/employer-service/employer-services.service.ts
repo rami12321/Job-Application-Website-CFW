@@ -16,6 +16,9 @@ export class EmployerService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+  getEmployerById(id: string): Observable<Employer> {
+    return this.http.get<Employer>(`${this.employerDbUrl}/${id}`);
+  }
   
 
 
