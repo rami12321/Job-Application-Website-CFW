@@ -77,4 +77,5 @@ export interface Youth {
   confirmation: string;
   status: 'accepted' | 'rejected' | 'pending';
   notes?:string;
+  jobCategory?:string;
 }

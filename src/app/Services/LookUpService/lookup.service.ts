@@ -18,6 +18,9 @@ export class LookupService {
   getMajors(): Observable<string[]> {
     return this.http.get<any>('assets/data/lookup.json').pipe(map((data) => data.majors));
   }
+  getJobCategories(): Observable<string[]> {
+    return this.http.get<any>('assets/data/lookup.json').pipe(map((data) => data.jobCategories));
+  }
   fetchAreaData(): Observable<any> {
     return this.http.get<any>('assets/data/lookup.json');
   }
@@ -33,4 +36,5 @@ export class LookupService {
   getAreaData(): any {
     return this.areaData;
   }
+
 }

@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const role = this.tabs[this.activeTabIndex];
-
     this.authService.login(this.userName, this.password, role).subscribe(response => {
       if (response.success) {
         console.log(`Login successful! Role: ${response.role}`);
@@ -51,6 +50,7 @@ export class LoginComponent implements OnInit {
         }
       } else {
         this.loginError = response.message; // Display login error
+        console.log(this.loginError)
       }
     });
   }
