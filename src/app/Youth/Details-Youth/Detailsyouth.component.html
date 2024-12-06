@@ -13,50 +13,50 @@
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
 
 
-          <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+          <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4 ">
             <!-- Row 1 -->
-            <p><strong>First Name (EN):</strong> {{ youth?.firstNameEn }}</p>
-            <p><strong>Family Registration Number:</strong> {{ youth?.familyRegistrationNumber }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (EN):</strong> {{ youth?.firstNameEn }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Family Registration Number:</strong> {{ youth?.familyRegistrationNumber }}</p>
 
             <!-- Row 2 -->
-            <p><strong>Father's Name (EN):</strong> {{ youth?.fatherNameEn }}</p>
-            <p><strong>Mobile Phone:</strong> {{ youth?.mobilePhone }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (EN):</strong> {{ youth?.fatherNameEn }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone:</strong> {{ youth?.mobilePhone }}</p>
 
             <!-- Row 3 -->
-            <p><strong>Last Name (EN):</strong> {{ youth?.lastNameEn }}</p>
-            <p><strong>WhatsApp:</strong> {{ youth?.whatsapp }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (EN):</strong> {{ youth?.lastNameEn }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp:</strong> {{ youth?.whatsapp }}</p>
 
             <!-- Row 4 -->
-            <p><strong>First Name (AR):</strong> {{ youth?.firstNameAr }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (AR):</strong> {{ youth?.firstNameAr }}</p>
             <!-- <p><strong>Emergency Phone:</strong> {{ youth?.emergencyPhone }}</p> -->
 
             <!-- Row 5 -->
-            <p><strong>Father's Name (AR):</strong> {{ youth?.fatherNameAr }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (AR):</strong> {{ youth?.fatherNameAr }}</p>
             <!-- <p><strong>Emergency Relation:</strong> {{ youth?.emergencyRelation }}</p> -->
 
             <!-- Row 6 -->
-            <p><strong>Last Name (AR):</strong> {{ youth?.lastNameAr }}</p>
-            <p><strong>Email:</strong> {{ youth?.email }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (AR):</strong> {{ youth?.lastNameAr }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email:</strong> {{ youth?.email }}</p>
 
             <!-- Row 7 -->
-            <p><strong>Gender:</strong> {{ youth?.gender }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Gender:</strong> {{ youth?.gender }}</p>
             <!-- <p><strong>Head of Family:</strong> {{ youth?.headfa }}</p> -->
 
             <!-- Row 8 -->
-            <p><strong>Date of Birth:</strong> {{ youth?.dob }}</p>
-            <p><strong>Area:</strong> {{ youth?.area }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Birth:</strong> {{ youth?.dob }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area:</strong> {{ youth?.area }}</p>
 
             <!-- Row 9 -->
-            <p><strong>Nationality:</strong> {{ youth?.nationality }}</p>
-            <p><strong>Camp Type:</strong> {{ youth?.campType }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Nationality:</strong> {{ youth?.nationality }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp Type:</strong> {{ youth?.campType }}</p>
 
             <!-- Row 10 -->
-            <p><strong>Registration Status:</strong> {{ youth?.registrationStatus }}</p>
-            <p><strong>Camp:</strong> {{ youth?.camp }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Registration Status:</strong> {{ youth?.registrationStatus }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp:</strong> {{ youth?.camp }}</p>
 
             <!-- Row 11 -->
-            <p><strong>Personal Registration Number:</strong> {{ youth?.personalRegistrationNumber }}</p>
-            <p><strong>Full Address:</strong> {{ youth?.fullAddress }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Personal Registration Number:</strong> {{ youth?.personalRegistrationNumber }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Address:</strong> {{ youth?.fullAddress }}</p>
           </div>
         </div>
     </div>
@@ -69,9 +69,9 @@
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>How did you hear about this job opportunity?</strong> {{ youth?.jobOpportunitySource }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">How did you hear about this job opportunity?</strong> {{ youth?.jobOpportunitySource }}</p>
             <!-- <p><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong> {{ youth?.educationGraduate }}</p> -->
-            <p><strong>Education Level:</strong> {{ youth?.educationLevel }}</p>
+            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Education Level:</strong> {{ youth?.educationLevel }}</p>
             <p><strong>Major:</strong> {{ youth?.major }}</p>
             <p><strong>School, University, or Institution:</strong> {{ youth?.institution }}</p>
             <p><strong>Place/Country:</strong> {{ youth?.gradplace }}</p>
@@ -124,57 +124,68 @@
 
 
     <!-- Experience Details Tab -->
-    <p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
-        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
-              Experience Details
-            </h3>
-            <div *ngFor="let experience of youth?.experiences; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-            <p><strong>Experience {{ i + 1 }}:</strong></p>
-            <p><strong>Type:</strong> {{ experience.type }}</p>
-            <p><strong>Employer Name:</strong> {{ experience.employerName }}</p>
-            <p><strong>Employer Phone:</strong> {{ experience.employerPhone }}</p>
-            <p><strong>Area:</strong> {{ experience.area }}</p>
-            <p><strong>Employment Type:</strong> {{ experience.employmentType }}</p>
-            <p><strong>Job Title:</strong> {{ experience.jobTitle }}</p>
-            <p><strong>Start Date:</strong> {{ experience.startDate }}</p>
-            <p><strong>End Date:</strong> {{ experience.endDate }}</p>
-            <p><strong>Salary:</strong> {{ experience.salary }}</p>
-            <p><strong>Main Tasks:</strong> {{ experience.mainTasks }}</p>
-          </div>
-        </div>
-      </p-tabPanel>
+<!-- Experience Details Tab -->
+<p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
+  <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+      Experience Details
+    </h3>
 
+    <!-- Check if youth and experiences exist -->
+    <div *ngIf="(youth?.experiences?.length || 0) > 0; else noExperience">
+      <div *ngFor="let experience of youth?.experiences; let i = index" 
+           class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <p><strong>Experience {{ i + 1 }}:</strong></p>
+        <p><strong>Type:</strong> {{ experience?.type }}</p>
+        <p><strong>Employer Name:</strong> {{ experience?.employerName }}</p>
+        <p><strong>Employer Phone:</strong> {{ experience?.employerPhone }}</p>
+        <p><strong>Area:</strong> {{ experience?.area }}</p>
+        <p><strong>Employment Type:</strong> {{ experience?.employmentType }}</p>
+        <p><strong>Job Title:</strong> {{ experience?.jobTitle }}</p>
+        <p><strong>Start Date:</strong> {{ experience?.startDate }}</p>
+        <p><strong>End Date:</strong> {{ experience?.endDate }}</p>
+        <p><strong>Salary:</strong> {{ experience?.salary }}</p>
+        <p><strong>Main Tasks:</strong> {{ experience?.mainTasks }}</p>
+      </div>
+    </div>
 
-    <!-- Training and Skills Tab -->
-    <p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
-        <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
-              Training Details
-            </h3>
-            <div *ngFor="let training of youth?.trainings; let i = index" class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+    <!-- Fallback for no experiences -->
+    <ng-template #noExperience>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Experience Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
 
-            <p><strong>Training {{ i + 1 }}:</strong></p>
-            <p><strong>Institution:</strong> {{ training.institution }}</p>
-            <p><strong>Certificate:</strong> {{ training.certificate }}</p>
-            <p><strong>Area:</strong> {{ training.area }}</p>
-            <p><strong>Duration From:</strong> {{ training.durationFrom }}</p>
-            <p><strong>Duration To:</strong> {{ training.durationTo }}</p>
-          </div>
-          <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+<!-- Training Details Tab -->
+<p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
+  <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+      Training Details
+    </h3>
 
-          <!-- <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>Arabic:</strong> {{ youth?.skills.arabic }}</p>
-            <p><strong>English:</strong> {{ youth?.skills.english }}</p>
-            <p><strong>French:</strong> {{ youth?.skills.french }}</p>
-            <div *ngFor="let skill of youth?.skills.computerSkills">
-              <p><strong>Computer Skill:</strong> {{ skill }}</p>
-            </div>
-          </div> -->
-        </div>
+    <!-- Check if youth and trainings exist -->
+    <div *ngIf="(youth?.trainings?.length || 0) > 0; else noExperience">
+      <div *ngFor="let training of youth?.trainings; let i = index" 
+           class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <p><strong>Training {{ i + 1 }}:</strong></p>
+        <p><strong>Institution:</strong> {{ training?.institution }}</p>
+        <p><strong>Certificate:</strong> {{ training?.certificate }}</p>
+        <p><strong>Area:</strong> {{ training?.area }}</p>
+        <p><strong>Duration From:</strong> {{ training?.durationFrom }}</p>
+        <p><strong>Duration To:</strong> {{ training?.durationTo }}</p>
+      </div>
+    </div>
 
-        </div>
-      </p-tabPanel>
+    <!-- Fallback for no trainings -->
+    <ng-template #noTraining>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Training Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
 
 
     <!-- Required Documents Tab -->
@@ -185,24 +196,106 @@
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
 
-          <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>CV:</strong> {{ youth?.cv }}</p>
-            <p><strong>Cover Letter:</strong> {{ youth?.coverLetter }}</p>
-            <p><strong>Identity Card:</strong> {{ youth?.identityCard }}</p>
-            <p><strong>Registration Card:</strong> {{ youth?.registrationCard }}</p>
-            <p><strong>Degree:</strong> {{ youth?.degree }}</p>
-            <p><strong>PRCS Proof:</strong> {{ youth?.prcsProof }}</p>
-            <p><strong>Fire Brigades Proof:</strong> {{ youth?.fireProof }}</p>
-            <p><strong>Al-Shifaa Proof:</strong> {{ youth?.alShifaaProof }}</p>
-          </div>
-          <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+              <div class="grid grid-cols-2 gap-6 mt-4">
+                <!-- CV -->
+                <p>
+                  <strong>CV:</strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('CV-Example.pdf')" class="text-blue-600 hover:underline">
+                      CV-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Cover Letter -->
+                <p>
+                  <strong>Cover Letter:</strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Cover-Letter-example.pdf')" class="text-blue-600 hover:underline">
+                      Cover-Letter-example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Identity Card -->
+                <p>
+                  <strong>Identity Card:</strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Identity-Example.pdf')" class="text-blue-600 hover:underline">
+                      Identity-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Registration Card -->
+                <p>
+                  <strong>Registration Card:</strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Registration-Card-Example.pdf')" class="text-blue-600 hover:underline">
+                      Registration-Card-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Degree -->
+                <p>
+                  <strong>Degree:</strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Degree-Example.pdf')" class="text-blue-600 hover:underline">
+                      Degree-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- PRCS Proof -->
+                <p>
+                  <strong>PRCS Proof:</strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('PRCS-Example.pdf')" class="text-blue-600 hover:underline">
+                      PRCS-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Fire Brigades Proof -->
+                <p>
+                  <strong>Fire Brigades Proof:</strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Fire-Brigades-Example.pdf')" class="text-blue-600 hover:underline">
+                      Fire-Brigades-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Al-Shifaa Proof -->
+                <p>
+                  <strong>Al-Shifaa Proof:</strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Alshifaa-example.pdf')" class="text-blue-600 hover:underline">
+                      Alshifaa-example.pdf
+                    </a>
+                  </span>
+                </p>
+              </div>
+              
+              <!-- Modal -->
+              <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+                  <button
+                    (click)="closePdfModal()"
+                    class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+                  >
+                    <span class="text-xl font-bold">&times;</span>
+                  </button>
+                  <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+                  <pdf-viewer *ngIf="currentPdfUrl" [src]="currentPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+                </div>
+              </div>
+              
 
-          <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>Password:</strong> (hidden for security)</p>
-          </div>
+
         </div>
 
-    </div>
 
         </div>
       </p-tabPanel>
