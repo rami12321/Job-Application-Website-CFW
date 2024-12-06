@@ -185,9 +185,19 @@
           >
             <i class="pi pi-eye"></i>
           </button>
-
+          @if(!status){
+            <p-dialog
+            [(visible)]="dialogVisible"
+            [style]="{ width: '80rem' }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-details-employer
+              *ngIf="selectedYouthId"
+              [employerId]="selectedYouthId.toString()"
+              />
+          </p-dialog>
+          }@else{
           <p-dialog
-            header="Youth Details"
             [(visible)]="dialogVisible"
             [style]="{ width: '80rem' }"
             (onHide)="clearSelectedYouthId()"
@@ -197,7 +207,7 @@
               [youthId]="selectedYouthId"
             />
           </p-dialog>
-
+        }
           <button
             *ngIf="action === 'pend'"
             type="button"

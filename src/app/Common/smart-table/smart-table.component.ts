@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyouth.component';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
+import { DetailsEmployerComponent } from '../../Employer/Details-Employer/details-employer.component';
 interface Column {
   field: string;
   header: string;
@@ -31,6 +32,7 @@ interface Column {
     DialogModule,
     ButtonModule,
     YouthSignupDetailsComponent,
+    DetailsEmployerComponent
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -331,7 +333,7 @@ export class SmartTableComponent implements OnInit {
       case 'waiting':
         return ['view', 'accept', 'reject', 'pend'];
       default:
-        return ['view', 'pend'];
+        return ['view', 'delete'];
     }
   }
 
