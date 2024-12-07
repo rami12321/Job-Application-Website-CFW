@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
+import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 
 @Component({
   selector: 'app-Main-Youth',
@@ -22,7 +23,8 @@ export class MainYouthComponent implements OnInit {
   notes: string = '';
   jobCategories: { [key: string]: string[] } = {}; // Key-value pairs for categories
 
-  constructor(private lookupService: LookupService) {}
+  constructor(private lookupService: LookupService,   private youthService: YouthServiceService,
+  ) {}
 
   ngOnInit() {
     this.userName = localStorage.getItem('firstName') || '';
@@ -44,17 +46,50 @@ export class MainYouthComponent implements OnInit {
     this.selectedSubcategory = ''; // Reset subcategory selection
   }
 
+  updateCategoryJob(id: number, jobCategory: string): void {
+    if (!jobCategory) {
+      console.error('Job category is required');
+      return;
+    }
 
+    // Construct the payload with the required "jobCategory" field
+    const payload = { jobCategory };  // Ensure this matches the backend
+
+    this.youthService.updateYouthCategoryJob(id, payload).subscribe(
+      (response) => {
+        console.log(`Job Category updated to ${jobCategory} for youth with ID: ${id}`);
+        // Re-fetch or refresh the data to reflect the changes
+      },
+      (error) => {
+        console.error('Error updating status:', error);
+      }
+    );
+  }
+
+
+  
   applyForJob() {
     if (this.selectedCategory && this.selectedSubcategory) {
       console.log(
         `Applied for ${this.selectedSubcategory} under ${this.selectedCategory}`
       );
-      this.showPopup = false;
+
+      const youthIdString = localStorage.getItem('userId'); // Retrieve from localStorage
+      const youthId = youthIdString ? parseInt(youthIdString, 10) : null; // Convert to number
+
+      if (youthId) {
+        this.updateCategoryJob(youthId, this.selectedSubcategory); // Pass ID and subcategory
+        this.showPopup = false;
+      } else {
+        console.error('Invalid youth ID. ');
+        alert('Could not retrieve user ID. Please try again.');
+      }
     } else {
       alert('Please select a category and a subcategory.');
     }
   }
+
+
 
   closePopup() {
     this.showPopup = false;

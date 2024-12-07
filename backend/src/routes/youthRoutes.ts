@@ -12,6 +12,7 @@ import {
   updateYouth,
   updateYouthExperience,
   updateYouthTraining,
+  updateJob,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -41,6 +42,7 @@ router.put('/:id/trainings', updateYouthTraining);
 router.delete('/:id', deleteYouth);
 
 router.patch('/:id/status', updateYouthStatus);
+router.patch('/:id/jobCategory', updateJob);
 router.post('/check-registration', checkRegistrationNumber);
 
 export default router;  // Correct export

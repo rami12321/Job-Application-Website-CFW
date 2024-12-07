@@ -185,6 +185,33 @@ export const updateYouthStatus = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Youth with ID ${id} status updated successfully.`, updatedYouth: youths[youthIndex] });
 };
+export const updateJob = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const { jobCategory } = req.body;  // Extract the new status from the request body
+  let youths: Youth[] = readFile();
+
+  // Check if status is provided
+  if (!jobCategory) {
+    res.status(400).json({ message: 'job is required.' });
+    return;
+  }
+
+  // Find the youth by ID
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Update the status
+  youths[youthIndex].jobCategory = jobCategory;
+
+  // Save the updated youths array back to the file
+  writeFile(youths);
+
+  res.status(200).json({ message: `Youth with ID ${id} job updated successfully.`, updatedYouth: youths[youthIndex] });
+};
 
 export const checkRegistrationNumber = (req: Request, res: Response): void => {
   const { personalRegistrationNumber } = req.body; // Extract registration number from the request body
