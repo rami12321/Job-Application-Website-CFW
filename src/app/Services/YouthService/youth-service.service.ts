@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 export class YouthServiceService {
   private apiUrl = 'http://localhost:3000/youth';
   private youthDbUrl = 'assets/data/youthdb.json';
-  
+
   constructor(private http: HttpClient) {}
 
 
@@ -37,6 +37,9 @@ export class YouthServiceService {
 
   updateYouthStatus(id: number, status: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
+  }
+  updateYouthCategoryJob(id: number, payload: any): Observable<any> {
+    return this.http.patch(`http://localhost:3000/youth/${id}/jobCategory`, payload);
   }
   checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
     return this.http.get<any[]>(this.apiUrl).pipe(
