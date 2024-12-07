@@ -1,3 +1,89 @@
-<p>
-  Main-Youth works!
-</p>
+<div class="container mx-auto p-4">
+  <p class="text-xl font-bold mb-4">Hello {{userName}}</p>
+
+  <!-- Conditional Alert for Pending Job -->
+   @if(jobStatus==='waiting'){
+
+  <div class="alert alert-warning bg-cyan-200 border-l-4 border-cyan-500 text-cyan-700 p-4 mb-4">
+    <p>This job is in waiting-list. You should we are reviewing your application</p>
+   </div>
+}
+@else if (jobStatus==='pending') {
+  <div class="alert alert-warning bg-yellow-200 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+    <p>This job is pending due to missing details. You should edit your profile</p>
+    <button (click)="viewNotes()" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">
+      View Notes
+    </button>
+
+    </div>
+}
+@else if (jobStatus==='accepted') {
+  <div class="alert alert-warning bg-green-200 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+    <p>Accepted. You can apply to a job.</p>
+    <button (click)="acceptJob()" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">
+     Apply to Job
+    </button>
+    </div>
+}
+@else if (jobStatus==='rejected') {
+  <div class="alert alert-warning bg-red-200 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+    <p>Rejected. Sorry you are rejected !</p>
+    </div>
+}
+
+<div *ngIf="showPopup" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+    <h2 class="text-2xl font-bold mb-4">Select a Job Category</h2>
+
+    <!-- Select Main Category -->
+    <label for="main-category" class="block text-sm font-medium text-gray-700 mb-1">Main Category</label>
+    <select
+      id="main-category"
+      [(ngModel)]="selectedCategory"
+      (change)="onSelectCategory(selectedCategory)"
+      class="w-full p-2 border border-gray-300 rounded-md mb-4"
+    >
+      <option *ngFor="let category of jobCategories | keyvalue" [value]="category.key">
+        {{ category.key }}
+      </option>
+    </select>
+
+    <!-- Select Subcategory -->
+    <div *ngIf="subcategories.length > 0">
+      <label for="subcategory" class="block text-sm font-medium text-gray-700 mb-1">Subcategory</label>
+      <select
+        id="subcategory"
+        [(ngModel)]="selectedSubcategory"
+        class="w-full p-2 border border-gray-300 rounded-md mb-4"
+      >
+        <option *ngFor="let subcategory of subcategories" [value]="subcategory">
+          {{ subcategory }}
+        </option>
+      </select>
+    </div>
+
+    <div class="flex justify-between">
+      <button (click)="applyForJob()" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md">
+        Apply
+      </button>
+      <button (click)="closePopup()" class="bg-gray-300 hover:bg-gray-500 text-gray-800 py-2 px-4 rounded-md">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+  <div *ngIf="showNote" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+      <h2 class="text-2xl font-bold mb-4">Notes</h2>
+      <p>{{notes}}</p>
+            <div class="flex justify-end">
+        <button (click)="closeNotes()" class="bg-gray-300 hover:bg-gray-500 text-gray-800 py-2 px-4 rounded-md">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

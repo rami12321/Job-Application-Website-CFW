@@ -17,12 +17,12 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 export class YouthSignupDetailsComponent implements OnInit {
   isPdfModalOpen = false;
   currentPdfUrl: string | null = null;
-  
+
   @Input() youthId!: number; // Accept ID from parent
   public youth: Youth | undefined;
 
   constructor(private youthService: YouthServiceService) {
-    
+
   }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class YouthSignupDetailsComponent implements OnInit {
       this.fetchYouthDetails();
     }
   }
-  
+
 
   private fetchYouthDetails(): void {
     this.youthService.getYouthById(this.youthId).subscribe({
