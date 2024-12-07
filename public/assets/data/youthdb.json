@@ -5,7 +5,7 @@
     "password": "qawsedrf12",
     "role": "Youth",
     "firstNameEn": "bashar",
-    "fatherNameEn": "adnan",
+    "fatherNameEn": "hahaa",
     "lastNameEn": "alsayyed",
     "firstNameAr": "بشار",
     "fatherNameAr": "عدنان",
@@ -189,8 +189,8 @@
     "password": "123123.rR",
     "role": "Youth",
     "status": "waiting",
-    "firstNameEn": "kug",
-    "fatherNameEn": "fhyf",
+    "firstNameEn": "rami",
+    "fatherNameEn": "haah",
     "lastNameEn": "fhy",
     "firstNameAr": "fhq",
     "fatherNameAr": "hgf",
@@ -217,10 +217,10 @@
     "major": "Industrial Engineering",
     "institution": "rami",
     "graduationDate": "2024-12-01",
-    "gradplace": "rami",
+    "gradplace": "lebanon",
     "employmentOpportunities": "Short-term employment opportunities with external organizations",
     "aboutYourself": "rami",
-    "placedByKfw": "no",
+    "placedByKfw": "yes",
     "kfwYear": "",
     "question2": "yes",
     "innovationLabGraduate": "yes",
@@ -240,8 +240,21 @@
     "experiences": [
       {
         "type": "Paid Job",
-        "employerName": "",
-        "employerPhone": "",
+        "employerName": "ahmaaaaad",
+        "employerPhone": "dsc",
+        "area": "North Lebanon",
+        "employmentType": "Monthly",
+        "jobTitle": "",
+        "startDate": "",
+        "endDate": "",
+        "salary": "",
+        "tasks": "",
+        "mainTasks": "scsxx"
+      },
+      {
+        "type": "Paid Job",
+        "employerName": "njnnk",
+        "employerPhone": "koko",
         "area": "North Lebanon",
         "employmentType": "Monthly",
         "jobTitle": "",
@@ -253,9 +266,16 @@
     ],
     "trainings": [
       {
-        "institution": "",
-        "certificate": "",
+        "institution": "ooo",
+        "certificate": "aaa",
         "area": "North Lebanon",
+        "durationFrom": "2024-06-18",
+        "durationTo": "2024-12-01"
+      },
+      {
+        "institution": "ppppppppppppppp",
+        "certificate": "aaa",
+        "area": "North Lebjkjanon",
         "durationFrom": "2024-06-18",
         "durationTo": "2024-12-01"
       }
@@ -272,7 +292,18 @@
     "fireProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "confirmation": "yes",
-    "confirmPassword": "123123.rR"
+    "confirmPassword": "123123.rR",
+    "type": "shhhhshsh",
+    "employerName": "",
+    "employerPhone": "",
+    "employmentType": "Monthly",
+    "jobTitle": "",
+    "startDate": "",
+    "endDate": "2024-12-27",
+    "salary": "",
+    "tasks": "",
+    "isEditing": true,
+    "mainTasks": "koko"
   },
   {
     "id": "Y-63898738",

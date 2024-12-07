@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../Services/AuthService/auth-service.service';
 
 @Component({
   selector: 'app-Header',
@@ -18,7 +20,7 @@ export class HeaderComponent implements OnInit {
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     const firstName = localStorage.getItem('firstName') || 'F';
@@ -38,6 +40,14 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     // Redirect to login page
     window.location.href = '/login';
+  }
+
+  editProfile(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      // Redirect to profile page, passing the user ID
+      this.router.navigate(['/youthprofile', userId]);
+    }
   }
 
 }

@@ -7,6 +7,7 @@ import { SignUpEmployerComponent } from './Employer/SignUp-Employer/SignUp-Emplo
 import { YouthSignupDetailsComponent } from './Youth/Details-Youth/Detailsyouth.component';
 import { MainYouthComponent } from './Youth/Main-Youth/Main-Youth.component';
 import { DetailsEmployerComponent } from './Employer/Details-Employer/details-employer.component';
+import { YouthprofileComponent } from '../app/Youth/youthprofile/youthprofile.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,8 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  { path: 'youthprofile/:id', component: YouthprofileComponent },
+
   {
     path: 'login',
     component: LoginComponent,
@@ -43,9 +46,14 @@ export const routes: Routes = [
   { path: 'youthsignup-details', component: YouthSignupDetailsComponent }, // Add this route
   { path: 'details-employer', component: DetailsEmployerComponent },
 
-
+  {
+    path: 'youthprofile',
+    component: YouthprofileComponent, // Parent for steps
+  },
   {
     path: 'admin',
     component: MainAdminComponent, // Parent for steps
   }
+
+  
 ];

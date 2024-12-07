@@ -9,6 +9,9 @@ import {
   getYouthById,
   updateYouthStatus,
   checkRegistrationNumber,
+  updateYouth,
+  updateYouthExperience,
+  updateYouthTraining,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -28,6 +31,10 @@ router.post(
   ],
   createYouth
 );
+router.put('/:id', updateYouth);
+// Assuming you're using Express.js
+router.put('/:id/experiences', updateYouthExperience); // Route for updating experiences only
+router.put('/:id/trainings', updateYouthTraining);
 
 // router.put('/:id', updateYouth);
 

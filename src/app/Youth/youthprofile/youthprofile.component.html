@@ -1,0 +1,822 @@
+
+
+<div class="tab-container">
+
+    <p-tabView >
+  
+  
+      <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
+          <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+              <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+                Personal Information
+              </h3>
+
+              
+              <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+  
+  
+                <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+                  <!-- Row 1 -->
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (EN):</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.firstNameEn }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].firstNameEn"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Family Registration Number:</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.familyRegistrationNumber }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].familyRegistrationNumber"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                
+                  <!-- Row 2 -->
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (EN):</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.fatherNameEn }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].fatherNameEn"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone:</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.mobilePhone }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].mobilePhone"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                
+                  <!-- Row 3 -->
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (EN):</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.lastNameEn }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].lastNameEn"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp:</strong>
+                    <span *ngIf="!isEditing['personal']">{{ youth?.whatsapp }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].whatsapp"
+                      class="border border-gray-300 rounded p-2"
+                      type="text"
+                    />
+                  </div>
+                
+<!-- Row 4 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (AR):</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.firstNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].firstNameAr"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 5 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (AR):</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.fatherNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].fatherNameAr"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 6 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (AR):</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.lastNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].lastNameAr"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.email }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].email"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 7 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Gender:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.gender }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].gender"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 8 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Birth:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.dob }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].dob"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.area }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].area"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 9 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Nationality:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.nationality }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].nationality"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp Type:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.campType }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].campType"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 10 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Registration Status:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.registrationStatus }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].registrationStatus"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.camp }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].camp"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+
+<!-- Row 11 -->
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Personal Registration Number:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.personalRegistrationNumber }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].personalRegistrationNumber"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+<div>
+  <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Address:</strong>
+  <span *ngIf="!isEditing['personal']">{{ youth?.fullAddress }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].fullAddress"
+    class="border border-gray-300 rounded p-2"
+    type="text"
+  />
+</div>
+                
+                  <!-- Action Buttons -->
+                  <div class="col-span-2 flex gap-4 mt-6">
+                    <button
+                      *ngIf="isEditing['personal']"
+                      (click)="saveChanges('personal')"
+                      class="px-4 py-2 bg-green-500 text-white rounded"
+                    >
+                      Save
+                    </button>
+                    <button
+                      *ngIf="isEditing['personal']"
+                      (click)="cancelEdit('personal')"
+                      class="px-4 py-2 bg-red-500 text-white rounded"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      *ngIf="!isEditing['personal']"
+                      (click)="toggleEdit('personal')"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+                
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="General Section" leftIcon="pi pi-address-book">
+      <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+          General Section
+        </h3>
+    
+        <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            
+            <!-- Job Opportunity Source -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">How did you hear about this job opportunity?</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.jobOpportunitySource }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].jobOpportunitySource" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Education Level -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Education Level:</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.educationLevel }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].educationLevel" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Major -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Major:</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.major }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].major" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Institution -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">School, University, or Institution:</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.institution }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].institution" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Place/Country -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Place/Country:</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.gradplace }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].gradplace" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Graduation Date -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Graduation:</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.graduationDate }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].graduationDate" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Short-term Employment Interest -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Are you interested in short-term employment opportunities?</strong>
+              <span *ngIf="!isEditing['general']">{{ youth?.employmentOpportunities }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].employmentOpportunities" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+          </div>
+    
+          <!-- About Yourself -->
+          <div class="mt-6">
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Tell us about yourself (Background, Experiences, Skills, and Motivation):</strong>
+            <span *ngIf="!isEditing['general']">{{ youth?.aboutYourself }}</span>
+            <textarea *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].aboutYourself" class="border border-gray-300 rounded p-2 w-full" rows="4"></textarea>
+          </div>
+        </div>
+    
+        <!-- Action Buttons -->
+        <div class="col-span-2 flex gap-4 mt-6">
+          <button *ngIf="isEditing['general']" (click)="saveChanges('general')" class="px-4 py-2 bg-green-500 text-white rounded">
+            Save
+          </button>
+          <button *ngIf="isEditing['general']" (click)="cancelEdit('general')" class="px-4 py-2 bg-red-500 text-white rounded">
+            Cancel
+          </button>
+          <button *ngIf="!isEditing['general']" (click)="toggleEdit('general')" class="px-4 py-2 bg-blue-500 text-white rounded">
+            Edit
+          </button>
+        </div>
+      </div>
+    </p-tabPanel>
+    
+    <p-tabPanel header="General Questions" leftIcon="pi pi-question">
+      <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+          General Questions
+        </h3>
+    
+        <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            
+            <!-- Placed by KFW CfW -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Placed by KFW CfW:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.placedByKfw }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].placedByKfw" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- KFW Year -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">KFW Year:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.kfwYear }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].kfwYear" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Innovation Lab Graduate -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Innovation Lab Graduate:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.innovationLabGraduate }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].innovationLabGraduate" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Innovation Lab Graduate Type -->
+            <div *ngFor="let innovtyp of youth?.innovationLabGradtype">
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Innovation Lab Graduate Type:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ innovtyp }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].innovationLabGradtype" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Disability -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Disability:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.disability }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].disability" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Disability Support -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Disability Support:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.disabilitySupport }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].disabilitySupport" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Disability Type -->
+            <div *ngFor="let dis of youth?.disabilityTypes">
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Disability Type:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ dis }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].disabilityTypes" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Employed -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Employed:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.employed }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].employed" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Employment Duration -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Employment Duration:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.seekingEmploymentDuration }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].seekingEmploymentDuration" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Volunteer with PRCS -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with PRCS:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isPrcsVolunteer }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].isPrcsVolunteer" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Volunteer with Fire Brigades -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with Fire Brigades:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isFireBrigadesVolunteer }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].isFireBrigadesVolunteer" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+    
+            <!-- Volunteer with Al-Shifaa -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with Al-Shifaa:</strong>
+              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isAlShifaaVolunteer }}</span>
+              <input *ngIf="isEditing['generalQuestions']" [(ngModel)]="editModels['generalQuestions'].isAlShifaaVolunteer" class="border border-gray-300 rounded p-2" type="text" />
+            </div>
+          </div>
+    
+          <!-- Action Buttons -->
+          <div class="col-span-2 flex gap-4 mt-6">
+            <button *ngIf="isEditing['generalQuestions']" (click)="saveChanges('generalQuestions')" class="px-4 py-2 bg-green-500 text-white rounded">
+              Save
+            </button>
+            <button *ngIf="isEditing['generalQuestions']" (click)="cancelEdit('generalQuestions')" class="px-4 py-2 bg-red-500 text-white rounded">
+              Cancel
+            </button>
+            <button *ngIf="!isEditing['generalQuestions']" (click)="toggleEdit('generalQuestions')" class="px-4 py-2 bg-blue-500 text-white rounded">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+    
+  
+    <!-- Experience Details Tab -->
+    <p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
+      <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+          Experience Details
+        </h3>
+    
+        <!-- Check if youth and experiences exist -->
+        <div *ngIf="(youth?.experiences?.length || 0) > 0; else noExperience">
+          <div
+            *ngFor="let experience of youth?.experiences; let i = index"
+            class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]"
+          >
+            <!-- Display Mode -->
+            <div *ngIf="!experience.isEditing">
+              <p><strong>Experience {{ i + 1 }}</strong></p>
+              <p><strong>Type:</strong> {{ experience?.type }}</p>
+              <p><strong>Employer Name:</strong> {{ experience?.employerName }}</p>
+              <p><strong>Employer Phone:</strong> {{ experience?.employerPhone }}</p>
+              <p><strong>Area:</strong> {{ experience?.area }}</p>
+              <p><strong>Employment Type:</strong> {{ experience?.employmentType }}</p>
+              <p><strong>Job Title:</strong> {{ experience?.jobTitle }}</p>
+              <p>
+                <strong>Start Date:</strong> {{ experience?.startDate | date: 'longDate' }}
+              </p>
+              <p>
+                <strong>End Date:</strong> {{ experience?.endDate | date: 'longDate' }}
+              </p>
+              <p><strong>Salary:</strong> {{ experience?.salary }}</p>
+              <p><strong>Main Tasks:</strong> {{ experience?.mainTasks }}</p>
+              <button
+                (click)="toggleEditExperience(i)"
+                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Edit
+              </button>
+            </div>
+    
+            <!-- Edit Mode -->
+            <div *ngIf="experience.isEditing">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <strong>Type:</strong>
+                  <input
+                    [(ngModel)]="experience.type"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employer Name:</strong>
+                  <input
+                    [(ngModel)]="experience.employerName"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employer Phone:</strong>
+                  <input
+                    [(ngModel)]="experience.employerPhone"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Area:</strong>
+                  <input
+                    [(ngModel)]="experience.area"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employment Type:</strong>
+                  <input
+                    [(ngModel)]="experience.employmentType"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Job Title:</strong>
+                  <input
+                    [(ngModel)]="experience.jobTitle"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Start Date:</strong>
+                  <input
+                    [(ngModel)]="experience.startDate"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="date"
+                  />
+                </div>
+                <div>
+                  <strong>End Date:</strong>
+                  <input
+                    [(ngModel)]="experience.endDate"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="date"
+                  />
+                </div>
+                <div>
+                  <strong>Salary:</strong>
+                  <input
+                    [(ngModel)]="experience.salary"
+                    class="border border-gray-300 rounded p-2 w-full"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Main Tasks:</strong>
+                  <textarea
+                    [(ngModel)]="experience.mainTasks"
+                    class="border border-gray-300 rounded p-2 w-full"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="flex gap-4 mt-4">
+                <button
+                (click)="saveChangesexp('experience', i)"
+                class="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                  Save
+                </button>
+                <button
+                  (click)="cancelEditExperience(i)"
+                  class="px-4 py-2 bg-red-500 text-white rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Fallback for no experiences -->
+        <ng-template #noExperience>
+          <p class="text-lg text-gray-500 dark:text-gray-300">
+            No Available Experience Details.
+          </p>
+        </ng-template>
+      </div>
+    </p-tabPanel>
+    
+  
+<!-- Training Details Tab -->
+<p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
+  <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+      Training Details
+    </h3>
+
+    <!-- Check if youth and trainings exist -->
+    <div *ngIf="(youth?.trainings?.length || 0) > 0; else noTraining">
+      <div
+        *ngFor="let training of youth?.trainings; let i = index"
+        class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff] cursor-pointer"
+      >
+        <!-- Display Mode -->
+        <div *ngIf="!training.isEditing">
+          <p><strong>Training {{ i + 1 }}</strong></p>
+          <p><strong>Institution:</strong> {{ training?.institution }}</p>
+          <p><strong>Certificate:</strong> {{ training?.certificate }}</p>
+          <p><strong>Area:</strong> {{ training?.area }}</p>
+          <p><strong>Duration From:</strong> {{ training?.durationFrom | date: 'longDate' }}</p>
+          <p><strong>Duration To:</strong> {{ training?.durationTo | date: 'longDate' }}</p>
+          <button
+            (click)="toggleEditTraining(i)"
+            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Edit
+          </button>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="training.isEditing">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <strong>Institution:</strong>
+              <input
+                [(ngModel)]="training.institution"
+                class="border border-gray-300 rounded p-2 w-full"
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Certificate:</strong>
+              <input
+                [(ngModel)]="training.certificate"
+                class="border border-gray-300 rounded p-2 w-full"
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Area:</strong>
+              <input
+                [(ngModel)]="training.area"
+                class="border border-gray-300 rounded p-2 w-full"
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Duration From:</strong>
+              <input
+                [(ngModel)]="training.durationFrom"
+                class="border border-gray-300 rounded p-2 w-full"
+                type="date"
+              />
+            </div>
+            <div>
+              <strong>Duration To:</strong>
+              <input
+                [(ngModel)]="training.durationTo"
+                class="border border-gray-300 rounded p-2 w-full"
+                type="date"
+              />
+            </div>
+          </div>
+          <div class="flex gap-4 mt-4">
+            <button
+              (click)="saveChangesTraining('trainings', i)"
+              class="px-4 py-2 bg-green-500 text-white rounded"
+            >
+              Save
+            </button>
+            <button
+              (click)="cancelEditTraining(i)"
+              class="px-4 py-2 bg-red-500 text-white rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback for no trainings -->
+    <ng-template #noTraining>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Training Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
+
+
+  
+      <!-- Required Documents Tab -->
+      <p-tabPanel header="Required Documents" leftIcon="pi pi-file-import">
+          <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+              <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+                Required Documents
+              </h3>
+              <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+  
+                <div class="grid grid-cols-2 gap-6 mt-4">
+                  <!-- CV -->
+                  <p>
+                    <strong>CV:</strong>
+                    <span>
+                      <a href="javascript:void(0)" (click)="openPdfModal('CV-Example.pdf')" class="text-blue-600 hover:underline">
+                        CV-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Cover Letter -->
+                  <p>
+                    <strong>Cover Letter:</strong>
+                    <span>
+                      <a href="javascript:void(0)" (click)="openPdfModal('Cover-Letter-example.pdf')" class="text-blue-600 hover:underline">
+                        Cover-Letter-example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Identity Card -->
+                  <p>
+                    <strong>Identity Card:</strong>
+                    <span>
+                      <a href="javascript:void(0)" (click)="openPdfModal('Identity-Example.pdf')" class="text-blue-600 hover:underline">
+                        Identity-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Registration Card -->
+                  <p>
+                    <strong>Registration Card:</strong>
+                    <span>
+                      <a href="javascript:void(0)" (click)="openPdfModal('Registration-Card-Example.pdf')" class="text-blue-600 hover:underline">
+                        Registration-Card-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Degree -->
+                  <p>
+                    <strong>Degree:</strong>
+                    <span >
+                      <a href="javascript:void(0)" (click)="openPdfModal('Degree-Example.pdf')" class="text-blue-600 hover:underline">
+                        Degree-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- PRCS Proof -->
+                  <p>
+                    <strong>PRCS Proof:</strong>
+                    <span >
+                      <a href="javascript:void(0)" (click)="openPdfModal('PRCS-Example.pdf')" class="text-blue-600 hover:underline">
+                        PRCS-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Fire Brigades Proof -->
+                  <p>
+                    <strong>Fire Brigades Proof:</strong>
+                    <span >
+                      <a href="javascript:void(0)" (click)="openPdfModal('Fire-Brigades-Example.pdf')" class="text-blue-600 hover:underline">
+                        Fire-Brigades-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Al-Shifaa Proof -->
+                  <p>
+                    <strong>Al-Shifaa Proof:</strong>
+                    <span >
+                      <a href="javascript:void(0)" (click)="openPdfModal('Alshifaa-example.pdf')" class="text-blue-600 hover:underline">
+                        Alshifaa-example.pdf
+                      </a>
+                    </span>
+                  </p>
+                </div>
+                
+                <!-- Modal -->
+                <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                  <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+                    <button
+                      (click)="closePdfModal()"
+                      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+                    >
+                      <span class="text-xl font-bold">&times;</span>
+                    </button>
+                    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+                    <pdf-viewer *ngIf="currentPdfUrl" [src]="currentPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+                  </div>
+                </div>
+                
+  
+  
+          </div>
+  
+  
+          </div>
+        </p-tabPanel>
+  
+    </p-tabView>
+  
+      <!-- Required Documents Tab -->
+  </div>
+  
+  
