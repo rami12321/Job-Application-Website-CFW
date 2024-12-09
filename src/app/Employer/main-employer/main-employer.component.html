@@ -1,1 +1,184 @@
-<p>main-employer works!</p>
+<!-- employer.component.html -->
+<div class="employer-page p-4">
+  <div class="flex flex-col justify-center items-center">
+    <h2 class="text-xl font-bold mb-4">Employer Page</h2>
+
+    <!-- Request Job Button -->
+     @if(jobRequested){
+      <button
+      pButton
+      label="Update Job Request"
+      icon="pi pi-pencil"
+      class="p-button-raised p-button-primary mb-4 px-4 py-2"
+
+    ></button>
+     }@else {
+      <button
+      pButton
+      label="Request Job"
+      icon="pi pi-plus"
+      class="p-button-raised p-button-primary mb-4 px-4 py-2"
+      (click)="openDialog()"
+    ></button>
+     }
+
+  </div>
+
+  <!-- Dialog -->
+  <p-dialog
+    [(visible)]="displayDialog"
+    header="Request Job"
+    [modal]="true"
+    [closable]="false"
+    [style]="{ width: '30vw' }"
+  >
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Step 1: Select Job Category</h3>
+      <label for="category" class="block mb-2">Job Category:</label>
+      <select
+        id="category"
+        [(ngModel)]="selectedCategory"
+        (change)="onSelectCategory(selectedCategory)"
+        class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option *ngFor="let category of mainCategories" [value]="category.value">{{ category.label }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="selectedCategory" class="mt-4">
+      <h3 class="text-lg font-semibold mb-2">Step 2: Enter Job Details</h3>
+      <form (ngSubmit)="submitForm()">
+        <!-- Job Title -->
+        <label for="jobTitle" class="block mb-2">Job Title:</label>
+        <input
+          type="text"
+          id="jobTitle"
+          [(ngModel)]="jobDetails.title"
+          name="jobTitle"
+          placeholder="Enter job title"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Number of Employees -->
+        <label for="employees" class="block mb-2">Number of Employees:</label>
+        <input
+          type="number"
+          id="employees"
+          [(ngModel)]="jobDetails.numEmployees"
+          name="employees"
+          placeholder="Enter number of employees"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Job Level -->
+        <label for="level" class="block mb-2">Job Level:</label>
+        <select
+          id="level"
+          [(ngModel)]="jobDetails.level"
+          name="level"
+          class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="junior">Junior</option>
+          <option value="mid">Mid-Level</option>
+          <option value="senior">Senior</option>
+        </select>
+
+        <!-- Location -->
+        <label for="location" class="block mb-2">Location:</label>
+        <input
+          type="text"
+          id="location"
+          [(ngModel)]="jobDetails.location"
+          name="location"
+          placeholder="Enter job location"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Type of Job -->
+        <label for="typeOfJob" class="block mb-2">Type of Job:</label>
+        <select
+          id="typeOfJob"
+          [(ngModel)]="jobDetails.typeOfJob"
+          name="typeOfJob"
+          class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="hybrid">Hybrid</option>
+          <option value="onsite">Onsite</option>
+          <option value="remote">Remote</option>
+        </select>
+
+        <!-- Supervisor Name -->
+        <label for="supervisorName" class="block mb-2">Supervisor Name:</label>
+        <input
+          type="text"
+          id="supervisorName"
+          [(ngModel)]="jobDetails.supervisorName"
+          name="supervisorName"
+          placeholder="Enter supervisor name"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Supervisor Position -->
+        <label for="supervisorPosition" class="block mb-2">Supervisor Position:</label>
+        <input
+          type="text"
+          id="supervisorPosition"
+          [(ngModel)]="jobDetails.supervisorPosition"
+          name="supervisorPosition"
+          placeholder="Enter supervisor position"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Supervisor Email -->
+        <label for="supervisorEmail" class="block mb-2">Supervisor Email:</label>
+        <input
+          type="email"
+          id="supervisorEmail"
+          [(ngModel)]="jobDetails.supervisorEmail"
+          name="supervisorEmail"
+          placeholder="Enter supervisor email"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <!-- Supervisor Phone Number -->
+        <label for="supervisorPhone" class="block mb-2">Supervisor Phone Number:</label>
+        <input
+          type="tel"
+          id="supervisorPhone"
+          [(ngModel)]="jobDetails.supervisorPhone"
+          name="supervisorPhone"
+          placeholder="Enter supervisor phone number"
+          class="p-inputtext w-full mb-3"
+          required
+        />
+
+        <div class="flex justify-end gap-2 mt-4">
+          <button
+            pButton
+            label="Cancel"
+            class="p-button-text p-button-danger px-4 py-2"
+            (click)="closeDialog()"
+            type="button"
+          ></button>
+          <button
+            pButton
+            label="Submit"
+            icon="pi pi-check"
+            class="p-button-raised p-button-success px-4 py-2"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+
+  <!-- Confirmation Message -->
+  <p *ngIf="jobRequested" class="mt-4 text-green-600 font-medium">
+    Job request has been successfully submitted for "{{jobDetails.title}}"!
+  </p>
+</div>

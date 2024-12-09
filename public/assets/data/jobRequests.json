@@ -1,0 +1,49 @@
+[
+  {
+    "title": "hadh",
+    "numEmployees": 34,
+    "level": "junior",
+    "location": "dasdas",
+    "typeOfJob": "hybrid",
+    "supervisorName": "asdas",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "dasda@asdda",
+    "supervisorPhone": "41465465"
+  },
+  {
+    "id": "",
+    "title": "hadh",
+    "numEmployees": 12,
+    "level": "senior",
+    "location": "dasdas",
+    "typeOfJob": "remote",
+    "supervisorName": "",
+    "supervisorPosition": "eqwe",
+    "supervisorEmail": "qweqw",
+    "supervisorPhone": "41465465"
+  },
+  {
+    "id": "",
+    "title": "hadh",
+    "numEmployees": 123,
+    "level": "mid",
+    "location": "dasdas",
+    "typeOfJob": "onsite",
+    "supervisorName": "",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "qweqw",
+    "supervisorPhone": "41465465"
+  },
+  {
+    "id": "",
+    "title": "hadh",
+    "numEmployees": 213,
+    "level": "mid",
+    "location": "dasdas",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "sdaasd",
+    "supervisorEmail": "dasda@asddaasd",
+    "supervisorPhone": "12123"
+  }
+]

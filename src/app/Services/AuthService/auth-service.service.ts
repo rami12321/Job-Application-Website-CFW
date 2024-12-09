@@ -37,9 +37,15 @@ export class AuthService {
 
         if (user) {
           // Save authentication details in localStorage
+          if(user.role=='Employer'){
+          localStorage.setItem('firstName', user.fullNameEnglish); // Store first name
+
+          }else{
+
+            localStorage.setItem('firstName', user.firstNameEn); // Store first name
+            localStorage.setItem('lastName', user.lastNameEn); // Store last name
+          }
           localStorage.setItem('authenticated', 'true'); // Store authentication status
-          localStorage.setItem('firstName', user.firstNameEn); // Store first name
-          localStorage.setItem('lastName', user.lastNameEn); // Store last name
           localStorage.setItem('role', user.role); // Store role
           localStorage.setItem('status', user.status); // Store role
           localStorage.setItem('notes', user.notes); // Store role
