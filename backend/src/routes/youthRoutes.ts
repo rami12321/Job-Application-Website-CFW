@@ -13,6 +13,7 @@ import {
   updateYouthExperience,
   updateYouthTraining,
   updateJob,
+  updateYouthCamp,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -20,6 +21,7 @@ const router = Router();
 router.get('/', getAllYouth);
 
 router.get('/:id', getYouthById);
+router.patch('/:id/camp', updateYouthCamp);
 
 router.post(
   '/',

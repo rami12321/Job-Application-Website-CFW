@@ -37,7 +37,7 @@ export interface Youth {
   gradplace: string;
   employmentOpportunities: string;
   aboutYourself: string;
-
+  educationGraduate: string;
   // General Questions
   placedByKfw: boolean;
   kfwYear?: string;
@@ -47,7 +47,7 @@ export interface Youth {
   disabilitySupport?: string;
   disabilityTypes: string[];
   employed: boolean;
-
+  stcgraduate:string;
   seekingEmploymentDuration?: string;
   isPrcsVolunteer: boolean;
   isFireBrigadesVolunteer: boolean;

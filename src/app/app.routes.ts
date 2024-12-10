@@ -8,6 +8,7 @@ import { YouthSignupDetailsComponent } from './Youth/Details-Youth/Detailsyouth.
 import { MainYouthComponent } from './Youth/Main-Youth/Main-Youth.component';
 import { DetailsEmployerComponent } from './Employer/Details-Employer/details-employer.component';
 import { YouthprofileComponent } from '../app/Youth/youthprofile/youthprofile.component';
+import { EmployerprofileComponent } from './Employer/employerprofile/employerprofile.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+
   {
     path:'main-admin',
     component: MainAdminComponent
@@ -33,6 +35,8 @@ export const routes: Routes = [
     path: 'main-youth',
     component: MainYouthComponent,
   },
+  { path: 'youthprofile/:id', component: YouthprofileComponent },
+  { path: 'employerprofile/:id', component: EmployerprofileComponent },
 
   {
     path: 'signup-youth',
@@ -46,6 +50,10 @@ export const routes: Routes = [
   { path: 'youthsignup-details', component: YouthSignupDetailsComponent }, // Add this route
   { path: 'details-employer', component: DetailsEmployerComponent },
 
+{
+  path: 'employerprofile',
+  component: EmployerprofileComponent, // Parent for steps
+},
   {
     path: 'youthprofile',
     component: YouthprofileComponent, // Parent for steps

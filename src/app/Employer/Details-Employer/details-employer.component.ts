@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class DetailsEmployerComponent {
   @Input() employerId!: string; // Accept the employer ID as input
   public employer: Employer | undefined;
-
+  isModalOpen = false;
+  modalImage: string = '';
   constructor(private employerService: EmployerService) {}
 
   ngOnInit(): void {
@@ -22,7 +23,15 @@ export class DetailsEmployerComponent {
       this.fetchEmployerDetails();
     }
   }
+  openModal(imageSrc: string): void {
+    this.modalImage = imageSrc;
+    this.isModalOpen = true;
+  }
 
+  // Close the modal
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
   ngOnChanges(): void {
     if (this.employerId) {
       this.fetchEmployerDetails();

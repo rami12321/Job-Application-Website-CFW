@@ -42,7 +42,12 @@ export class YouthServiceService {
   }
   
 
-
+  deleteCamp(userId: string): Observable<any> {
+    const url = `${this.apiUrl}/${userId}`;
+    const payload = { camp: null }; // Clear the 'camp' field
+    return this.http.patch(url, payload); // Use PATCH to update only the 'camp' field
+  }
+  
   deleteYouth(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

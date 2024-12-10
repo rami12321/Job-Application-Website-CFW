@@ -32,9 +32,9 @@ export class EmployerService {
   // Update an employer by ID
   updateEmployer(id: string, updatedEmployer: Partial<Employer>): Observable<Employer> {
     return this.http.put<Employer>(`${this.employerDbUrl}/${id}`, updatedEmployer, {
-      headers: { 'Content-Type': 'application/json' }
     });
   }
+  
 
   // Delete an employer by ID
   deleteEmployer(id: string): Observable<any> {

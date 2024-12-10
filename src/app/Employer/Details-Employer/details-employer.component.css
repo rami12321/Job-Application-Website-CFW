@@ -1,24 +1,96 @@
-
-
-.container strong {
-  @apply text-lg font-bold text-gray-700 dark:text-gray-300;
+/* Container with mixed styling */
+.mixed-container {
+  display: flex;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  background: #f0f8ff;
 }
 
-.container span {
-  @apply text-base font-medium text-gray-600 dark:text-gray-400;
-}
-div.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-div.rounded-lg {
+/* Inner panel styling */
+.mixed-panel {
+  flex-grow: 1;
+  background: linear-gradient(to right, #e6f7ff, #cce4ff);
+  color: #333333;
+  padding: 2rem;
+  overflow-y: auto;
   border-radius: 0.75rem;
+  margin: 0.7rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 2px solid #d4edff;
 }
 
-div.shadow-md {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+/* Label styling */
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0d6efd;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
 }
 
-div.border {
-  border: 1px solid #d4edff;
+/* Value styling */
+.value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333333;
+}
+
+/* Signature section */
+.signature {
+  margin-top: 1rem;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .mixed-container {
+    background: #1e90ff;
+  }
+  .mixed-panel {
+    background: linear-gradient(to right, #6ab5ff, #1e90ff);
+    color: #f9f9f9;
+  }
+  .label {
+    color: #f9f9f9;
+  }
+  .value {
+    color: #e0e0e0;
+  }
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 768px) {
+  .mixed-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .mixed-panel {
+    padding: 1rem;
+    margin: 0;
+  }
+}
+/* Modal Overlay */
+.fixed.inset-0.bg-black.bg-opacity-50 {
+  background: rgba(0, 0, 0, 0.5); /* Transparent black background */
+}
+
+/* Modal Container */
+.bg-white {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 200px;
+}
+
+/* Close Button */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #333;
 }

@@ -43,11 +43,23 @@ export class HeaderComponent implements OnInit {
   }
 
   editProfile(): void {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      // Redirect to profile page, passing the user ID
-      this.router.navigate(['/youthprofile', userId]);
+    const userId = localStorage.getItem('userId'); // Get the user ID
+    const role = localStorage.getItem('role'); // Get the user role
+  
+    if (userId && role) {
+      if (role.toLowerCase() === 'employer') {
+        // Navigate to employer profile page
+        this.router.navigate(['/employerprofile', userId]);
+      } else if (role.toLowerCase() === 'youth') {
+        // Navigate to youth profile page
+        this.router.navigate(['/youthprofile', userId]);
+      } else {
+        console.error('Unknown role, unable to navigate');
+      }
+    } else {
+      console.error('User ID or role not found, cannot navigate');
     }
   }
+  
 
 }
