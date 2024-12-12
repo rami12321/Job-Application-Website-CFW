@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { Youth } from '../../Model/Youth';
 
 @Injectable({
   providedIn: 'root',
@@ -25,16 +26,31 @@ export class YouthServiceService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-
-  updateYouth(id: number, updatedData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, updatedData);
+  updateYouthExperience(userId: string, experiences: any[]): Observable<any> {
+    const url = `${this.apiUrl}/${userId}/experiences`; // Endpoint for updating experiences
+    const payload = { experiences }; // Payload only includes the 'experiences' field
+    return this.http.put(url, payload); // Make the PUT request
   }
+  
+    updateYouthTraining(userId: string, trainings: any[]): Observable<any> {
+    const url = `${this.apiUrl}/${userId}/trainings`; // Endpoint for updating training
+    const payload = { trainings };  // Payload only includes the 'trainings' field
+    return this.http.put(url, payload);  // Make the PUT request
+  }
+  updateYouth(id: number, updatedData: Partial<Youth>): Observable<Youth> {
+    return this.http.put<Youth>(`${this.apiUrl}/${id}`, updatedData);
+  }
+  
 
-
+  deleteCamp(userId: string): Observable<any> {
+    const url = `${this.apiUrl}/${userId}`;
+    const payload = { camp: null }; // Clear the 'camp' field
+    return this.http.patch(url, payload); // Use PATCH to update only the 'camp' field
+  }
+  
   deleteYouth(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
-
   updateYouthStatus(id: number, status: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
   }

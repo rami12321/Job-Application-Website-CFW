@@ -37,6 +37,40 @@ export const createYouth = (req: Request, res: Response): void => {
   writeFile(youths);
   res.status(201).json(newYouth);
 };
+export const updateYouthCamp = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract user ID from request parameters
+  const { camp } = req.body; // Extract the `camp` field from the request body
+
+  // Read the current youth data
+  let youths: Youth[] = readFile();
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  // Check if the youth exists
+  if (youthIndex === -1) {
+     res.status(404).json({ message: `Youth with ID ${id} not found.` }); // Ensure no further code execution
+     return;
+  }
+
+  // Update or clear the `camp` field
+  if (camp === null || camp === undefined) {
+    delete youths[youthIndex].camp; // Remove the `camp` field if null or undefined
+  } else {
+    youths[youthIndex].camp = camp; // Update the `camp` field
+  }
+
+  // Save the updated data back to the file
+  fs.writeFile(filePath, JSON.stringify(youths, null, 2), 'utf8', (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error writing updated youth data to file.' }); // Exit on error
+    }
+
+    // Respond with the updated youth data
+    return res.status(200).json({
+      message: `Youth with ID ${id} updated successfully.`,
+      updatedYouth: youths[youthIndex],
+    });
+  });
+};
 
 
 export const getYouthById = (req: Request, res: Response): void => {
@@ -68,11 +102,41 @@ export const deleteYouth = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Youth with ID ${id} deleted successfully.`, deletedYouth });
 };
-
-// Update youth by ID
 export const updateYouth = (req: Request, res: Response): void => {
   const { id } = req.params;
   const updatedData: Partial<Youth> = req.body; // Accept partial updates
+
+  // Read the current youth data
+  let youths: Youth[] = readFile();
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  if (youthIndex === -1) {
+     res.status(404).json({ message: `Youth with ID ${id} not found.` });
+     return;
+  }
+
+  // Update the youth data
+  youths[youthIndex] = { ...youths[youthIndex], ...updatedData };
+
+  // Save the updated data back to the file
+  fs.writeFile(filePath, JSON.stringify(youths, null, 2), 'utf8', (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error writing updated youth data to file.' });
+    }
+
+    // Respond with the updated youth data
+    return res.status(200).json({
+      message: `Youth with ID ${id} updated successfully.`,
+      updatedYouth: youths[youthIndex],
+    });
+  });
+};
+
+export const updateYouthTraining = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const updatedTrainings: any[] = req.body.trainings; // Extract the updated trainings
+
+  // Read the current youth data
   let youths: Youth[] = readFile();
   const youthIndex = youths.findIndex((y) => y.id === id);
 
@@ -81,14 +145,44 @@ export const updateYouth = (req: Request, res: Response): void => {
     return;
   }
 
-  // Merge the existing youth data with the updated data
-  const updatedYouth = { ...youths[youthIndex], ...updatedData };
-  youths[youthIndex] = updatedYouth;
+  // Update only the trainings field
+  youths[youthIndex].trainings = updatedTrainings;
 
-  writeFile(youths);
-
-  res.status(200).json({ message: `Youth with ID ${id} updated successfully.`, updatedYouth });
+  // Save the updated data back to the file
+  try {
+    writeFile(youths);
+    res.status(200).json({ message: 'Youth trainings updated successfully', youth: youths[youthIndex] });
+  } catch (error) {
+    console.error('Error updating youth trainings:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
 };
+export const updateYouthExperience = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const updatedExperiences: any[] = req.body.experiences; // Assuming the payload has the 'experiences' field
+
+  // Read the current youth data
+  let youths: Youth[] = readFile();
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Update only the experiences field
+  youths[youthIndex].experiences = updatedExperiences;
+
+  // Save the updated data back to the file
+  try {
+    writeFile(youths);
+    res.status(200).json({ message: 'Youth experiences updated successfully', youth: youths[youthIndex] });
+  } catch (error) {
+    console.error('Error updating youth experiences:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
 export const updateYouthStatus = (req: Request, res: Response): void => {
   const { id } = req.params;
   const { status } = req.body;  // Extract the new status from the request body

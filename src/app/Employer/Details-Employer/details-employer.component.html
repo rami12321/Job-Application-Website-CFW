@@ -1,40 +1,67 @@
-<div class="container">
+<div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+  <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+    Employer Details
+  </h3>
+  <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+    <div class="grid grid-cols-2 gap-6 mt-4">
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Organization: </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.organization }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (English): </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.fullNameEnglish }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (Arabic): </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.fullNameArabic }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone: </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.mobilePhone }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp Number: </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.whatsappNumber }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email Address: </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.email }}</span>
+      </p>
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area: </strong> 
+        <span class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.area }}</span>
+      </p>
+      <div *ngIf="employer?.signature" class="mt-6">
+        <p>
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Signature:</strong>
+        </p>
+        
+        <!-- Image with white card background -->
+        <div 
+        class="w-20 h-32 bg-white border border-[#d4edff] dark:border-gray-700 rounded-md shadow-md  justify-center items-center cursor-pointer "
+        (click)="openModal(employer?.signature || '')"
+          >
+          <img 
+            [src]="employer?.signature" 
+            alt="Employer Signature" 
+            class="w-29 h-28 object-contain"
+          >
+        </div>
+      </div>
+      
+      <!-- Modal for Image Preview -->
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-96 max-h-96 overflow-auto">
+    <div class="flex justify-end">
+      <button (click)="closeModal()" class="text-gray-600 dark:text-gray-300 font-semibold text-lg">X</button>
+    </div>
+    <img [src]="modalImage" alt="Signature Preview" class="w-full h-auto max-h-96 object-contain mx-auto">
+  </div>
+</div>
 
-    <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-
-        <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Organization:</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.organization }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Full Name (English):</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.fullNameEnglish }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Full Name (Arabic):</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.fullNameArabic }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Mobile Phone:</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.mobilePhone }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">WhatsApp Number:</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.whatsappNumber }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Email Address:</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.email }}</p>
-      </div>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-        <strong class="text-gray-700 dark:text-gray-300">Area:</strong>
-        <p class="text-gray-900 dark:text-gray-100">{{ employer?.area }}</p>
-      </div>
-      <div *ngIf="employer?.signature">
-        <strong class="text-gray-700 dark:text-gray-300">Signature:</strong>
-        <img [src]="employer?.signature" alt="Employer Signature" class="w-32 h-32 object-contain border rounded-md">
-      </div>
+      
     </div>
   </div>
 </div>

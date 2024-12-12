@@ -179,7 +179,7 @@ export class SignUpYouthComponent implements OnInit {
     this.generalQuestionsForm = this.fb.group({
       placedByKfw: ['', Validators.required],
       kfwYear: [''],
-      question2 : ['', Validators.required],
+      stcgraduate : ['', Validators.required],
 
       innovationLabGraduate: ['', Validators.required],
       innovationLabGradtype: this.fb.array([]),

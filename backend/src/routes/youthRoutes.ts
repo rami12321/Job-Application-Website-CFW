@@ -9,9 +9,13 @@ import {
   getYouthById,
   updateYouthStatus,
   checkRegistrationNumber,
+  updateYouth,
+  updateYouthExperience,
+  updateYouthTraining,
   updateJob,
   updateYouthNotes,
   getYouthNotesById,
+  updateYouthCamp,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -19,6 +23,7 @@ const router = Router();
 router.get('/', getAllYouth);
 
 router.get('/:id', getYouthById);
+router.patch('/:id/camp', updateYouthCamp);
 
 router.post(
   '/',
@@ -31,6 +36,10 @@ router.post(
   ],
   createYouth
 );
+router.put('/:id', updateYouth);
+// Assuming you're using Express.js
+router.put('/:id/experiences', updateYouthExperience); // Route for updating experiences only
+router.put('/:id/trainings', updateYouthTraining);
 
 // router.put('/:id', updateYouth);
 
@@ -41,4 +50,4 @@ router.patch('/:id/status', updateYouthStatus);
 router.patch('/:id/jobCategory', updateJob);
 router.post('/check-registration', checkRegistrationNumber);
 
-export default router; 
+export default router;

@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../Services/AuthService/auth-service.service';
 
 @Component({
   selector: 'app-Header',
@@ -18,7 +20,7 @@ export class HeaderComponent implements OnInit {
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     const firstName = localStorage.getItem('firstName') || 'F';
@@ -39,5 +41,25 @@ export class HeaderComponent implements OnInit {
     // Redirect to login page
     window.location.href = '/login';
   }
+
+  editProfile(): void {
+    const userId = localStorage.getItem('userId'); // Get the user ID
+    const role = localStorage.getItem('role'); // Get the user role
+  
+    if (userId && role) {
+      if (role.toLowerCase() === 'employer') {
+        // Navigate to employer profile page
+        this.router.navigate(['/employerprofile', userId]);
+      } else if (role.toLowerCase() === 'youth') {
+        // Navigate to youth profile page
+        this.router.navigate(['/youthprofile', userId]);
+      } else {
+        console.error('Unknown role, unable to navigate');
+      }
+    } else {
+      console.error('User ID or role not found, cannot navigate');
+    }
+  }
+  
 
 }

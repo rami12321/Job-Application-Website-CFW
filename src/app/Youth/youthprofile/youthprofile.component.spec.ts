@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SmartTableComponent } from './smart-table.component';
+import { YouthprofileComponent } from './youthprofile.component';
 
-describe('SmartTableComponent', () => {
-  let component: SmartTableComponent;
-  let fixture: ComponentFixture<SmartTableComponent>;
+describe('YouthprofileComponent', () => {
+  let component: YouthprofileComponent;
+  let fixture: ComponentFixture<YouthprofileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SmartTableComponent]
+      imports: [YouthprofileComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SmartTableComponent);
+    fixture = TestBed.createComponent(YouthprofileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
