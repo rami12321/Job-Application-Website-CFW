@@ -212,11 +212,11 @@ export const updateYouthStatus = (req: Request, res: Response): void => {
 };
 export const updateJob = (req: Request, res: Response): void => {
   const { id } = req.params;
-  const { jobCategory } = req.body;  // Extract the new status from the request body
+  const { appliedJob } = req.body;  // Extract the new status from the request body
   let youths: Youth[] = readFile();
 
   // Check if status is provided
-  if (!jobCategory) {
+  if (!appliedJob) {
     res.status(400).json({ message: 'job is required.' });
     return;
   }
@@ -230,7 +230,7 @@ export const updateJob = (req: Request, res: Response): void => {
   }
 
   // Update the status
-  youths[youthIndex].jobCategory = jobCategory;
+  youths[youthIndex].appliedJob = appliedJob;
 
   // Save the updated youths array back to the file
   writeFile(youths);
@@ -252,6 +252,27 @@ export const checkRegistrationNumber = (req: Request, res: Response): void => {
   }
 };
 
+export const getAppliedJobById = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract the ID from the request parameters
+  const youths: Youth[] = readFile(); // Read all youth data from the file
+
+  // Find the youth by ID
+  const youth = youths.find((y) => y.id === id);
+
+  if (!youth) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Check if the youth has applied for a job
+  if (!youth.appliedJob) {
+    res.status(404).json({ message: `No applied job found for youth with ID ${id}.` });
+    return;
+  }
+
+  // Return the applied job
+  res.status(200).json({ appliedJob: youth.appliedJob });
+};
 export const updateYouthNotes = (req: Request, res: Response): void => {
   const { id } = req.params;
   const { notes } = req.body;  // Extract the new notes from the request body

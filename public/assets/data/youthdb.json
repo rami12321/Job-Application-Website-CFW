@@ -182,10 +182,8 @@
     "confirmPassword": "qawsedrf12",
     "status": "accepted",
     "notes": "df",
-    "jobCategory": [
-      "Auto Electrician",
-      "Auto Mechanic",
-      "Diesel Mechanic"
+    "appliedJob": [
+      "Blacksmith"
     ]
   },
   {

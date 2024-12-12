@@ -31,7 +31,7 @@ export class YouthServiceService {
     const payload = { experiences }; // Payload only includes the 'experiences' field
     return this.http.put(url, payload); // Make the PUT request
   }
-  
+
     updateYouthTraining(userId: string, trainings: any[]): Observable<any> {
     const url = `${this.apiUrl}/${userId}/trainings`; // Endpoint for updating training
     const payload = { trainings };  // Payload only includes the 'trainings' field
@@ -40,14 +40,14 @@ export class YouthServiceService {
   updateYouth(id: number, updatedData: Partial<Youth>): Observable<Youth> {
     return this.http.put<Youth>(`${this.apiUrl}/${id}`, updatedData);
   }
-  
+
 
   deleteCamp(userId: string): Observable<any> {
     const url = `${this.apiUrl}/${userId}`;
     const payload = { camp: null }; // Clear the 'camp' field
     return this.http.patch(url, payload); // Use PATCH to update only the 'camp' field
   }
-  
+
   deleteYouth(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
@@ -74,5 +74,8 @@ export class YouthServiceService {
 
   getYouthNotesById(id: number): Observable<{ notes: string }> {
     return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
+  }
+  getAppliedJobById(id: number): Observable<{ appliedJob: any }> {
+    return this.http.get<{ appliedJob: string }>(`${this.apiUrl}/${id}/appliedJob`);
   }
 }

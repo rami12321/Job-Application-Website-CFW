@@ -16,6 +16,7 @@ import {
   updateYouthNotes,
   getYouthNotesById,
   updateYouthCamp,
+  getAppliedJobById,
 } from '../controllers/youthController';
 
 const router = Router();
@@ -46,6 +47,7 @@ router.put('/:id/trainings', updateYouthTraining);
 router.delete('/:id', deleteYouth);
 router.patch('/:id/notes', updateYouthNotes);
 router.get('/:id/notes', getYouthNotesById);
+router.get('/:id/appliedJob', getAppliedJobById);
 router.patch('/:id/status', updateYouthStatus);
 router.patch('/:id/jobCategory', updateJob);
 router.post('/check-registration', checkRegistrationNumber);
