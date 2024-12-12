@@ -11,9 +11,6 @@
   @apply text-lg font-bold text-gray-700 dark:text-gray-300;
 }
 
-.tab-container span {
-  @apply text-base font-medium text-gray-600 dark:text-gray-400;
-}
 
 :host ::ng-deep .p-tabview-nav {
     flex-direction: column;

@@ -34,12 +34,26 @@ export const createJobRequest = (req: Request, res: Response): void => {
   const newJobRequest: Job = req.body; // Ensure req.body adheres to jobRequest type
 
   // Generate the ID and assign it to the new jobRequest
+  newJobRequest.id = generateUniqueId(); // Ensure ID is generated here
 
+  // Push the new jobRequest with the generated ID to the array
   jobRequests.push(newJobRequest);
+
+  // Save the updated jobRequests array back to the file
   writeFile(jobRequests);
 
+  // Return the newly created jobRequest
   res.status(201).json(newJobRequest);
 };
+
+// Function to generate a unique ID (make sure this matches the client-side ID generation logic)
+function generateUniqueId(): string {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+  const randomLetter = letters[Math.floor(Math.random() * letters.length)]; 
+  const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+  return `${randomLetter}-${randomNumber}`; 
+}
+
 
 export const getJobRequestById = (req: Request, res: Response): void => {
   const { id } = req.params;

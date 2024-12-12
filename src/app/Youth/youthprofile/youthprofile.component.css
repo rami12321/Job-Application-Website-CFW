@@ -13,7 +13,7 @@
 }
 
 .tab-container span {
-  @apply text-base font-medium text-gray-600 dark:text-gray-400;
+  @apply text-base font-semibold size-3 text-gray-600 dark:text-gray-400;
 }
 
 :host ::ng-deep .p-tabview-nav {
