@@ -4,23 +4,24 @@
     <h2 class="text-xl font-bold mb-4">Employer Page</h2>
 
     <!-- Request Job Button -->
-     @if(jobRequested){
-      <button
-      pButton
-      label="Update Job Request"
-      icon="pi pi-pencil"
-      class="p-button-raised p-button-primary mb-4 px-4 py-2"
+<!-- Request Job Button -->
+<button
+  *ngIf="!jobRequested"
+  pButton
+  label="Request Job"
+  icon="pi pi-plus"
+  class="p-button-raised p-button-primary mb-4 px-4 py-2"
+  (click)="openDialog()"
+></button>
 
-    ></button>
-     }@else {
-      <button
-      pButton
-      label="Request Job"
-      icon="pi pi-plus"
-      class="p-button-raised p-button-primary mb-4 px-4 py-2"
-      (click)="openDialog()"
-    ></button>
-     }
+<button
+  *ngIf="jobRequested"
+  pButton
+  label="Update Job Request"
+  icon="pi pi-pencil"
+  class="p-button-raised p-button-primary mb-4 px-4 py-2"
+></button>
+
 
   </div>
 
@@ -170,6 +171,7 @@
             pButton
             label="Submit"
             icon="pi pi-check"
+            
             class="p-button-raised p-button-success px-4 py-2"
           ></button>
         </div>
@@ -177,8 +179,92 @@
     </div>
   </p-dialog>
 
-  <!-- Confirmation Message -->
-  <p *ngIf="jobRequested" class="mt-4 text-green-600 font-medium">
-    Job request has been successfully submitted for "{{jobDetails.title}}"!
-  </p>
+  
+</div><div class="max-w-5xl mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+  <!-- Table -->
+  <table class="min-w-full table-auto border-collapse rounded-lg overflow-hidden">
+    <thead>
+      <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+        <th
+          *ngFor="let column of columns"
+          class="px-8 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
+          (click)="sortTable(column.key)"
+        >
+          <span class="flex items-center">
+            {{ column.label }}
+            <svg
+              class="w-4 h-4 ml-2"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path [attr.d]="getSortIconPath(column.key)" />
+            </svg>
+          </span>
+        </th>
+        <!-- Action Column -->
+        <th class="px-8 py-4 border-b border-gray-300 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let job of paginatedData"
+        class="hover:bg-blue-200 transition-colors ease-in-out duration-150"
+      >
+        <td
+          class="px-8 py-4 border-b border-gray-300 text-sm text-gray-700"
+          *ngFor="let column of columns"
+        >
+          {{ job[column.key] }}
+        </td>
+        <!-- Action Buttons -->
+        <td class="px-8 py-4 border-b border-gray-300 text-center">
+          <button class="text-blue-600 hover:text-blue-800 mr-4 transition-colors">
+            Edit
+          </button>
+          <button class="text-red-600 hover:text-red-800 transition-colors">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="mt-6 flex justify-between items-center">
+    <!-- Previous Button -->
+    <button
+      class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+
+    <!-- Page Numbers -->
+    <div class="flex items-center space-x-2">
+      <span class="text-sm text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
+    </div>
+
+    <!-- Next Button -->
+    <button
+      class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      Next
+    </button>
+  </div>
+
+  <!-- Search Input -->
+  <div class="mt-4 flex items-center space-x-2">
+    <input
+      type="text"
+      class="px-4 py-2 border border-gray-300 rounded-md"
+      placeholder="Search"
+      [(ngModel)]="searchQuery"
+      (input)="searchJobs()"
+    />
+  </div>
 </div>

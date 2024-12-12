@@ -1,70 +1,73 @@
 <div class="responsive-container">
+  
 <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-
+  <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+    Employer Profile
+  </h3>
     <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
       <div class="grid grid-cols-2 gap-6 mt-4">
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Organization: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.organization }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.organization }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['organization']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
             type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (English): </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.fullNameEnglish }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.fullNameEnglish }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['fullNameEnglish']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
             type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (Arabic): </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.fullNameArabic }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.fullNameArabic }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['fullNameArabic']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
             type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.mobilePhone }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.mobilePhone }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['mobilePhone']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
             type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp Number: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.whatsappNumber }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.whatsappNumber }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['whatsappNumber']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
             type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email Address: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.email }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.email }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['email']"
-            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"            type="text"
+            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"            type="text"
           />
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-800 dark:text-gray-200">{{ employer?.area }}</span>
+          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.area }}</span>
           <select
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['area']"

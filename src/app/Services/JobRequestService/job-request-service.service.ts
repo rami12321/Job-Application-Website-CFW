@@ -8,7 +8,7 @@ import { Job } from '../../Model/JobDetails';
 })
 export class JobRequestService {
 
-  private JobRequestsUrl = 'http://localhost:3000/job-request'; // Ensure the backend is running at this URL
+  private JobRequestsUrl = 'http://localhost:3000/job-request'; 
 
   constructor(private http: HttpClient) {}
 

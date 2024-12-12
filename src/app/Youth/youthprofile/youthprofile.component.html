@@ -4,7 +4,9 @@
   <div class="card shadow-md bg-white rounded-lg">
 
     <p-tabView class="step-form-container">
-  
+      <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+        Youth Details
+      </h3>
   
       <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
           <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
@@ -20,7 +22,7 @@
                   <!-- Row 1 -->
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (EN): </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.firstNameEn }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.firstNameEn }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].firstNameEn"
@@ -31,7 +33,7 @@
 
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Family Registration Number: </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.familyRegistrationNumber }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.familyRegistrationNumber }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].familyRegistrationNumber"
@@ -44,7 +46,7 @@
                   <!-- Row 2 -->
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (EN): </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.fatherNameEn }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.fatherNameEn }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].fatherNameEn"
@@ -55,7 +57,7 @@
                   </div>
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone: </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.mobilePhone }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.mobilePhone }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].mobilePhone"
@@ -68,7 +70,7 @@
                   <!-- Row 3 -->
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (EN): </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.lastNameEn }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.lastNameEn }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].lastNameEn"
@@ -79,7 +81,7 @@
                   </div>
                   <div>
                     <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp: </strong>
-                    <span *ngIf="!isEditing['personal']">{{ youth?.whatsapp }}</span>
+                    <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.whatsapp }}</span>
                     <input
                       *ngIf="isEditing['personal']"
                       [(ngModel)]="editModels['personal'].whatsapp"
@@ -92,7 +94,7 @@
 <!-- Row 4 -->
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (AR): </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.firstNameAr }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.firstNameAr }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].firstNameAr"
@@ -105,7 +107,7 @@
 <!-- Row 5 -->
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (AR): </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.fatherNameAr }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.fatherNameAr }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].fatherNameAr"
@@ -118,7 +120,7 @@
 <!-- Row 6 -->
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (AR): </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.lastNameAr }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.lastNameAr }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].lastNameAr"
@@ -129,7 +131,7 @@
 </div>
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email: </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.email }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.email }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].email"
@@ -142,7 +144,7 @@
 <!-- Row 7 -->
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Gender: </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.gender }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.gender }}</span>
   <select
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].gender"
@@ -157,7 +159,7 @@
 <!-- Row 8 -->
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Birth: </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.dob }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.dob }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].dob"
@@ -181,7 +183,7 @@
     <option value="">Select</option>
     <option *ngFor="let area of lookupData.areas" [value]="area.name">{{ area.name }}</option>
   </select>
-  <span *ngIf="!isEditing['personal']">{{ youth?.area }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.area }}</span>
 </div>
 
 <!-- Row 10 -->
@@ -209,7 +211,7 @@
     <option value="">Select</option>
     <option *ngFor="let type of campTypeOptions" [value]="type">{{ type }}</option>
   </select>
-  <span *ngIf="!isEditing['personal']">{{ youth?.campType }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.campType }}</span>
 </div>
 
 <div *ngIf="campOptions && campOptions.length > 0" class="space-y-6 border-b border-gray-300 pb-6">
@@ -224,14 +226,14 @@
     <option value="">Select</option>
     <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
   </select>
-  <span *ngIf="!isEditing['personal']">{{ youth?.camp }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.camp }}</span>
 </div>
 
 
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Personal Registration Number: </strong>
   
-  <span *ngIf="!isEditing['personal']">{{ youth?.personalRegistrationNumber }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.personalRegistrationNumber }}</span>
 
   <span *ngIf="isEditing['personal']">{{ youth?.personalRegistrationNumber }}</span>
 </div>
@@ -239,7 +241,7 @@
 
 <div>
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Address: </strong>
-  <span *ngIf="!isEditing['personal']">{{ youth?.fullAddress }}</span>
+  <span *ngIf="!isEditing['personal']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.fullAddress }}</span>
   <input
     *ngIf="isEditing['personal']"
     [(ngModel)]="editModels['personal'].fullAddress"
@@ -289,7 +291,7 @@
             <!-- Job Opportunity Source -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">How did you hear about this job opportunity?</strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.jobOpportunitySource }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.jobOpportunitySource }}</span>
               <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].jobOpportunitySource" class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
               >
                 <option value="">Select</option>
@@ -300,7 +302,7 @@
             <!-- Education Graduate -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Are you a graduate with a Short Term Course, TVET, or University Degree?</strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.educationGraduate }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.educationGraduate }}</span>
               <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].educationGraduate" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -310,7 +312,7 @@
             <!-- Education Level -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Education Level: </strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.educationLevel }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.educationLevel }}</span>
               <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].educationLevel" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
                 <option value="">Select Education Level</option>
                 <option *ngFor="let level of lookupData.educationLevels" [value]="level">{{ level }}</option>
@@ -320,7 +322,7 @@
             <!-- Major -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Major: </strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.major }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.major }}</span>
               <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].major" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm" (change)="onMajorChange($event)">
                 <option value="">Select Major</option>
                 <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
@@ -332,7 +334,7 @@
             <!-- Institution -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">School, University, or Institution: </strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.institution }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.institution }}</span>
               <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].institution" type="text"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
  />
             </div>
@@ -340,7 +342,7 @@
             <!-- Place/Country -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Place/Country: </strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.gradplace }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.gradplace }}</span>
               <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].gradplace" type="text"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
  />
             </div>
@@ -348,7 +350,7 @@
             <!-- Date of Graduation -->
             <div>
               <strong class="text-lg font-bold text-gray-700 datext-gray-300">Date of Graduation: </strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.graduationDate }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.graduationDate }}</span>
               <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].graduationDate" type="date"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
  />
             </div>
@@ -356,7 +358,7 @@
             <!-- Employment Opportunities -->
             <div>
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Are you interested in short-term employment opportunities?</strong>
-              <span *ngIf="!isEditing['general']">{{ youth?.employmentOpportunities }}</span>
+              <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.employmentOpportunities }}</span>
               <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].employmentOpportunities" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
                 <option value="">Select</option>
                 <option *ngFor="let option of lookupData.employmentOpportunitiesOptions" [value]="option">{{ option }}</option>
@@ -367,7 +369,7 @@
           <!-- About Yourself -->
           <div class="mt-6">
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Tell us about yourself (Background, Experiences, Skills, and Motivation): </strong>
-            <span *ngIf="!isEditing['general']">{{ youth?.aboutYourself }}</span>
+            <span *ngIf="!isEditing['general']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.aboutYourself }}</span>
             <textarea *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].aboutYourself"                     class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
  rows="4"></textarea>
           </div>
@@ -397,7 +399,7 @@
               <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Placed by KFW CfW: </strong>
               
               <!-- Display value when not editing -->
-              <span *ngIf="!isEditing['generalQuestions']">{{ youth?.placedByKfw }}</span>
+              <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.placedByKfw }}</span>
               
               <!-- Show radio buttons when editing -->
               <div *ngIf="isEditing['generalQuestions']">
@@ -437,7 +439,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Graduate of Siblin Vocational Training Center (STC): </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.stcgraduate }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.stcgraduate }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -467,7 +469,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Innovation Lab Graduate: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.innovationLabGraduate }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.innovationLabGraduate }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -523,7 +525,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Disability: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.disability }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.disability }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -603,7 +605,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Are You Currently Employed: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.employed }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.employed }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -649,7 +651,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with PRCS: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isPrcsVolunteer }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.isPrcsVolunteer }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -679,7 +681,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with Fire Brigades: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isFireBrigadesVolunteer }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.isFireBrigadesVolunteer }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -709,7 +711,7 @@
   <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Volunteer with Al-Shifaa: </strong>
   
   <!-- Display value when not editing -->
-  <span *ngIf="!isEditing['generalQuestions']">{{ youth?.isAlShifaaVolunteer }}</span>
+  <span *ngIf="!isEditing['generalQuestions']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ youth?.isAlShifaaVolunteer }}</span>
   
   <!-- Show radio buttons when editing -->
   <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
@@ -769,20 +771,25 @@
             <!-- Display Mode -->
             <div *ngIf="!experience.isEditing">
               <p><strong>Experience {{ i + 1 }}</strong></p>
-              <p><strong>Type: </strong> {{ experience?.type }}</p>
-              <p><strong>Employer Name: </strong> {{ experience?.employerName }}</p>
-              <p><strong>Employer Phone: </strong> {{ experience?.employerPhone }}</p>
-              <p><strong>Area: </strong> {{ experience?.area }}</p>
-              <p><strong>Employment Type: </strong> {{ experience?.employmentType }}</p>
-              <p><strong>Job Title: </strong> {{ experience?.jobTitle }}</p>
+              <p><strong>Type: </strong><span  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"
+> {{ experience?.type }}</span></p>
+              <p><strong>Employer Name: </strong><span  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"
+> {{ experience?.employerName }}</span></p>
+              <p><strong>Employer Phone: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ experience?.employerPhone }}</span></p>
+              <p><strong>Area: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ experience?.area }}</span></p>
+              <p><strong>Employment Type: </strong><span  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"
+> {{ experience?.employmentType }}</span></p>
+              <p><strong>Job Title: </strong> <span>{{ experience?.jobTitle }}</span></p>
               <p>
-                <strong>Start Date: </strong> {{ experience?.startDate | date:  'longDate' }}
+                <strong>Start Date: </strong><span  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"
+> {{ experience?.startDate | date:  'longDate' }}</span>
               </p>
               <p>
-                <strong>End Date: </strong> {{ experience?.endDate | date:  'longDate' }}
+                <strong>End Date: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ experience?.endDate | date:  'longDate' }}</span>
               </p>
-              <p><strong>Salary: </strong> {{ experience?.salary }}</p>
-              <p><strong>Main Tasks: </strong> {{ experience?.mainTasks }}</p>
+              <p><strong>Salary: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ experience?.salary }}</span></p>
+              <p><strong>Main Tasks: </strong><span  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"
+> {{ experience?.mainTasks }}</span></p>
               <button
                 (click)="toggleEditExperience(i)"
                 class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
@@ -927,11 +934,11 @@
         <!-- Display Mode -->
         <div *ngIf="!training.isEditing">
           <p><strong>Training {{ i + 1 }}</strong></p>
-          <p><strong>Institution: </strong> {{ training?.institution }}</p>
-          <p><strong>Certificate: </strong> {{ training?.certificate }}</p>
-          <p><strong>Area: </strong> {{ training?.area }}</p>
-          <p><strong>Duration From: </strong> {{ training?.durationFrom | date:  'longDate' }}</p>
-          <p><strong>Duration To: </strong> {{ training?.durationTo | date:  'longDate' }}</p>
+          <p><strong>Institution: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ training?.institution }}</span></p>
+          <p><strong>Certificate: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ training?.certificate }}</span></p>
+          <p><strong>Area: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ training?.area }}</span></p>
+          <p><strong>Duration From: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ training?.durationFrom | date:  'longDate' }}</span></p>
+          <p><strong>Duration To: </strong> <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ training?.durationTo | date:  'longDate' }}</span></p>
           <button
             (click)="toggleEditTraining(i)"
             class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"

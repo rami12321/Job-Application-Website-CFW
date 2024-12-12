@@ -4,7 +4,9 @@
 
   <p-tabView >
 
-
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+      Youth Details
+    </h3>
     <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
         <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
             <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
@@ -15,48 +17,48 @@
 
           <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4 ">
             <!-- Row 1 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (EN):</strong> {{ youth?.firstNameEn }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Family Registration Number:</strong> {{ youth?.familyRegistrationNumber }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300 " >First Name (EN):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.firstNameEn }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Family Registration Number:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.familyRegistrationNumber }} </span></p>
 
             <!-- Row 2 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (EN):</strong> {{ youth?.fatherNameEn }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone:</strong> {{ youth?.mobilePhone }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (EN):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.fatherNameEn }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.mobilePhone }} </span></p>
 
             <!-- Row 3 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (EN):</strong> {{ youth?.lastNameEn }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp:</strong> {{ youth?.whatsapp }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (EN):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.lastNameEn }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.whatsapp }} </span></p>
 
             <!-- Row 4 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (AR):</strong> {{ youth?.firstNameAr }}</p>
-            <!-- <p><strong>Emergency Phone:</strong> {{ youth?.emergencyPhone }}</p> -->
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">First Name (AR):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.firstNameAr }} </span></p>
+            <!-- <p class="space-y-2"><strong>Emergency Phone:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.emergencyPhone }} </span></p> -->
 
             <!-- Row 5 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (AR):</strong> {{ youth?.fatherNameAr }}</p>
-            <!-- <p><strong>Emergency Relation:</strong> {{ youth?.emergencyRelation }}</p> -->
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Father's Name (AR):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.fatherNameAr }} </span></p>
+            <!-- <p class="space-y-2"><strong>Emergency Relation:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.emergencyRelation }} </span></p> -->
 
             <!-- Row 6 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (AR):</strong> {{ youth?.lastNameAr }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email:</strong> {{ youth?.email }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Last Name (AR):  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.lastNameAr }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.email }} </span></p>
 
             <!-- Row 7 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Gender:</strong> {{ youth?.gender }}</p>
-            <!-- <p><strong>Head of Family:</strong> {{ youth?.headfa }}</p> -->
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Gender:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.gender }} </span></p>
+            <!-- <p class="space-y-2"><strong>Head of Family:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.headfa }} </span></p> -->
 
             <!-- Row 8 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Birth:</strong> {{ youth?.dob }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area:</strong> {{ youth?.area }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Date of Birth:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.dob }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.area }} </span></p>
 
             <!-- Row 9 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Nationality:</strong> {{ youth?.nationality }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp Type:</strong> {{ youth?.campType }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Nationality:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.nationality }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp Type:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.campType }} </span></p>
 
             <!-- Row 10 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Registration Status:</strong> {{ youth?.registrationStatus }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp:</strong> {{ youth?.camp }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Registration Status:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.registrationStatus }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Camp:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.camp }} </span></p>
 
             <!-- Row 11 -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Personal Registration Number:</strong> {{ youth?.personalRegistrationNumber }}</p>
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Address:</strong> {{ youth?.fullAddress }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Personal Registration Number:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.personalRegistrationNumber }} </span></p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Address:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.fullAddress }} </span></p>
           </div>
         </div>
     </div>
@@ -69,18 +71,18 @@
             </h3>
             <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">How did you hear about this job opportunity?</strong> {{ youth?.jobOpportunitySource }}</p>
-            <!-- <p><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong> {{ youth?.educationGraduate }}</p> -->
-            <p><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Education Level:</strong> {{ youth?.educationLevel }}</p>
-            <p><strong>Major:</strong> {{ youth?.major }}</p>
-            <p><strong>School, University, or Institution:</strong> {{ youth?.institution }}</p>
-            <p><strong>Place/Country:</strong> {{ youth?.gradplace }}</p>
-            <p><strong>Date of Graduation:</strong> {{ youth?.graduationDate }}</p>
-            <p><strong>Are you interested in short-term employment opportunities?</strong> {{ youth?.employmentOpportunities }}</p>
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">How did you hear about this job opportunity?</strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.jobOpportunitySource }} </span></p>
+            <!-- <p class="space-y-2"><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.educationGraduate }} </span></p> -->
+            <p class="space-y-2"><strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Education Level:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.educationLevel }} </span></p>
+            <p class="space-y-2"><strong>Major:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.major }} </span></p>
+            <p class="space-y-2"><strong>School, University, or Institution:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.institution }} </span></p>
+            <p class="space-y-2"><strong>Place/Country:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.gradplace }} </span></p>
+            <p class="space-y-2"><strong>Date of Graduation:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.graduationDate }} </span></p>
+            <p class="space-y-2"><strong>Are you interested in short-term employment opportunities?</strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.employmentOpportunities }} </span></p>
           </div>
           <div class="mt-6">
-            <p><strong>Tell us about yourself (Background, Experiences, Skills, and Motivation):</strong></p>
-            <p>{{ youth?.aboutYourself }}</p>
+            <p class="space-y-2"><strong>Tell us about yourself (Background, Experiences, Skills, and Motivation):  </strong></p>
+            <p class="space-y-2"> <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.aboutYourself }} </span></p>
           </div>
         </div>
     </div>
@@ -99,23 +101,23 @@
 
 
           <div class="grid grid-cols-2 gap-6 mt-4">
-            <p><strong>Placed by KFW CfW:</strong> {{ youth?.placedByKfw }}</p>
-            <p><strong>KFW Year:</strong> {{ youth?.kfwYear }}</p>
-            <p><strong>Innovation Lab Graduate:</strong> {{ youth?.innovationLabGraduate }}</p>
+            <p class="space-y-2"><strong>Placed by KFW CfW:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.placedByKfw }} </span></p>
+            <p class="space-y-2"><strong>KFW Year:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.kfwYear }} </span></p>
+            <p class="space-y-2"><strong>Innovation Lab Graduate:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.innovationLabGraduate }} </span></p>
             <div *ngFor="let innovtyp of youth?.innovationLabGradtype">
-              <p><strong>Innovation Lab Graduate Type:</strong> {{ innovtyp }}</p>
+              <p class="space-y-2"><strong>Innovation Lab Graduate Type:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ innovtyp }} </span></p>
             </div>
-            <!-- <p><strong>Digital Skills:</strong> {{ youth?.digitalSkills }}</p> -->
-            <p><strong>Disability:</strong> {{ youth?.disability }}</p>
-            <p><strong>Disability Support:</strong> {{ youth?.disabilitySupport }}</p>
+            <!-- <p class="space-y-2"><strong>Digital Skills:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.digitalSkills }} </span></p> -->
+            <p class="space-y-2"><strong>Disability:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.disability }} </span></p>
+            <p class="space-y-2"><strong>Disability Support:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.disabilitySupport }} </span></p>
             <div *ngFor="let dis of youth?.disabilityTypes">
-              <p><strong>Disability Type:</strong> {{ dis }}</p>
+              <p class="space-y-2"><strong>Disability Type:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ dis }} </span></p>
             </div>
-            <p><strong>Employed:</strong> {{ youth?.employed }}</p>
-            <p><strong>Employment Duration:</strong> {{ youth?.seekingEmploymentDuration }}</p>
-            <p><strong>Volunteer with PRCS:</strong> {{ youth?.isPrcsVolunteer }}</p>
-            <p><strong>Volunteer with Fire Brigades:</strong> {{ youth?.isFireBrigadesVolunteer }}</p>
-            <p><strong>Volunteer with Al-Shifaa:</strong> {{ youth?.isAlShifaaVolunteer }}</p>
+            <p class="space-y-2"><strong>Employed:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.employed }} </span></p>
+            <p class="space-y-2"><strong>Employment Duration:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.seekingEmploymentDuration }} </span></p>
+            <p class="space-y-2"><strong>Volunteer with PRCS:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.isPrcsVolunteer }} </span></p>
+            <p class="space-y-2"><strong>Volunteer with Fire Brigades:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.isFireBrigadesVolunteer }} </span></p>
+            <p class="space-y-2"><strong>Volunteer with Al-Shifaa:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ youth?.isAlShifaaVolunteer }} </span></p>
           </div>
         </div>
     </div>
@@ -135,17 +137,17 @@
     <div *ngIf="(youth?.experiences?.length || 0) > 0; else noExperience">
       <div *ngFor="let experience of youth?.experiences; let i = index" 
            class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-        <p><strong>Experience {{ i + 1 }}:</strong></p>
-        <p><strong>Type:</strong> {{ experience?.type }}</p>
-        <p><strong>Employer Name:</strong> {{ experience?.employerName }}</p>
-        <p><strong>Employer Phone:</strong> {{ experience?.employerPhone }}</p>
-        <p><strong>Area:</strong> {{ experience?.area }}</p>
-        <p><strong>Employment Type:</strong> {{ experience?.employmentType }}</p>
-        <p><strong>Job Title:</strong> {{ experience?.jobTitle }}</p>
-        <p><strong>Start Date:</strong> {{ experience?.startDate }}</p>
-        <p><strong>End Date:</strong> {{ experience?.endDate }}</p>
-        <p><strong>Salary:</strong> {{ experience?.salary }}</p>
-        <p><strong>Main Tasks:</strong> {{ experience?.mainTasks }}</p>
+        <p class="space-y-2"><strong>Experience  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ i + 1 }} </span>:  </strong></p>
+        <p class="space-y-2"><strong>Type:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.type }} </span></p>
+        <p class="space-y-2"><strong>Employer Name:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.employerName }} </span></p>
+        <p class="space-y-2"><strong>Employer Phone:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.employerPhone }} </span></p>
+        <p class="space-y-2"><strong>Area:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.area }} </span></p>
+        <p class="space-y-2"><strong>Employment Type:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.employmentType }} </span></p>
+        <p class="space-y-2"><strong>Job Title:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.jobTitle }} </span></p>
+        <p class="space-y-2"><strong>Start Date:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.startDate }} </span></p>
+        <p class="space-y-2"><strong>End Date:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.endDate }} </span></p>
+        <p class="space-y-2"><strong>Salary:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.salary }} </span></p>
+        <p class="space-y-2"><strong>Main Tasks:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ experience?.mainTasks }} </span></p>
       </div>
     </div>
 
@@ -169,12 +171,12 @@
     <div *ngIf="(youth?.trainings?.length || 0) > 0; else noExperience">
       <div *ngFor="let training of youth?.trainings; let i = index" 
            class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
-        <p><strong>Training {{ i + 1 }}:</strong></p>
-        <p><strong>Institution:</strong> {{ training?.institution }}</p>
-        <p><strong>Certificate:</strong> {{ training?.certificate }}</p>
-        <p><strong>Area:</strong> {{ training?.area }}</p>
-        <p><strong>Duration From:</strong> {{ training?.durationFrom }}</p>
-        <p><strong>Duration To:</strong> {{ training?.durationTo }}</p>
+        <p class="space-y-2"><strong>Training  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ i + 1 }} </span>:  </strong></p>
+        <p class="space-y-2"><strong>Institution:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ training?.institution }} </span></p>
+        <p class="space-y-2"><strong>Certificate:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ training?.certificate }} </span></p>
+        <p class="space-y-2"><strong>Area:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ training?.area }} </span></p>
+        <p class="space-y-2"><strong>Duration From:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ training?.durationFrom }} </span></p>
+        <p class="space-y-2"><strong>Duration To:  </strong>  <span class="text-lg font-semibold text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900"> {{ training?.durationTo }} </span></p>
       </div>
     </div>
 
@@ -198,8 +200,8 @@
 
               <div class="grid grid-cols-2 gap-6 mt-4">
                 <!-- CV -->
-                <p>
-                  <strong>CV:</strong>
+                <p class="space-y-2">
+                  <strong>CV:  </strong>
                   <span>
                     <a href="javascript:void(0)" (click)="openPdfModal('CV-Example.pdf')" class="text-blue-600 hover:underline">
                       CV-Example.pdf
@@ -208,8 +210,8 @@
                 </p>
               
                 <!-- Cover Letter -->
-                <p>
-                  <strong>Cover Letter:</strong>
+                <p class="space-y-2">
+                  <strong>Cover Letter:  </strong>
                   <span>
                     <a href="javascript:void(0)" (click)="openPdfModal('Cover-Letter-example.pdf')" class="text-blue-600 hover:underline">
                       Cover-Letter-example.pdf
@@ -218,8 +220,8 @@
                 </p>
               
                 <!-- Identity Card -->
-                <p>
-                  <strong>Identity Card:</strong>
+                <p class="space-y-2">
+                  <strong>Identity Card:  </strong>
                   <span>
                     <a href="javascript:void(0)" (click)="openPdfModal('Identity-Example.pdf')" class="text-blue-600 hover:underline">
                       Identity-Example.pdf
@@ -228,8 +230,8 @@
                 </p>
               
                 <!-- Registration Card -->
-                <p>
-                  <strong>Registration Card:</strong>
+                <p class="space-y-2">
+                  <strong>Registration Card:  </strong>
                   <span>
                     <a href="javascript:void(0)" (click)="openPdfModal('Registration-Card-Example.pdf')" class="text-blue-600 hover:underline">
                       Registration-Card-Example.pdf
@@ -238,8 +240,8 @@
                 </p>
               
                 <!-- Degree -->
-                <p>
-                  <strong>Degree:</strong>
+                <p class="space-y-2">
+                  <strong>Degree:  </strong>
                   <span >
                     <a href="javascript:void(0)" (click)="openPdfModal('Degree-Example.pdf')" class="text-blue-600 hover:underline">
                       Degree-Example.pdf
@@ -248,8 +250,8 @@
                 </p>
               
                 <!-- PRCS Proof -->
-                <p>
-                  <strong>PRCS Proof:</strong>
+                <p class="space-y-2">
+                  <strong>PRCS Proof:  </strong>
                   <span >
                     <a href="javascript:void(0)" (click)="openPdfModal('PRCS-Example.pdf')" class="text-blue-600 hover:underline">
                       PRCS-Example.pdf
@@ -258,8 +260,8 @@
                 </p>
               
                 <!-- Fire Brigades Proof -->
-                <p>
-                  <strong>Fire Brigades Proof:</strong>
+                <p class="space-y-2">
+                  <strong>Fire Brigades Proof:  </strong>
                   <span >
                     <a href="javascript:void(0)" (click)="openPdfModal('Fire-Brigades-Example.pdf')" class="text-blue-600 hover:underline">
                       Fire-Brigades-Example.pdf
@@ -268,8 +270,8 @@
                 </p>
               
                 <!-- Al-Shifaa Proof -->
-                <p>
-                  <strong>Al-Shifaa Proof:</strong>
+                <p class="space-y-2">
+                  <strong>Al-Shifaa Proof:  </strong>
                   <span >
                     <a href="javascript:void(0)" (click)="openPdfModal('Alshifaa-example.pdf')" class="text-blue-600 hover:underline">
                       Alshifaa-example.pdf
