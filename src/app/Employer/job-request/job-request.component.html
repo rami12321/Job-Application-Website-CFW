@@ -1,0 +1,118 @@
+<!-- job-request.component.html -->
+<div class="responsive-container">
+    <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+      <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+        Job Request Details
+      </h3>
+      <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <div class="grid grid-cols-2 gap-6 mt-4">
+          <!-- Job Title -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
+            <span *ngIf="!isEditing['jobTitle']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.title }}
+            </span>
+            <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+          </p>
+  
+          <!-- Number of Employees -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
+            <span *ngIf="!isEditing['numEmployees']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.numEmployees }}
+            </span>
+            <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="number" />
+          </p>
+  
+          <!-- Job Level -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
+            <span *ngIf="!isEditing['level']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.level }}
+            </span>
+            <select *ngIf="isEditing['level']" [(ngModel)]="editModels['level']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-30">
+              <option value="junior">Junior</option>
+              <option value="mid">Mid-Level</option>
+              <option value="senior">Senior</option>
+            </select>
+          </p>
+  
+          <!-- Location -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
+            <span *ngIf="!isEditing['location']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.location }}
+            </span>
+            <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+          </p>
+  
+          <!-- Type of Job -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
+            <span *ngIf="!isEditing['typeOfJob']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.typeOfJob }}
+            </span>
+            <select *ngIf="isEditing['typeOfJob']" [(ngModel)]="editModels['typeOfJob']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-30">
+              <option value="Full-Time">Full-Time</option>
+              <option value="Part-Time">Part-Time</option>
+              <option value="Contract">Contract</option>
+              <option value="Temporary">Temporary</option>
+            </select>
+          </p>
+  
+          <!-- Supervisor Name -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
+            <span *ngIf="!isEditing['supervisorName']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorName }}
+            </span>
+            <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+          </p>
+  
+          <!-- Supervisor Position -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
+            <span *ngIf="!isEditing['supervisorPosition']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorPosition }}
+            </span>
+            <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+          </p>
+  
+          <!-- Supervisor Email -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
+            <span *ngIf="!isEditing['supervisorEmail']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorEmail }}
+            </span>
+            <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="email" />
+          </p>
+  
+          <!-- Supervisor Phone -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
+            <span *ngIf="!isEditing['supervisorPhone']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorPhone }}
+            </span>
+            <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="tel" />
+          </p>
+          
+        </div>
+  
+        <!-- Edit / Save / Cancel Buttons -->
+        <div class="flex justify-end mt-4">
+          <button *ngIf="!isEditing['details']" (click)="startEditing()" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+            Edit
+          </button>
+          <div *ngIf="isEditing['details']">
+            <button (click)="saveChanges()" class="px-4 py-2 bg-green-500 text-white rounded-md shadow hover:bg-green-600 mr-2">
+              Save
+            </button>
+            <button (click)="cancelEditing()" class="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-red-600">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
