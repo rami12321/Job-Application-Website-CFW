@@ -157,274 +157,157 @@
   "jobCategories": [
     {
       "categories": {
-        "X-ray Imaging": [
-          "X-ray Technician",
-          "Radiology Assistant"
-        ],
-        "Women's Sewing": [
-          "Tailor",
-          "Sewing Machine Operator"
-        ],
-        "Welding and Aluminum Manufacturing": [
-          "Welding Technician",
-          "Aluminum Fabricator"
-        ],
-        "Web Development": [
-          "Frontend Developer",
-          "Backend Developer",
-          "Full-stack Developer"
-        ],
-        "Translation": [
-          "Translator",
-          "Interpreter",
-          "Localization Specialist"
-        ],
-        "Tourism and Travel": [
-          "Travel Agent",
-          "Tour Guide",
-          "Tourism Manager"
-        ],
-        "Theater Arts": [
-          "Actor",
-          "Director",
-          "Stage Manager"
-        ],
-        "Fine Arts": [
-          "Painter",
-          "Sculptor",
-          "Art Curator"
-        ],
-        "Teaching Diploma": [
-          "Elementary Teacher",
-          "Secondary School Teacher",
-          "Special Education Teacher"
-        ],
-        "Systems and Networks": [
-          "Network Administrator",
-          "Systems Engineer",
-          "IT Support Specialist"
-        ],
-        "Surveying": [
-          "Surveyor",
-          "Land Survey Technician"
-        ],
-        "Statistics": [
-          "Statistician",
-          "Data Analyst"
-        ],
-        "Speech Therapy": [
-          "Speech Therapist",
-          "Speech Pathologist"
-        ],
-        "Specialized Education Diploma": [
-          "Special Education Teacher",
-          "Learning Support Assistant"
-        ],
-        "Specialized Education": [
-          "Special Education Teacher",
-          "Therapist for Special Needs"
-        ],
-        "Solar Energy Installation, Air Conditioning, and Refrigeration": [
-          "Solar Panel Installer",
-          "Air Conditioning Technician",
-          "Refrigeration Technician"
-        ],
-        "Social Work": [
-          "Social Worker",
-          "Counselor",
-          "Community Support Worker"
-        ],
-        "Social Activation": [
-          "Social Activist",
-          "Community Outreach Worker"
-        ],
-        "Social Work Activation": [
-          "Social Welfare Officer",
-          "Community Organizer"
-        ],
-        "Secretarial Studies": [
-          "Secretary",
-          "Administrative Assistant"
-        ],
-        "Sociology": [
-          "Sociologist",
+        "Business": [
+          "Accountant",
+          "Accountant Assistant",
+          "Admin Assistant",
+          "Administrative Support Officer",
+          "Assistant Veteranian",
+          "Communication Assistant",
+          "Customer service Employee",
+          "Data Entry Clerk",
+          "Data Management Officer",
+          "Enumerator & Community Engagement Officer",
+          "Finance Officer",
+          "HR Assistant",
+          "HR Officer",
+          "MIS Officer",
+          "Office Equipment & Computer Maintenance Technician",
+          "Procurement Assistant",
+          "Procurement Officer",
+          "Public Relation Assistant",
+          "Public Relation Officer",
           "Researcher",
-          "Policy Analyst"
+          "Sales Assistant",
+          "Sales Officer",
+          "Fundraising Assistant",
+          "Grants Assistant",
+          "Community Liaison Assistant",
+          "Field Inspection Assistant",
+          "Finance Assistant",
+          "Monitoring Officer",
+          "Project Assistant ",
+          "Property Inspection Assistant "
         ],
-        "Sales and Business Relations": [
-          "Sales Manager",
-          "Business Development Executive",
-          "Client Relations Manager"
+        "Cars & Motors Electrican": [
+          "Auto Electrician",
+          "Auto Mechanic",
+          "Diesel Mechanic"
         ],
-        "Restaurant Assistant": [
-          "Waiter",
-          "Kitchen Assistant",
-          "Restaurant Host"
+        "Construction": [
+          "Interior Architect",
+          "Interior Designer"
         ],
-        "Restaurant Service Assistant": [
-          "Server",
-          "Busser",
-          "Hostess"
-        ],
-        "Religion Studies": [
-          "Theology Professor",
-          "Religious Studies Scholar"
-        ],
-        "Radio and Television": [
-          "Radio Presenter",
-          "Television Host",
-          "Broadcast Technician"
-        ],
-        "Radio and Television Repair": [
-          "Radio Technician",
-          "Television Repair Technician"
-        ],
-        "Public Relations and Organizational Communication": [
-          "Public Relations Specialist",
-          "Corporate Communications Manager"
-        ],
-        "Public Health": [
-          "Public Health Officer",
-          "Health Educator",
-          "Epidemiologist"
-        ],
-        "Psychology": [
-          "Psychologist",
-          "Psychiatrist",
-          "Counselor"
-        ],
-        "Production Mechanics": [
-          "Production Mechanic",
-          "Manufacturing Technician"
-        ],
-        "Graphic Printing and Production": [
+        "Crafts": [
+          "Barber",
+          "Blacksmith",
+          "Carpenter",
+          "Chef Assistant ",
+          "Electronics Technician",
+          "Fashion Designer",
+          "Fitness Trainer",
+          "General CCTV Electrician",
+          "General Electrician",
           "Graphic Designer",
-          "Print Production Specialist"
-        ],
-        "Political Science": [
-          "Political Analyst",
-          "Public Policy Expert"
-        ],
-        "Physical Therapy": [
-          "Physical Therapist",
-          "Rehabilitation Specialist"
-        ],
-        "Physics": [
-          "Physicist",
-          "Researcher",
-          "Laboratory Technician"
-        ],
-        "Physical Education": [
-          "Physical Education Teacher",
+          "Hair dresser",
+          "HVAC & refrigerator Technician",
+          "Lathe Technician",
+          "Manicure & Pedicure Technician",
+          "Plumbing technician",
+          "Sheet Metal Fabricator",
+          "Solar Technician",
           "Sports Coach",
-          "Fitness Trainer"
+          "Sustainable Farming Technician",
+          "Tailor",
+          "Welder"
         ],
-        "Photography": [
-          "Photographer",
-          "Photography Assistant"
+        "Digital": [
+          "IT Officer",
+          "IT Technician",
+          "Mobile Developer",
+          "Web Developer"
         ],
-        "Philosophy": [
-          "Philosophy Professor",
-          "Ethics Consultant"
+        "Education": [
+          "Arabic Teacher",
+          "Biochemist",
+          "Chemistry Teacher",
+          "Early Childhood Teacher",
+          "English Teacher",
+          "French Teacher",
+          "Mathematic Teacher",
+          "Religion Teacher",
+          "Science Teacher",
+          "Socials Teacher",
+          "Special Education Assistant",
+          "Special Education Provider",
+          "shadow teacher"
         ],
-        "Pharmacy Assistant": [
-          "Pharmacy Technician",
-          "Pharmaceutical Sales Representative"
+        "Engineering": [
+          "Agriculture Scientist",
+          "Architect Assistant",
+          "Architecture Engineer",
+          "Assistant Civil Engineer",
+          "Assistant Floor Supervisor",
+          "Assistant Mechanical Engineer",
+          "Biomedical Engineer",
+          "Civil Engineer",
+          "CNC Engineer",
+          "Communication Engineer",
+          "Electric Engineer",
+          "Electromechanical Engineer",
+          "Electronics Engineer",
+          "Industrial Engineer",
+          "Mechanical Engineer"
         ],
-        "Pharmacy": [
-          "Pharmacist",
-          "Clinical Pharmacist"
-        ],
-        "Performing Arts": [
-          "Dancer",
-          "Choreographer",
-          "Performing Arts Teacher"
-        ],
-        "Pastry Chef": [
-          "Baker",
-          "Pastry Sous-Chef",
-          "Confectioner"
-        ],
-        "Office Equipment and Computer Maintenance": [
-          "Computer Technician",
-          "Office Equipment Repair Technician"
-        ],
-        "Occupational Therapy": [
-          "Occupational Therapist",
-          "Therapist Assistant"
-        ],
-        "Nursing Care": [
+        "Health": [
+          "Dental Assistant",
+          "Dentist Assistant",
+          "Food Safety Tehnical Assistant",
+          "Food Scientist",
+          "Medical Lab Analyst",
+          "Medical Lab Technichian",
           "Nurse",
-          "Nurse Practitioner",
-          "Nursing Assistant"
+          "Nurse Assistant",
+          "Nutritionist",
+          "Occupational Therapist",
+          "Paramedic",
+          "Pharmacist Assistant",
+          "Pharmacy Assistant",
+          "Phsycologist Assistant",
+          "Physiotherapist",
+          "Physiotherapy assistant",
+          "Labaratory Scientist",
+          "Radiology Technician ",
+          "Speech Therapisat",
+          "X-ray technician",
+          "Environmental health officer"
         ],
-        "Child Care": [
-          "Childcare Worker",
-          "Nanny",
-          "Daycare Manager"
+        "Industrial": [
+          "Industrial Electricity Technician",
+          "Industrial Mechanics",
+          "Machining & Industrial Mechanics Technician"
         ],
-        "Music": [
-          "Musician",
-          "Music Teacher",
-          "Composer"
-        ],
-        "Medical Laboratory Sciences": [
-          "Medical Laboratory Technician",
-          "Lab Technologist"
-        ],
-        "Dental Laboratory Sciences": [
-          "Dental Lab Technician",
-          "Orthodontic Assistant"
-        ],
-        "Medical Equipment Maintenance": [
-          "Medical Equipment Technician",
-          "Biomedical Engineer"
-        ],
-        "Mechanics Maintenance": [
-          "Automobile Mechanic",
-          "Heavy Equipment Mechanic"
-        ],
-        "Mechanical Engineering": [
-          "Mechanical Engineer",
-          "Design Engineer"
-        ],
-        "Mathematics": [
-          "Mathematician",
-          "Math Teacher"
-        ],
-        "Mass Communication": [
+        "Media": [
+          "Arts Animator",
+          "Assistant news editor",
+          "Communication & Digital Media Officer",
+          "Digital Marketing Assistant",
           "Journalist",
-          "Media Specialist"
+          "Marketing Officer",
+          "Photo-Videographer",
+          "Studio Operator Assistant"
         ],
-        "Marketing": [
-          "Marketing Manager",
-          "Digital Marketing Specialist"
+        "Services": [
+          "Legal Volunteer",
+          "Translator"
         ],
-        "Management Information Systems": [
-          "IT Manager",
-          "Business Analyst"
-        ],
-        "Management and Organization": [
-          "Project Manager",
-          "Operations Manager"
-        ],
-        "Business Management": [
-          "Business Analyst",
-          "Corporate Strategist"
-        ],
-        "Mechanic of Equipment": [
-          "Equipment Mechanic",
-          "Machine Maintenance Technician"
-        ],
-        "Electrical Machines": [
-          "Electrical Engineer",
-          "Machine Maintenance Technician"
+        "Social": [
+          "PSS Animator",
+          "Social Worker"
         ]
       }
     }
-
   ]
-
 
 
   }
