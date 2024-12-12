@@ -67,7 +67,7 @@ export class MainYouthComponent implements OnInit {
   }
 
 
-  
+
   applyForJob() {
     if (this.selectedCategory && this.selectedSubcategory) {
       console.log(
