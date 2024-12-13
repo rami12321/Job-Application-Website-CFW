@@ -217,6 +217,15 @@
               <i class="pi pi-clock"></i>
             </button>
             <button
+          *ngIf="action === 'assign'"
+          type="button"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          (click)="showNoteDialog(product)"
+        >
+          <i class="pi pi-user-plus"></i>
+        </button>
+
+            <button
               *ngIf="action === 'notes'"
               type="button"
               class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-yellow-600"

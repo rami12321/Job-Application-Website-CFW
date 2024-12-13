@@ -23,7 +23,7 @@ export class MainEmployerComponent {
   jobRequested: boolean = false;
   subcategories: string[] = []; // Store selected subcategories
   allCategories: Record<string, string[]> = {}; // Store full category data
- 
+  userId=localStorage.getItem("userId")|| ""
 
   columns: { key: keyof Job, label: string }[] = [
     { key: 'title', label: 'Job Title' },
@@ -31,7 +31,7 @@ export class MainEmployerComponent {
     { key: 'typeOfJob', label: 'Type' },
     { key: 'supervisorName', label: 'Supervisor' }
   ];
-  
+
   jobs: Job[] = [];
   paginatedData: Job[] = [];
   searchQuery: string = '';
@@ -44,6 +44,7 @@ isLoading = true;
 errorMessage: string | null = null;
   jobDetails: Job = {
     id: '', // Optional
+    employerId:this.userId,
     title: '',
     numEmployees: 0,
     level: '',
@@ -53,6 +54,7 @@ errorMessage: string | null = null;
     supervisorPosition: '',
     supervisorEmail: '',
     supervisorPhone: '',
+    status:'waiting-E',
   };
 
   constructor(
@@ -139,7 +141,7 @@ errorMessage: string | null = null;
     }
     this.sortDirection = this.sortKey === key && this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortKey = key;
-  
+
     const sortedJobs = [...this.jobs].sort((a, b) => {
       const keyA = key as keyof Job;
       const valueA = a[keyA]?.toString().toLowerCase() || '';
@@ -233,6 +235,7 @@ errorMessage: string | null = null;
     this.subcategories = [];
     this.jobDetails = {
       id: '',
+      employerId:this.userId,
       title: '',
       numEmployees: 0,
       level: '',
@@ -242,6 +245,8 @@ errorMessage: string | null = null;
       supervisorPosition: '',
       supervisorEmail: '',
       supervisorPhone: '',
+      status: '',
+
     };
   }
 }

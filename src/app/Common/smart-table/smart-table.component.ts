@@ -14,6 +14,7 @@ import { LookupService } from '../../Services/LookUpService/lookup.service';
 import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyouth.component';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { DetailsEmployerComponent } from '../../Employer/Details-Employer/details-employer.component';
+import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 interface Column {
   field: string;
   header: string;
@@ -97,6 +98,7 @@ export class SmartTableComponent implements OnInit {
   constructor(
     private youthService: YouthServiceService,
     private employerService: EmployerService,
+    private JobRequestService: JobRequestService,
     private lookupService: LookupService
   ) {}
 
@@ -106,7 +108,9 @@ export class SmartTableComponent implements OnInit {
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else {
+    } else if(this.fetchedData == 'job-request') {
+      this.fetchJobRequests();
+    }else{
       this.fetchYouthData();
     }
     this.lookupService.getLookupData().subscribe(
@@ -134,7 +138,9 @@ export class SmartTableComponent implements OnInit {
     localStorage.removeItem('selectedColumns');
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else {
+    } else if(this.fetchedData=='job-request') {
+      this.fetchJobRequests();
+    }else{
       this.fetchYouthData();
     }
   }
@@ -302,6 +308,82 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  fetchJobRequests(): void {
+    this.JobRequestService.getAllJobs().subscribe(
+      (data: any[]) => {
+        console.log('Fetched Employer Data:', data);
+
+        // Step 1: Filter by `status` if provided
+        let filteredData = this.status
+          ? data.filter((item) => item.status === this.status)
+          : data;
+
+        // Step 2: Apply filters for gender, major, and area
+        filteredData = filteredData.filter((item) => {
+          const matchesGender =
+            this.selectedGender.length === 0 ||
+            this.selectedGender.includes(item.gender);
+          const matchesMajor =
+            this.selectedMajors.length === 0 ||
+            this.selectedMajors.includes(item.major);
+          const matchesArea =
+            this.selectedAreas.length === 0 ||
+            this.selectedAreas.includes(item.area.name);
+          const matchesEducationLevels =
+            this.selectedEducationLevels.length === 0 ||
+            this.selectedEducationLevels.includes(item.educationLevels);
+          const matchesNationalityOptions =
+            this.selectedNationalities.length === 0 ||
+            this.selectedNationalities.includes(item.nationalityOptions);
+
+          return (
+            matchesGender &&
+            matchesMajor &&
+            matchesArea &&
+            matchesEducationLevels &&
+            matchesNationalityOptions
+          );
+        });
+
+        // Step 3: Configure columns dynamically if filtered data is available
+        if (filteredData.length > 0) {
+          // Exclude unwanted columns
+          const filteredColumns = Object.keys(filteredData[0]).filter(
+            (key) => !this.excludedColumns.includes(key)
+          );
+
+          // Map filtered columns to the format expected by PrimeNG
+          this.cols = filteredColumns.map((key) => ({
+            field: key,
+            header: this.capitalize(key),
+          }));
+          const savedColumns = localStorage.getItem('selectedColumns');
+          if (savedColumns) {
+            this._selectedColumns = JSON.parse(savedColumns);
+            this.cols = [...this._selectedColumns]; // Synchronize `cols`
+          } else {
+            // Default to all columns if no saved state
+            this._selectedColumns = this.cols;
+            this.cols = [...this._selectedColumns];
+          }
+
+          // Initialize _selectedColumns with all columns except "Action"
+          if (this.savedColumns) {
+            this.savedColumns = this.cols;
+          } else {
+            this._selectedColumns = this.cols;
+          }
+        }
+
+        // Step 4: Update youth list and paginated products
+        this.employerList = filteredData;
+        this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
+      },
+      (error) => {
+        console.error('Error fetching youth data:', error);
+      }
+    );
+  }
   onColumnChange(selectedColumns: Column[]): void {
     this.selectedColumns = selectedColumns;
   }
@@ -332,6 +414,8 @@ export class SmartTableComponent implements OnInit {
         return ['view', 'accept', 'reject', 'notes'];
       case 'waiting':
         return ['view', 'accept', 'reject', 'pend'];
+      case 'waiting-E':
+        return ['view', 'assign', 'reject'];
       default:
         return ['view', 'delete'];
     }
@@ -436,5 +520,16 @@ export class SmartTableComponent implements OnInit {
   displayNoteDialog(youth: any): void {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
+  }
+  assignYouthToJob(jobId: string, youthId: string) {
+    this.youthService.assignYouthToJob(jobId, youthId).subscribe({
+      next: (response) => {
+        console.log('Youth assigned successfully:', response);
+        alert(`Youth with ID ${youthId} has been assigned to job ${jobId}.`);
+      },
+      error: (err) => {
+        console.error('Error assigning youth:', err);
+      },
+    });
   }
 }

@@ -1,6 +1,7 @@
 export interface Job {
 
   id?: string;
+  employerId:string;
   title: string;
   numEmployees: number;
   level: string;
@@ -10,4 +11,5 @@ export interface Job {
   supervisorPosition: string;
   supervisorEmail: string;
   supervisorPhone: string;
+  status:string;
 }

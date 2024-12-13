@@ -78,4 +78,8 @@ export class YouthServiceService {
   getAppliedJobById(id: number): Observable<{ appliedJob: any }> {
     return this.http.get<{ appliedJob: string }>(`${this.apiUrl}/${id}/appliedJob`);
   }
+  assignYouthToJob(jobId: string, youthId: string): Observable<any> {
+    const url = `${this.apiUrl}/${jobId}/${youthId}`;
+    return this.http.post(url, {});
+  }
 }
