@@ -1,19 +1,16 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Job } from '../../Model/JobDetails';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { ActivatedRoute } from '@angular/router';
-import SignaturePad from 'signature_pad';
 
 @Component({
-  selector: 'app-job-request',
+  selector: 'app-job-request-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './job-request.component.html',
-  styleUrls: ['./job-request.component.css']
+  imports: [],
+  templateUrl: './job-request-details.component.html',
+  styleUrl: './job-request-details.component.css'
 })
-export class JobRequestComponent implements OnInit {
+export class JobRequestDetailsComponent {
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
   isEditing: { [key: string]: boolean } = {};
@@ -24,8 +21,6 @@ export class JobRequestComponent implements OnInit {
   isSignatureModalOpen = false;
   isEditingSignature = false;
 
-  @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
-  signaturePad!: SignaturePad;
 
   constructor(
     private jobRequestService: JobRequestService,
@@ -43,9 +38,16 @@ export class JobRequestComponent implements OnInit {
       }
     });
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['jobId'] && this.jobId) {
+      this.fetchJobRequestDetails();
+    }
+  }
   fetchJobRequestDetails(): void {
-    this.jobRequestService.getJobById(this.jobId!).subscribe({
+    if (!this.jobId) return;
+    
+
+    this.jobRequestService.getJobById(this.jobId).subscribe({
       next: (data: Job) => {
         this.jobRequest = data;
       },
@@ -90,45 +92,5 @@ export class JobRequestComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
-  }
-
-  openSignaturePad(isEditing: boolean = false): void {
-    this.isEditingSignature = isEditing;
-    this.isSignatureModalOpen = true;
-
-    setTimeout(() => {
-      this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
-      if (isEditing && this.signatureImage) {
-        const img = new Image();
-        img.src = this.signatureImage;
-        img.onload = () => {
-          const canvas = this.signaturePadElement.nativeElement;
-          const context = canvas.getContext('2d');
-          context?.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-      }
-    });
-  }
-
-  saveSignature(): void {
-    if (!this.signaturePad.isEmpty()) {
-      this.signatureImage = this.signaturePad.toDataURL();
-      this.closeSignaturePad();
-    } else {
-      alert('Please provide a signature.');
-    }
-  }
-
-  clearSignature(): void {
-    this.signaturePad.clear();
-  }
-
-  closeSignaturePad(): void {
-    this.isSignatureModalOpen = false;
-    this.isEditingSignature = false;
-  }
-
-  deleteSignature(): void {
-    this.signatureImage = null;
   }
 }
