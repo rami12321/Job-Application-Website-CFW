@@ -9,8 +9,8 @@ import { MainYouthComponent } from './Youth/Main-Youth/Main-Youth.component';
 import { DetailsEmployerComponent } from './Employer/Details-Employer/details-employer.component';
 import { YouthprofileComponent } from '../app/Youth/youthprofile/youthprofile.component';
 import { EmployerprofileComponent } from './Employer/employerprofile/employerprofile.component';
-import { JobRequestComponent } from './Employer/job-request/job-request.component';
-import { JobRequestTableComponent } from './Employer/job-request-table/job-request-table.component';
+import { JobRequestComponent } from './Employer/JobRequestEdit/job-request.component';
+import { JobRequestDetailsComponent } from './Employer/JobRequestDetails/job-request-details.component';
 
 export const routes: Routes = [
   {
@@ -30,13 +30,18 @@ export const routes: Routes = [
     component: MainAdminComponent
   },
   {
-    path:'job-request-table',
-    component: JobRequestTableComponent
+    path: 'job-request-details/:id',
+    component: JobRequestDetailsComponent,
+  },
+  {
+    path: 'job-request-details',
+    component: JobRequestDetailsComponent,
   },
   {
     path: 'main-employer',
     component: MainEmployerComponent,
   },
+  
   {
     path: 'main-youth',
     component: MainYouthComponent,

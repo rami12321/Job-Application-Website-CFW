@@ -8,11 +8,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { Job } from '../../Model/JobDetails';
+import { JobRequestDetailsComponent } from "../JobRequestDetails/job-request-details.component";
+import { JobRequestComponent } from "../JobRequestEdit/job-request.component";
 
 @Component({
   selector: 'app-main-employer',
   standalone: true,
-  imports: [CommonModule, DialogModule, MultiSelectModule, DropdownModule, PaginatorModule, ButtonModule],
+  imports: [CommonModule, DialogModule, MultiSelectModule, DropdownModule, PaginatorModule, ButtonModule, JobRequestDetailsComponent, JobRequestComponent],
   templateUrl: './main-employer.component.html',
   styleUrls: ['./main-employer.component.css']
 })
@@ -23,13 +25,19 @@ export class MainEmployerComponent {
   jobRequested: boolean = false;
   subcategories: string[] = []; // Store selected subcategories
   allCategories: Record<string, string[]> = {}; // Store full category data
-  userId=localStorage.getItem("userId")|| ""
+  isDeleteModalOpen = false;
+  selectedJobTitle: string | null = null;
 
   columns: { key: keyof Job, label: string }[] = [
+    { key: 'id', label: 'ID' },
+
     { key: 'title', label: 'Job Title' },
-    { key: 'location', label: 'Location' },
     { key: 'typeOfJob', label: 'Type' },
-    { key: 'supervisorName', label: 'Supervisor' }
+    { key: 'level', label: 'Level' },
+    { key: 'location', label: 'Location' },
+    { key: 'numEmployees', label: 'Number Requested' },
+
+
   ];
 
   jobs: Job[] = [];
@@ -41,6 +49,11 @@ export class MainEmployerComponent {
   sortKey: string = '';
 sortDirection: 'asc' | 'desc' = 'asc';
 isLoading = true;
+selectedJobId: string | null = null;
+isModalOpen: boolean = false; // Modal visibility
+isEditModalOpen: boolean = false; // Modal visibility
+
+selectedJob: Job | null = null;
 errorMessage: string | null = null;
   jobDetails: Job = {
     id: '', // Optional
@@ -81,8 +94,28 @@ errorMessage: string | null = null;
         console.error('Failed to fetch categories:', err);
       }
     });
+    this.sortKey = 'id'; // Default sorting key
+    this.sortDirection = 'desc';
     this.fetchJobTableData();
   }
+  openEditModal(jobId: string): void {
+    this.selectedJobId = jobId;
+    this.isEditModalOpen = true;
+  }
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.selectedJobId = null;
+  }
+  openModal(jobId: string): void {
+    this.selectedJobId = jobId;
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.selectedJobId = null;
+  }
+
   filterTable(): void {
     const filteredJobs = this.jobs.filter((job) =>
       this.columns.some((column) => {
@@ -94,7 +127,33 @@ errorMessage: string | null = null;
     this.currentPage = 1;
     this.updatePaginatedData(filteredJobs);
   }
+  openDeleteModal(job: Job): void {
+    this.selectedJobId = job.id ?? null;
+    this.selectedJobTitle = job.title ?? 'this job';
+    this.isDeleteModalOpen = true;
+  }
 
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.selectedJobId = null;
+    this.selectedJobTitle = null;
+  }
+
+  confirmDelete(): void {
+    if (!this.selectedJobId) return;
+
+    this.jobRequestService.deleteJob(this.selectedJobId).subscribe({
+      next: () => {
+        this.jobs = this.jobs.filter((job) => job.id !== this.selectedJobId);
+        this.updatePaginatedData();
+        this.closeDeleteModal();
+      },
+      error: (err) => {
+        console.error('Error deleting job:', err);
+        this.closeDeleteModal();
+      },
+    });
+  }
   getSortIconPath(key: string): string {
     if (this.sortKey === key) {
       return this.sortDirection === 'asc'
@@ -129,10 +188,6 @@ errorMessage: string | null = null;
     console.log('Editing job with id:', id);
   }
 
-  deleteJob(id: string) {
-    // Handle delete logic here
-    console.log('Deleting job with id:', id);
-  }
 
   sortTable(key: string): void {
     if (!(key in this.jobDetails)) {
@@ -155,13 +210,18 @@ errorMessage: string | null = null;
     this.jobs = sortedJobs;
     this.updatePaginatedData();
   }
-
   fetchJobTableData(): void {
     this.jobRequestService.getAllJobs().subscribe({
       next: (data: Job[]) => {
-        this.jobs = data;
+        // Sort the jobs by ID in descending order (newest to oldest), handling undefined cases
+        this.jobs = data.sort((a, b) => {
+          const idA = a.id ?? ''; // Use an empty string if undefined
+          const idB = b.id ?? ''; // Use an empty string if undefined
+          return idB.localeCompare(idA); // Compare IDs
+        });
+
         this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
-        this.updatePaginatedData();
+        this.updatePaginatedData(); // Update paginated data after sorting
         this.isLoading = false;
       },
       error: (err) => {
@@ -170,8 +230,21 @@ errorMessage: string | null = null;
         this.isLoading = false;
       }
     });
-    this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
-    this.updatePagination();
+  }
+
+
+  deleteJob(id: string): void {
+    this.jobRequestService.deleteJob(id).subscribe({
+      next: () => {
+        this.jobs = this.jobs.filter((job) => job.id !== id);
+        this.updatePaginatedData();
+        this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
+      },
+      error: (err) => {
+        console.error('Error deleting job:', err);
+        this.errorMessage = 'Error deleting job';
+      },
+    });
   }
   nextPage() {
     if (this.currentPage < this.totalPages) {

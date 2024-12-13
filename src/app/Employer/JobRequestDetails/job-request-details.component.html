@@ -1,0 +1,85 @@
+<!-- job-request.component.html -->
+<div class="responsive-container">
+    <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+      <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+        Job Request Details
+      </h3>
+      <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <div class="grid grid-cols-2 gap-6 mt-4">
+          <!-- Job Title -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.title }}
+            </span>
+          </p>
+  
+          <!-- Number of Employees -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.numEmployees }}
+            </span>
+          </p>
+  
+          <!-- Job Level -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.level }}
+            </span>
+          </p>
+  
+          <!-- Location -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.location }}
+            </span>
+          </p>
+  
+          <!-- Type of Job -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.typeOfJob }}
+            </span>
+          </p>
+  
+          <!-- Supervisor Name -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorName }}
+            </span>
+          </p>
+  
+          <!-- Supervisor Position -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorPosition }}
+            </span>
+          </p>
+  
+          
+          <!-- Supervisor Email -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorEmail }}
+            </span>
+          </p>
+  
+          <!-- Supervisor Phone -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
+            <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.supervisorPhone }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
