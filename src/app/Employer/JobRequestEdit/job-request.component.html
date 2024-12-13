@@ -12,7 +12,7 @@
             <span *ngIf="!isEditing['jobTitle']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.title }}
             </span>
-            <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+            <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="job-detail-input"  type="text" />
           </p>
   
           <!-- Number of Employees -->
@@ -21,7 +21,7 @@
             <span *ngIf="!isEditing['numEmployees']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.numEmployees }}
             </span>
-            <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="number" />
+            <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="job-detail-input"  type="number" />
           </p>
   
           <!-- Job Level -->
@@ -30,7 +30,7 @@
             <span *ngIf="!isEditing['level']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.level }}
             </span>
-            <select *ngIf="isEditing['level']" [(ngModel)]="editModels['level']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-30">
+            <select *ngIf="isEditing['level']" [(ngModel)]="editModels['level']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="junior">Junior</option>
               <option value="mid">Mid-Level</option>
               <option value="senior">Senior</option>
@@ -43,7 +43,7 @@
             <span *ngIf="!isEditing['location']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.location }}
             </span>
-            <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+            <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="job-detail-input"  type="text" />
           </p>
   
           <!-- Type of Job -->
@@ -66,7 +66,7 @@
             <span *ngIf="!isEditing['supervisorName']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.supervisorName }}
             </span>
-            <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+            <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="job-detail-input"  type="text" />
           </p>
   
           <!-- Supervisor Position -->
@@ -75,7 +75,7 @@
             <span *ngIf="!isEditing['supervisorPosition']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.supervisorPosition }}
             </span>
-            <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="text" />
+            <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="job-detail-input"  type="text" />
           </p>
   
           <!-- Supervisor Email -->
@@ -84,7 +84,7 @@
             <span *ngIf="!isEditing['supervisorEmail']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.supervisorEmail }}
             </span>
-            <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="email" />
+            <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="job-detail-input"  type="email" />
           </p>
   
           <!-- Supervisor Phone -->
@@ -93,7 +93,7 @@
             <span *ngIf="!isEditing['supervisorPhone']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
               {{ jobRequest?.supervisorPhone }}
             </span>
-            <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" type="tel" />
+            <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="job-detail-input"  type="tel" />
           </p>
           
         </div>
