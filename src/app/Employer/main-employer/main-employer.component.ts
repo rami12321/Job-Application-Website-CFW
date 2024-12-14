@@ -8,15 +8,24 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { Job } from '../../Model/JobDetails';
-import { JobRequestDetailsComponent } from "../JobRequestDetails/job-request-details.component";
-import { JobRequestComponent } from "../JobRequestEdit/job-request.component";
+import { JobRequestDetailsComponent } from '../JobRequestDetails/job-request-details.component';
+import { JobRequestComponent } from '../JobRequestEdit/job-request.component';
 
 @Component({
   selector: 'app-main-employer',
   standalone: true,
-  imports: [CommonModule, DialogModule, MultiSelectModule, DropdownModule, PaginatorModule, ButtonModule, JobRequestDetailsComponent, JobRequestComponent],
+  imports: [
+    CommonModule,
+    DialogModule,
+    MultiSelectModule,
+    DropdownModule,
+    PaginatorModule,
+    ButtonModule,
+    JobRequestDetailsComponent,
+    JobRequestComponent,
+  ],
   templateUrl: './main-employer.component.html',
-  styleUrls: ['./main-employer.component.css']
+  styleUrls: ['./main-employer.component.css'],
 })
 export class MainEmployerComponent {
   displayDialog: boolean = false;
@@ -27,8 +36,9 @@ export class MainEmployerComponent {
   allCategories: Record<string, string[]> = {}; // Store full category data
   isDeleteModalOpen = false;
   selectedJobTitle: string | null = null;
+  userId = localStorage.getItem('userId') || '';
 
-  columns: { key: keyof Job, label: string }[] = [
+  columns: { key: keyof Job; label: string }[] = [
     { key: 'id', label: 'ID' },
 
     { key: 'title', label: 'Job Title' },
@@ -36,8 +46,6 @@ export class MainEmployerComponent {
     { key: 'level', label: 'Level' },
     { key: 'location', label: 'Location' },
     { key: 'numEmployees', label: 'Number Requested' },
-
-
   ];
 
   jobs: Job[] = [];
@@ -47,17 +55,16 @@ export class MainEmployerComponent {
   itemsPerPage: number = 5;
   totalPages: number = 1;
   sortKey: string = '';
-sortDirection: 'asc' | 'desc' = 'asc';
-isLoading = true;
-selectedJobId: string | null = null;
-isModalOpen: boolean = false; // Modal visibility
-isEditModalOpen: boolean = false; // Modal visibility
-
-selectedJob: Job | null = null;
-errorMessage: string | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
+  isLoading = true;
+  selectedJobId: string | null = null;
+  isModalOpen: boolean = false; // Modal visibility
+  isEditModalOpen: boolean = false; // Modal visibility
+  selectedJob: Job | null = null;
+  errorMessage: string | null = null;
   jobDetails: Job = {
     id: '', // Optional
-    employerId:this.userId,
+    employerId: this.userId,
     title: '',
     numEmployees: 0,
     level: '',
@@ -67,7 +74,7 @@ errorMessage: string | null = null;
     supervisorPosition: '',
     supervisorEmail: '',
     supervisorPhone: '',
-    status:'waiting-E',
+    status: 'waiting-E',
   };
 
   constructor(
@@ -80,9 +87,9 @@ errorMessage: string | null = null;
     this.lookupService.getJobCategories().subscribe({
       next: (data: any) => {
         if (data && data.length > 0 && data[0].categories) {
-          this.mainCategories = Object.keys(data[0].categories).map(key => ({
+          this.mainCategories = Object.keys(data[0].categories).map((key) => ({
             label: key, // Key as label
-            value: key  // Key as value
+            value: key, // Key as value
           }));
           this.allCategories = data[0].categories; // Store full categories data
           console.log('Categories loaded:', this.mainCategories);
@@ -92,7 +99,7 @@ errorMessage: string | null = null;
       },
       error: (err) => {
         console.error('Failed to fetch categories:', err);
-      }
+      },
     });
     this.sortKey = 'id'; // Default sorting key
     this.sortDirection = 'desc';
@@ -120,7 +127,10 @@ errorMessage: string | null = null;
     const filteredJobs = this.jobs.filter((job) =>
       this.columns.some((column) => {
         const key = column.key as keyof Job; // Explicitly cast to keyof Job
-        return job[key]?.toString().toLowerCase().includes(this.searchQuery.toLowerCase());
+        return job[key]
+          ?.toString()
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
       })
     );
     this.totalPages = Math.ceil(filteredJobs.length / this.itemsPerPage);
@@ -188,13 +198,13 @@ errorMessage: string | null = null;
     console.log('Editing job with id:', id);
   }
 
-
   sortTable(key: string): void {
     if (!(key in this.jobDetails)) {
       console.error(`Invalid sorting key: ${key}`);
       return;
     }
-    this.sortDirection = this.sortKey === key && this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.sortDirection =
+      this.sortKey === key && this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortKey = key;
 
     const sortedJobs = [...this.jobs].sort((a, b) => {
@@ -228,10 +238,9 @@ errorMessage: string | null = null;
         console.error('Error fetching job data:', err);
         this.errorMessage = 'Error fetching job data';
         this.isLoading = false;
-      }
+      },
     });
   }
-
 
   deleteJob(id: string): void {
     this.jobRequestService.deleteJob(id).subscribe({
@@ -261,7 +270,10 @@ errorMessage: string | null = null;
   }
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    this.paginatedData = this.jobs.slice(startIndex, startIndex + this.itemsPerPage);
+    this.paginatedData = this.jobs.slice(
+      startIndex,
+      startIndex + this.itemsPerPage
+    );
   }
   openDialog(): void {
     this.displayDialog = true;
@@ -299,7 +311,7 @@ errorMessage: string | null = null;
       },
       error: (err) => {
         console.error('Failed to submit job request:', err);
-      }
+      },
     });
   }
 
@@ -308,7 +320,7 @@ errorMessage: string | null = null;
     this.subcategories = [];
     this.jobDetails = {
       id: '',
-      employerId:this.userId,
+      employerId: this.userId,
       title: '',
       numEmployees: 0,
       level: '',
@@ -319,7 +331,6 @@ errorMessage: string | null = null;
       supervisorEmail: '',
       supervisorPhone: '',
       status: '',
-
     };
   }
 }
