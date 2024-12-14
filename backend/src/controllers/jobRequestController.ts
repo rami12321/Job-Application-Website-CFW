@@ -1,8 +1,8 @@
-// src/controllers/jobRequestController.ts
+
 import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { Youth } from '../models/youth'; // Import Youth model
+import { Youth } from '../models/youth';
 import { Job } from '../models/jobRequest';
 const filePath = path.join(__dirname, '../../../public/assets/data/jobRequests.json');
 
@@ -23,34 +23,54 @@ const writeFile = (data: Job[]): void => {
   }
 };
 
-// Get all jobRequests
 export const getAllJobRequests = (req: Request, res: Response): void => {
   const jobRequests: Job[] = readFile();
   res.status(200).json(jobRequests);
 };
+export const getJobsByEmployerId = (req: Request, res: Response): void => {
+  const employerId = req.query.employerId as string;
 
-//Create New jobRequest
+  if (!employerId) {
+    res.status(400).json({ message: 'Employer ID is required' });
+    return;
+  }
+
+  const jobRequests: Job[] = readFile();
+  const filteredJobs = jobRequests.filter((job) => job.employerId === employerId);
+
+  if (filteredJobs.length === 0) {
+    res.status(404).json({ message: 'No jobs found for this employer' });
+    return
+  }
+
+
+  res.status(200).json(filteredJobs);
+};
+
+
+
+
 export const createJobRequest = (req: Request, res: Response): void => {
   const jobRequests: Job[] = readFile();
 
-  // Create a new job request object excluding `id` from the client
-  const { id, ...jobRequestData } = req.body; // Exclude `id` if it exists in the client's data
+
+  const { id, ...jobRequestData } = req.body;
   const newJobRequest: Job = {
-    ...jobRequestData, // Include all other data from the client
-    id: generateUniqueId(), // Generate a new unique ID server-side
+    ...jobRequestData,
+    id: generateUniqueId(),
   };
 
-  // Push the new job request to the array
+
   jobRequests.push(newJobRequest);
 
-  // Save the updated job requests array back to the file
+
   writeFile(jobRequests);
 
-  // Return the newly created job request
+
   res.status(201).json(newJobRequest);
 };
 
-// Function to generate a unique ID (make sure this matches the client-side ID generation logic)
+
 function generateUniqueId(): string {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const randomLetter = letters[Math.floor(Math.random() * letters.length)];
@@ -74,7 +94,7 @@ export const getJobRequestById = (req: Request, res: Response): void => {
 
 export const updateJobRequest = (req: Request, res: Response): void => {
   const { id } = req.params;
-  const updatedData: Partial<Job> = req.body; // Accept partial updates
+  const updatedData: Partial<Job> = req.body;
   let jobRequests: Job[] = readFile();
   const jobRequestIndex = jobRequests.findIndex((e) => e.id === id);
 
@@ -83,7 +103,7 @@ export const updateJobRequest = (req: Request, res: Response): void => {
     return;
   }
 
-  // Merge the existing employer data with updated data
+
   const updatedJobRequest = { ...jobRequests[jobRequestIndex], ...updatedData };
   jobRequests[jobRequestIndex] = updatedJobRequest;
 
@@ -102,14 +122,14 @@ export const deleteJobRequest = (req: Request, res: Response): void => {
     return;
   }
 
-  const deletedJobRequest = jobRequests.splice(jobRequestIndex, 1); // Remove employer
+  const deletedJobRequest = jobRequests.splice(jobRequestIndex, 1);
   writeFile(jobRequests);
 
   res.status(200).json({ message: `Job Request with ID ${id} deleted successfully.`, deletedJobRequest });
 };
 
 export const assignYouthToJob = (req: Request, res: Response): void => {
-  const { jobId, youthId } = req.params; // Job ID and Youth ID from request params
+  const { jobId, youthId } = req.params;
   let jobRequests: Job[] = readFile();
 
   const jobIndex = jobRequests.findIndex((job) => job.id === jobId);
@@ -118,13 +138,13 @@ export const assignYouthToJob = (req: Request, res: Response): void => {
     return;
   }
 
-  // Ensure the youth ID isn't already assigned
+
   if (jobRequests[jobIndex].assignedYouth.includes(youthId)) {
     res.status(400).json({ message: `Youth with ID ${youthId} is already assigned to this job.` });
     return;
   }
 
-  // Add the youth ID to the assignedYouth array
+
   jobRequests[jobIndex].assignedYouth.push(youthId);
 
   writeFile(jobRequests);

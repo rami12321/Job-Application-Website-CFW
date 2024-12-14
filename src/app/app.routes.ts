@@ -46,6 +46,10 @@ export const routes: Routes = [
     path: 'main-youth',
     component: MainYouthComponent,
   },
+  {
+    path: 'main-youth/:id',
+    component: MainYouthComponent,
+  },
   { path: 'youthprofile/:id', component: YouthprofileComponent },
   { path: 'employerprofile/:id', component: EmployerprofileComponent },
 

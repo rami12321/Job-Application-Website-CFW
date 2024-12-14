@@ -16,6 +16,14 @@ export class JobRequestService {
   getAllJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(this.JobRequestsUrl);
   }
+// Get Jobs by Employer ID
+
+getJobsByEmployerId(employerId: string): Observable<Job[]> {
+  const url = `http://localhost:3000/job-request/by-employer?employerId=${encodeURIComponent(employerId)}`;
+  return this.http.get<Job[]>(url);  // Using Angular's HttpClient
+}
+
+
 
   // Get Job by ID
   getJobById(id: string): Observable<Job> {
