@@ -42,7 +42,13 @@ interface Column {
 export class SmartTableComponent implements OnInit {
   @Input() status: string | undefined;
   @Input() fetchedData: string | undefined;
-
+  youthsNotes: { name: string; notes: string }[] = [];
+  youthDialogVisible = false; // Controls dialog visibility
+  youths: any[] = []; // Stores fetched youths
+  selectedYouths: any[] = []; // Selected youths for assignment
+  selectedEmployer:string='';
+  currentEmployerId:string='';
+  currentJob: string = ''; // Stores the current job being ass
   youthList: any[] = [];
   employerList: any[] = [];
   cols: Column[] = [];
@@ -388,9 +394,7 @@ export class SmartTableComponent implements OnInit {
 
   //youth dialog
   youthDialog:boolean= false;
-  showYouthDialog() {
-    this.youthDialog = true;
-  }
+
 
   updateStatus(id: number, newStatus: string): void {
     this.youthService.updateYouthStatus(id, newStatus).subscribe(
@@ -414,7 +418,7 @@ export class SmartTableComponent implements OnInit {
   visible: boolean = false;
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
-
+  noYouthMessage:string='';
   loadLookupData(): void {
     this.lookupService.getLookupData().subscribe((data) => {
       this.areas = data.areas || [];
@@ -467,17 +471,38 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
-  fetchYouthByJob(job: string[]): void {
-    this.youthService.getYouthByJob(job).subscribe(
-      (response) => {
-        console.log(`Notes for youth with ID ${job}:`, response);
+  fetchYouthByJob(jobs: string[]): void {
+    // Join jobs into a comma-separated string to pass in the URL
+    const jobsQuery = jobs.join(',');
 
-        // You can perform additional operations here, such as displaying the notes in a dialog
-         // If a note exists, store it for display
-        this.youthDialog = true; // Open the dialog to show the note
+    // Call the service to fetch youth based on jobs array
+    this.youthService.getYouthByJob(jobsQuery).subscribe(
+      (response) => {
+        console.log(`Jobs: ${jobs}`, response);
+
+        // Check if response has youths and handle accordingly
+        if (response.youths && response.youths.length > 0) {
+          // If youths are found, process them and display notes
+          this.youthsNotes = response.youths.map((youth: any) => {
+            return {
+              name: youth.name,
+              notes: youth.notes || '' // Default to empty if no notes available
+            };
+          });
+          this.noYouthMessage = ''; // Reset the message if youths are found
+        } else {
+          // If no youths are found, set an error message
+          this.noYouthMessage = "No youth for this job yet.";
+        }
+
+        // Always open the dialog
+        this.noteDialogVisible = true;
       },
       (error) => {
-        console.error('Error fetching notes:', error);
+        console.error('Error fetching youths:', error);
+        // If there was an error, set the error message
+        this.noYouthMessage = "Error fetching youths.";
+        this.noteDialogVisible = true; // Show error message in the dialog
       }
     );
   }
@@ -486,15 +511,40 @@ export class SmartTableComponent implements OnInit {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
-  assignYouthToJob(jobId: string, youthId: string) {
-    this.youthService.assignYouthToJob(jobId, youthId).subscribe({
-      next: (response) => {
-        console.log('Youth assigned successfully:', response);
-        alert(`Youth with ID ${youthId} has been assigned to job ${jobId}.`);
+  showYouthDialog(job: string,selectedEmployer:string): void {
+    this.selectedEmployer=selectedEmployer;
+    this.currentJob = job; // Store the current job being assigned
+    this.youthService.getYouthByJob(job).subscribe({
+      next: (response: any) => {
+        this.youths = response.youths || []; // Populate youths from response
+        this.youthDialogVisible = true; // Open the dialog
       },
-      error: (err) => {
-        console.error('Error assigning youth:', err);
-      },
+      error: (error) => {
+        console.error('Error fetching youths:', error);
+      }
     });
+  }
+  assignYouthsToEmployer(): void {
+    console.log('Employer:', this.selectedEmployer);
+    console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
+
+    // if (!this.currentEmployerId || this.selectedYouths.length === 0) {
+    //   console.error('Employer ID or selected youths are missing.');
+    //   return;
+    // }
+
+    this.selectedYouths.forEach((youth: any) => {
+      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.name}`);
+      this.employerService.assignYouthToEmployer(this.selectedEmployer, youth.id, youth.name).subscribe({
+        next: () => {
+          console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to employer ${this.currentEmployerId}.`);
+        },
+        error: (error) => {
+          console.error(`Error assigning youth ${youth.name} (ID: ${youth.id}):`, error);
+        }
+      });
+    });
+
+    this.youthDialogVisible = false;
   }
 }

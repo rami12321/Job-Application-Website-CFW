@@ -34,10 +34,17 @@ export class EmployerService {
     return this.http.put<Employer>(`${this.employerDbUrl}/${id}`, updatedEmployer, {
     });
   }
-  
+
 
   // Delete an employer by ID
   deleteEmployer(id: string): Observable<any> {
     return this.http.delete(`${this.employerDbUrl}/${id}`);
   }
+  assignYouthToEmployer(employerId: string, youthId: string, name: string): Observable<any> {
+    const url = `${this.employerDbUrl}/${employerId}/assign/${youthId}`;
+    return this.http.post(url, { name }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
 }

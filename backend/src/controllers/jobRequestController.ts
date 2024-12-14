@@ -128,25 +128,4 @@ export const deleteJobRequest = (req: Request, res: Response): void => {
   res.status(200).json({ message: `Job Request with ID ${id} deleted successfully.`, deletedJobRequest });
 };
 
-export const assignYouthToJob = (req: Request, res: Response): void => {
-  const { jobId, youthId } = req.params;
-  let jobRequests: Job[] = readFile();
 
-  const jobIndex = jobRequests.findIndex((job) => job.id === jobId);
-  if (jobIndex === -1) {
-    res.status(404).json({ message: `Job with ID ${jobId} not found.` });
-    return;
-  }
-
-
-  if (jobRequests[jobIndex].assignedYouth.includes(youthId)) {
-    res.status(400).json({ message: `Youth with ID ${youthId} is already assigned to this job.` });
-    return;
-  }
-
-
-  jobRequests[jobIndex].assignedYouth.push(youthId);
-
-  writeFile(jobRequests);
-  res.status(200).json({ message: "Youth assigned successfully.", job: jobRequests[jobIndex] });
-};

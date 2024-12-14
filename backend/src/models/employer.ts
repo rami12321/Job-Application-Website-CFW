@@ -1,5 +1,10 @@
+export interface AssignedYouth {
+  id: string;
+  name: string;
+  status: string;
+}
 export interface Employer {
-  id?: string; 
+  id?: string;
   username: string;
   password: string;
   organization: string;
@@ -10,4 +15,5 @@ export interface Employer {
   email: string;
   area: string;
   signature: string | null;
+  assignedYouths?: AssignedYouth[];
 }

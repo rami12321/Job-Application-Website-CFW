@@ -19,7 +19,7 @@ import {
   getAppliedJobById,
   getYouthByJob,
 } from '../controllers/youthController';
-import { assignYouthToJob } from '../controllers/jobRequestController';
+// import { assignYouthToJob } from '../controllers/jobRequestController';
 
 const router = Router();
 
@@ -53,7 +53,7 @@ router.get('/:id/appliedJob', getAppliedJobById);
 router.get('/appliedJob/:appliedJob', getYouthByJob);
 router.patch('/:id/status', updateYouthStatus);
 router.patch('/:id/jobCategory', updateJob);
-router.post('/jobs/:jobId/:youthId', assignYouthToJob);
+// router.post('/jobs/:jobId/:youthId', assignYouthToJob);
 router.post('/check-registration', checkRegistrationNumber);
 
 export default router;

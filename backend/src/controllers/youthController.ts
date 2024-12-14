@@ -337,12 +337,13 @@ export const getYouthByJob = (req: Request, res: Response): void => {
 
   // If no youths are found for the applied job, return 404 error
   if (filteredYouths.length === 0) {
-    res.status(404).json({ message: `No youths found who applied for job: ${appliedJob}.` });
+    res.status(200).json({ message: `No youths found who applied for job: ${appliedJob}.` });
     return;
   }
 
   // Map and return the matching youths' names and notes
   const result = filteredYouths.map((y) => ({
+    id:y.id,
     name: y.firstNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
     notes: y.notes || [] // Default to empty array if no notes available
   }));
