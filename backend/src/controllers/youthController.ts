@@ -321,3 +321,32 @@ export const getYouthNotesById = (req: Request, res: Response): void => {
   // Return the notes
   res.status(200).json({ notes: youth.notes });
 };
+
+
+export const getYouthByJob = (req: Request, res: Response): void => {
+  // Extract 'appliedJob' from req.params
+  const { appliedJob } = req.params; // Get appliedJob from the URL parameters
+
+  // Read the youth data (example function)
+  const youths: Youth[] = readFile(); // Read the data from file or database
+
+  // Filter youths who have the applied job in their appliedJob array
+  const filteredYouths = youths.filter((y) =>
+    Array.isArray(y.appliedJob) && y.appliedJob.includes(appliedJob)
+  );
+
+  // If no youths are found for the applied job, return 404 error
+  if (filteredYouths.length === 0) {
+    res.status(404).json({ message: `No youths found who applied for job: ${appliedJob}.` });
+    return;
+  }
+
+  // Map and return the matching youths' names and notes
+  const result = filteredYouths.map((y) => ({
+    name: y.firstNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
+    notes: y.notes || [] // Default to empty array if no notes available
+  }));
+
+  // Send the response with the matching youths
+  res.status(200).json({ youths: result });
+};

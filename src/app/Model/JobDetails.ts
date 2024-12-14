@@ -2,7 +2,8 @@ export interface Job {
 
   id?: string;
   employerId:string;
-  title: string;
+  job: string;
+  title?: string;
   numEmployees: number;
   level: string;
   location: string;

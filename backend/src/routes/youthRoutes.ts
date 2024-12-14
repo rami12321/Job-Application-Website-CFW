@@ -17,6 +17,7 @@ import {
   getYouthNotesById,
   updateYouthCamp,
   getAppliedJobById,
+  getYouthByJob,
 } from '../controllers/youthController';
 import { assignYouthToJob } from '../controllers/jobRequestController';
 
@@ -49,6 +50,7 @@ router.delete('/:id', deleteYouth);
 router.patch('/:id/notes', updateYouthNotes);
 router.get('/:id/notes', getYouthNotesById);
 router.get('/:id/appliedJob', getAppliedJobById);
+router.get('/appliedJob/:appliedJob', getYouthByJob);
 router.patch('/:id/status', updateYouthStatus);
 router.patch('/:id/jobCategory', updateJob);
 router.post('/jobs/:jobId/:youthId', assignYouthToJob);

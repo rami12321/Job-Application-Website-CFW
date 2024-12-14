@@ -1,9 +1,9 @@
-import { Youth } from "./youth";
+import { Youth } from './youth';
 export interface Job {
-
   id?: string;
-  employerId:string;
-  title: string;
+  employerId: string;
+  job: string;
+  title?: string;
   numEmployees: number;
   level: string;
   location: string;
@@ -12,6 +12,6 @@ export interface Job {
   supervisorPosition: string;
   supervisorEmail: string;
   supervisorPhone: string;
-  status:string;
+  status: string;
   assignedYouth: string[]; // Array of Youth IDs or references
 }

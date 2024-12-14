@@ -33,7 +33,7 @@ interface Column {
     DialogModule,
     ButtonModule,
     YouthSignupDetailsComponent,
-    DetailsEmployerComponent
+    DetailsEmployerComponent,
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -108,9 +108,9 @@ export class SmartTableComponent implements OnInit {
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else if(this.fetchedData == 'job-request') {
+    } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
-    }else{
+    } else {
       this.fetchYouthData();
     }
     this.lookupService.getLookupData().subscribe(
@@ -138,9 +138,9 @@ export class SmartTableComponent implements OnInit {
     localStorage.removeItem('selectedColumns');
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else if(this.fetchedData=='job-request') {
+    } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
-    }else{
+    } else {
       this.fetchYouthData();
     }
   }
@@ -242,33 +242,6 @@ export class SmartTableComponent implements OnInit {
           ? data.filter((item) => item.status === this.status)
           : data;
 
-        // Step 2: Apply filters for gender, major, and area
-        filteredData = filteredData.filter((item) => {
-          const matchesGender =
-            this.selectedGender.length === 0 ||
-            this.selectedGender.includes(item.gender);
-          const matchesMajor =
-            this.selectedMajors.length === 0 ||
-            this.selectedMajors.includes(item.major);
-          const matchesArea =
-            this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area.name);
-          const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
-          const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
-
-          return (
-            matchesGender &&
-            matchesMajor &&
-            matchesArea &&
-            matchesEducationLevels &&
-            matchesNationalityOptions
-          );
-        });
-
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -317,34 +290,6 @@ export class SmartTableComponent implements OnInit {
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
-
-        // Step 2: Apply filters for gender, major, and area
-        filteredData = filteredData.filter((item) => {
-          const matchesGender =
-            this.selectedGender.length === 0 ||
-            this.selectedGender.includes(item.gender);
-          const matchesMajor =
-            this.selectedMajors.length === 0 ||
-            this.selectedMajors.includes(item.major);
-          const matchesArea =
-            this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area.name);
-          const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
-          const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
-
-          return (
-            matchesGender &&
-            matchesMajor &&
-            matchesArea &&
-            matchesEducationLevels &&
-            matchesNationalityOptions
-          );
-        });
-
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -441,6 +386,12 @@ export class SmartTableComponent implements OnInit {
     this.noteDialogVisible = true;
   }
 
+  //youth dialog
+  youthDialog:boolean= false;
+  showYouthDialog() {
+    this.youthDialog = true;
+  }
+
   updateStatus(id: number, newStatus: string): void {
     this.youthService.updateYouthStatus(id, newStatus).subscribe(
       (response) => {
@@ -510,6 +461,20 @@ export class SmartTableComponent implements OnInit {
         // You can perform additional operations here, such as displaying the notes in a dialog
         this.note = response.notes || ''; // If a note exists, store it for display
         this.noteDialogVisible = true; // Open the dialog to show the note
+      },
+      (error) => {
+        console.error('Error fetching notes:', error);
+      }
+    );
+  }
+  fetchYouthByJob(job: string[]): void {
+    this.youthService.getYouthByJob(job).subscribe(
+      (response) => {
+        console.log(`Notes for youth with ID ${job}:`, response);
+
+        // You can perform additional operations here, such as displaying the notes in a dialog
+         // If a note exists, store it for display
+        this.youthDialog = true; // Open the dialog to show the note
       },
       (error) => {
         console.error('Error fetching notes:', error);

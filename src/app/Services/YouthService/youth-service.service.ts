@@ -78,6 +78,9 @@ export class YouthServiceService {
   getAppliedJobById(id: number): Observable<{ appliedJob: any }> {
     return this.http.get<{ appliedJob: string }>(`${this.apiUrl}/${id}/appliedJob`);
   }
+  getYouthByJob(job: string[]): Observable<{ appliedJob: any }> {
+    return this.http.get<{ appliedJob: string }>(`${this.apiUrl}/appliedJob/${job}`);
+  }
   assignYouthToJob(jobId: string, youthId: string): Observable<any> {
     const url = `${this.apiUrl}/${jobId}/${youthId}`;
     return this.http.post(url, {});

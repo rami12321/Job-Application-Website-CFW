@@ -65,6 +65,7 @@ export class MainEmployerComponent {
   jobDetails: Job = {
     id: '', // Optional
     employerId: this.userId,
+    job: '',
     title: '',
     numEmployees: 0,
     level: '',
@@ -187,7 +188,7 @@ export class MainEmployerComponent {
   searchJobs() {
     // Perform search filter logic here based on searchQuery
     this.paginatedData = this.jobs.filter((job) =>
-      job.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      job.title?.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to first page after search
@@ -321,6 +322,7 @@ export class MainEmployerComponent {
     this.jobDetails = {
       id: '',
       employerId: this.userId,
+      job: '',
       title: '',
       numEmployees: 0,
       level: '',

@@ -36,3 +36,16 @@ button.absolute {
     transform: scale(1);
   }
 }
+::ng-deep .p-multiselect-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+
+}
+::ng-deep .p-multiselect {
+  border: 1px solid #060606;
+}
+
+::ng-deep .p-multiselect-item:hover {
+  background-color: #e0f7fa;
+
+}
