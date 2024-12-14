@@ -6,6 +6,7 @@ import {
   getJobRequestById,
   deleteJobRequest,
   updateJobRequest,
+  getJobsByEmployerId,
 } from '../controllers/jobRequestController';
 
 const router: Router = Router();
@@ -16,6 +17,7 @@ router.post('/', createJobRequest);          // Create a new employer
 router.get('/:id', getJobRequestById);      // Get employer by ID
 router.put('/:id', updateJobRequest);       // Update employer by ID
 router.delete('/:id', deleteJobRequest);    // Delete employer by ID
+router.get('/job-request/by-employer', getJobsByEmployerId);
 
 
 export default router;
