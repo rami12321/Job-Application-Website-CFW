@@ -115,6 +115,8 @@ export class SignUpEmployerComponent implements AfterViewInit  {
       email: this.signupForm.value.email,
       area: this.signupForm.value.area,
       signature: this.signatureImage || null, 
+      role: 'Employer'
+
     };
   }
   generateUniqueId(): string {
@@ -171,38 +173,13 @@ export class SignUpEmployerComponent implements AfterViewInit  {
         alert('Error verifying the verification code.');
       }
     );
-      const signupData = this.createSignupModel();
 
-      // Simulate an HTTP submission
-      console.log('Submitting Form Data:', signupData);
-      alert('Form data submitted successfully!');
-      this.saveToJson();
     }
   ngOnInit() {
   }
   
   
   
-  
-saveToJson(): void {
-  const signupData = this.createSignupModel();
-
-  this.employerService.saveEmployerData(signupData).subscribe(
-    (response) => {
-      console.log('Employer data saved successfully:', response);
-      this.formSubmitted = true;
-
-      this.signupForm.reset();
-      setTimeout(() => {
-        this.formSubmitted = false;
-      }, 3000);
-    },
-    (error) => {
-      console.error('Error saving data:', error);
-      alert('There was an error while saving the data.');
-    }
-  );
-}
 
 
 }

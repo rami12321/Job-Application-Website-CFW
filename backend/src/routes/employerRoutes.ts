@@ -6,6 +6,7 @@ import {
   getEmployerById,
   deleteEmployer,
   updateEmployer,
+  uploadProfileImage,
 } from '../controllers/employerController';
 
 const router: Router = Router();
@@ -16,6 +17,7 @@ router.post('/employer', createEmployer);          // Create a new employer
 router.get('/employer/:id', getEmployerById);      // Get employer by ID
 router.put('/employer/:id', updateEmployer);       // Update employer by ID
 router.delete('/employer/:id', deleteEmployer);    // Delete employer by ID
+router.post('/employer/:id/upload-profile-image', uploadProfileImage);  // Upload profile image
 
 
 export default router;
