@@ -4,11 +4,10 @@ import { Observable } from 'rxjs';
 import { Job } from '../../Model/JobDetails';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JobRequestService {
-
-  private JobRequestsUrl = 'http://localhost:3000/job-request'; 
+  private JobRequestsUrl = 'http://localhost:3000/job-request';
 
   constructor(private http: HttpClient) {}
 
@@ -16,15 +15,13 @@ export class JobRequestService {
   getAllJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(this.JobRequestsUrl);
   }
-// Get Jobs by Employer ID
-
-getJobsByEmployerId(employerId: string): Observable<Job[]> {
-  const url = `http://localhost:3000/job-request/by-employer?employerId=${encodeURIComponent(employerId)}`;
-  return this.http.get<Job[]>(url);  // Using Angular's HttpClient
-}
-
-
-
+  // Get Jobs by Employer ID
+  getJobsByEmployerId(employerId: string): Observable<Job[]> {
+    const url = `http://localhost:3000/job-request/by-employer?employerId=${encodeURIComponent(
+      employerId
+    )}`;
+    return this.http.get<Job[]>(url); // Using Angular's HttpClient
+  }
   // Get Job by ID
   getJobById(id: string): Observable<Job> {
     return this.http.get<Job>(`${this.JobRequestsUrl}/${id}`);
@@ -33,19 +30,26 @@ getJobsByEmployerId(employerId: string): Observable<Job[]> {
   // Save a new Job
   saveJobData(Job: Job): Observable<Job> {
     return this.http.post<Job>(this.JobRequestsUrl, Job, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 
   // Update an Job by ID
   updateJob(id: string, updatedJob: Partial<Job>): Observable<Job> {
     return this.http.put<Job>(`${this.JobRequestsUrl}/${id}`, updatedJob, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 
   // Delete an Job by ID
   deleteJob(id: string): Observable<any> {
     return this.http.delete(`${this.JobRequestsUrl}/${id}`);
+  }
+  // Assign a Youth to a Job Request
+  assignYouthToJobRequest(jobId: string, youthId: string,name:string): Observable<any> {
+    const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
+    return this.http.put(url, {name}, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }

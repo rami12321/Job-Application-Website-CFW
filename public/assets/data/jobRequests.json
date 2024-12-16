@@ -49,6 +49,18 @@
     "supervisorEmail": "123dasd",
     "supervisorPhone": "asdasdasd",
     "status": "waiting-E",
-    "id": "E-76475929"
+    "id": "E-76475929",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "name": "Mohammad",
+        "status": "waiting"
+      },
+      {
+        "id": "14305200",
+        "name": "rami",
+        "status": "waiting"
+      }
+    ]
   }
 ]

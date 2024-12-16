@@ -46,7 +46,7 @@ export class SmartTableComponent implements OnInit {
   youthDialogVisible = false; // Controls dialog visibility
   youths: any[] = []; // Stores fetched youths
   selectedYouths: any[] = []; // Selected youths for assignment
-  selectedEmployer:string='';
+  selectedJob:string='';
   currentEmployerId:string='';
   currentJob: string = ''; // Stores the current job being ass
   youthList: any[] = [];
@@ -511,8 +511,8 @@ export class SmartTableComponent implements OnInit {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
-  showYouthDialog(job: string,selectedEmployer:string): void {
-    this.selectedEmployer=selectedEmployer;
+  showYouthDialog(job: string,selectedJob:string): void {
+    this.selectedJob=selectedJob;
     this.currentJob = job; // Store the current job being assigned
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
@@ -525,7 +525,7 @@ export class SmartTableComponent implements OnInit {
     });
   }
   assignYouthsToEmployer(): void {
-    console.log('Employer:', this.selectedEmployer);
+    console.log('Employer:', this.selectedJob);
     console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
 
     // if (!this.currentEmployerId || this.selectedYouths.length === 0) {
@@ -535,7 +535,7 @@ export class SmartTableComponent implements OnInit {
 
     this.selectedYouths.forEach((youth: any) => {
       console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.name}`);
-      this.employerService.assignYouthToEmployer(this.selectedEmployer, youth.id, youth.name).subscribe({
+      this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id, youth.name).subscribe({
         next: () => {
           console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to employer ${this.currentEmployerId}.`);
         },

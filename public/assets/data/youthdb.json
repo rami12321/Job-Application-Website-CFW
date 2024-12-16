@@ -312,7 +312,14 @@
     "salary": "",
     "tasks": "",
     "mainTasks": "koko",
-    "question2": "yes"
+    "question2": "yes",
+    "appliedJob": [
+      "Auto Electrician",
+      "Accountant Assistant",
+      "Admin Assistant",
+      "Assistant Veteranian",
+      "Administrative Support Officer"
+    ]
   },
   {
     "id": "Y-63898738",

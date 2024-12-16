@@ -1,4 +1,9 @@
 import { Youth } from './youth';
+export interface AssignedYouth {
+  id: string;
+  name: string;
+  status: string;
+}
 export interface Job {
   id?: string;
   employerId: string;
@@ -13,5 +18,5 @@ export interface Job {
   supervisorEmail: string;
   supervisorPhone: string;
   status: string;
-  assignedYouth: string[]; // Array of Youth IDs or references
+  assignedYouths?: AssignedYouth[];
 }
