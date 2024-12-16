@@ -33,7 +33,7 @@ interface Column {
     DialogModule,
     ButtonModule,
     YouthSignupDetailsComponent,
-    DetailsEmployerComponent
+    DetailsEmployerComponent,
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -42,7 +42,13 @@ interface Column {
 export class SmartTableComponent implements OnInit {
   @Input() status: string | undefined;
   @Input() fetchedData: string | undefined;
-
+  youthsNotes: { name: string; notes: string }[] = [];
+  youthDialogVisible = false; // Controls dialog visibility
+  youths: any[] = []; // Stores fetched youths
+  selectedYouths: any[] = []; // Selected youths for assignment
+  selectedJob:string='';
+  currentEmployerId:string='';
+  currentJob: string = ''; // Stores the current job being ass
   youthList: any[] = [];
   employerList: any[] = [];
   cols: Column[] = [];
@@ -108,9 +114,9 @@ export class SmartTableComponent implements OnInit {
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else if(this.fetchedData == 'job-request') {
+    } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
-    }else{
+    } else {
       this.fetchYouthData();
     }
     this.lookupService.getLookupData().subscribe(
@@ -138,9 +144,9 @@ export class SmartTableComponent implements OnInit {
     localStorage.removeItem('selectedColumns');
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
-    } else if(this.fetchedData=='job-request') {
+    } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
-    }else{
+    } else {
       this.fetchYouthData();
     }
   }
@@ -242,33 +248,6 @@ export class SmartTableComponent implements OnInit {
           ? data.filter((item) => item.status === this.status)
           : data;
 
-        // Step 2: Apply filters for gender, major, and area
-        filteredData = filteredData.filter((item) => {
-          const matchesGender =
-            this.selectedGender.length === 0 ||
-            this.selectedGender.includes(item.gender);
-          const matchesMajor =
-            this.selectedMajors.length === 0 ||
-            this.selectedMajors.includes(item.major);
-          const matchesArea =
-            this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area.name);
-          const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
-          const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
-
-          return (
-            matchesGender &&
-            matchesMajor &&
-            matchesArea &&
-            matchesEducationLevels &&
-            matchesNationalityOptions
-          );
-        });
-
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -317,34 +296,6 @@ export class SmartTableComponent implements OnInit {
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
-
-        // Step 2: Apply filters for gender, major, and area
-        filteredData = filteredData.filter((item) => {
-          const matchesGender =
-            this.selectedGender.length === 0 ||
-            this.selectedGender.includes(item.gender);
-          const matchesMajor =
-            this.selectedMajors.length === 0 ||
-            this.selectedMajors.includes(item.major);
-          const matchesArea =
-            this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area.name);
-          const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
-          const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
-
-          return (
-            matchesGender &&
-            matchesMajor &&
-            matchesArea &&
-            matchesEducationLevels &&
-            matchesNationalityOptions
-          );
-        });
-
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -441,6 +392,10 @@ export class SmartTableComponent implements OnInit {
     this.noteDialogVisible = true;
   }
 
+  //youth dialog
+  youthDialog:boolean= false;
+
+
   updateStatus(id: number, newStatus: string): void {
     this.youthService.updateYouthStatus(id, newStatus).subscribe(
       (response) => {
@@ -463,7 +418,7 @@ export class SmartTableComponent implements OnInit {
   visible: boolean = false;
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
-
+  noYouthMessage:string='';
   loadLookupData(): void {
     this.lookupService.getLookupData().subscribe((data) => {
       this.areas = data.areas || [];
@@ -516,20 +471,80 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  fetchYouthByJob(jobs: string[]): void {
+    // Join jobs into a comma-separated string to pass in the URL
+    const jobsQuery = jobs.join(',');
+
+    // Call the service to fetch youth based on jobs array
+    this.youthService.getYouthByJob(jobsQuery).subscribe(
+      (response) => {
+        console.log(`Jobs: ${jobs}`, response);
+
+        // Check if response has youths and handle accordingly
+        if (response.youths && response.youths.length > 0) {
+          // If youths are found, process them and display notes
+          this.youthsNotes = response.youths.map((youth: any) => {
+            return {
+              name: youth.name,
+              notes: youth.notes || '' // Default to empty if no notes available
+            };
+          });
+          this.noYouthMessage = ''; // Reset the message if youths are found
+        } else {
+          // If no youths are found, set an error message
+          this.noYouthMessage = "No youth for this job yet.";
+        }
+
+        // Always open the dialog
+        this.noteDialogVisible = true;
+      },
+      (error) => {
+        console.error('Error fetching youths:', error);
+        // If there was an error, set the error message
+        this.noYouthMessage = "Error fetching youths.";
+        this.noteDialogVisible = true; // Show error message in the dialog
+      }
+    );
+  }
 
   displayNoteDialog(youth: any): void {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
-  assignYouthToJob(jobId: string, youthId: string) {
-    this.youthService.assignYouthToJob(jobId, youthId).subscribe({
-      next: (response) => {
-        console.log('Youth assigned successfully:', response);
-        alert(`Youth with ID ${youthId} has been assigned to job ${jobId}.`);
+  showYouthDialog(job: string,selectedJob:string): void {
+    this.selectedJob=selectedJob;
+    this.currentJob = job; // Store the current job being assigned
+    this.youthService.getYouthByJob(job).subscribe({
+      next: (response: any) => {
+        this.youths = response.youths || []; // Populate youths from response
+        this.youthDialogVisible = true; // Open the dialog
       },
-      error: (err) => {
-        console.error('Error assigning youth:', err);
-      },
+      error: (error) => {
+        console.error('Error fetching youths:', error);
+      }
     });
+  }
+  assignYouthsToEmployer(): void {
+    console.log('Employer:', this.selectedJob);
+    console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
+
+    // if (!this.currentEmployerId || this.selectedYouths.length === 0) {
+    //   console.error('Employer ID or selected youths are missing.');
+    //   return;
+    // }
+
+    this.selectedYouths.forEach((youth: any) => {
+      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.name}`);
+      this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id, youth.name).subscribe({
+        next: () => {
+          console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to employer ${this.currentEmployerId}.`);
+        },
+        error: (error) => {
+          console.error(`Error assigning youth ${youth.name} (ID: ${youth.id}):`, error);
+        }
+      });
+    });
+
+    this.youthDialogVisible = false;
   }
 }

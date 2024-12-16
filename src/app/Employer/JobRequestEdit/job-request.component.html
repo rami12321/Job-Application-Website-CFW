@@ -14,7 +14,7 @@
             </span>
             <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="job-detail-input"  type="text" />
           </p>
-  
+
           <!-- Number of Employees -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
@@ -23,7 +23,7 @@
             </span>
             <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="job-detail-input"  type="number" />
           </p>
-  
+
           <!-- Job Level -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
@@ -36,7 +36,7 @@
               <option value="senior">Senior</option>
             </select>
           </p>
-  
+
           <!-- Location -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
@@ -45,7 +45,7 @@
             </span>
             <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="job-detail-input"  type="text" />
           </p>
-  
+
           <!-- Type of Job -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
@@ -59,7 +59,7 @@
               <option value="Temporary">Temporary</option>
             </select>
           </p>
-  
+
           <!-- Supervisor Name -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
@@ -68,7 +68,7 @@
             </span>
             <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="job-detail-input"  type="text" />
           </p>
-  
+
           <!-- Supervisor Position -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
@@ -77,7 +77,7 @@
             </span>
             <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="job-detail-input"  type="text" />
           </p>
-  
+
           <!-- Supervisor Email -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
@@ -86,7 +86,7 @@
             </span>
             <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="job-detail-input"  type="email" />
           </p>
-  
+
           <!-- Supervisor Phone -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
@@ -95,9 +95,9 @@
             </span>
             <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="job-detail-input"  type="tel" />
           </p>
-          
+
         </div>
-  
+
         <!-- Edit / Save / Cancel Buttons -->
         <div class="flex justify-end mt-4">
           <button *ngIf="!isEditing['details']" (click)="startEditing()" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
@@ -115,4 +115,3 @@
       </div>
     </div>
   </div>
-  

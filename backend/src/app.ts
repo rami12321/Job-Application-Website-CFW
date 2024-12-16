@@ -19,7 +19,6 @@ app.use(express.json({ limit: '50mb' }));  // Increase limit for JSON requests
 app.use(express.static('public'));    
 
 // Define your routes
-app.use(jobRequestsRoutes);
 app.use('/youth', youthRoutes);
 app.use('/employer', employerRoutes);
 app.use('/job-request', jobRequestsRoutes);

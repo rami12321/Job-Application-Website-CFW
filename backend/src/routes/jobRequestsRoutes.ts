@@ -7,6 +7,7 @@ import {
   deleteJobRequest,
   updateJobRequest,
   getJobsByEmployerId,
+  assignYouthToJobRequest,
 } from '../controllers/jobRequestController';
 
 const router: Router = Router();
@@ -18,6 +19,7 @@ router.get('/:id', getJobRequestById);      // Get employer by ID
 router.put('/:id', updateJobRequest);       // Update employer by ID
 router.delete('/:id', deleteJobRequest);    // Delete employer by ID
 router.get('/job-request/by-employer', getJobsByEmployerId);
+router.put('/:id/youths/:youthId', assignYouthToJobRequest);
 
 
 export default router;

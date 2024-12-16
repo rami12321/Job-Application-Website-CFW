@@ -194,3 +194,48 @@ export const updateEmployer = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Employer with ID ${id} updated successfully.`, updatedEmployer });
 };
+// Assign youth to employer
+export const assignYouthToEmployer = (req: Request, res: Response): void => {
+  const { id, youthId } = req.params; // Extract employerId and youthId from route parameters
+  const { name } = req.body; // Extract the youth's name from the request body
+  let employers: Employer[] = readFile(); // Read the current employers' data
+
+  const employerIndex = employers.findIndex((e) => e.id === id);
+
+  // Check if the employer exists
+  if (employerIndex === -1) {
+    res.status(404).json({ message: `Employer with ID ${id} not found.` });
+    return;
+  }
+
+  // Initialize the assigned youths array if it doesn't exist
+  if (!employers[employerIndex].assignedYouths) {
+    employers[employerIndex].assignedYouths = [];
+  }
+
+  // Check if the youth is already assigned
+  const existingYouthIndex = employers[employerIndex].assignedYouths.findIndex((y) => y.id === youthId);
+
+  if (existingYouthIndex !== -1) {
+    // If the youth is already assigned, update their name or any other property as needed
+    employers[employerIndex].assignedYouths[existingYouthIndex] = {
+      ...employers[employerIndex].assignedYouths[existingYouthIndex],
+      name: name || employers[employerIndex].assignedYouths[existingYouthIndex].name, // Update the name if provided
+    };
+  } else {
+    // Add the new youth with default status
+    employers[employerIndex].assignedYouths.push({
+      id: youthId,
+      name: name || "Unknown", // Use "Unknown" if name is not provided
+      status: "waiting", // Default status
+    });
+  }
+
+  // Save the updated employers array back to the file
+  writeFile(employers);
+
+  res.status(200).json({
+    message: `Youth with ID ${youthId} has been assigned to employer with ID ${id}.`,
+    updatedEmployer: employers[employerIndex],
+  });
+};
