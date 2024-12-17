@@ -15,6 +15,7 @@ import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyo
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { DetailsEmployerComponent } from '../../Employer/Details-Employer/details-employer.component';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
+import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 interface Column {
   field: string;
   header: string;
@@ -34,6 +35,7 @@ interface Column {
     ButtonModule,
     YouthSignupDetailsComponent,
     DetailsEmployerComponent,
+    JobRequestDetailsComponent,
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',

@@ -228,29 +228,29 @@
               </div>
             </ng-template>
           </p-dialog>
-          @if(!status){
           <p-dialog
-            [(visible)]="dialogVisible"
-            [style]="{ width: '80rem' }"
-            (onHide)="clearSelectedYouthId()"
-          >
-            <app-details-employer
-              *ngIf="selectedYouthId"
-              [employerId]="selectedYouthId.toString()"
-            />
-          </p-dialog>
-          }@else{
-          <p-dialog
-            [(visible)]="dialogVisible"
-            [style]="{ width: '80rem' }"
-            (onHide)="clearSelectedYouthId()"
-          >
-            <app-youthsignup-details
-              *ngIf="selectedYouthId"
-              [youthId]="selectedYouthId"
-            />
-          </p-dialog>
-          }
+  [(visible)]="dialogVisible"
+  [style]="{ width: '80rem' }"
+  (onHide)="clearSelectedYouthId()"
+>
+  @if (!status) {
+    <app-details-employer
+      *ngIf="selectedYouthId"
+      [employerId]="selectedYouthId.toString()"
+    ></app-details-employer>
+  } @else if (status === 'waiting-E' || status === 'assigned') {
+    <app-job-request-details
+      *ngIf="selectedYouthId"
+      [jobId]="selectedYouthId.toString()"
+    ></app-job-request-details>
+  } @else {
+    <app-youthsignup-details
+      *ngIf="selectedYouthId"
+      [youthId]="selectedYouthId"
+    ></app-youthsignup-details>
+  }
+</p-dialog>
+
           <button
             *ngIf="action === 'pend'"
             type="button"
