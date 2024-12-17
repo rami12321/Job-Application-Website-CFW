@@ -1,24 +1,17 @@
 <!-- employer.component.html -->
-<div class="employer-page p-4">
-  <div class="flex flex-col justify-center items-center">
-    <h2 class="text-xl font-bold mb-4">Employer Page</h2>
+<div class="employer-page p-6 max-w-7xl mx-auto bg-gray-100 text-gray-800">
+  <div class="flex flex-col items-center space-y-6">
+    <!-- Title -->
+    <h2 class="text-2xl font-bold text-gray-900">Employer Page</h2>
 
+    <!-- Buttons -->
     <button
-
       pButton
       label="Request Job"
       icon="pi pi-plus"
-      class="p-button-raised p-button-primary mb-4 px-4 py-2"
+      class="p-3 rounded-md bg-blue-600 text-white hover:bg-blue-500 transition-all duration-200"
       (click)="openDialog()"
     ></button>
-
-    <!-- <button
-      *ngIf="jobRequested"
-      pButton
-      label="Update Job Request"
-      icon="pi pi-pencil"
-      class="p-button-raised p-button-primary mb-4 px-4 py-2"
-    ></button> -->
   </div>
 
   <!-- Dialog -->
@@ -26,11 +19,13 @@
     [(visible)]="displayDialog"
     header="Request Job"
     [modal]="true"
-    [style]="{ width: '30vw' }"
+    [style]="{ width: '40vw' }"
+  class="shadow-lg"
   >
     <div>
-      <h3 class="text-lg font-semibold mb-2">Step 1: Select Job Category</h3>
-      <label for="category" class="block mb-2">Job Category:</label>
+      <h3 class="text-lg font-semibold mb-2 border-b">Step 1: Select Job</h3>
+      <label for="category" class="block text-sm font-medium text-gray-700 mt-3">
+        Job Category:</label>
       <select
         id="category"
         [(ngModel)]="selectedCategory"
@@ -44,55 +39,54 @@
           {{ category.label }}
         </option>
       </select>
+
+      @if(subcategories.length > 0){
+      <label
+        for="subcategory"
+        class="block text-sm font-medium text-gray-700 mt-2 mb-1"
+        >Job:</label
+      >
+      <select
+        id="category"
+        [(ngModel)]="selectedjob"
+        (change)="onSelectJob(selectedjob)"
+        class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option *ngFor="let subcategory of subcategories" [value]="subcategory">
+          {{ subcategory }}
+        </option>
+      </select>
+      }
     </div>
 
-    <div *ngIf="selectedCategory" class="mt-4">
-      <h3 class="text-lg font-semibold mb-2">Step 2: Enter Job Details</h3>
+    <div *ngIf="step1" class="mt-4">
+      <h3 class="text-lg font-semibold mb-2 border-b">Step 2: Enter Job Details</h3>
       <form (ngSubmit)="submitForm()">
-        <!-- Number of Employees -->
-
-        @if(subcategories.length > 0){
-          <label
-          for="subcategory"
-          class="block text-sm font-medium text-gray-700 mb-1"
-          >Job:</label
-        >
-        <p-multiSelect
-          display="chip"
-          [options]="subcategories"
-          [(ngModel)]="jobDetails.job"
-          name="job"
-          [maxSelectedLabels]="3"
-          styleClass="w-full md:w-80"
-          placeholder="Select job(s)"
-        ></p-multiSelect>
-        }
-
         <!-- Job Title -->
-        <label for="jobTitle" class="block mb-2">Job Title:</label>
+        <label for="jobTitle" class="block text-sm font-medium text-gray-700 mt-3">Job Title:</label>
         <input
           type="text"
           id="jobTitle"
           [(ngModel)]="jobDetails.title"
           name="jobTitle"
           placeholder="Enter job title"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
-        <label for="employees" class="block mb-2">Number of Employees:</label>
+        <label for="employees" class="block text-sm font-medium text-gray-700 mt-3">Number of Employees:</label>
         <input
           type="number"
           id="employees"
           [(ngModel)]="jobDetails.numEmployees"
           name="employees"
           placeholder="Enter number of employees"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
         <!-- Job Level -->
-        <label for="level" class="block mb-2">Job Level:</label>
+        <label for="level" class="block text-sm font-medium text-gray-700 mt-3">Job Level:</label>
         <select
           id="level"
           [(ngModel)]="jobDetails.level"
@@ -105,19 +99,19 @@
         </select>
 
         <!-- Location -->
-        <label for="location" class="block mb-2">Location:</label>
+        <label for="location" class="block text-sm font-medium text-gray-700 mt-3">Location:</label>
         <input
           type="text"
           id="location"
           [(ngModel)]="jobDetails.location"
           name="location"
           placeholder="Enter job location"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
         <!-- Type of Job -->
-        <label for="typeOfJob" class="block mb-2">Type of Job:</label>
+        <label for="typeOfJob" class="block text-sm font-medium text-gray-700 mt-3">Type of Job:</label>
         <select
           id="typeOfJob"
           [(ngModel)]="jobDetails.typeOfJob"
@@ -130,19 +124,19 @@
         </select>
 
         <!-- Supervisor Name -->
-        <label for="supervisorName" class="block mb-2">Supervisor Name:</label>
+        <label for="supervisorName" class="block text-sm font-medium text-gray-700 mt-3">Supervisor Name:</label>
         <input
           type="text"
           id="supervisorName"
           [(ngModel)]="jobDetails.supervisorName"
           name="supervisorName"
           placeholder="Enter supervisor name"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
         <!-- Supervisor Position -->
-        <label for="supervisorPosition" class="block mb-2"
+        <label for="supervisorPosition" class="block text-sm font-medium text-gray-700 mt-3"
           >Supervisor Position:</label
         >
         <input
@@ -151,12 +145,12 @@
           [(ngModel)]="jobDetails.supervisorPosition"
           name="supervisorPosition"
           placeholder="Enter supervisor position"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
         <!-- Supervisor Email -->
-        <label for="supervisorEmail" class="block mb-2"
+        <label for="supervisorEmail" class="block text-sm font-medium text-gray-700 mt-3"
           >Supervisor Email:</label
         >
         <input
@@ -165,12 +159,12 @@
           [(ngModel)]="jobDetails.supervisorEmail"
           name="supervisorEmail"
           placeholder="Enter supervisor email"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
         <!-- Supervisor Phone Number -->
-        <label for="supervisorPhone" class="block mb-2"
+        <label for="supervisorPhone" class="block text-sm font-medium text-gray-700 mt-3"
           >Supervisor Phone Number:</label
         >
         <input
@@ -179,7 +173,7 @@
           [(ngModel)]="jobDetails.supervisorPhone"
           name="supervisorPhone"
           placeholder="Enter supervisor phone number"
-          class="p-inputtext w-full mb-3"
+          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           required
         />
 
@@ -187,7 +181,7 @@
           <button
             pButton
             label="Cancel"
-            class="p-button-text p-button-danger px-4 py-2"
+            class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-500 focus:ring-4 focus:ring-red-300"
             (click)="closeDialog()"
             type="button"
           ></button>
@@ -195,7 +189,7 @@
             pButton
             label="Submit"
             icon="pi pi-check"
-            class="p-button-raised p-button-success px-4 py-2"
+            class="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-500 focus:ring-4 focus:ring-green-300"
           ></button>
         </div>
       </form>

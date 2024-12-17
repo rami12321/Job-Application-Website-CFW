@@ -46,10 +46,28 @@ export class JobRequestService {
     return this.http.delete(`${this.JobRequestsUrl}/${id}`);
   }
   // Assign a Youth to a Job Request
-  assignYouthToJobRequest(jobId: string, youthId: string,name:string): Observable<any> {
+  assignYouthToJobRequest(
+    jobId: string,
+    youthId: string,
+    name: string
+  ): Observable<any> {
     const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
-    return this.http.put(url, {name}, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return this.http.put(
+      url,
+      { name },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+  updateJobRequestStatus(id: string, status: string): Observable<any> {
+    const url = `${this.JobRequestsUrl}/${id}/status`;
+    return this.http.put(
+      url,
+      { status },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }

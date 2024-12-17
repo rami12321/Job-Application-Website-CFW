@@ -1,40 +1,5 @@
 [
   {
-    "employerId": "34285768",
-    "job": [
-      "Auto Electrician"
-    ],
-    "title": "hadh",
-    "numEmployees": 3,
-    "level": "",
-    "location": "",
-    "typeOfJob": "",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "waiting-E",
-    "id": "A-61232388"
-  },
-  {
-    "employerId": "34285768",
-    "job": [
-      "Translator",
-      "Legal Volunteer"
-    ],
-    "title": "dasd",
-    "numEmployees": 9,
-    "level": "",
-    "location": "",
-    "typeOfJob": "",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "waiting-E",
-    "id": "T-32416340"
-  },
-  {
     "employerId": "L-18100564",
     "job": [
       "Auto Electrician"
@@ -48,7 +13,7 @@
     "supervisorPosition": "asdasd12",
     "supervisorEmail": "123dasd",
     "supervisorPhone": "asdasdasd",
-    "status": "waiting-E",
+    "status": "assigned",
     "id": "E-76475929",
     "assignedYouths": [
       {
@@ -62,5 +27,20 @@
         "status": "waiting"
       }
     ]
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Dental Assistant",
+    "title": "qwertyuio",
+    "numEmployees": 10,
+    "level": "mid",
+    "location": "asd",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "123dasd",
+    "supervisorPhone": "asdasdasd",
+    "status": "waiting-E",
+    "id": "T-87414113"
   }
 ]

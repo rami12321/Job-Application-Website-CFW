@@ -174,3 +174,34 @@ export const assignYouthToJobRequest = (req: Request, res: Response): void => {
   });
 };
 
+export const updateJobRequestStatus = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract jobRequest ID from route parameters
+  const { status } = req.body; // Extract the new status from the request body
+
+  // Validate that a status is provided
+  if (!status) {
+    res.status(400).json({ message: 'Status is required' });
+    return;
+  }
+
+  const jobRequests: Job[] = readFile(); // Read the current job requests data
+
+  const jobIndex = jobRequests.findIndex((job) => job.id === id);
+
+  // Check if the job request exists
+  if (jobIndex === -1) {
+    res.status(404).json({ message: `Job Request with ID ${id} not found.` });
+    return;
+  }
+
+  // Update the status of the job request
+  jobRequests[jobIndex].status = status;
+
+  // Save the updated job requests back to the file
+  writeFile(jobRequests);
+
+  res.status(200).json({
+    message: `Job Request with ID ${id} status updated to '${status}'.`,
+    updatedJobRequest: jobRequests[jobIndex],
+  });
+};

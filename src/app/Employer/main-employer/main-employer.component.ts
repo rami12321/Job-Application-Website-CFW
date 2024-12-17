@@ -31,6 +31,8 @@ export class MainEmployerComponent {
   displayDialog: boolean = false;
   mainCategories: any[] = []; // Categories for dropdown
   selectedCategory: string = '';
+  selectedjob: string = '';
+  step1: boolean = false;
   jobRequested: boolean = false;
   subcategories: string[] = []; // Store selected subcategories
   allCategories: Record<string, string[]> = {}; // Store full category data
@@ -106,13 +108,13 @@ export class MainEmployerComponent {
     this.sortDirection = 'desc';
     const employerId = localStorage.getItem('userId');
     console.log('Employer ID from localStorage:', employerId); // This should log the correct ID (e.g., 'F-70583249')
-  
+
     if (!employerId) {
       console.error('Employer ID not found in localStorage');
       this.errorMessage = 'You must be logged in to view this data';
       return;
     }
-  
+
     // Pass the employerId to your method to fetch job data
     this.fetchJobTableData(employerId);
   }
@@ -239,7 +241,7 @@ export class MainEmployerComponent {
           const idB = b.id ?? ''; // Use an empty string if undefined
           return idB.localeCompare(idA); // Compare IDs
         });
-  
+
         this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
         this.updatePaginatedData(); // Update paginated data after sorting
         this.isLoading = false;
@@ -251,8 +253,6 @@ export class MainEmployerComponent {
       },
     });
   }
-  
-
   deleteJob(id: string): void {
     this.jobRequestService.deleteJob(id).subscribe({
       next: () => {
@@ -302,6 +302,11 @@ export class MainEmployerComponent {
     console.log('Subcategories:', this.subcategories);
   }
 
+  onSelectJob(job: string): void {
+    this.selectedjob = job;
+    this.step1 = true; // Display Step 2
+  }
+
   submitForm(): void {
     // Validate required fields
     if (!this.jobDetails.title || this.jobDetails.numEmployees <= 0) {
@@ -312,6 +317,7 @@ export class MainEmployerComponent {
     // Build job request object
     const jobRequest: Job = {
       ...this.jobDetails,
+      job: this.selectedjob,
     };
 
     this.jobRequestService.saveJobData(jobRequest).subscribe({
