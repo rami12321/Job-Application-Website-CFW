@@ -11,9 +11,10 @@ import { AuthService } from '../../Services/AuthService/auth-service.service';
   imports: [CommonModule] // Import CommonModule here
 })
 export class HeaderComponent implements OnInit {
-  isMenuOpen = false; // Tracks mobile menu state
+  isMenuOpen = false; 
   dropdownOpen = false;
   userInitials: string = '';
+  profileImage: string | null = null; // Holds profile image if available
 
   role=localStorage.getItem("userRole")
 
@@ -26,6 +27,8 @@ export class HeaderComponent implements OnInit {
     const firstName = localStorage.getItem('firstName') || 'F';
     const lastName = localStorage.getItem('lastName') || 'N';
     this.userInitials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    this.profileImage = localStorage.getItem('profileImage') || null; // Load profile image if available
+
   }
 
 
@@ -48,10 +51,8 @@ export class HeaderComponent implements OnInit {
   
     if (userId && role) {
       if (role.toLowerCase() === 'employer') {
-        // Navigate to employer profile page
         this.router.navigate(['/employerprofile', userId]);
       } else if (role.toLowerCase() === 'youth') {
-        // Navigate to youth profile page
         this.router.navigate(['/youthprofile', userId]);
       } else {
         console.error('Unknown role, unable to navigate');

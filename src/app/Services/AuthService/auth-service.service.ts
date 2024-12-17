@@ -38,8 +38,8 @@ export class AuthService {
         if (user) {
           // Save authentication details in localStorage
           if(user.role=='Employer'){
-          localStorage.setItem('firstName', user.fullNameEnglish); // Store first name
-
+          localStorage.setItem('firstName', user.fullNameEnglish);
+          localStorage.setItem('role', user.role);
           }else{
 
             localStorage.setItem('firstName', user.firstNameEn); // Store first name

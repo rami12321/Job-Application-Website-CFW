@@ -10,4 +10,7 @@ export interface Employer {
   email: string;
   area: string;
   signature: string | null;
+  profileImage?: string; 
+    role: string;
+
 }

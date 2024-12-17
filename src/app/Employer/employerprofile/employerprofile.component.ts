@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import SignaturePad from 'signature_pad';
+import imageCompression from 'browser-image-compression';
 
 @Component({
   selector: 'app-employerprofile',
@@ -16,6 +17,8 @@ import SignaturePad from 'signature_pad';
 export class EmployerprofileComponent implements OnChanges {
   private userId: string | null = null;
   public employer: Employer | undefined;
+  profileImageSrc: string | null = null;
+
   isEditing: { [key: string]: boolean } = {};
   editModels: { [key: string]: any } = {};
   isModalOpen = false;
@@ -23,6 +26,7 @@ export class EmployerprofileComponent implements OnChanges {
   signatureImage: string | null = null;
   isSignatureModalOpen = false;
   isEditingSignature = false; 
+  public signatureSrc: string | null = null;
 
   @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
@@ -58,28 +62,141 @@ export class EmployerprofileComponent implements OnChanges {
       },
     });
   }
+  private loadSignature(signatureId: string): void {
+    fetch('/assets/data/signatures.json')
+      .then((response) => response.json())
+      .then((signatures) => {
+        const signatureEntry = signatures.find((sig: any) => sig.id === signatureId);
+        if (signatureEntry) {
+          this.employer!.signature = signatureEntry.signatureImage; // Set Base64 data
+        } else {
+          console.error('Signature not found in signatures.json for ID:', signatureId);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching signatures.json:', error);
+      });
+  }
+  onImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profileImageSrc = reader.result as string; // Update preview dynamically
+      };
+      reader.readAsDataURL(file); // Convert file to Base64 string
+    }
+  }
+  
+  
+  convertImageToBase64(file: File): void {
+    const reader = new FileReader();
+    
+    reader.onloadend = () => {
+      const base64String = reader.result as string; // This is the base64 string
+  
+      // Send base64 string to backend
+      this.uploadImageAsBase64(base64String);
+    };
+  
+    reader.readAsDataURL(file);  // Converts the file to base64
+  }
+  
+  uploadImageAsBase64(base64String: string): void {
+    const payload = { image: base64String };
+  
+    this.employerService.uploadProfileImage(this.userId!, payload).subscribe({
+      next: (response) => {
+        console.log('Image uploaded successfully:', response);
+  
+        // Store only the key in employer's profileImage
+        this.employer!.profileImage = response.imageUrl; // This should be just the key or URL
+  
+        // Call to update profile image
+        this.getProfileImage();
+      },
+      error: (err) => {
+        console.error('Error uploading image:', err);
+      },
+    });
+  }
+  
+// Method to get the profile image from images.json based on employer's profileImage key
+getProfileImage(): void {
+  const imageKey = this.employer?.profileImage?.split('#')[1];  // Extract key part from profileImage string
+
+  if (imageKey) {
+    fetch('/assets/data/images.json')  // This assumes images.json is in the assets folder
+      .then((response) => response.json())
+      .then((images) => {
+        const imageEntry = images.find((img: any) => img.key === imageKey);
+        if (imageEntry) {
+          this.profileImageSrc = imageEntry.data;  // Assign base64 string from images.json
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching images.json:', error);
+      });
+  }
+  // If no profile image key is available, set profileImageSrc to null or a default image URL
+  else {
+    this.profileImageSrc = null;  // Or use a default image URL
+  }
+}
+
 
   cancelEditing(): void {
     this.isEditing['details'] = false;
     this.editModels = {}; 
   }
-
   private fetchEmployerDetails(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
       next: (data: Employer) => {
-        this.employer = data; // Store the employer details
+        this.employer = data;
+        if (this.employer?.signature) {
+          const signatureKey = this.employer.signature.split('#')[1]; // Extract key part
+          this.loadSignature(signatureKey);
+        }
+        this.loadProfileImage();  // After employer data is fetched, load the profile image
       },
       error: (err) => {
         console.error('Error fetching employer data:', err);
       },
     });
   }
+  
+  private loadProfileImage(): void {
+    const imageKey = this.employer?.profileImage?.split('#')[1]; // Extract the image key
+    if (imageKey) {
+      fetch('/assets/data/images.json')
+        .then((response) => response.json())
+        .then((images) => {
+          const imageEntry = images.find((img: any) => img.key === imageKey);
+          if (imageEntry) {
+            this.profileImageSrc = imageEntry.data; // Assign Base64 or URL from images.json
+          } else {
+            console.error('Image not found in images.json for key:', imageKey);
+            this.profileImageSrc = null; // Fallback if no image is found
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching images.json:', error);
+          this.profileImageSrc = null; // Handle fetch error
+        });
+    } else {
+      this.profileImageSrc = null; // Fallback if no key is present
+    }
+  }
+  
+  
+  
+  
 
   openModal(imageSrc: string): void {
-    this.modalImage = imageSrc;
+    this.modalImage = imageSrc; // Assign Base64 or URL of the signature
     this.isModalOpen = true;
   }
-
+  
   closeModal(): void {
     this.isModalOpen = false;
   }
@@ -140,6 +257,8 @@ deleteSignature(): void {
         console.error('Invalid or missing id');
       }
     });
+    this.getProfileImage();
+
 
   }
   

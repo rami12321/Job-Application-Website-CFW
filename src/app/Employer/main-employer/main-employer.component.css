@@ -35,6 +35,134 @@ button.absolute {
     opacity: 1;
     transform: scale(1);
   }
+}:host ::ng-deep .p-tabview {
+  display: flex;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem;
+  background: linear-gradient(135deg, #f4f8fc, #e9eff5); /* Softer and cleaner gradient */
+  border: 1px solid #d4dae3;
+}
+
+:host ::ng-deep .p-tabview-nav {
+  width: 220px; /* Slightly wider for better readability */
+  flex-direction: column;
+  background: #fbfcfd; /* Neutral background for contrast */
+  padding: 1.2rem 0.8rem;
+  border-right: 2px solid #d4dae3;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05); /* Light shadow for depth */
+}
+
+/* General Tab Styling */
+:host ::ng-deep .p-tabview-title {
+  margin: 0.7rem 0;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: capitalize;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for a polished look */
+}
+
+/* Waiting Tab */
+:host ::ng-deep .waiting-tab .p-tabview-title {
+  background-color: #fbe9e9; /* Soft peach-red */
+  color: #d32f2f;
+}
+
+:host ::ng-deep .waiting-tab:hover .p-tabview-title,
+:host ::ng-deep .waiting-tab.p-highlight .p-tabview-title {
+  background-color: #d32f2f; /* Strong but not harsh */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3); /* Tab-specific hover shadow */
+}
+
+/* Assigned Tab */
+:host ::ng-deep .assigned-tab .p-tabview-title {
+  background-color: #fff5d1; /* Gentle yellow-orange */
+  color: #f57c00;
+}
+
+:host ::ng-deep .assigned-tab:hover .p-tabview-title,
+:host ::ng-deep .assigned-tab.p-highlight .p-tabview-title {
+  background-color: #f57c00; /* Vibrant but not overpowering */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
+}
+
+/* In Progress Tab */
+:host ::ng-deep .in-progress-tab .p-tabview-title {
+  background-color: #e3f2fd; /* Soft sky-blue */
+  color: #1976d2;
+}
+
+:host ::ng-deep .in-progress-tab:hover .p-tabview-title,
+:host ::ng-deep .in-progress-tab.p-highlight .p-tabview-title {
+  background-color: #1976d2; /* Balanced blue */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+}
+
+/* Completed Tab */
+:host ::ng-deep .completed-tab .p-tabview-title {
+  background-color: #e8f5e9; /* Light green */
+  color: #388e3c;
+}
+
+:host ::ng-deep .completed-tab:hover .p-tabview-title,
+:host ::ng-deep .completed-tab.p-highlight .p-tabview-title {
+  background-color: #388e3c; /* Calm and professional green */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.3);
+}
+
+/* Tab Panels */
+:host ::ng-deep .p-tabview-panels {
+  flex-grow: 1;
+  padding: 2rem;
+  border-radius: 0 12px 12px 0;
+  margin: 0.5rem;
+  background: #ffffff; /* Clean and neutral content background */
+  color: #424242;
+  border-left: 2px solid #d4dae3;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05); /* Soft inset shadow */
+  overflow-y: auto;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  :host ::ng-deep .p-tabview {
+    flex-direction: column;
+    height: auto;
+  }
+
+  :host ::ng-deep .p-tabview-nav {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0.5rem;
+  }
+
+  :host ::ng-deep .p-tabview-title {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  :host ::ng-deep .p-tabview-panels {
+    margin: 0;
+    padding: 1.2rem;
+  }
 }
 ::ng-deep .p-multiselect-item {
   padding: 10px;
