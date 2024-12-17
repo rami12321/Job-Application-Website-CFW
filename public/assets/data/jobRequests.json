@@ -10,23 +10,23 @@
     "location": "",
     "typeOfJob": "onsite",
     "supervisorName": "asdasd",
-    "supervisorPosition": "asdasd12",
-    "supervisorEmail": "123dasd",
-    "supervisorPhone": "asdasdasd",
-    "status": "assigned",
-    "id": "E-76475929",
-    "assignedYouths": [
-      {
-        "id": "34285768",
-        "name": "Mohammad",
-        "status": "waiting"
-      },
-      {
-        "id": "14305200",
-        "name": "rami",
-        "status": "waiting"
-      }
-    ]
+    "supervisorPosition": "eqwe",
+    "supervisorEmail": "dasda@asdda",
+    "supervisorPhone": "41465465"
+
+  },
+  {
+    "employerId": "L-18100564",
+    "title": "hadh",
+    "numEmployees": 23,
+    "level": "senior",
+    "location": "dasdas",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "eqwe",
+    "supervisorEmail": "dasda@asdda",
+    "supervisorPhone": "41465465",
+    "id": "H-38572024"
   },
   {
     "employerId": "L-18100564",
