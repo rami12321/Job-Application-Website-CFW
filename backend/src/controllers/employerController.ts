@@ -1,4 +1,4 @@
-// src/controllers/employerController.ts
+
 import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -8,7 +8,7 @@ const filePath = path.join(__dirname, '../../../public/assets/data/employers.jso
 const imagesFilePath = path.join(__dirname, '../../../public/assets/data/images.json');
 const signatureFilePath = path.join(__dirname, '../../../public/assets/data/signatures.json');
 
-// Utility functions
+
 const readFile = (): Employer[] => {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify([]));
@@ -27,46 +27,46 @@ const writeFile = (data: Employer[]): void => {
 };
 
 
-// Get all employers
+
 export const getAllEmployers = (req: Request, res: Response): void => {
   const employers: Employer[] = readFile();
   res.status(200).json(employers);
 };
 export interface Signature {
-  id: string; // A unique identifier for the signature
-  employerId: string; // Links the signature to the employer
-  signatureImage: string; // Base64-encoded image of the signature
+  id: string;
+  employerId: string;
+  signatureImage: string;
 }
 
-//Create New Employer
+
 export const createEmployer = (req: Request, res: Response): void => {
   const employers: Employer[] = readFile();
-  const newEmployer: Employer = req.body; // Ensure req.body adheres to Employer type
+  const newEmployer: Employer = req.body;
 
-  // Generate the ID and assign it to the new employer
+
   newEmployer.id = newEmployer.id || `${employers.length + 1}`;
 
-  // Process signature (if provided)
+
   if (newEmployer.signature) {
-    const signatureFileData :Signature[] = fs.existsSync(signatureFilePath)
+    const signatureFileData: Signature[] = fs.existsSync(signatureFilePath)
       ? JSON.parse(fs.readFileSync(signatureFilePath, 'utf-8') || '[]')
       : [];
 
-    const signatureEntry : Signature={
+    const signatureEntry: Signature = {
       id: `${newEmployer.id}-signature`,
       employerId: newEmployer.id,
       signatureImage: newEmployer.signature,
     };
 
-    // Add signature to signature.json
+
     signatureFileData.push(signatureEntry);
     fs.writeFileSync(signatureFilePath, JSON.stringify(signatureFileData, null, 2), 'utf-8');
 
-    // Replace the signature field in employers.json with the signature URL
+
     newEmployer.signature = `/assets/data/signatures.json#${signatureEntry.id}`;
   }
 
-  // Add employer to the employers array
+
   employers.push(newEmployer);
   writeFile(employers);
 
@@ -93,7 +93,7 @@ export const getSignatureByEmployerId = (req: Request, res: Response): void => {
 };
 
 
-// Get employer by ID
+
 export const getEmployerById = (req: Request, res: Response): void => {
   const { id } = req.params;
   const employers: Employer[] = readFile();
@@ -107,7 +107,7 @@ export const getEmployerById = (req: Request, res: Response): void => {
   res.status(200).json(employer);
 };
 
-// Delete employer by ID
+
 export const deleteEmployer = (req: Request, res: Response): void => {
   const { id } = req.params;
   let employers: Employer[] = readFile();
@@ -118,7 +118,7 @@ export const deleteEmployer = (req: Request, res: Response): void => {
     return;
   }
 
-  const deletedEmployer = employers.splice(employerIndex, 1); // Remove employer
+  const deletedEmployer = employers.splice(employerIndex, 1);
   writeFile(employers);
 
   res.status(200).json({ message: `Employer with ID ${id} deleted successfully.`, deletedEmployer });
@@ -126,14 +126,14 @@ export const deleteEmployer = (req: Request, res: Response): void => {
 
 export const uploadProfileImage = (req: Request, res: Response): void => {
   const { id } = req.params;
-  const { image } = req.body; // Image is expected as a base64 string
+  const { image } = req.body;
 
   if (!image) {
     res.status(400).json({ message: 'No image data provided.' });
     return;
   }
 
-  // Read employer data
+
   const employers: Employer[] = readFile();
   const employer = employers.find((e) => e.id === id);
 
@@ -142,19 +142,19 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
     return;
   }
 
-  // Generate unique image key
+
   const imageKey = `${id}`;
 
-  // Read images.json file
+
   let images: { key: string; data: string }[] = [];
   if (fs.existsSync(imagesFilePath)) {
     images = JSON.parse(fs.readFileSync(imagesFilePath, 'utf-8') || '[]');
   }
 
-  // Add the new image data
+
   images.push({ key: imageKey, data: image });
 
-  // Write back to images.json
+
   try {
     fs.writeFileSync(imagesFilePath, JSON.stringify(images, null, 2));
     console.log('Image data written to images.json');
@@ -164,7 +164,7 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
     return;
   }
 
-  // Update employer's profile image reference
+
   employer.profileImage = `/assets/data/images.json#${imageKey}`;
   writeFile(employers);
 
@@ -174,10 +174,10 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
   });
 };
 
-// Update employer by ID
+
 export const updateEmployer = (req: Request, res: Response): void => {
   const { id } = req.params;
-  const updatedData: Partial<Employer> = req.body; // Accept partial updates
+  const updatedData: Partial<Employer> = req.body;
   let employers: Employer[] = readFile();
   const employerIndex = employers.findIndex((e) => e.id === id);
 
@@ -186,7 +186,7 @@ export const updateEmployer = (req: Request, res: Response): void => {
     return;
   }
 
-  // Merge the existing employer data with updated data
+
   const updatedEmployer = { ...employers[employerIndex], ...updatedData };
   employers[employerIndex] = updatedEmployer;
 
@@ -194,44 +194,61 @@ export const updateEmployer = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Employer with ID ${id} updated successfully.`, updatedEmployer });
 };
-// Assign youth to employer
+import { Youth } from '../models/youth';
+
 export const assignYouthToEmployer = (req: Request, res: Response): void => {
-  const { id, youthId } = req.params; // Extract employerId and youthId from route parameters
-  const { name } = req.body; // Extract the youth's name from the request body
-  let employers: Employer[] = readFile(); // Read the current employers' data
+  const { id, youthId } = req.params;
+  let employers: Employer[] = readFile();
+  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
 
   const employerIndex = employers.findIndex((e) => e.id === id);
 
-  // Check if the employer exists
+
   if (employerIndex === -1) {
     res.status(404).json({ message: `Employer with ID ${id} not found.` });
     return;
   }
 
-  // Initialize the assigned youths array if it doesn't exist
+
+  const youth = youthData.find((y) => y.id === youthId);
+
+
+  if (!youth) {
+    res.status(404).json({ message: `Youth with ID ${youthId} not found.` });
+    return;
+  }
+
+
   if (!employers[employerIndex].assignedYouths) {
     employers[employerIndex].assignedYouths = [];
   }
 
-  // Check if the youth is already assigned
+
   const existingYouthIndex = employers[employerIndex].assignedYouths.findIndex((y) => y.id === youthId);
 
   if (existingYouthIndex !== -1) {
-    // If the youth is already assigned, update their name or any other property as needed
+
     employers[employerIndex].assignedYouths[existingYouthIndex] = {
       ...employers[employerIndex].assignedYouths[existingYouthIndex],
-      name: name || employers[employerIndex].assignedYouths[existingYouthIndex].name, // Update the name if provided
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
     };
   } else {
-    // Add the new youth with default status
+
     employers[employerIndex].assignedYouths.push({
       id: youthId,
-      name: name || "Unknown", // Use "Unknown" if name is not provided
-      status: "waiting", // Default status
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
     });
   }
 
-  // Save the updated employers array back to the file
+
   writeFile(employers);
 
   res.status(200).json({
@@ -239,3 +256,4 @@ export const assignYouthToEmployer = (req: Request, res: Response): void => {
     updatedEmployer: employers[employerIndex],
   });
 };
+

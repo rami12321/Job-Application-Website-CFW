@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from '../../Model/JobDetails';
+import { AssignedYouth } from '../../../../backend/src/models/employer';
 
 @Injectable({
   providedIn: 'root',
@@ -45,11 +46,11 @@ export class JobRequestService {
   deleteJob(id: string): Observable<any> {
     return this.http.delete(`${this.JobRequestsUrl}/${id}`);
   }
-  // Assign a Youth to a Job Request
-  assignYouthToJobRequest(jobId: string, youthId: string,name:string): Observable<any> {
+  assignYouthToJobRequest(jobId: string, youthId: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
-    return this.http.put(url, {name}, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return this.http.put(url, {}, { headers: { 'Content-Type': 'application/json' } });
   }
+  
+  
+  
 }

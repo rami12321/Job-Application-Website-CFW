@@ -17,7 +17,6 @@ app.use(express.json({ limit: '50mb' }));  // Increase limit for JSON requests
 
 // Serve static files
 app.use(express.static('public'));    
-
 // Define your routes
 app.use('/youth', youthRoutes);
 app.use('/employer', employerRoutes);

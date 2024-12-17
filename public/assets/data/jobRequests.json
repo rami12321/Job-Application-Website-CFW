@@ -14,7 +14,19 @@
     "supervisorEmail": "",
     "supervisorPhone": "",
     "status": "waiting-E",
-    "id": "A-61232388"
+    "id": "A-61232388",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "name": "Mohammad",
+        "status": "waiting"
+      },
+      {
+        "id": "14305200",
+        "name": "rami",
+        "status": "waiting"
+      }
+    ]
   },
   {
     "employerId": "34285768",
@@ -53,6 +65,9 @@
   },
   {
     "employerId": "F-70583249",
+    "job": [
+      "Auto Electrician"
+    ],
     "title": "Software Developer Internship",
     "numEmployees": 2,
     "level": "mid",
@@ -63,6 +78,24 @@
     "supervisorEmail": "test@gmail.com",
     "supervisorPhone": "7678",
     "status": "waiting-E",
-    "id": "K-95631187"
+    "id": "K-95631187",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      },
+      {
+        "id": "14305200",
+        "firstName": "rami",
+        "lastName": "ahah",
+        "dob": "2005-06-15",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      }
+    ]
   }
 ]

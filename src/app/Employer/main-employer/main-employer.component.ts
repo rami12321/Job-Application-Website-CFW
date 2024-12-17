@@ -43,9 +43,10 @@ export class MainEmployerComponent {
 
   columns: { key: keyof Job; label: string }[] = [
     { key: 'id', label: 'ID' },
+    { key: 'job', label: 'Job' },
 
     { key: 'title', label: 'Job Title' },
-
+    
     { key: 'location', label: 'Location' },
     { key: 'numEmployees', label: 'Number Requested' },
   ];

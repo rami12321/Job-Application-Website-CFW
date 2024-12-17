@@ -15,6 +15,7 @@ import { YouthSignupDetailsComponent } from '../../Youth/Details-Youth/Detailsyo
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { DetailsEmployerComponent } from '../../Employer/Details-Employer/details-employer.component';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
+import { Job } from '../../Model/JobDetails';
 interface Column {
   field: string;
   header: string;
@@ -56,6 +57,7 @@ export class SmartTableComponent implements OnInit {
   savedColumns: Column[] = [];
   paginatedProducts: any[] = [];
   rowsPerPage = 10;
+  jobs: Job[] = [];
   selectedGender: string[] = [];
   rowData: any = {}; // Or use the appropriate type for your data
   areas: any[] = [];
@@ -287,6 +289,7 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+  
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
       (data: any[]) => {
@@ -527,24 +530,24 @@ export class SmartTableComponent implements OnInit {
   assignYouthsToEmployer(): void {
     console.log('Employer:', this.selectedJob);
     console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
-
-    // if (!this.currentEmployerId || this.selectedYouths.length === 0) {
-    //   console.error('Employer ID or selected youths are missing.');
-    //   return;
-    // }
-
+  
+    // Ensure that only the youth IDs are passed to the backend
     this.selectedYouths.forEach((youth: any) => {
-      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.name}`);
-      this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id, youth.name).subscribe({
+      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.firstName} ${youth.lastName}`);
+  
+      // Send only the youth ID to the backend; the backend will fetch the details
+      this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id).subscribe({
         next: () => {
-          console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to employer ${this.currentEmployerId}.`);
+          console.log(`Youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}) assigned to employer ${this.selectedJob}.`);
         },
         error: (error) => {
-          console.error(`Error assigning youth ${youth.name} (ID: ${youth.id}):`, error);
+          console.error(`Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`, error);
         }
       });
     });
-
+  
     this.youthDialogVisible = false;
   }
+  
+  
 }
