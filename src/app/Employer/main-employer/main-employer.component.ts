@@ -33,6 +33,8 @@ export class MainEmployerComponent {
   displayDialog: boolean = false;
   mainCategories: any[] = [];
   selectedCategory: string = '';
+  selectedjob: string = '';
+  step1: boolean = false;
   jobRequested: boolean = false;
   subcategories: string[] = [];
   allCategories: Record<string, string[]> = {};
@@ -110,11 +112,13 @@ export class MainEmployerComponent {
     const employerId = localStorage.getItem('userId');
     console.log('Employer ID from localStorage:', employerId);
 
+
     if (!employerId) {
       console.error('Employer ID not found in localStorage');
       this.errorMessage = 'You must be logged in to view this data';
       return;
     }
+
 
 
     this.fetchJobTableData(employerId);
@@ -267,7 +271,6 @@ export class MainEmployerComponent {
     });
   }
 
-
   deleteJob(id: string): void {
     this.jobRequestService.deleteJob(id).subscribe({
       next: () => {
@@ -317,6 +320,11 @@ export class MainEmployerComponent {
     console.log('Subcategories:', this.subcategories);
   }
 
+  onSelectJob(job: string): void {
+    this.selectedjob = job;
+    this.step1 = true; // Display Step 2
+  }
+
   submitForm(): void {
 
     if (!this.jobDetails.title || this.jobDetails.numEmployees <= 0) {
@@ -327,6 +335,7 @@ export class MainEmployerComponent {
 
     const jobRequest: Job = {
       ...this.jobDetails,
+      job: this.selectedjob,
     };
 
     this.jobRequestService.saveJobData(jobRequest).subscribe({

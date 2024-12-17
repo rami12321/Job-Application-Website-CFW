@@ -73,6 +73,7 @@
     "id": "T-32416340"
   },
   {
+
     "employerId": "L-18100564",
     "job": [
       "Auto Electrician"
@@ -105,6 +106,8 @@
     "supervisorPhone": "7678",
     "status": "waiting-E",
     "id": "K-95631187",
+    "status": "assigned",
+    "id": "E-76475929",
     "assignedYouths": [
       {
         "id": "34285768",
@@ -123,5 +126,20 @@
         "status": "waiting"
       }
     ]
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Dental Assistant",
+    "title": "qwertyuio",
+    "numEmployees": 10,
+    "level": "mid",
+    "location": "asd",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "123dasd",
+    "supervisorPhone": "asdasdasd",
+    "status": "waiting-E",
+    "id": "T-87414113"
   }
 ]
