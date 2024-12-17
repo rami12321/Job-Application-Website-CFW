@@ -16,7 +16,6 @@ app.use(cors());
 
 app.use(express.json()); // For parsing JSON request bodies
 app.use(express.static('public'));    // Serve static files
-app.use(jobRequestsRoutes)
 app.use(bodyParser.json());
 app.use('/youth', youthRoutes);
 app.use('/employer', employerRoutes);
