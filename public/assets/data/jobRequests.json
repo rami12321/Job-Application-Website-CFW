@@ -1,35 +1,6 @@
 [
   {
     "employerId": "L-18100564",
-    "job": [
-      "Auto Electrician"
-    ],
-    "title": "New22",
-    "numEmployees": 8,
-    "level": "mid",
-    "location": "",
-    "typeOfJob": "onsite",
-    "supervisorName": "asdasd",
-    "supervisorPosition": "eqwe",
-    "supervisorEmail": "dasda@asdda",
-    "supervisorPhone": "41465465"
-
-  },
-  {
-    "employerId": "L-18100564",
-    "title": "hadh",
-    "numEmployees": 23,
-    "level": "senior",
-    "location": "dasdas",
-    "typeOfJob": "onsite",
-    "supervisorName": "asdasd",
-    "supervisorPosition": "eqwe",
-    "supervisorEmail": "dasda@asdda",
-    "supervisorPhone": "41465465",
-    "id": "H-38572024"
-  },
-  {
-    "employerId": "L-18100564",
     "job": "Dental Assistant",
     "title": "qwertyuio",
     "numEmployees": 10,
@@ -40,7 +11,29 @@
     "supervisorPosition": "sdasd",
     "supervisorEmail": "123dasd",
     "supervisorPhone": "asdasdasd",
+    "status": "assigned",
+    "id": "T-87414113",
+    "assignedYouths": [
+      {
+        "id": "14305200",
+        "name": "rami",
+        "status": "waiting"
+      }
+    ]
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Radiology Technician ",
+    "title": "123123",
+    "numEmployees": 2,
+    "level": "mid",
+    "location": "dasdas",
+    "typeOfJob": "remote",
+    "supervisorName": "asdas",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "asd",
+    "supervisorPhone": "da",
     "status": "waiting-E",
-    "id": "T-87414113"
+    "id": "D-53259704"
   }
 ]

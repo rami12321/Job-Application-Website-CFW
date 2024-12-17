@@ -27,8 +27,9 @@ export const getAllJobRequests = (req: Request, res: Response): void => {
   const jobRequests: Job[] = readFile();
   res.status(200).json(jobRequests);
 };
+
 export const getJobsByEmployerId = (req: Request, res: Response): void => {
-  const employerId = req.query.employerId as string;
+  const { employerId } = req.params; // Extract employerId from route parameters
 
   if (!employerId) {
     res.status(400).json({ message: 'Employer ID is required' });
@@ -39,10 +40,9 @@ export const getJobsByEmployerId = (req: Request, res: Response): void => {
   const filteredJobs = jobRequests.filter((job) => job.employerId === employerId);
 
   if (filteredJobs.length === 0) {
-    res.status(404).json({ message: 'No jobs found for this employer' });
-    return
+    res.status(404).json({ message: `No jobs found for employer with ID ${employerId}` });
+    return;
   }
-
 
   res.status(200).json(filteredJobs);
 };
