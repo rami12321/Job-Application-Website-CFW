@@ -537,6 +537,7 @@ export class SmartTableComponent implements OnInit {
     console.log('Employer:', this.selectedJob);
     console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
 
+
     const youthsAssigned = []; // Array to track successful assignments
 
     this.selectedYouths.forEach((youth: any) => {
@@ -561,6 +562,7 @@ export class SmartTableComponent implements OnInit {
   
     this.youthDialogVisible = false;
   }
+
 
   private updateJobStatusToAssigned(): void {
     this.JobRequestService.updateJobRequestStatus(this.selectedJob, 'assigned').subscribe({
