@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import SignaturePad from 'signature_pad';
-import imageCompression from 'browser-image-compression';
 
 @Component({
   selector: 'app-employerprofile',
@@ -25,7 +24,7 @@ export class EmployerprofileComponent implements OnChanges {
   modalImage: string = '';
   signatureImage: string | null = null;
   isSignatureModalOpen = false;
-  isEditingSignature = false; 
+  isEditingSignature = false;
   public signatureSrc: string | null = null;
 
   @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
@@ -87,31 +86,31 @@ export class EmployerprofileComponent implements OnChanges {
       reader.readAsDataURL(file); // Convert file to Base64 string
     }
   }
-  
-  
+
+
   convertImageToBase64(file: File): void {
     const reader = new FileReader();
-    
+
     reader.onloadend = () => {
       const base64String = reader.result as string; // This is the base64 string
-  
+
       // Send base64 string to backend
       this.uploadImageAsBase64(base64String);
     };
-  
+
     reader.readAsDataURL(file);  // Converts the file to base64
   }
-  
+
   uploadImageAsBase64(base64String: string): void {
     const payload = { image: base64String };
-  
+
     this.employerService.uploadProfileImage(this.userId!, payload).subscribe({
       next: (response) => {
         console.log('Image uploaded successfully:', response);
-  
+
         // Store only the key in employer's profileImage
         this.employer!.profileImage = response.imageUrl; // This should be just the key or URL
-  
+
         // Call to update profile image
         this.getProfileImage();
       },
@@ -120,7 +119,7 @@ export class EmployerprofileComponent implements OnChanges {
       },
     });
   }
-  
+
 // Method to get the profile image from images.json based on employer's profileImage key
 getProfileImage(): void {
   const imageKey = this.employer?.profileImage?.split('#')[1];  // Extract key part from profileImage string
@@ -147,7 +146,7 @@ getProfileImage(): void {
 
   cancelEditing(): void {
     this.isEditing['details'] = false;
-    this.editModels = {}; 
+    this.editModels = {};
   }
   private fetchEmployerDetails(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
@@ -164,7 +163,7 @@ getProfileImage(): void {
       },
     });
   }
-  
+
   private loadProfileImage(): void {
     const imageKey = this.employer?.profileImage?.split('#')[1]; // Extract the image key
     if (imageKey) {
@@ -187,20 +186,20 @@ getProfileImage(): void {
       this.profileImageSrc = null; // Fallback if no key is present
     }
   }
-  
-  
-  
-  
+
+
+
+
 
   openModal(imageSrc: string): void {
     this.modalImage = imageSrc; // Assign Base64 or URL of the signature
     this.isModalOpen = true;
   }
-  
+
   closeModal(): void {
     this.isModalOpen = false;
   }
-  
+
 openSignaturePad(isEditing: boolean = false): void {
   this.isEditingSignature = isEditing;
   this.isSignatureModalOpen = true;
@@ -246,11 +245,11 @@ deleteSignature(): void {
       const id = params.get('id');
       console.log('Route params:', params); // Log the entire paramMap
       console.log('Retrieved id:', id); // Log the value of the id
-  
+
       this.userId = id ? id : null;  // Store it directly as a string
-  
+
       console.log('userId:', this.userId);
-  
+
       if (this.userId) {
         this.fetchEmployerDetails();
       } else {
@@ -261,7 +260,7 @@ deleteSignature(): void {
 
 
   }
-  
-  
-  
+
+
+
 }
