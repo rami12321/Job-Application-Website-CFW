@@ -19,7 +19,7 @@ router.post('/', createJobRequest);          // Create a new employer
 router.get('/:id', getJobRequestById);      // Get employer by ID
 router.put('/:id', updateJobRequest);       // Update employer by ID
 router.delete('/:id', deleteJobRequest);    // Delete employer by ID
-router.get('/job-request/by-employer', getJobsByEmployerId);
+router.get('/by-employer/:employerId', getJobsByEmployerId);
 router.put('/:id/youths/:youthId', assignYouthToJobRequest);
 router.put('/:id/status', updateJobRequestStatus);
 

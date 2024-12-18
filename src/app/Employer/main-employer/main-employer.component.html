@@ -241,13 +241,14 @@
             class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
           >
           
-            <td
-              class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
-              *ngFor="let column of columns"
-              
-            >
-              {{ job[column.key] }}
-            </td>
+          <td
+          class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
+          *ngFor="let column of columns"
+          [ngClass]="{ 'no-wrap': column.key === 'id' }"
+        >
+          {{ job[column.key] }}
+        </td>
+        
             <!-- Action Buttons -->
             <td class="px-6 py-4 border-b border-gray-300 text-center">
               <div class="flex space-x-2 justify-center">

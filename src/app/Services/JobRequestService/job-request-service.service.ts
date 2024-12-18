@@ -18,9 +18,7 @@ export class JobRequestService {
   }
   // Get Jobs by Employer ID
   getJobsByEmployerId(employerId: string): Observable<Job[]> {
-    const url = `http://localhost:3000/job-request/by-employer?employerId=${encodeURIComponent(
-      employerId
-    )}`;
+    const url = `${this.JobRequestsUrl}/by-employer/${employerId}`;
     return this.http.get<Job[]>(url); // Using Angular's HttpClient
   }
   // Get Job by ID
@@ -63,5 +61,15 @@ export class JobRequestService {
   }
   
   
-  
+  updateJobRequestStatus(id: string, status: string): Observable<any> {
+    const url = `${this.JobRequestsUrl}/${id}/status`;
+    return this.http.put(
+      url,
+      { status },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
 }

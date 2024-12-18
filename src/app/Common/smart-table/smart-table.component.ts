@@ -16,6 +16,7 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
 import { DetailsEmployerComponent } from '../../Employer/Details-Employer/details-employer.component';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { Job } from '../../Model/JobDetails';
+import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 interface Column {
   field: string;
   header: string;
@@ -35,6 +36,7 @@ interface Column {
     ButtonModule,
     YouthSignupDetailsComponent,
     DetailsEmployerComponent,
+    JobRequestDetailsComponent,
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -534,8 +536,7 @@ export class SmartTableComponent implements OnInit {
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
     console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
-  
-    // Ensure that only the youth IDs are passed to the backend
+
 
     const youthsAssigned = []; // Array to track successful assignments
 
@@ -545,18 +546,6 @@ export class SmartTableComponent implements OnInit {
       // Send only the youth ID to the backend; the backend will fetch the details
       this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id).subscribe({
         next: () => {
-          console.log(`Youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}) assigned to employer ${this.selectedJob}.`);
-        },
-        error: (error) => {
-          console.error(`Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`, error);
-        }
-      });
-    });
-  
-    this.youthDialogVisible = false;
-  }
-  
-  
           console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`);
           youthsAssigned.push(youth); // Track successfully assigned youth
 
@@ -566,13 +555,14 @@ export class SmartTableComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error(`Error assigning youth ${youth.name} (ID: ${youth.id}):`, error);
-        },
+          console.error(`Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`, error);
+        }
       });
     });
-
-    this.youthDialogVisible = false; // Close the dialog after initiating assignments
+  
+    this.youthDialogVisible = false;
   }
+
 
   private updateJobStatusToAssigned(): void {
     this.JobRequestService.updateJobRequestStatus(this.selectedJob, 'assigned').subscribe({
