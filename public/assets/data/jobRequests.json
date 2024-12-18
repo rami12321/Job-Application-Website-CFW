@@ -13,7 +13,6 @@
     "supervisorPosition": "eqwe",
     "supervisorEmail": "dasda@asdda",
     "supervisorPhone": "41465465"
-
   },
   {
     "employerId": "L-18100564",
@@ -92,25 +91,7 @@
     "supervisorEmail": "test@gmail.com",
     "supervisorPhone": "7678",
     "status": "waiting-E",
-    "id": "K-95631187",
-    "assignedYouths": [
-      {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "14305200",
-        "firstName": "rami",
-        "lastName": "ahah",
-        "dob": "2005-06-15",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
-      }
-    ]
+    "id": "K-95631187"
   },
   {
     "employerId": "L-18100564",
