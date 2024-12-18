@@ -196,82 +196,94 @@
     </div>
   </p-dialog>
 </div>
+
+
+
+  <h3 class="text-2xl font-bold text-[#1e90ff] dark:text-[#ffffff] mb-4 ml-7 shadow-sm">
+    Job Requests
+  </h3>
+  <p-tabView (onTabChange)="onTabChange($event)">
+  <!-- Waiting Tab -->
+  <p-tabPanel header="Waiting" [headerStyleClass]="'waiting-tab'">
+    <div class="overflow-x-auto">
+
 <div class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
-  <!-- Table -->
-  <div class="overflow-x-auto">
-    <table
-      class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden"
-    >
-      <thead>
-        <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
-          <th
-            *ngFor="let column of columns"
-            class="px-6 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
-            (click)="sortTable(column.key)"
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+        <thead>
+          <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+            <th
+              *ngFor="let column of columns"
+              class="px-6 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
+              (click)="sortTable(column.key)"
+            >
+              <span class="flex items-center">
+                {{ column.label }}
+                <svg
+                  class="w-4 h-4 ml-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path [attr.d]="getSortIconPath(column.key)" />
+                </svg>
+              </span>
+            </th>
+            <!-- Action Column -->
+            <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let job of paginatedData"
+            class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
           >
-            <span class="flex items-center">
-              {{ column.label }}
-              <svg
-                class="w-4 h-4 ml-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path [attr.d]="getSortIconPath(column.key)" />
-              </svg>
-            </span>
-          </th>
-          <!-- Action Column -->
-          <th class="px-6 py-4 border-b border-gray-300 text-center">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let job of paginatedData"
-          class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
-        >
-          <td
-            class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
-            *ngFor="let column of columns"
-          >
-            {{ job[column.key] }}
-          </td>
-          <!-- Action Buttons -->
-          <td class="px-6 py-4 border-b border-gray-300 text-center">
-            <div class="flex space-x-2 justify-center">
-              <button
-                class="bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
-                aria-label="Edit"
-                (click)="openEditModal(job.id ?? 'N/A')"
-              >
-                <i class="pi pi-pencil text-lg"></i>
-              </button>
+          
+            <td
+              class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
+              *ngFor="let column of columns"
+              
+            >
+              {{ job[column.key] }}
+            </td>
+            <!-- Action Buttons -->
+            <td class="px-6 py-4 border-b border-gray-300 text-center">
+              <div class="flex space-x-2 justify-center">
 
-              <button
-                class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
-                aria-label="Delete"
-                (click)="openDeleteModal(job)"
-              >
-                <i class="pi pi-trash text-lg"></i>
-              </button>
+                
+                <button
+  class="bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+  aria-label="Edit"
+  (click)="openEditModal(job.id ?? 'N/A')"
+>
+  <i class="pi pi-pencil text-lg"></i>
+</button>
 
-              <button
-                class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
-                aria-label="Info"
-                (click)="openModal(job.id ?? 'N/A')"
-              >
-                <i class="pi pi-info text-lg"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+  
+                <button
+                  class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                  aria-label="Delete"
+                  (click)="openDeleteModal(job)"
+                >
+                  <i class="pi pi-trash text-lg"></i>
+                </button>
+  
+                <button
+                  class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                  aria-label="Info"
+                  (click)="openModal(job.id ?? 'N/A')"
+                >
+                  <i class="pi pi-info text-lg"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
   <!-- Pagination Controls -->
   <div class="mt-6 flex justify-between items-center">
     <!-- Previous Button -->
@@ -311,6 +323,8 @@
     />
   </div>
 </div>
+
+
 <div
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   *ngIf="isEditModalOpen"
@@ -444,3 +458,17 @@
     </div>
   </div>
 </div>
+</div>
+
+
+</p-tabPanel>
+<p-tabPanel header="Assigned" [headerStyleClass]="'assigned-tab'">
+  <p>Assigned jobs will go here.</p>
+</p-tabPanel>
+<p-tabPanel header="In Progress" [headerStyleClass]="'in-progress-tab'">
+  <p>In-progress jobs will go here.</p>
+</p-tabPanel>
+<p-tabPanel header="Completed" [headerStyleClass]="'completed-tab'">
+  <p>Completed jobs will go here.</p>
+</p-tabPanel>
+</p-tabView>

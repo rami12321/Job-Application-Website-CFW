@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import youthRoutes from './routes/youthRoutes';  // Ensure correct path
 import employerRoutes from './routes/employerRoutes';
@@ -10,18 +9,20 @@ import { deleteCode } from './controllers/VerificationCodeController';
 const app = express();
 const PORT = 3000;
 
-
-
+// Enable CORS
 app.use(cors());
 
-app.use(express.json()); // For parsing JSON request bodies
-app.use(express.static('public'));    // Serve static files
-app.use(bodyParser.json());
+// Increase the request body size limit to 50MB (you can adjust this as needed)
+app.use(express.json({ limit: '50mb' }));  // Increase limit for JSON requests
+
+// Serve static files
+app.use(express.static('public'));    
+// Define your routes
 app.use('/youth', youthRoutes);
 app.use('/employer', employerRoutes);
-app.use('/job-request',jobRequestsRoutes);
+app.use('/job-request', jobRequestsRoutes);
 app.use('/api', verificationcodeRoutes);
 app.delete('/api/verificationCode/:code', deleteCode);
 
-
+// Start the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

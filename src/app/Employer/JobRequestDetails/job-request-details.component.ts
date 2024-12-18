@@ -2,11 +2,12 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { Job } from '../../Model/JobDetails';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-job-request-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css'
 })
@@ -43,19 +44,26 @@ export class JobRequestDetailsComponent {
       this.fetchJobRequestDetails();
     }
   }
+
+  
   fetchJobRequestDetails(): void {
     if (!this.jobId) return;
-    
-
+  
     this.jobRequestService.getJobById(this.jobId).subscribe({
       next: (data: Job) => {
-        this.jobRequest = data;
+        // Ensure assignedYouths is always an array
+        this.jobRequest = {
+          ...data,
+          assignedYouths: data.assignedYouths || []
+        };
+        console.log('Fetched job request:', this.jobRequest);
       },
       error: (err) => {
         console.error('Error fetching job request:', err);
-      }
+      },
     });
   }
+  
 
   startEditing(): void {
     this.isEditing['details'] = true;

@@ -1,3 +1,5 @@
+import { AssignedYouth } from "./assignedYouth";
+
 export interface Job {
 
   id?: string;
@@ -13,4 +15,6 @@ export interface Job {
   supervisorEmail: string;
   supervisorPhone: string;
   status:string;
+    assignedYouths?: AssignedYouth[];
+  
 }

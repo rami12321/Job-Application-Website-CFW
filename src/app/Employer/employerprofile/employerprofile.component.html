@@ -6,6 +6,22 @@
   </h3>
     <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
       <div class="grid grid-cols-2 gap-6 mt-4">
+        <div class="profile-image-container">
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Profile Image: </strong>
+          
+          <!-- Display Profile Image -->
+
+          <div *ngIf="profileImageSrc">
+            <img [src]="profileImageSrc" alt="Profile Image" class="w-32 h-32 object-cover rounded-full border border-[#d4edff] dark:border-gray-700 shadow-md">
+          </div>
+          <input *ngIf="isEditing['details']" type="file" accept="image/*" (change)="onImageChange($event)" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700" />
+          
+          
+          </div>
+          
+          
+        
+        
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Organization: </strong>
           <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.organization }}</span>
@@ -85,11 +101,15 @@
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Signature:</strong>
           </p>
           <div
-            class="w-21 h-32  bg-white border border-[#d4edff] dark:border-gray-700 rounded-md shadow-md justify-center items-center cursor-pointer"
+            class="w-21 h-32 bg-white border border-[#d4edff] dark:border-gray-700 rounded-md shadow-md justify-center items-center cursor-pointer"
             (click)="openModal(employer?.signature || '')"
           >
-            <img [src]="employer?.signature" alt="Employer Signature" class="w-29 h-28 object-contain" />
+            <img [src]="employer?.signature || ''" alt="Employer Signature" class="w-29 h-28 object-contain" />
           </div>
+        <div *ngIf="!employer?.signature" class="mt-6 text-gray-500">
+          No signature available.
+        </div>
+        
           <div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white p-6 rounded-lg shadow-lg max-w-96 max-h-96 overflow-auto">
               <div class="flex justify-end">

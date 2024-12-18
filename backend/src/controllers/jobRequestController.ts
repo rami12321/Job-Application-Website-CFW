@@ -128,44 +128,59 @@ export const deleteJobRequest = (req: Request, res: Response): void => {
   res.status(200).json({ message: `Job Request with ID ${id} deleted successfully.`, deletedJobRequest });
 };
 
-// Assign youth to a job request
 export const assignYouthToJobRequest = (req: Request, res: Response): void => {
-  const { id, youthId } = req.params; // Extract jobRequest ID and youthId from route parameters
-  const { name } = req.body; // Extract the youth's details from the request body
-  const jobRequests: Job[] = readFile(); // Read the current job requests data
+  const { id, youthId } = req.params;
+  const jobRequests: Job[] = readFile();
+  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
 
   const jobIndex = jobRequests.findIndex((job) => job.id === id);
 
-  // Check if the job request exists
+
   if (jobIndex === -1) {
     res.status(404).json({ message: `Job Request with ID ${id} not found.` });
     return;
   }
 
-  // Initialize the assigned youths array if it doesn't exist
+
+  const youth = youthData.find((y) => y.id === youthId);
+
+
+  if (!youth) {
+    res.status(404).json({ message: `Youth with ID ${youthId} not found.` });
+    return;
+  }
+
+
   if (!jobRequests[jobIndex].assignedYouths) {
     jobRequests[jobIndex].assignedYouths = [];
   }
 
-  // Check if the youth is already assigned
+
   const existingYouthIndex = jobRequests[jobIndex].assignedYouths.findIndex((y) => y.id === youthId);
 
   if (existingYouthIndex !== -1) {
-    // If the youth is already assigned, update their details
+
     jobRequests[jobIndex].assignedYouths[existingYouthIndex] = {
       ...jobRequests[jobIndex].assignedYouths[existingYouthIndex],
-      name: name || jobRequests[jobIndex].assignedYouths[existingYouthIndex].name, // Update the name if provided
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
     };
   } else {
-    // Add the new youth with default status
+
     jobRequests[jobIndex].assignedYouths.push({
       id: youthId,
-      name: name || "Unknown", // Use "Unknown" if name is not provided
-      status: "waiting", // Default status
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
     });
   }
 
-  // Save the updated job requests array back to the file
+
   writeFile(jobRequests);
 
   res.status(200).json({

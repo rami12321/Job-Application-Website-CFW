@@ -28,6 +28,10 @@ export class EmployerService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+  uploadProfileImage(employerId: string, payload: { image: string }): Observable<any> {
+    return this.http.post<any>(`${this.employerDbUrl}/${employerId}/upload-profile-image`, payload);
+  }
+  
 
   // Update an employer by ID
   updateEmployer(id: string, updatedEmployer: Partial<Employer>): Observable<Employer> {
