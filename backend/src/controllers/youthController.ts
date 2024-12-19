@@ -28,14 +28,23 @@ export const getAllYouth = (req: Request, res: Response): void => {
 
 
 export const createYouth = (req: Request, res: Response): void => {
-  const youths: Youth[] = readFile();
+  const youths: Youth[] = readFile();  // Read existing youths from the file
   const newYouth: Youth = req.body;
 
-  // Generate the ID and assign it to the new youth
+  // Generate the current date and time for createdAt
+  const createdAt = new Date().toISOString();  // ISO 8601 format string (e.g., "2024-12-19T12:34:56Z")
 
-  youths.push(newYouth);
-  writeFile(youths);
-  res.status(201).json(newYouth);
+  // Add the createdAt field to the newYouth object
+  const youthWithTimestamp: Youth = {
+    ...newYouth,
+    createdAt,  // Add the createdAt field with the current timestamp
+  };
+
+  // Add the new youth with the timestamp to the list
+  youths.push(youthWithTimestamp);
+  writeFile(youths);  // Write the updated list of youths back to the file
+
+  res.status(201).json(youthWithTimestamp);  // Return the newly created youth with the createdAt field
 };
 export const updateYouthCamp = (req: Request, res: Response): void => {
   const { id } = req.params; // Extract user ID from request parameters
@@ -344,8 +353,9 @@ export const getYouthByJob = (req: Request, res: Response): void => {
   // Map and return the matching youths' names and notes
   const result = filteredYouths.map((y) => ({
     id:y.id,
-    name: y.firstNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
-    notes: y.notes || [] // Default to empty array if no notes available
+    name: y.firstNameEn+ ' ' +y.lastNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
+    notes: y.notes || [] ,// Default to empty array if no notes available
+    beneficiary: y.beneficiary ||false // Default to empty array if no notes available
   }));
 
   // Send the response with the matching youths

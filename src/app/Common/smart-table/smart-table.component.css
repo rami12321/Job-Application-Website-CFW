@@ -58,4 +58,16 @@
   padding: 15px !important;
 }
 
+.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  animation: fade-in 0.2s ease-in-out forwards !important; /* Bind the animation */
+}
 
+@keyframes fade-in {
+  0% {
+      background-color: transparent !important;
+  }
+  100% {
+      background-color: transparent !important;
+  }
+}

@@ -37,18 +37,32 @@ export class YouthChartComponent implements OnInit {
 
   ngOnInit() {
     this.youthService.getAllYouth().subscribe((youths) => {
+      const totalYouths = youths.length;
+
       // Gender Distribution for Pie Chart
       const genderData = this.getGenderDistribution(youths);
+      const genderPercentages = this.getPercentageDistribution(
+        Object.values(genderData),
+        totalYouths
+      );
 
       // Education Level Distribution for Pie Chart
       const educationData = this.getEducationDistribution(youths);
+      const educationPercentages = this.getPercentageDistribution(
+        Object.values(educationData),
+        totalYouths
+      );
 
       // Age Distribution for Bar Chart
       const ageData = this.getAgeDistribution(youths);
+      const agePercentages = this.getPercentageDistribution(
+        Object.values(ageData),
+        totalYouths
+      );
 
       // Create Pie Chart for Gender Distribution
       this.createPieChart('genderChart', {
-        labels: Object.keys(genderData),
+        labels: this.appendPercentagesToLabels(Object.keys(genderData), genderPercentages),
         datasets: [
           {
             label: 'Gender Distribution',
@@ -60,7 +74,7 @@ export class YouthChartComponent implements OnInit {
 
       // Create Pie Chart for Education Level Distribution
       this.createPieChart('educationChart', {
-        labels: Object.keys(educationData),
+        labels: this.appendPercentagesToLabels(Object.keys(educationData), educationPercentages),
         datasets: [
           {
             label: 'Education Level Distribution',
@@ -72,7 +86,7 @@ export class YouthChartComponent implements OnInit {
 
       // Create Bar Chart for Age Distribution
       this.createBarChart('ageChart', {
-        labels: Object.keys(ageData),
+        labels: this.appendPercentagesToLabels(Object.keys(ageData), agePercentages),
         datasets: [
           {
             label: 'Age Distribution',
@@ -113,6 +127,15 @@ export class YouthChartComponent implements OnInit {
     const lowerLimit = Math.floor(age / 2) * 2; // Round down to nearest even number
     const upperLimit = lowerLimit + 2; // Set upper limit for 2-year range
     return `${lowerLimit}-${upperLimit}`;
+  }
+
+  private getPercentageDistribution(values: number[], total: number): number[] {
+    return values.map((value) => parseFloat(((value / total) * 100).toFixed(1))); // Convert to number after formatting
+  }
+
+
+  private appendPercentagesToLabels(labels: string[], percentages: number[]): string[] {
+    return labels.map((label, index) => `${label} (${percentages[index]}%)`);
   }
 
   private createPieChart(canvasId: string, chartData: any) {

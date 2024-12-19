@@ -531,7 +531,8 @@ export class SmartTableComponent implements OnInit {
         this.youths = (response.youths || []).map((youth: any) => ({
           id: youth.id,
           name: youth.name,
-          label: `${youth.name} (${youth.id})` // Create a label for the multi-select
+          beneficiary:youth.beneficiary,
+          label: `${youth.name} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}` // Add icon and text if beneficiary
         }));
 
         console.log('Transformed youths array:', this.youths); // Log the transformed array

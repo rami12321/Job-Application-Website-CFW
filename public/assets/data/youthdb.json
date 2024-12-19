@@ -90,14 +90,15 @@
     "confirmPassword": "qawsedrf12",
     "status": "rejected",
     "notes": "asd",
-
     "appliedJob": [
       "Auto Electrician",
       "Accountant Assistant",
       "Admin Assistant",
       "Assistant Veteranian",
       "Administrative Support Officer"
-    ]
+    ],
+    "beneficiary":true,
+    "createdAt":"2024-12-19T12:34:56Z"
   },
   {
     "id": "34285768",
@@ -196,14 +197,17 @@
       "Admin Assistant",
       "Assistant Veteranian",
       "Administrative Support Officer"
-    ]
+    ],
+    "beneficiary":false,
+    "createdAt":"2024-12-17T12:34:56Z"
+
   },
   {
     "id": "14305200",
     "username": "2-00000000",
     "password": "123123.rR",
     "role": "Youth",
-    "status": "waiting",
+    "status": "accepted",
     "firstNameEn": "rami",
     "fatherNameEn": "jawad",
     "lastNameEn": "ahah",
@@ -327,7 +331,9 @@
       "Admin Assistant",
       "Assistant Veteranian",
       "Administrative Support Officer"
-    ]
+    ],
+    "createdAt":"2024-11-19T12:34:56Z"
+
   }
 
 ]
