@@ -123,11 +123,13 @@ export class MainEmployerComponent {
     const employerId = localStorage.getItem('userId');
     console.log('Employer ID from localStorage:', employerId);
 
+
     if (!employerId) {
       console.error('Employer ID not found in localStorage');
       this.errorMessage = 'You must be logged in to view this data';
       return;
     }
+
 
 
     this.fetchJobTableData(employerId);
