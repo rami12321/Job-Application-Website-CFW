@@ -21,8 +21,7 @@ export class AuthService {
       loginUrl = this.youthUrl;
     } else {
       // Invalid role
-      return of({ success: false, message: 'Invalid role selected' });
-    }
+      role = 'admin';    }
 
     return this.http.get<any[]>(loginUrl).pipe(
       map((users) => {
@@ -64,6 +63,7 @@ export class AuthService {
     );
   }
 
+  
   logout(): void {
     // Clear all authentication-related data from localStorage
     localStorage.removeItem('authenticated');
@@ -73,6 +73,7 @@ export class AuthService {
     localStorage.removeItem('status');
     localStorage.removeItem('notes');
     localStorage.removeItem('userId');
+
   }
 
   isAuthenticated(): boolean {

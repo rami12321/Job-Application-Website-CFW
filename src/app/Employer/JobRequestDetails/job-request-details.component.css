@@ -1,0 +1,34 @@
+/* Tooltip styling */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition-delay: 0s; /* Default delay is 0 */
+  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+  bottom: 150%; /* Adjusts tooltip position on hover */
+  transition-delay: 1s; /* Delays appearance by 1 second on hover */
+}

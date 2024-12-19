@@ -1,88 +1,86 @@
-<div class="responsive-container mx-auto max-w-6xl">
-  <!-- Card Wrapper -->
-  <div class="p-4   rounded-lg shadow-md border border-gray-300 bg-[#f0f8ff] dark:bg-[#1e90ff]">
-    <!-- Job Request Details Section -->
-    <h3 class="text-lg font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+<div class="responsive-container">
+  <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
       Job Request Details
     </h3>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <!-- Job Title -->
-      <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
-          {{ jobRequest?.title }}
-        </span>
-      </p>
-
+    
+    <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+      <div class="grid grid-cols-2 gap-6 mt-4">
+        <!-- Job Title -->
+        <p>
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
+          <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            {{ jobRequest?.title }}
+          </span>
+        </p>
       <!-- Number of Employees -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.numEmployees }}
         </span>
       </p>
-
       <!-- Job Level -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.level }}
         </span>
       </p>
 
       <!-- Location -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Location: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.location }}
         </span>
       </p>
 
       <!-- Type of Job -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.typeOfJob }}
         </span>
       </p>
-
       <!-- Supervisor Name -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.supervisorName }}
         </span>
       </p>
-
       <!-- Supervisor Position -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.supervisorPosition }}
         </span>
       </p>
-
       <!-- Supervisor Email -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.supervisorEmail }}
         </span>
       </p>
 
       <!-- Supervisor Phone -->
       <p>
-        <strong class="text-base font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
-        <span class="text-base font-medium text-gray-600 dark:text-gray-400 shadow-sm px-3 py-2 bg-blue-50 dark:bg-blue-900 rounded">
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
+        <span class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
           {{ jobRequest?.supervisorPhone }}
         </span>
       </p>
     </div>
   </div>
 
+  <div *ngIf="hasAssignedYouths" class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
+    <!-- Search Input -->
+
   
-  <div class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
-    <div class="overflow-x-auto">
+    <!-- Table -->
+    <div class="overflow-x-auto mt-4">
       <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
         <thead>
           <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
@@ -95,7 +93,7 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let youth of jobRequest?.assignedYouths"
+            *ngFor="let youth of paginatedAssignedYouths"
             class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
           >
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.firstName }}</td>
@@ -104,37 +102,62 @@
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-blue-600 underline">
               <a *ngIf="youth?.cv" [href]="youth.cv" target="_blank">View CV</a>
             </td>
-  
-            <!-- Action Buttons -->
             <td class="px-6 py-4 border-b border-gray-300 text-center">
               <div class="flex space-x-4 justify-center">
-                <!-- Conditional Accept/Reject Buttons -->
-                <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected'; else statusButton">
-                  <button
-                    class="w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                    (click)="toggleYouthStatus(youth, 'accepted')"
-                    aria-label="Accept Youth"
-                  >
-                    <i class="pi pi-check text-lg"></i>
-                  </button>
-                  <button
-                    class="w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                    (click)="toggleYouthStatus(youth, 'rejected')"
-                    aria-label="Reject Youth"
-                  >
-                    <i class="pi pi-times text-lg"></i>
-                  </button>
+                <!-- Action Buttons -->
+                <ng-container *ngIf="isEmployer(); else nonEmployerView">
+                  <!-- Accept/Reject -->
+                  <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected'; else statusFlag">
+                    <button
+                      class="tooltip w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                      (click)="toggleYouthStatus(youth, 'accepted')"
+                      aria-label="Accept Youth"
+                      data-tooltip="Click to accept the youth"
+                    >
+                      <i class="pi pi-check text-lg"></i>
+                    </button>
+                    <button
+                      class="tooltip w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                      (click)="toggleYouthStatus(youth, 'rejected')"
+                      aria-label="Reject Youth"
+                      data-tooltip="Click to reject the youth"
+                    >
+                      <i class="pi pi-times text-lg"></i>
+                    </button>
+                  </ng-container>
+                  <!-- Status -->
+                  <ng-template #statusFlag>
+                    <button
+                      *ngIf="youth.action === 'accepted'"
+                      class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                      (click)="toggleYouthStatus(youth, null)"
+                      aria-label="Accepted Status"
+                      data-tooltip="Click to reset"
+                    >
+                      <i class="pi pi-check-circle text-lg"></i>
+                    </button>
+                    <button
+                      *ngIf="youth.action === 'rejected'"
+                      class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                      (click)="toggleYouthStatus(youth, null)"
+                      aria-label="Rejected Status"
+                      data-tooltip="Click to reset"
+                    >
+                      <i class="pi pi-times-circle text-lg"></i>
+                    </button>
+                  </ng-template>
                 </ng-container>
-  
-                <!-- Status Button -->
-                <ng-template #statusButton>
-                  <button
-                    class="w-10 h-10 bg-gray-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                    (click)="toggleYouthStatus(youth, null)"
-                    aria-label="Toggle Status"
-                  >
-                    {{ youth.action | titlecase }}
-                  </button>
+                <!-- Non-Employer -->
+                <ng-template #nonEmployerView>
+                  <div *ngIf="youth.action === 'accepted'" class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md">
+                    <i class="pi pi-check-circle text-lg"></i>
+                  </div>
+                  <div *ngIf="youth.action === 'rejected'" class="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md">
+                    <i class="pi pi-times-circle text-lg"></i>
+                  </div>
+                  <div *ngIf="!youth.action" class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-md">
+                    <i class="pi pi-clock text-lg"></i>
+                  </div>
                 </ng-template>
               </div>
             </td>
@@ -143,17 +166,28 @@
       </table>
     </div>
   
-    <!-- Submit Button -->
-    <div class="mt-6 flex justify-center">
+    <!-- Pagination Controls -->
+    <div class="mt-6 flex justify-between items-center">
       <button
-        class="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
-        [disabled]="!isSubmitEnabled()"
-        (click)="submitJobRequest()"
+        class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
       >
-        Submit
+        Previous
+      </button>
+      <div class="flex items-center space-x-2">
+        <span class="text-sm text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button
+        class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
       </button>
     </div>
   </div>
+  
   
   
 </div>
