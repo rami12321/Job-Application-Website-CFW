@@ -1,0 +1,201 @@
+<<<<<<< HEAD
+[
+  {
+    "employerId": "34285768",
+    "job": "Auto Electrician",
+    "title": "hadh",
+    "numEmployees": 3,
+    "level": "",
+    "location": "",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "eqwe",
+    "supervisorEmail": "dasda@asdda",
+    "supervisorPhone": "41465465"
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Dental Assistant",
+    "title": "qwertyuio",
+    "numEmployees": 10,
+    "level": "mid",
+    "location": "Akkar, LBN",
+    "typeOfJob": "onsite",
+    "supervisorName": "",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "assigned",
+    "id": "A-61232388",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "name": "Mohammad",
+        "status": "waiting",
+        "action": "accepted"
+      },
+      {
+        "id": "14305200",
+        "name": "rami",
+        "status": "waiting",
+        "firstName": "rami",
+        "lastName": "ahah",
+        "dob": "2005-06-15",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "action": "accepted"
+      }
+    ]
+  },
+  {
+    "employerId": "34285768",
+    "job": "Translator",
+    "title": "dasd",
+    "numEmployees": 9,
+    "level": "",
+    "location": "",
+    "typeOfJob": "",
+    "supervisorName": "",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "waiting-E",
+    "id": "T-32416340"
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Auto Electrician",
+    "title": "New22",
+    "numEmployees": 8,
+    "level": "mid",
+    "location": "",
+    "typeOfJob": "onsite",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "123dasd",
+    "supervisorPhone": "asdasdasd",
+    "status": "waiting-E",
+    "id": "G-55827737",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      },
+      {
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      }
+    ]
+  },
+  {
+    "employerId": "L-18100564",
+    "job": "Auto Electrician",
+    "title": "123123",
+    "numEmployees": 2,
+    "level": "mid",
+    "location": "dasdas",
+    "typeOfJob": "remote",
+    "supervisorName": "asdas",
+    "supervisorPosition": "sdasd",
+    "supervisorEmail": "asd",
+    "supervisorPhone": "da",
+    "status": "waiting-E",
+    "id": "D-53259704"
+  },
+  {
+    "employerId": "F-70583249",
+    "job": "Auto Electrician",
+    "title": "Data Entry",
+    "numEmployees": 2,
+    "level": "senior",
+    "location": "ddd",
+    "typeOfJob": "onsite",
+    "supervisorName": "",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "assigned",
+    "id": "J-59716278",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "action": "rejected"
+      },
+      {
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "action": "rejected"
+      }
+    ]
+  },
+  {
+    "employerId": "F-70583249",
+    "job": "Auto Mechanic",
+    "title": "intern",
+    "numEmployees": 3,
+    "level": "mid",
+    "location": "lebanon",
+    "typeOfJob": "Full-Time",
+    "supervisorName": "rmai",
+    "supervisorPosition": "all",
+    "supervisorEmail": "kqpkm@gmail.com",
+    "supervisorPhone": "233423",
+    "status": "waiting-E",
+    "category": "Cars & Motors Electrican",
+    "id": "L-93833072"
+  },
+  {
+    "employerId": "F-70583249",
+    "job": "Auto Electrician",
+    "title": "Data Entry Clerk",
+    "numEmployees": 23,
+    "level": "mid",
+    "location": "Akkar, LBN",
+    "typeOfJob": "onsite",
+    "supervisorName": "Osama Al Ali",
+    "supervisorPosition": "Manager",
+    "supervisorEmail": "wef@gmail.com",
+    "supervisorPhone": "78678",
+    "status": "assigned",
+    "category": "Cars & Motors Electrican",
+    "id": "Y-23071980",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "action": "accepted"
+      },
+      {
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "action": "rejected"
+      }
+    ]
+  }
+]
+=======
+>>>>>>> 980ad74049ffdff58868c8223de01fc51f9b1728

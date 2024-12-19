@@ -40,7 +40,10 @@ export class MainEmployerComponent {
   allCategories: Record<string, string[]> = {};
   isDeleteModalOpen = false;
   selectedJobTitle: string | null = null;
-  
+  waitingSearchQuery: string = '';
+  assignedSearchQuery: string = '';
+  inProgressSearchQuery: string = '';
+  completedSearchQuery: string = '';
   userId = localStorage.getItem('userId') || '';
 
   columns: { key: keyof Job; label: string }[] = [
@@ -48,11 +51,18 @@ export class MainEmployerComponent {
     { key: 'job', label: 'Job' },
 
     { key: 'title', label: 'Job Title' },
-    
+
     { key: 'location', label: 'Location' },
     { key: 'numEmployees', label: 'Number Requested' },
   ];
-
+  waitingJobs: Job[] = [];
+  assignedJobs: Job[] = [];
+  inProgressJobs: Job[] = [];
+  completedJobs: Job[] = [];
+  filteredWaitingJobs: Job[] = [];
+  filteredAssignedJobs: Job[] = [];
+  filteredInProgressJobs: Job[] = [];
+  filteredCompletedJobs: Job[] = [];
   jobs: Job[] = [];
   paginatedData: Job[] = [];
   searchQuery: string = '';
@@ -67,6 +77,7 @@ export class MainEmployerComponent {
   isEditModalOpen: boolean = false;
   selectedJob: Job | null = null;
   errorMessage: string | null = null;
+  
   jobDetails: Job = {
     id: '',
     employerId: this.userId,
@@ -124,16 +135,32 @@ export class MainEmployerComponent {
     this.fetchJobTableData(employerId);
   }
   onTabChange(event: any): void {
-    const statusMap = ['waiting-E', 'assigned-E', 'in-progress', 'completed'];
+    const statusMap = ['waiting-E', 'assigned', 'in-progress', 'completed'];
     const selectedStatus = statusMap[event.index];
+  
     this.paginatedData = this.jobsByStatus(selectedStatus);
-    this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
     this.currentPage = 1;
+    this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
     this.updatePaginatedData();
   }
+  
   jobsByStatus(status: string): Job[] {
-  return this.jobs.filter((job) => job.status === status);
-}
+    return this.jobs.filter((job) => job.status === status);
+  }
+  
+  categorizeJobs(): void {
+    this.waitingJobs = this.jobs.filter((job) => job.status === 'waiting-E');
+    this.assignedJobs = this.jobs.filter((job) => job.status === 'assigned');
+    this.inProgressJobs = this.jobs.filter((job) => job.status === 'in-progress');
+    this.completedJobs = this.jobs.filter((job) => job.status === 'completed');
+  
+    // Initialize filtered jobs
+    this.filteredWaitingJobs = [...this.waitingJobs];
+    this.filteredAssignedJobs = [...this.assignedJobs];
+    this.filteredInProgressJobs = [...this.inProgressJobs];
+    this.filteredCompletedJobs = [...this.completedJobs];
+  }
+  
 
   openEditModal(jobId: string): void {
     this.selectedJobId = jobId;
@@ -181,12 +208,10 @@ export class MainEmployerComponent {
 
   confirmDelete(): void {
     if (!this.selectedJobId) return;
-
+  
     this.jobRequestService.deleteJob(this.selectedJobId).subscribe({
       next: () => {
-        this.jobs = this.jobs.filter((job) => job.id !== this.selectedJobId);
-        this.updatePaginatedData();
-        this.closeDeleteModal();
+        window.location.reload(); // Reload the page
       },
       error: (err) => {
         console.error('Error deleting job:', err);
@@ -194,6 +219,7 @@ export class MainEmployerComponent {
       },
     });
   }
+  
   getSortIconPath(key: string): string {
     if (this.sortKey === key) {
       return this.sortDirection === 'asc'
@@ -207,6 +233,7 @@ export class MainEmployerComponent {
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedData = filteredJobs.slice(startIndex, endIndex);
   }
+  
 
   changePage(newPage: number): void {
     if (newPage > 0 && newPage <= this.totalPages) {
@@ -214,13 +241,29 @@ export class MainEmployerComponent {
       this.updatePaginatedData();
     }
   }
-  searchJobs() {
-
-    this.paginatedData = this.jobs.filter((job) =>
-      job.title?.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
-    this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
-    this.currentPage = 1;
+  searchJobs(status: string): void {
+    switch (status) {
+      case 'waiting':
+        this.filteredWaitingJobs = this.waitingJobs.filter((job) =>
+          job.title?.toLowerCase().includes(this.waitingSearchQuery.toLowerCase())
+        );
+        break;
+      case 'assigned':
+        this.filteredAssignedJobs = this.assignedJobs.filter((job) =>
+          job.title?.toLowerCase().includes(this.assignedSearchQuery.toLowerCase())
+        );
+        break;
+      case 'in-progress':
+        this.filteredInProgressJobs = this.inProgressJobs.filter((job) =>
+          job.title?.toLowerCase().includes(this.inProgressSearchQuery.toLowerCase())
+        );
+        break;
+      case 'completed':
+        this.filteredCompletedJobs = this.completedJobs.filter((job) =>
+          job.title?.toLowerCase().includes(this.completedSearchQuery.toLowerCase())
+        );
+        break;
+    }
   }
 
   editJob(id: string) {
@@ -258,8 +301,10 @@ export class MainEmployerComponent {
           const idB = b.id ?? '';
           return idB.localeCompare(idA);
         });
-
-        this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
+  
+        this.categorizeJobs(); // Categorize jobs after fetching
+        this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
+        this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
         this.updatePaginatedData();
         this.isLoading = false;
       },
@@ -270,6 +315,7 @@ export class MainEmployerComponent {
       },
     });
   }
+  
 
   deleteJob(id: string): void {
     this.jobRequestService.deleteJob(id).subscribe({
@@ -322,33 +368,40 @@ export class MainEmployerComponent {
 
   onSelectJob(job: string): void {
     this.selectedjob = job;
-    this.step1 = true; // Display Step 2
+    this.step1 = true;
   }
 
   submitForm(): void {
-
+    // Validate required fields
     if (!this.jobDetails.title || this.jobDetails.numEmployees <= 0) {
       console.error('Title and number of employees are required.');
       return;
     }
-
-
+  
+    // Construct the job request object
     const jobRequest: Job = {
-      ...this.jobDetails,
-      job: this.selectedjob,
+      ...this.jobDetails,       // Spread other job details
+      job: this.selectedjob,    // Selected job (subcategory)
+      category: this.selectedCategory, // Selected main category
     };
-
+  
+    // Save the job data
     this.jobRequestService.saveJobData(jobRequest).subscribe({
       next: (response) => {
         console.log('Job Request Submitted Successfully:', response);
         this.jobRequested = true;
         this.closeDialog();
+  
+        // Reload the page to show updated data
+        window.location.reload();
       },
       error: (err) => {
         console.error('Failed to submit job request:', err);
       },
     });
   }
+  
+
 
   resetForm(): void {
     this.selectedCategory = '';
