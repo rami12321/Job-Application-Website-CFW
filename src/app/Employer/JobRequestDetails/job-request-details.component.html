@@ -104,67 +104,248 @@
             </td>
             <td class="px-6 py-4 border-b border-gray-300 text-center">
               <div class="flex space-x-4 justify-center">
-                <!-- Action Buttons -->
+                <!-- Employer View -->
                 <ng-container *ngIf="isEmployer(); else nonEmployerView">
-                  <!-- Accept/Reject -->
-                  <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected'; else statusFlag">
+                  <ng-container *ngIf="youth.action === 'approved'; else actionButtons">
+                    <!-- Approved Status for Employers (Non-editable) -->
                     <button
-                      class="tooltip w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                      (click)="toggleYouthStatus(youth, 'accepted')"
-                      aria-label="Accept Youth"
-                      data-tooltip="Click to accept the youth"
+                      class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
+                      aria-label="Approved Status"
+                      data-tooltip="Approved"
+                      disabled
                     >
-                      <i class="pi pi-check text-lg"></i>
-                    </button>
-                    <button
-                      class="tooltip w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                      (click)="toggleYouthStatus(youth, 'rejected')"
-                      aria-label="Reject Youth"
-                      data-tooltip="Click to reject the youth"
-                    >
-                      <i class="pi pi-times text-lg"></i>
+                      <i class="pi pi-verified text-lg"></i>
                     </button>
                   </ng-container>
-                  <!-- Status -->
-                  <ng-template #statusFlag>
-                    <button
-                      *ngIf="youth.action === 'accepted'"
-                      class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                      (click)="toggleYouthStatus(youth, null)"
-                      aria-label="Accepted Status"
-                      data-tooltip="Click to reset"
-                    >
-                      <i class="pi pi-check-circle text-lg"></i>
-                    </button>
-                    <button
-                      *ngIf="youth.action === 'rejected'"
-                      class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
-                      (click)="toggleYouthStatus(youth, null)"
-                      aria-label="Rejected Status"
-                      data-tooltip="Click to reset"
-                    >
-                      <i class="pi pi-times-circle text-lg"></i>
-                    </button>
+                
+                  <!-- Accept and Reject Buttons for Employers (when action is not approved) -->
+                  <ng-template #actionButtons>
+                    <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected'; else statusFlag">
+                      <button
+                        class="tooltip w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        (click)="toggleYouthStatus(youth, 'accepted')"
+                        aria-label="Accept Youth"
+                        data-tooltip="Accept Youth"
+                      >
+                        <i class="pi pi-check text-lg"></i>
+                      </button>
+                      <button
+                        class="tooltip w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        (click)="toggleYouthStatus(youth, 'rejected')"
+                        aria-label="Reject Youth"
+                        data-tooltip="Reject Youth"
+                      >
+                        <i class="pi pi-times text-lg"></i>
+                      </button>
+                    </ng-container>
+                
+                    <!-- Status Flag for Accepted or Rejected -->
+                    <ng-template #statusFlag>
+                      <button
+                        *ngIf="youth.action === 'accepted'"
+                        class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        aria-label="Accepted Status"
+                        (click)="toggleYouthStatus(youth, null)"
+                        data-tooltip="Reset to Pending"
+                      >
+                        <i class="pi pi-check-circle text-lg"></i>
+                      </button>
+                      <button
+                        *ngIf="youth.action === 'rejected'"
+                        class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        aria-label="Rejected Status"
+                        (click)="toggleYouthStatus(youth, null)"
+                        data-tooltip="Reset to Pending"
+                      >
+                        <i class="pi pi-times-circle text-lg"></i>
+                      </button>
+                    </ng-template>
                   </ng-template>
                 </ng-container>
-                <!-- Non-Employer -->
-                <ng-template #nonEmployerView>
-                  <div *ngIf="youth.action === 'accepted'" class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md">
-                    <i class="pi pi-check-circle text-lg"></i>
-                  </div>
-                  <div *ngIf="youth.action === 'rejected'" class="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md">
-                    <i class="pi pi-times-circle text-lg"></i>
-                  </div>
-                  <div *ngIf="!youth.action" class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-md">
-                    <i class="pi pi-clock text-lg"></i>
-                  </div>
-                </ng-template>
+            
+<!-- Non-Employer View -->
+<ng-template #nonEmployerView>
+  <ng-container *ngIf="youth.action === 'approved'; else actionStatus">
+    <!-- Approved Status for Non-Employer -->
+    <button
+      class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
+      aria-label="Approved"
+      (click)="openRevertModal(youth)"
+      data-tooltip="Revert to Accepted"
+      [disabled]="youth.isDisabled || youth.action !== 'approved'"
+
+    >
+      <i class="pi pi-verified text-lg"></i>
+    </button>
+  </ng-container>
+
+  <ng-template #actionStatus>
+    <ng-container *ngIf="youth.action === 'accepted'; else notAccepted">
+      <!-- Accepted Status for Non-Employer -->
+      <button
+        class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="Mark as Approved"
+        (click)="openApprovalModal(youth, 'approve')"
+        [disabled]="youth.isDisabled"
+
+        data-tooltip="Mark as Approved"
+      >
+        <i class="pi pi-check-circle text-lg"></i>
+      </button>
+    </ng-container>
+
+    <!-- Rejected Status or Waiting for Non-Employer -->
+    <ng-template #notAccepted>
+      <button
+        *ngIf="youth.action === 'rejected'"
+        class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="Rejected"
+        data-tooltip="Rejected"
+      >
+        <i class="pi pi-times-circle text-lg"></i>
+      </button>
+      <div
+        *ngIf="!youth.action"
+        class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="waiting"
+        data-tooltip="Waiting for action"
+      >
+        <i class="pi pi-clock text-lg"></i>
+      </div>
+    </ng-template>
+  </ng-template>
+  
+</ng-template>
+
+<!-- Modal for Approval -->
+<div
+  *ngIf="isApprovalModalOpen"
+  id="approval-modal"
+  tabindex="-1"
+  class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        (click)="closeApprovalModal()"
+      >
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      
+      <!-- Modal Content -->
+      <div class="p-4 md:p-5 text-center">
+        <!-- Icon -->
+        <svg
+          class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        
+        <!-- Modal Text -->
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Are you sure you want to mark this youth as "Final Approved"?
+        </h3>
+        
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button
+            (click)="confirmApproval()"
+            type="button"
+            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+          >
+            Yes, Approve
+          </button>
+          
+          <button
+            (click)="closeApprovalModal()"
+            type="button"
+            class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            No, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isrevertModalOpen" id="approval-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+      <!-- Close Button -->
+      <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="closeRModal()">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+
+      <!-- Modal Content -->
+      <div class="p-4 md:p-5 text-center">
+        <!-- Icon -->
+        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+
+        <!-- Modal Text -->
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Are you sure you want to Undo the "Final Approve"?
+        </h3>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button (click)="confirmRevert()" type="button" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+            Yes, Revert
+          </button>
+          
+          <button (click)="closeRModal()" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            No, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
               </div>
+
             </td>
+            
+            
           </tr>
+          
         </tbody>
       </table>
+      
     </div>
+
   
     <!-- Pagination Controls -->
     <div class="mt-6 flex justify-between items-center">
@@ -187,7 +368,17 @@
       </button>
     </div>
   </div>
+
+</div>
   
+<div>
+  <button
+  *ngIf="!isEmployer()"
+  [disabled]="!isSubmitEnabled"
+  (click)="submitJobRequests()"
+  class="submit-button"
   
-  
+>
+  Submit
+</button>
 </div>

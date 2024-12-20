@@ -5,18 +5,21 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // Import this
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-job-request-details',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule,FormsModule],
+  imports: [CommonModule, MatTooltipModule, FormsModule],
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
 export class JobRequestDetailsComponent {
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
+  isApprovalModalOpen: boolean = false;
+  selectedYouth: any | null = null;
+
   isEditing: { [key: string]: boolean } = {};
   editModels: { [key: string]: any } = {};
   isModalOpen = false;
@@ -31,8 +34,10 @@ export class JobRequestDetailsComponent {
   currentPage = 1;
   itemsPerPage = 3;
   searchQuery = '';
+  approvedCount: number = 0;
+  isSubmitEnabled: boolean = false;
   paginatedAssignedYouths: any[] = [];
-
+  isrevertModalOpen = false;
   constructor(
     private jobRequestService: JobRequestService,
     private route: ActivatedRoute,
@@ -59,30 +64,106 @@ export class JobRequestDetailsComponent {
 
 
   }
+  openRevertModal(youth: any): void {
+    this.isrevertModalOpen = true;
+    this.modalAction = 'reset';
+    this.selectedYouthName = `${youth.firstName} ${youth.lastName}`;
+    this.selectedYouth = youth;
+  }
+
+  confirmRevert(): void {
+    if (this.selectedYouth) {
+
+      this.selectedYouth.action = 'accepted';
+
+
+      this.jobRequestService
+        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .subscribe({
+          next: () => {
+            console.log(`Youth status reverted to: ${this.selectedYouth.action}`);
+            this.fetchJobRequestDetails();
+            this.closeRModal();
+          },
+          error: (err) => {
+            console.error('Error reverting youth status:', err);
+            this.closeRModal();
+          },
+        });
+    }
+  }
+
+  closeApprovalModal(): void {
+    this.isApprovalModalOpen = false;
+    this.modalAction = '';
+    this.selectedYouthName = '';
+    this.selectedYouth = null;
+  }
+  openApprovalModal(youth: any, action: string): void {
+    this.isApprovalModalOpen = true;
+    this.modalAction = action;
+    this.selectedYouthName = `${youth.firstName} ${youth.lastName}`;
+    this.selectedYouth = youth;
+  }
+  closeRModal(): void {
+    this.isrevertModalOpen = false;
+    this.modalAction = '';
+    this.selectedYouthName = '';
+    this.selectedYouth = null;
+  }
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.modalAction = '';
+    this.selectedYouthName = '';
+    this.selectedYouth = null;
+  }
+  confirmApproval(): void {
+    if (this.selectedYouth) {
+      if (this.modalAction === 'approve') {
+        this.selectedYouth.action = 'approved';
+      } else if (this.modalAction === 'reset') {
+        this.selectedYouth.action = 'accepted';
+      }
+
+      this.jobRequestService
+        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .subscribe({
+          next: () => {
+            console.log(`Youth status updated to: ${this.selectedYouth.action}`);
+            this.fetchJobRequestDetails();
+          },
+          error: (err) => console.error('Error updating youth status:', err),
+        });
+      this.isApprovalModalOpen = false;
+
+    }
+  }
+
+
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedAssignedYouths = this.jobRequest?.assignedYouths?.slice(startIndex, endIndex) || [];
   }
-  
+
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.updatePagination();
     }
   }
-  
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
       this.updatePagination();
     }
   }
-  
+
   get totalPages(): number {
     return Math.ceil((this.jobRequest?.assignedYouths?.length || 0) / this.itemsPerPage);
   }
-  
+
   searchAssignedYouths() {
     const query = this.searchQuery.toLowerCase();
     const filtered = this.jobRequest?.assignedYouths?.filter(
@@ -97,7 +178,7 @@ export class JobRequestDetailsComponent {
   get hasAssignedYouths(): boolean {
     return !!this.jobRequest?.assignedYouths?.length;
   }
-  
+
   navigateToRole(role: string): void {
     localStorage.setItem('role', role);
     this.userRole = role;
@@ -125,7 +206,8 @@ export class JobRequestDetailsComponent {
           ...data,
           assignedYouths: data.assignedYouths || [],
         };
-        this.updatePagination(); // Ensure pagination updates after fetching data
+        this.updatePagination();
+        this.initializeRowStates();
 
       },
       error: (err) => {
@@ -144,7 +226,7 @@ export class JobRequestDetailsComponent {
 
     const updatedYouth = {
       ...youth,
-      status: action === 'accepted' ? 'assigned' : 'rejected',
+      status: action === 'accepted' ? 'approved' : 'rejected',
     };
 
 
@@ -156,21 +238,70 @@ export class JobRequestDetailsComponent {
       });
   }
 
+  updateRowStates(): void {
+    if (this.jobRequest) {
+      this.approvedCount = this.jobRequest.assignedYouths?.filter(
+        (youth) => youth.action === 'approved'
+      ).length || 0;
+
+      this.jobRequest.assignedYouths?.forEach((youth) => {
+
+        youth.isDisabled =
+          this.approvedCount >= this.jobRequest!.numEmployees && youth.action !== 'approved';
+      });
+
+
+      this.isSubmitEnabled = this.approvedCount === this.jobRequest.numEmployees;
+    }
+  }
+
+  submitJobRequests(): void {
+    if (!this.jobRequest || !this.jobId) return;
+
+
+    const updatedYouths = this.jobRequest.assignedYouths
+      ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
+      .map((youth) => ({
+        ...youth,
+        status: youth.action === 'approved' ? 'approved' : youth.status,
+      }));
+
+    const updatedJobRequest = {
+      ...this.jobRequest,
+      assignedYouths: updatedYouths,
+      status: 'in-progress',
+    };
+
+    this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
+      next: () => {
+        console.log('Job request submitted successfully');
+        window.location.reload();
+      },
+      error: (err) => console.error('Error submitting job request:', err),
+    });
+  }
+
+
+
+  initializeRowStates(): void {
+    this.approvedCount = this.jobRequest?.assignedYouths?.filter(
+      (youth) => youth.action === 'approved'
+    ).length || 0;
+
+    const numEmployee = this.jobRequest?.numEmployees ?? 0;
+    this.updateRowStates();
+    this.isSubmitEnabled = this.approvedCount === numEmployee;
+  }
+
+
 
   toggleYouthStatus(youth: any, action: string | null): void {
-
-    if (!this.isEmployer()) {
-      console.error('Non-employers cannot change youth statuses.');
-      return;
-    }
-
     if (action) {
-
       this.updateYouthStatus(youth, action as 'accepted' | 'rejected');
     } else {
-
       youth.action = null;
       youth.status = 'waiting';
+
 
       if (this.jobRequest && this.jobId) {
         this.jobRequestService
@@ -182,9 +313,6 @@ export class JobRequestDetailsComponent {
       }
     }
   }
-
-
-
 
 
 
@@ -226,15 +354,6 @@ export class JobRequestDetailsComponent {
     return this.userRole === 'Admin' || !this.userRole;
   }
 
-
-
-
-
-  startEditing(): void {
-    this.isEditing['details'] = true;
-    this.editModels = { ...this.jobRequest };
-  }
-
   saveChanges(): void {
     if (!this.editModels) return;
 
@@ -253,17 +372,5 @@ export class JobRequestDetailsComponent {
     });
   }
 
-  cancelEditing(): void {
-    this.isEditing['details'] = false;
-    this.editModels = {};
-  }
 
-  openModal(imageSrc: string): void {
-    this.modalImage = imageSrc;
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
-  }
 }

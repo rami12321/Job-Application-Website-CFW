@@ -16,7 +16,9 @@ export interface Job {
   supervisorPosition: string;
   supervisorEmail: string;
   supervisorPhone: string;
+
   status:string;
+
     assignedYouths?: AssignedYouth[];
 
   
