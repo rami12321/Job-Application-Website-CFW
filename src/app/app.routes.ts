@@ -11,6 +11,7 @@ import { YouthprofileComponent } from '../app/Youth/youthprofile/youthprofile.co
 import { EmployerprofileComponent } from './Employer/employerprofile/employerprofile.component';
 import { JobRequestComponent } from './Employer/JobRequestEdit/job-request.component';
 import { JobRequestDetailsComponent } from './Employer/JobRequestDetails/job-request-details.component';
+import { candeactivateAdminGuard } from './guards/candeactivate-admin.guard';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,9 @@ export const routes: Routes = [
 
   {
     path:'main-admin',
-    component: MainAdminComponent
+    component: MainAdminComponent,
+    canDeactivate: [candeactivateAdminGuard] // Use the guard here
+
   },
   {
     path: 'job-request-details/:id',

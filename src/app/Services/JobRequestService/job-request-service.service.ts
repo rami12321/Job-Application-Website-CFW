@@ -50,6 +50,10 @@ export class JobRequestService {
   }
 
 
+
+
+
+
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
     return this.http.put(

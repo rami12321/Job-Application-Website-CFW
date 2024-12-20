@@ -6,6 +6,50 @@
       </h3>
       <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
         <div class="grid grid-cols-2 gap-6 mt-4">
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Category:</strong>
+            
+            <!-- Display current category if not in editing mode -->
+            <span *ngIf="!isEditing['category']" 
+                  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.category || 'Not available' }}
+            </span>
+            
+            <!-- Show category dropdown in editing mode -->
+            <select *ngIf="isEditing['category']" 
+                    id="category"
+                    [(ngModel)]="selectedCategory"
+                    (change)="onSelectCategory(selectedCategory)" 
+                    class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option *ngFor="let category of mainCategories" [value]="category.value">
+                {{ category.label }}
+              </option>
+            </select>
+            
+          </p>
+          
+          <p *ngIf="subcategories.length > 0">
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job:</strong>
+            
+            <!-- Display current job if not in editing mode -->
+            <span *ngIf="!isEditing['job']" 
+                  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+              {{ jobRequest?.job || 'Not available' }}
+            </span>
+            
+            <!-- Show subcategory dropdown in editing mode -->
+            <select *ngIf="isEditing['job']" 
+                    id="subcategory"
+                    [(ngModel)]="selectedjob" 
+                    (change)="onSelectJob(selectedjob)" 
+                    class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option *ngFor="let subcategory of subcategories" [value]="subcategory">
+                {{ subcategory }}
+              </option>
+            </select>
+          </p>
+          
+          
           <!-- Job Title -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>

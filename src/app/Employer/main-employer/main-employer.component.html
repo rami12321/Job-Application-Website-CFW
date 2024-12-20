@@ -237,7 +237,7 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let job of paginatedData"
+            *ngFor="let job of paginatedWaitingJobs"
             class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
           >
           
@@ -290,8 +290,8 @@
     <!-- Previous Button -->
     <button
       class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-      (click)="prevPage()"
-      [disabled]="currentPage === 1"
+      (click)="prevPage('waiting')"
+      [disabled]="currentPageWaiting === 1"
     >
       Previous
     </button>
@@ -299,16 +299,17 @@
     <!-- Page Numbers -->
     <div class="flex items-center space-x-2">
       <span class="text-sm text-gray-600"
-        >Page {{ currentPage }} of {{ totalPages }}</span
+        >      Page {{ currentPageWaiting }} of {{ Math.ceil(filteredWaitingJobs.length / itemsPerPage) }}
+        </span
       >
     </div>
 
     <!-- Next Button -->
     <button
       class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages"
-    >
+      (click)="nextPage('waiting')"
+      [disabled]="currentPageWaiting === Math.ceil(filteredWaitingJobs.length / itemsPerPage)"
+      >
       Next
     </button>
   </div>
@@ -320,7 +321,6 @@
       class="px-4 py-2 border border-gray-300 rounded-md"
       placeholder="Search"
       [(ngModel)]="searchQuery"
-      (input)="searchJobs()"
     />
   </div>
 </div>
@@ -335,8 +335,8 @@
   >
     <!-- Close Button -->
     <button
-      class="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
-      (click)="closeEditModal()"
+    class="close-button"
+    (click)="closeEditModal()"
     >
       &times;
     </button>
@@ -347,16 +347,8 @@
       *ngIf="selectedJobId"
     ></app-job-request>
 
-    <!-- Close Button for Modal -->
-    <div class="flex justify-end mt-4">
-      <button
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        (click)="closeEditModal()"
-      >
-        Close
-      </button>
+
     </div>
-  </div>
 </div>
 
 <div
@@ -366,26 +358,20 @@
   <div
     class="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-4 p-6 relative h-[90%]"
   >
-    <button
-      class="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
-      (click)="closeModal()"
-    >
-      &times;
-    </button>
+  <button
+  class="close-button"
+  (click)="closeModal()"
+>
+  &times;
+</button>
+
 
     <!-- Job Details Component -->
     <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
     </app-job-request-details>
 
     <!-- Close Button -->
-    <div class="flex justify-end mt-4">
-      <button
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        (click)="closeModal()"
-      >
-        Close
-      </button>
-    </div>
+
   </div>
 </div>
 
@@ -463,13 +449,443 @@
 
 
 </p-tabPanel>
+
 <p-tabPanel header="Assigned" [headerStyleClass]="'assigned-tab'">
-  <p>Assigned jobs will go here.</p>
-</p-tabPanel>
+  <div class="overflow-x-auto">
+
+    <div class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+            <thead>
+              <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+                <th
+                  *ngFor="let column of columns"
+                  class="px-6 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
+                  (click)="sortTable(column.key)"
+                >
+                  <span class="flex items-center">
+                    {{ column.label }}
+                    <svg
+                      class="w-4 h-4 ml-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path [attr.d]="getSortIconPath(column.key)" />
+                    </svg>
+                  </span>
+                </th>
+                <!-- Action Column -->
+                <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let job of paginatedAssignedJobs"
+                class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
+              >
+              
+              <td
+              class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
+              *ngFor="let column of columns"
+              [ngClass]="{ 'no-wrap': column.key === 'id' }"
+            >
+              {{ job[column.key] }}
+            </td>
+            
+                <!-- Action Buttons -->
+                <td class="px-6 py-4 border-b border-gray-300 text-center">
+                  <div class="flex space-x-2 justify-center">
+    
+                    
+
+    
+      
+                    <button
+                      class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                      aria-label="Delete"
+                      (click)="openDeleteModal(job)"
+                    >
+                      <i class="pi pi-trash text-lg"></i>
+                    </button>
+      
+                    <button
+                      class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                      aria-label="Info"
+                      (click)="openModal(job.id ?? 'N/A')"
+                    >
+                      <i class="pi pi-info text-lg"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
+      <!-- Pagination Controls -->
+      <div class="mt-6 flex justify-between items-center">
+        <!-- Previous Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+          (click)="prevPage('assigned')"
+          [disabled]="currentPageAssigned  === 1"
+        >
+          Previous
+        </button>
+    
+        <!-- Page Numbers -->
+        <div class="flex items-center space-x-2">
+          <span class="text-sm text-gray-600"
+            >      Page {{ currentPageAssigned }} of {{ Math.ceil(filteredAssignedJobs.length / itemsPerPage) }}</span
+          >
+        </div>
+    
+        <!-- Next Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+          (click)="nextPage('assigned')"
+          [disabled]="currentPageAssigned === Math.ceil(filteredAssignedJobs.length / itemsPerPage)"
+          >
+          Next
+        </button>
+      </div>
+    
+      <!-- Search Input -->
+      <div class="mt-4 flex items-center space-x-2">
+        <input
+          type="text"
+          class="px-4 py-2 border border-gray-300 rounded-md"
+          placeholder="Search"
+          [(ngModel)]="searchQuery"
+        />
+      </div>
+    </div>
+    
+    
+
+    
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      *ngIf="isModalOpen"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-4 p-6 relative h-[90%]"
+      >
+      <button
+      class="close-button"
+      (click)="closeModal()"
+    >
+      &times;
+    </button>
+    
+    
+        <!-- Job Details Component -->
+        <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
+        </app-job-request-details>
+    
+        <!-- Close Button -->
+    
+      </div>
+    </div>
+    
+    <div
+      id="delete-confirm-modal"
+      tabindex="-1"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      *ngIf="isDeleteModalOpen"
+    >
+      <div class="relative p-4 w-full max-w-md max-h-full">
+        <div
+          class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
+        >
+          <button
+            type="button"
+            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="closeDeleteModal()"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-4 md:p-5 text-center">
+            <svg
+              class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete <strong>{{ selectedJobTitle }}</strong
+              >?
+            </h3>
+            <button
+              type="button"
+              class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              (click)="confirmDelete()"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              type="button"
+              class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              (click)="closeDeleteModal()"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </p-tabPanel>
 <p-tabPanel header="In Progress" [headerStyleClass]="'in-progress-tab'">
-  <p>In-progress jobs will go here.</p>
-</p-tabPanel>
+  <div class="overflow-x-auto">
+
+    <div class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+            <thead>
+              <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+                <th
+                  *ngFor="let column of columns"
+                  class="px-6 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
+                  (click)="sortTable(column.key)"
+                >
+                  <span class="flex items-center">
+                    {{ column.label }}
+                    <svg
+                      class="w-4 h-4 ml-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path [attr.d]="getSortIconPath(column.key)" />
+                    </svg>
+                  </span>
+                </th>
+                <!-- Action Column -->
+                <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let job of paginatedInProgressJobs"
+                class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
+              >
+              
+              <td
+              class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
+              *ngFor="let column of columns"
+              [ngClass]="{ 'no-wrap': column.key === 'id' }"
+            >
+              {{ job[column.key] }}
+            </td>
+            
+                <!-- Action Buttons -->
+                <td class="px-6 py-4 border-b border-gray-300 text-center">
+                  <div class="flex space-x-2 justify-center">
+    
+                    
+
+    
+      
+                    <button
+                      class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                      aria-label="Delete"
+                      (click)="openDeleteModal(job)"
+                    >
+                      <i class="pi pi-trash text-lg"></i>
+                    </button>
+      
+                    <button
+                      class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                      aria-label="Info"
+                      (click)="openModal(job.id ?? 'N/A')"
+                    >
+                      <i class="pi pi-info text-lg"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
+      <!-- Pagination Controls -->
+      <div class="mt-6 flex justify-between items-center">
+        <!-- Previous Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+          (click)="prevPage('inProgress')"
+          [disabled]="currentPageInProgress  === 1"
+        >
+          Previous
+        </button>
+    
+        <!-- Page Numbers -->
+        <div class="flex items-center space-x-2">
+          <span class="text-sm text-gray-600"
+            >      Page {{ currentPageInProgress }} of {{ Math.ceil(filteredInProgressJobs.length / itemsPerPage) }}</span
+          >
+        </div>
+    
+        <!-- Next Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+          (click)="nextPage('inProgress')"
+          [disabled]="currentPageInProgress === Math.ceil(filteredInProgressJobs.length / itemsPerPage)"
+          >
+          Next
+        </button>
+      </div>
+    
+      <!-- Search Input -->
+      <div class="mt-4 flex items-center space-x-2">
+        <input
+          type="text"
+          class="px-4 py-2 border border-gray-300 rounded-md"
+          placeholder="Search"
+          [(ngModel)]="searchQuery"
+        />
+      </div>
+    </div>
+    
+    
+
+    
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      *ngIf="isModalOpen"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-4 p-6 relative h-[90%]"
+      >
+      <button
+      class="close-button"
+      (click)="closeModal()"
+    >
+      &times;
+    </button>
+    
+    
+        <!-- Job Details Component -->
+        <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
+        </app-job-request-details>
+    
+        <!-- Close Button -->
+    
+      </div>
+    </div>
+    
+    <div
+      id="delete-confirm-modal"
+      tabindex="-1"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      *ngIf="isDeleteModalOpen"
+    >
+      <div class="relative p-4 w-full max-w-md max-h-full">
+        <div
+          class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
+        >
+          <button
+            type="button"
+            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="closeDeleteModal()"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-4 md:p-5 text-center">
+            <svg
+              class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete <strong>{{ selectedJobTitle }}</strong
+              >?
+            </h3>
+            <button
+              type="button"
+              class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              (click)="confirmDelete()"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              type="button"
+              class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              (click)="closeDeleteModal()"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div></p-tabPanel>
 <p-tabPanel header="Completed" [headerStyleClass]="'completed-tab'">
   <p>Completed jobs will go here.</p>
 </p-tabPanel>
 </p-tabView>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+/* Tooltip styling */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition-delay: 0s; /* Default delay is 0 */
+  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+  bottom: 150%; /* Adjusts tooltip position on hover */
+  transition-delay: 1s; /* Delays appearance by 1 second on hover */
+}
+.bg-white {
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90%;
+  overflow-y: auto;
+}
+.submit-button {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 20px; /* Spacing from the bottom */
+  right: 40px; /* Adjusted spacing from the right for balance */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  z-index: 1000; /* Stays on top */
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #45a049; /* Slightly darker green */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .submit-button {
+    right: 20px; /* Slightly closer on smaller screens */
+    bottom: 15px; /* Adjusted bottom spacing for smaller screens */
+  }
+}
+
+
+/* Add more specific styles for the modal's fade-in and layout */
+#approval-modal {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

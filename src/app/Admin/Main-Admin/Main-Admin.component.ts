@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy  } from '@angular/core';
 import { SmartTableComponent } from '../../Common/smart-table/smart-table.component';
 import { CommonModule } from '@angular/common';
 import { AdminDashboardComponent } from '../Dashboard-Admin/Dashboard-Admin.component';
@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './Main-Admin.component.html',
   styleUrls: ['./Main-Admin.component.css']
 })
-export class MainAdminComponent implements OnInit {
+export class MainAdminComponent implements OnInit, OnDestroy {
   @Input() status: string | undefined;
   showModal: boolean = false;  // Controls the visibility of the modal
 
@@ -30,7 +30,11 @@ export class MainAdminComponent implements OnInit {
 
   constructor(private http: HttpClient, private codeService: VerificationCodeService, private dialog: MatDialog) { }
 
-
+  ngOnDestroy(): void {
+    // Clear localStorage when leaving the Admin component
+    localStorage.removeItem('role');
+    console.log('Admin component destroyed, role removed from localStorage.');
+  }
   generateCode() {
     this.codeService.generateCode().subscribe({
       next: (response) => {
@@ -89,7 +93,9 @@ export class MainAdminComponent implements OnInit {
     }
     if (savedYouthTab1) {
       this.activeYouthTab1 = savedYouthTab1;
-    }
+    };
+    localStorage.setItem('role', 'admin');
+    localStorage.setItem('authenticated', 'true');
   }
 
   changeYouthTab(tab: string): void {
