@@ -63,11 +63,16 @@ export class MainEmployerComponent {
   filteredAssignedJobs: Job[] = [];
   filteredInProgressJobs: Job[] = [];
   filteredCompletedJobs: Job[] = [];
+  paginatedWaitingJobs: Job[] = [];
+  Math = Math;
+paginatedAssignedJobs: Job[] = [];
+paginatedInProgressJobs: Job[] = [];
+paginatedCompletedJobs: Job[] = [];
   jobs: Job[] = [];
   paginatedData: Job[] = [];
   searchQuery: string = '';
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 3;
   totalPages: number = 1;
   sortKey: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -77,7 +82,10 @@ export class MainEmployerComponent {
   isEditModalOpen: boolean = false;
   selectedJob: Job | null = null;
   errorMessage: string | null = null;
-  
+  currentPageWaiting = 1;
+currentPageAssigned = 1;
+currentPageInProgress = 1;
+currentPageCompleted = 1;
   jobDetails: Job = {
     id: '',
     employerId: this.userId,
@@ -133,6 +141,8 @@ export class MainEmployerComponent {
 
 
     this.fetchJobTableData(employerId);
+    this.totalPages = Math.ceil(this.filteredAssignedJobs.length / this.itemsPerPage);
+
   }
   onTabChange(event: any): void {
     const statusMap = ['waiting-E', 'assigned', 'in-progress', 'completed'];
@@ -141,8 +151,11 @@ export class MainEmployerComponent {
     this.paginatedData = this.jobsByStatus(selectedStatus);
     this.currentPage = 1;
     this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
-    this.updatePaginatedData();
-  }
+    this.updatePaginatedData('waiting');
+    this.updatePaginatedData('assigned');
+    this.updatePaginatedData('inProgress');
+    this.updatePaginatedData('completed');
+      }
   
   jobsByStatus(status: string): Job[] {
     return this.jobs.filter((job) => job.status === status);
@@ -159,9 +172,91 @@ export class MainEmployerComponent {
     this.filteredAssignedJobs = [...this.assignedJobs];
     this.filteredInProgressJobs = [...this.inProgressJobs];
     this.filteredCompletedJobs = [...this.completedJobs];
+  
+    // Initialize paginated data
+    this.updatePaginatedData('waiting');
+    this.updatePaginatedData('assigned');
+    this.updatePaginatedData('inProgress');
+    this.updatePaginatedData('completed');
   }
   
+updatePaginatedData(category: string): void {
+  let filteredJobs: Job[] = [];
+  let currentPage = 1;
+  switch (category) {
+    case 'waiting':
+      filteredJobs = this.filteredWaitingJobs;
+      currentPage = this.currentPageWaiting;
+      this.paginatedWaitingJobs = this.paginate(filteredJobs, currentPage);
+      break;
+    case 'assigned':
+      filteredJobs = this.filteredAssignedJobs;
+      currentPage = this.currentPageAssigned;
+      this.paginatedAssignedJobs = this.paginate(filteredJobs, currentPage);
+      break;
+    case 'inProgress':
+      filteredJobs = this.filteredInProgressJobs;
+      currentPage = this.currentPageInProgress;
+      this.paginatedInProgressJobs = this.paginate(filteredJobs, currentPage);
+      break;
+    case 'completed':
+      filteredJobs = this.filteredCompletedJobs;
+      currentPage = this.currentPageCompleted;
+      this.paginatedCompletedJobs = this.paginate(filteredJobs, currentPage);
+      break;
+  }
+}
 
+paginate(jobs: Job[], currentPage: number): Job[] {
+  const startIndex = (currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  return jobs.slice(startIndex, endIndex);
+}
+
+  filterTable(): void {
+    const filteredJobs = this.jobs.filter((job) =>
+      this.columns.some((column) => {
+        const key = column.key as keyof Job;
+        return job[key]
+          ?.toString()
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
+      })
+    );
+    this.totalPages = Math.ceil(filteredJobs.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.updatePaginatedData('waiting');
+    this.updatePaginatedData('assigned');
+    this.updatePaginatedData('inProgress');
+    this.updatePaginatedData('completed');
+      }
+
+  fetchJobTableData(employerId: string): void {
+    this.jobRequestService.getJobsByEmployerId(employerId).subscribe({
+      next: (data: Job[]) => {
+        this.jobs = data.sort((a, b) => {
+          const idA = a.id ?? '';
+          const idB = b.id ?? '';
+          return idB.localeCompare(idA);
+        });
+  
+        this.categorizeJobs(); // Categorize jobs after fetching
+        this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
+        this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
+        this.updatePaginatedData('waiting');
+        this.updatePaginatedData('assigned');
+        this.updatePaginatedData('inProgress');
+        this.updatePaginatedData('completed');
+                this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching job data:', err);
+        this.errorMessage = 'Error fetching job data';
+        this.isLoading = false;
+      },
+    });
+  }
+  
   openEditModal(jobId: string): void {
     this.selectedJobId = jobId;
     this.isEditModalOpen = true;
@@ -180,20 +275,7 @@ export class MainEmployerComponent {
     this.selectedJobId = null;
   }
 
-  filterTable(): void {
-    const filteredJobs = this.jobs.filter((job) =>
-      this.columns.some((column) => {
-        const key = column.key as keyof Job;
-        return job[key]
-          ?.toString()
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase());
-      })
-    );
-    this.totalPages = Math.ceil(filteredJobs.length / this.itemsPerPage);
-    this.currentPage = 1;
-    this.updatePaginatedData(filteredJobs);
-  }
+
   openDeleteModal(job: Job): void {
     this.selectedJobId = job.id ?? null;
     this.selectedJobTitle = job.title ?? 'this job';
@@ -228,19 +310,9 @@ export class MainEmployerComponent {
     }
     return 'M7 11h10M7 15h10';
   }
-  updatePaginatedData(filteredJobs: Job[] = this.jobs): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedData = filteredJobs.slice(startIndex, endIndex);
-  }
-  
 
-  changePage(newPage: number): void {
-    if (newPage > 0 && newPage <= this.totalPages) {
-      this.currentPage = newPage;
-      this.updatePaginatedData();
-    }
-  }
+
+
   searchJobs(status: string): void {
     switch (status) {
       case 'waiting':
@@ -291,38 +363,22 @@ export class MainEmployerComponent {
       }
     });
     this.jobs = sortedJobs;
-    this.updatePaginatedData();
-  }
-  fetchJobTableData(employerId: string): void {
-    this.jobRequestService.getJobsByEmployerId(employerId).subscribe({
-      next: (data: Job[]) => {
-        this.jobs = data.sort((a, b) => {
-          const idA = a.id ?? '';
-          const idB = b.id ?? '';
-          return idB.localeCompare(idA);
-        });
-  
-        this.categorizeJobs(); // Categorize jobs after fetching
-        this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
-        this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
-        this.updatePaginatedData();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching job data:', err);
-        this.errorMessage = 'Error fetching job data';
-        this.isLoading = false;
-      },
-    });
-  }
+    this.updatePaginatedData('waiting');
+    this.updatePaginatedData('assigned');
+    this.updatePaginatedData('inProgress');
+    this.updatePaginatedData('completed');
+      }
   
 
   deleteJob(id: string): void {
     this.jobRequestService.deleteJob(id).subscribe({
       next: () => {
         this.jobs = this.jobs.filter((job) => job.id !== id);
-        this.updatePaginatedData();
-        this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
+        this.updatePaginatedData('waiting');
+        this.updatePaginatedData('assigned');
+        this.updatePaginatedData('inProgress');
+        this.updatePaginatedData('completed');
+                this.totalPages = Math.ceil(this.jobs.length / this.itemsPerPage);
       },
       error: (err) => {
         console.error('Error deleting job:', err);
@@ -330,19 +386,64 @@ export class MainEmployerComponent {
       },
     });
   }
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.updatePagination();
+  prevPage(category: string): void {
+    switch (category) {
+      case 'waiting':
+        if (this.currentPageWaiting > 1) {
+          this.currentPageWaiting--;
+          this.updatePaginatedData('waiting');
+        }
+        break;
+      case 'assigned':
+        if (this.currentPageAssigned > 1) {
+          this.currentPageAssigned--;
+          this.updatePaginatedData('assigned');
+        }
+        break;
+      case 'inProgress':
+        if (this.currentPageInProgress > 1) {
+          this.currentPageInProgress--;
+          this.updatePaginatedData('inProgress');
+        }
+        break;
+      case 'completed':
+        if (this.currentPageCompleted > 1) {
+          this.currentPageCompleted--;
+          this.updatePaginatedData('completed');
+        }
+        break;
     }
   }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updatePagination();
+  
+  nextPage(category: string): void {
+    switch (category) {
+      case 'waiting':
+        if (this.currentPageWaiting < Math.ceil(this.filteredWaitingJobs.length / this.itemsPerPage)) {
+          this.currentPageWaiting++;
+          this.updatePaginatedData('waiting');
+        }
+        break;
+      case 'assigned':
+        if (this.currentPageAssigned < Math.ceil(this.filteredAssignedJobs.length / this.itemsPerPage)) {
+          this.currentPageAssigned++;
+          this.updatePaginatedData('assigned');
+        }
+        break;
+      case 'inProgress':
+        if (this.currentPageInProgress < Math.ceil(this.filteredInProgressJobs.length / this.itemsPerPage)) {
+          this.currentPageInProgress++;
+          this.updatePaginatedData('inProgress');
+        }
+        break;
+      case 'completed':
+        if (this.currentPageCompleted < Math.ceil(this.filteredCompletedJobs.length / this.itemsPerPage)) {
+          this.currentPageCompleted++;
+          this.updatePaginatedData('completed');
+        }
+        break;
     }
   }
+  
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     this.paginatedData = this.jobs.slice(
