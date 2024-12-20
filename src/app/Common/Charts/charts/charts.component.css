@@ -3,6 +3,7 @@ canvas {
   display: block;
   max-width: 500px; /* Set maximum width for the chart */
   max-height: 300px; /* Set maximum height for the chart */
+  width: 500px;
   margin: 0 auto; /* Center the chart */
   border: 1px solid #ddd; /* Optional: Add a light border for visibility */
   border-radius: 8px; /* Optional: Rounded corners */

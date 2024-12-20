@@ -202,7 +202,15 @@
             }@else {
             <ng-template pTemplate="content">
               @if(status=='waiting-E'){
-
+                <p-multiSelect
+                [options]="youths"
+                [(ngModel)]="selectedYouths"
+                optionLabel="label"
+                dataKey="id"
+                placeholder="Select Youths"
+                styleClass="w-full"
+                ></p-multiSelect>
+              }@else{
                 <p-multiSelect
                 [options]="youths"
                 [(ngModel)]="selectedYouths"

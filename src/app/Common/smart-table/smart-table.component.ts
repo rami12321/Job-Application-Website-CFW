@@ -49,6 +49,8 @@ export class SmartTableComponent implements OnInit {
   youthDialogVisible = false; // Controls dialog visibility
   youths: any[] = []; // Stores fetched youths
   selectedYouths: any[] = []; // Selected youths for assignment
+  assignedYouths: any[] = []; // Youths fetched from the backend
+  combinedYouths: any[] = []; // Combination of assigned and selected
   selectedJob:string='';
   currentEmployerId:string='';
   currentJob: string = ''; // Stores the current job being ass
@@ -584,7 +586,6 @@ export class SmartTableComponent implements OnInit {
       },
     });
   }
-
 
 
 }

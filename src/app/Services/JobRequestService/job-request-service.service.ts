@@ -48,8 +48,8 @@ export class JobRequestService {
     const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
     return this.http.put(url, {}, { headers: { 'Content-Type': 'application/json' } });
   }
-  
-  
+
+
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
     return this.http.put(
@@ -60,5 +60,11 @@ export class JobRequestService {
       }
     );
   }
+  // JobRequestService
+getAssignedYouthsByJobId(id: string): Observable<AssignedYouth[]> {
+  const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
+  return this.http.get<AssignedYouth[]>(url); // Adjust the endpoint as per your backend API
+}
+
 
 }
