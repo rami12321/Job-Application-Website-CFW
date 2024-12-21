@@ -24,6 +24,17 @@ export class MainYouthComponent implements OnInit {
   notes: string = '';
   jobCategories: { [key: string]: string[] } = {}; // Key-value pairs for categories
   appliedJob: string | null = null;
+  activeTab: string = 'active'; // Default active tab
+  activeJobs = [
+    {
+      title: 'Internship - UI/UX Developer, Singapore (July to December 2025)',
+      req: '411233',
+      status: 'Recruiter Review',
+      date: 'December 21, 2024',
+    },
+  ];
+
+  inactiveJobs: any[] = [];
   constructor(private lookupService: LookupService,   private youthService: YouthServiceService,
   ) {}
 
@@ -63,7 +74,13 @@ export class MainYouthComponent implements OnInit {
       }
     );
   }
+  switchTab(tab: string): void {
+    this.activeTab = tab;
+  }
 
+  isTabActive(tab: string): boolean {
+    return this.activeTab === tab;
+  }
   onSelectCategory(category: string) {
     this.selectedCategory = category;
     this.subcategories = this.jobCategories[category] || [];

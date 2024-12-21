@@ -30,3 +30,32 @@ button {
   background-color: #e0f7fa;
 
 }
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.tabs .tab {
+  border-bottom-width: 2px;
+}
+
+.job-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+@media screen and (max-width: 768px) {
+  thead th.hidden {
+    display: none;
+  }
+  tbody td.hidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tabs .tab {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
