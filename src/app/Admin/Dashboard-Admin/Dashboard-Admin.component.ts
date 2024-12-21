@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
+import { YouthChartComponent } from '../../Common/Charts/charts/charts.component';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [AccordionModule],
+  imports: [AccordionModule,YouthChartComponent],
   templateUrl: './Dashboard-Admin.component.html',
   styleUrl: './Dashboard-Admin.component.css'
 })

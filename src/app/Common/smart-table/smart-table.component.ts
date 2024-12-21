@@ -49,10 +49,13 @@ export class SmartTableComponent implements OnInit {
   youthDialogVisible = false; // Controls dialog visibility
   youths: any[] = []; // Stores fetched youths
   selectedYouths: any[] = []; // Selected youths for assignment
+  assignedYouths: any[] = []; // Youths fetched from the backend
+  combinedYouths: any[] = []; // Combination of assigned and selected
   selectedJob:string='';
   currentEmployerId:string='';
   currentJob: string = ''; // Stores the current job being ass
   youthList: any[] = [];
+  assignedYouthList:any[]=[];
   employerList: any[] = [];
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
@@ -292,7 +295,7 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
-  
+
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
       (data: any[]) => {
@@ -519,13 +522,22 @@ export class SmartTableComponent implements OnInit {
     this.selectedYouth = youth ;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
-  showYouthDialog(job: string,selectedJob:string): void {
-    this.selectedJob=selectedJob;
+  showYouthDialog(job: string, selectedJob: string): void {
+    this.selectedJob = selectedJob;
     this.currentJob = job; // Store the current job being assigned
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
+        console.log('Response from getYouthByJob:', response); // Log the response for debugging
 
-        this.youths = response.youths  || []; // Populate youths from response
+        // Transform youths to include a label for display
+        this.youths = (response.youths || []).map((youth: any) => ({
+          id: youth.id,
+          name: youth.name,
+          beneficiary:youth.beneficiary,
+          label: `${youth.name} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}` // Add icon and text if beneficiary
+        }));
+
+        console.log('Transformed youths array:', this.youths); // Log the transformed array
         this.youthDialogVisible = true; // Open the dialog
       },
       error: (error) => {
@@ -542,7 +554,7 @@ export class SmartTableComponent implements OnInit {
 
     this.selectedYouths.forEach((youth: any) => {
       console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.firstName} ${youth.lastName}`);
-  
+
       // Send only the youth ID to the backend; the backend will fetch the details
       this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id).subscribe({
         next: () => {
@@ -559,7 +571,7 @@ export class SmartTableComponent implements OnInit {
         }
       });
     });
-  
+
     this.youthDialogVisible = false;
   }
 
@@ -576,5 +588,6 @@ export class SmartTableComponent implements OnInit {
       },
     });
   }
+
 
 }

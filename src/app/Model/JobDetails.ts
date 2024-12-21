@@ -21,5 +21,5 @@ export interface Job {
 
     assignedYouths?: AssignedYouth[];
 
-  
+
 }
