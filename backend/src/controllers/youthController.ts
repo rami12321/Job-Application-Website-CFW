@@ -42,7 +42,7 @@ export const createYouth = (req: Request, res: Response): void => {
 
   // Add the new youth with the timestamp to the list
   youths.push(youthWithTimestamp);
-  writeFile(youths);  // Write the updated list of youths back to the file
+  writeFile(youths);  // Write thd list of youths back to the file
 
   res.status(201).json(youthWithTimestamp);  // Return the newly created youth with the createdAt field
 };
@@ -219,6 +219,49 @@ export const updateYouthStatus = (req: Request, res: Response): void => {
 
   res.status(200).json({ message: `Youth with ID ${id} status updated successfully.`, updatedYouth: youths[youthIndex] });
 };
+// Controller for updating the appliedJob field
+export const updateAppliedJob = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const { appliedJob } = req.body;
+
+  if (!appliedJob || !Array.isArray(appliedJob)) {
+    res.status(400).json({ message: 'Applied jobs must be an array.' });
+    return;
+  }
+
+  let youths: Youth[] = readFile();
+  const youthIndex = youths.findIndex(y => y.id === id);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Log received jobs for debugging
+  console.log("Received Applied Jobs:", appliedJob);
+
+  appliedJob.forEach(job => {
+    if (!job.status) {
+      job.status = 'waiting';  // Default status to 'waiting'
+    }
+  });
+
+  // Log the structure of the applied jobs after applying default status
+  console.log("Updated Applied Jobs:", appliedJob);
+
+  // Update the appliedJob field
+  youths[youthIndex].appliedJob = appliedJob;
+
+  // Save the updated list
+  writeFile(youths);
+
+  res.status(200).json({
+    message: `Applied jobs updated for Youth ID: ${id}`,
+    updatedYouth: youths[youthIndex]
+  });
+};
+
+
 export const updateJob = (req: Request, res: Response): void => {
   const { id } = req.params;
   const { appliedJob } = req.body;  // Extract the new status from the request body
@@ -340,10 +383,9 @@ export const getYouthByJob = (req: Request, res: Response): void => {
   const youths: Youth[] = readFile(); // Read the data from file or database
 
   // Filter youths who have the applied job in their appliedJob array
-  const filteredYouths = youths.filter((y) =>
-    Array.isArray(y.appliedJob) && y.appliedJob.includes(appliedJob)
-  );
-
+const filteredYouths = youths.filter((y) =>
+  Array.isArray(y.appliedJob) && y.appliedJob.some((jobObj) => jobObj.job === appliedJob)
+);
   // If no youths are found for the applied job, return 404 error
   if (filteredYouths.length === 0) {
     res.status(200).json({ message: `No youths found who applied for job: ${appliedJob}.` });

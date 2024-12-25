@@ -179,7 +179,7 @@
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
-    "numEmployees": 4,
+    "numEmployees": 2,
     "level": "junior",
     "location": "Lebanon",
     "typeOfJob": "Full-Time",
@@ -187,86 +187,28 @@
     "supervisorPosition": "Senior Technician",
     "supervisorEmail": "nadia.seniortech@gmail.com",
     "supervisorPhone": "23647856",
-    "status": "assigned",
+    "status": "asssigned",
     "category": "Cars & Motors Electrician",
     "id": "L-98274361",
     "assignedYouths": [
       {
-        "id": "F-39476821",
-        "firstName": "Jad",
-        "lastName": "Mansour",
-        "dob": "2000-05-19",
-        "cv": "C:\\fakepath\\Jad's Resume.pdf",
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
         "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "G-54862319",
-        "firstName": "Nadia",
-        "lastName": "Kassem",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Nadia's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "H-29384567",
-        "firstName": "Kassem",
-        "lastName": "Omar",
-        "dob": "1995-02-18",
-        "cv": "C:\\fakepath\\Kassem's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "I-70254863",
-        "firstName": "Rami",
-        "lastName": "Salman",
-        "dob": "1996-11-25",
-        "cv": "C:\\fakepath\\Rami's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "accepted"
-      },
-      {
-        "id": "A-34295763",
-        "firstName": "Yousef",
-        "lastName": "Al-Sayed",
-        "dob": "1996-11-15",
-        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "B-76382945",
-        "firstName": "Mona",
-        "lastName": "Nabil",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Mona's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "rejected"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting",
+        "action": "accepted",
         "isDisabled": false
       },
       {
-        "id": "C-45678321",
-        "firstName": "Ali",
-        "lastName": "Zain",
-        "dob": "1998-02-10",
-        "cv": "C:\\fakepath\\Ali's Resume.pdf",
+        "id": "34285723",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
         "status": "waiting",
+        "action": "accepted",
         "isDisabled": false
       }
     ]
@@ -283,7 +225,7 @@
     "supervisorPosition": "Manager",
     "supervisorEmail": "mohammad.manager@gmail.com",
     "supervisorPhone": "23874562",
-    "status": "assigned",
+    "status": "in-progress",
     "category": "Cars & Motors Electrician",
     "id": "L-98457329",
     "assignedYouths": [
@@ -293,39 +235,19 @@
         "lastName": "Sarhan",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
+        "status": "approved",
+        "action": "approved",
+        "isDisabled": false
       },
       {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "accepted"
-      },
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
-      },
-      {
-        "id": "E-76845213",
-        "firstName": "Sara",
-        "lastName": "Abdallah",
+        "id": "14305200",
+        "firstName": "Rami",
+        "lastName": "Abou Eid",
         "dob": "1997-09-25",
         "cv": "C:\\fakepath\\Sara's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved"
       }
     ]
   },
@@ -658,35 +580,6 @@
         "status": "approved",
         "isDisabled": false,
         "action": "approved"
-      },
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
-      },
-      {
-        "id": "E-76845213",
-        "firstName": "Sara",
-        "lastName": "Abdallah",
-        "dob": "1997-09-25",
-        "cv": "C:\\fakepath\\Sara's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true
       }
     ]
   },

@@ -3,10 +3,14 @@ export interface AssignedYouth {
   id: string;
   firstName: string;
   lastName: string;
-  dob: string; 
-  cv: string; 
+  dob: string; // Assuming it's a string or date format
+  cv: string; // Assuming the CV is a URL or path to the file
   status: string;
+  action?: 'accepted' | 'rejected' | 'approved' | null; // Optional action property
+  isDisabled?: boolean; 
+
 }
+
 
 export interface Job {
   id?: string;

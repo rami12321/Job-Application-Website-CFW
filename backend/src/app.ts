@@ -5,6 +5,7 @@ import employerRoutes from './routes/employerRoutes';
 import jobRequestsRoutes from './routes/jobRequestsRoutes';
 import verificationcodeRoutes from './routes/verificationcodeRoutes';
 import { deleteCode } from './controllers/VerificationCodeController';
+import { updateAppliedJob } from './controllers/youthController';
 
 const app = express();
 const PORT = 3000;
@@ -23,6 +24,7 @@ app.use('/employer', employerRoutes);
 app.use('/job-request', jobRequestsRoutes);
 app.use('/api', verificationcodeRoutes);
 app.delete('/api/verificationCode/:code', deleteCode);
+app.put('/youth/:id/appliedJob', updateAppliedJob);
 
 // Start the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
