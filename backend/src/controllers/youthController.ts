@@ -316,15 +316,19 @@ export const getAppliedJobById = (req: Request, res: Response): void => {
     return;
   }
 
-  // Check if the youth has applied for a job
-  if (!youth.appliedJob) {
-    res.status(404).json({ message: `No applied job found for youth with ID ${id}.` });
+  // Check if the youth has applied for any jobs
+  if (!youth.appliedJob || youth.appliedJob.length === 0) {
+    res.status(404).json({ message: `No applied jobs found for youth with ID ${id}.` });
     return;
   }
 
-  // Return the applied job
-  res.status(200).json({ appliedJob: youth.appliedJob });
+  // Extract only the job names from the appliedJob array
+  const appliedJobs = youth.appliedJob.map((job) => job.job);
+
+  // Return the job names
+  res.status(200).json({ appliedJobs });
 };
+
 export const updateYouthNotes = (req: Request, res: Response): void => {
   const { id } = req.params;
   const { notes } = req.body;  // Extract the new notes from the request body

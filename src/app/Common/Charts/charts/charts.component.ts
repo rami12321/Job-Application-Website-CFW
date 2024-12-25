@@ -7,9 +7,12 @@ import {
   Tooltip,
   Legend,
   BarController,
+  LineController,
   CategoryScale,
   LinearScale,
   BarElement,
+  LineElement,
+  PointElement,
 } from 'chart.js';
 
 @Component({
@@ -29,9 +32,12 @@ export class YouthChartComponent implements OnInit {
       Tooltip,
       Legend,
       BarController,
+      LineController,
       CategoryScale,
       LinearScale,
-      BarElement
+      BarElement,
+      LineElement,
+      PointElement
     );
   }
 
@@ -52,25 +58,8 @@ export class YouthChartComponent implements OnInit {
     this.youthService.getAllYouth().subscribe((youths) => {
       const totalYouths = youths.length;
       const createdAtData = this.getCreatedAtDistribution(youths);
-
-    // Sort dates in chronological order
-    const sortedDates = Object.keys(createdAtData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-    const sortedCounts = sortedDates.map((date) => createdAtData[date]);
-
-    // Create Line Chart for CreatedAt
-    // this.createLineChart('createdAtChart', {
-    //   labels: sortedDates,
-    //   datasets: [
-    //     {
-    //       label: 'Youths Created Over Time',
-    //       data: sortedCounts,
-    //       borderColor: '#36A2EB',
-    //       backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    //       fill: true,
-    //       tension: 0.4, // Smoother lines
-    //     },
-    //   ],
-    // });
+      const sortedDates = Object.keys(createdAtData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+      const sortedCounts = sortedDates.map((date) => createdAtData[date]);
 
       // Map original education levels to shortened ones
       const shortenedEducationLevels = youths.map((youth) => ({
@@ -120,7 +109,7 @@ export class YouthChartComponent implements OnInit {
       );
 
       // Beneficiary Distribution
-      const beneficiaryData = this.getDistribution(youths, 'beneficiary');
+      const beneficiaryData =this.getDistribution(youths, 'beneficiary');
       const beneficiaryPercentages = this.getPercentageDistribution(
         Object.values(beneficiaryData),
         totalYouths
@@ -246,6 +235,20 @@ export class YouthChartComponent implements OnInit {
           },
         ],
       });
+
+    this.createLineChart('createdAtChart', {
+      labels: sortedDates,
+      datasets: [
+        {
+          label: 'Youths Created Over Time',
+          data: sortedCounts,
+          borderColor: '#36A2EB',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: true,
+          tension: 0.4, // Smoother lines
+        },
+      ],
+    });
     });
   }
 
@@ -260,10 +263,11 @@ export class YouthChartComponent implements OnInit {
     }, {} as Record<string, number>);
   }
 
-  getCreatedAtDistribution(youths: any[]): { [key: string]: number } {
+
+  private getCreatedAtDistribution(youths: any[]): { [key: string]: number } {
     const distribution: { [key: string]: number } = {};
     youths.forEach((youth) => {
-      const date = new Date(youth.createdAt).toLocaleDateString(); // Format date (e.g., "MM/DD/YYYY")
+      const date = new Date(youth.createdAt).toLocaleDateString();
       distribution[date] = (distribution[date] || 0) + 1;
     });
     return distribution;
@@ -312,6 +316,36 @@ export class YouthChartComponent implements OnInit {
     new Chart(ctx, {
       type: 'bar', // Use 'bar' type for age distribution
       data: chartData,
+    });
+  }
+  private createLineChart(canvasId: string, chartData: any) {
+    const ctx = document.getElementById(canvasId) as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Youths',
+            },
+          },
+        },
+      },
     });
   }
 }
