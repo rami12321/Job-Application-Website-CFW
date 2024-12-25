@@ -11,7 +11,7 @@
             
             <!-- Display current category if not in editing mode -->
             <span *ngIf="!isEditing['category']" 
-                  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+                  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.category || 'Not available' }}
             </span>
             
@@ -33,7 +33,7 @@
             
             <!-- Display current job if not in editing mode -->
             <span *ngIf="!isEditing['job']" 
-                  class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+                  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.job || 'Not available' }}
             </span>
             
@@ -53,7 +53,7 @@
           <!-- Job Title -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
-            <span *ngIf="!isEditing['jobTitle']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['jobTitle']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.title }}
             </span>
             <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="job-detail-input"  type="text" />
@@ -62,7 +62,7 @@
           <!-- Number of Employees -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
-            <span *ngIf="!isEditing['numEmployees']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['numEmployees']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.numEmployees }}
             </span>
             <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="job-detail-input"  type="number" />
@@ -71,7 +71,7 @@
           <!-- Job Level -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
-            <span *ngIf="!isEditing['level']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['level']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.level }}
             </span>
             <select *ngIf="isEditing['level']" [(ngModel)]="editModels['level']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -84,7 +84,7 @@
           <!-- Location -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
-            <span *ngIf="!isEditing['location']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['location']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.location }}
             </span>
             <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="job-detail-input"  type="text" />
@@ -93,7 +93,7 @@
           <!-- Type of Job -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
-            <span *ngIf="!isEditing['typeOfJob']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['typeOfJob']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.typeOfJob }}
             </span>
             <select *ngIf="isEditing['typeOfJob']" [(ngModel)]="editModels['typeOfJob']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-30">
@@ -107,7 +107,7 @@
           <!-- Supervisor Name -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
-            <span *ngIf="!isEditing['supervisorName']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['supervisorName']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.supervisorName }}
             </span>
             <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="job-detail-input"  type="text" />
@@ -116,7 +116,7 @@
           <!-- Supervisor Position -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
-            <span *ngIf="!isEditing['supervisorPosition']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['supervisorPosition']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.supervisorPosition }}
             </span>
             <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="job-detail-input"  type="text" />
@@ -125,7 +125,7 @@
           <!-- Supervisor Email -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
-            <span *ngIf="!isEditing['supervisorEmail']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['supervisorEmail']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.supervisorEmail }}
             </span>
             <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="job-detail-input"  type="email" />
@@ -134,7 +134,7 @@
           <!-- Supervisor Phone -->
           <p>
             <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
-            <span *ngIf="!isEditing['supervisorPhone']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">
+            <span *ngIf="!isEditing['supervisorPhone']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
               {{ jobRequest?.supervisorPhone }}
             </span>
             <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="job-detail-input"  type="tel" />

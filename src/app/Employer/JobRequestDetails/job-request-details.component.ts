@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 
 @Component({
   selector: 'app-job-request-details',
@@ -41,7 +42,8 @@ export class JobRequestDetailsComponent {
   constructor(
     private jobRequestService: JobRequestService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private youthService: YouthServiceService
 
   ) { }
 
@@ -254,33 +256,97 @@ export class JobRequestDetailsComponent {
       this.isSubmitEnabled = this.approvedCount === this.jobRequest.numEmployees;
     }
   }
-
   submitJobRequests(): void {
-    if (!this.jobRequest || !this.jobId) return;
-
-
-    const updatedYouths = this.jobRequest.assignedYouths
-      ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
-      .map((youth) => ({
-        ...youth,
-        status: youth.action === 'approved' ? 'approved' : youth.status,
-      }));
-
+    if (!this.jobRequest || !this.jobId) {
+      console.error('Job request or job ID is undefined.');
+      return;
+    }
+  
+    // Update the assigned youth statuses
+    const updatedYouths =
+      this.jobRequest.assignedYouths
+        ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
+        .map((youth) => ({
+          ...youth,
+          status: youth.action === 'approved' ? 'approved' : youth.status,
+        })) ?? [];
+  
     const updatedJobRequest = {
       ...this.jobRequest,
       assignedYouths: updatedYouths,
       status: 'in-progress',
     };
-
+  
+    // Update the job request
     this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
       next: () => {
-        console.log('Job request submitted successfully');
-        window.location.reload();
+        console.log('Job request submitted successfully.');
+  
+        updatedYouths.forEach((youth) => {
+          const isApproved = youth.status === 'approved';
+  
+          // Update the applied jobs for the youth
+          this.updateYouthAppliedJobs(
+            youth.id, // Youth ID
+            this.jobRequest?.job || '', // Current job title
+            isApproved ? 'approved' : 'rejected'
+          );
+        });
+  
+        setTimeout(() => {
+          window.location.reload();
+        }, 500); // Optional: Small delay for smoother reload
       },
       error: (err) => console.error('Error submitting job request:', err),
     });
   }
-
+  
+  /**
+   * Updates the status of all applied jobs for a youth.
+   * @param youthId - The ID of the youth
+   * @param currentJobTitle - The title of the current job to approve/reject
+   * @param newStatus - The new status for the current job
+   */
+  updateYouthAppliedJobs(
+    youthId: any,
+    currentJobTitle: string,
+    newStatus: string
+  ): void {
+    this.youthService.getYouthById(youthId).subscribe({
+      next: (youth) => {
+        if (youth && youth.appliedJob) {
+          console.log('Fetched youth record:', youth);
+  
+          // Update statuses for all applied jobs
+          const updatedAppliedJobs = youth.appliedJob.map(
+            (job: { job: string; status: string }) => {
+            if (job.job === currentJobTitle) {
+              return { ...job, status: newStatus }; // Update current job
+            } else if (job.status === 'waiting') {
+              return { ...job, status: 'rejected' }; // Reject other waiting jobs
+            }
+            return job; // Retain other statuses
+          });
+  
+          const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
+  
+          this.youthService.updateYouth(youthId, updatedYouth).subscribe({
+            next: () =>
+              console.log(
+                `Successfully updated applied jobs for youth ID: ${youthId}`
+              ),
+            error: (err) =>
+              console.error(`Error updating youth record for ID: ${youthId}`, err),
+          });
+        } else {
+          console.error(`Youth record or applied jobs not found for ID: ${youthId}`);
+        }
+      },
+      error: (err) =>
+        console.error(`Error fetching youth data for ID: ${youthId}`, err),
+    });
+  }
+  
 
 
   initializeRowStates(): void {

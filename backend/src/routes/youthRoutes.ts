@@ -12,12 +12,14 @@ import {
   updateYouth,
   updateYouthExperience,
   updateYouthTraining,
-  updateJob,
   updateYouthNotes,
   getYouthNotesById,
   updateYouthCamp,
   getAppliedJobById,
   getYouthByJob,
+  updateAppliedJob,
+  updateJob,
+  
 } from '../controllers/youthController';
 // import { assignYouthToJob } from '../controllers/jobRequestController';
 
@@ -52,7 +54,9 @@ router.get('/:id/notes', getYouthNotesById);
 router.get('/:id/appliedJob', getAppliedJobById);
 router.get('/appliedJob/:appliedJob', getYouthByJob);
 router.patch('/:id/status', updateYouthStatus);
-router.patch('/:id/jobCategory', updateJob);
+// Add this route to update the appliedJob for a specific youth
+router.put('/:id/jobCategory', updateJob);
+
 // router.post('/jobs/:jobId/:youthId', assignYouthToJob);
 router.post('/check-registration', checkRegistrationNumber);
 

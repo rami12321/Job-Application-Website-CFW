@@ -18,6 +18,14 @@ export class LookupService {
   getMajors(): Observable<string[]> {
     return this.http.get<any>('assets/data/lookup.json').pipe(map((data) => data.majors));
   }
+  getJobDescription(jobTitle: string): Observable<string[]> {
+    return this.http.get<any>(this.lookupUrl).pipe(
+      map(data => {
+        const job = data.jobs[jobTitle];
+        return job ? job.description : [];
+      })
+    );
+  }
   getJobCategories(): Observable<string[]> {
     return this.http.get<any>('assets/data/lookup.json').pipe(map((data) => data.jobCategories));
   }

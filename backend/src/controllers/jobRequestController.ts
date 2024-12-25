@@ -189,6 +189,26 @@ export const assignYouthToJobRequest = (req: Request, res: Response): void => {
   });
 };
 
+export const getAssignedYouthsByJobId = (req: Request, res: Response): void => {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400).json({ message: 'Employer ID is required' });
+    return;
+  }
+
+  const jobRequests: Job[] = readFile();
+  const filteredJobs = jobRequests.filter((job) => job.id === id);
+
+  if (filteredJobs.length === 0) {
+    res.status(404).json({ message: `No job requests found for employer with ID ${id}` });
+    return;
+  }
+
+  const assignedYouths = filteredJobs.flatMap((job) => job.assignedYouths || []);
+
+  res.status(200).json(assignedYouths);
+};
 export const updateJobRequestStatus = (req: Request, res: Response): void => {
   const { id } = req.params; // Extract jobRequest ID from route parameters
   const { status } = req.body; // Extract the new status from the request body
@@ -219,4 +239,5 @@ export const updateJobRequestStatus = (req: Request, res: Response): void => {
     message: `Job Request with ID ${id} status updated to '${status}'.`,
     updatedJobRequest: jobRequests[jobIndex],
   });
+
 };

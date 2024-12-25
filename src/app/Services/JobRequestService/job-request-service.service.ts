@@ -50,8 +50,10 @@ export class JobRequestService {
   }
 
 
-  
-  
+
+
+
+
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
     return this.http.put(
@@ -62,5 +64,12 @@ export class JobRequestService {
       }
     );
   }
+  // JobRequestService
+getAssignedYouthsByJobId(id: string): Observable<AssignedYouth[]> {
+  const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
+  return this.http.get<AssignedYouth[]>(url); // Adjust the endpoint as per your backend API
+}
+
+
 
 }

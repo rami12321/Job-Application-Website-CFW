@@ -1,5 +1,5 @@
 export interface AssignedYouth {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     dob: string; // Assuming it's a string or date format

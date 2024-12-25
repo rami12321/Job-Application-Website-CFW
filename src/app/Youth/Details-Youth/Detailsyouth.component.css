@@ -5,33 +5,38 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 1rem;
-    background: #f0f8ff;
-}
-.tab-container strong {
-  @apply text-lg font-bold text-gray-700 dark:text-gray-300;
 }
 
 
+
+
+.label {
+  @apply text-lg font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
+}
+
+.value {
+  @apply text-lg font-medium text-gray-700 dark:text-gray-400 px-2 py-2 m-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm;
+}
 :host ::ng-deep .p-tabview-nav {
     flex-direction: column;
-    width: 280px; /* Increased width to ensure tabs fit without being cut off */
+    width: 280px; 
     background: linear-gradient(90deg, #e6f7ff, #b3e4ff);
-    padding: 1rem; /* Added more padding to the tab box */
+    padding: 1rem; 
     border-right: 1px solid #d4edff;
     overflow-y: auto;
-    height: 100%; /* Ensure the tab navigation box stretches to fill the container */
+    height: 100%; 
 }
 
 :host ::ng-deep .p-tabview-title {
     margin-bottom: 0.5rem;
-    padding: 0.75rem 1rem; /* Slightly larger padding */
-    font-size: 1rem; /* Slightly larger font size */
-    font-weight: 600; /* More prominent font weight */
-    color: #0d6efd; /* Darker primary color for better visibility */
+    padding: 0.75rem 1rem; 
+    font-size: 1rem; 
+    font-weight: 600; 
+    color: #0d6efd; 
     border-radius: 0.5rem;
     background-color: #e6f7ff;
     transition: background-color 0.3s ease, color 0.3s ease;
-    text-transform: capitalize; /* Capitalize tab titles */
+    text-transform: capitalize; 
 }
 
 :host ::ng-deep .p-tabview-title:hover {
@@ -50,10 +55,10 @@
     flex-grow: 1;
     background: #ffffff;
     color: #333333;
-    padding: 2rem;
+    padding: 0rem;
     overflow-y: auto;
     border-radius: 0.5rem;
-    margin: 0.7rem;
+    margin: 0rem;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1;
@@ -98,7 +103,7 @@
     }
 }
 
-/* Custom scrollbar styling */
+
 :host ::ng-deep .p-tabview-panels::-webkit-scrollbar {
     width: 8px;
 }
@@ -110,7 +115,7 @@
 
 
 
-  /* Styles for inner content */
+  
   div.mb-6 {
     margin-bottom: 1.5rem;
   }
@@ -120,19 +125,19 @@
   }
 
   div.rounded-lg {
-    border-radius: 0.75rem; /* Consistent border radius */
+    border-radius: 0.75rem; 
   }
 
   div.shadow-md {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
   }
 
   div.bg-white {
-    background-color: #ffffff; /* Maintain a clean white background */
+    background-color: #ffffff; 
   }
 
   div.dark\:bg-gray-800 {
-    background-color: #1f2937; /* Dark mode styling */
+    background-color: #1f2937; 
   }
 
   h3.text-lg {
@@ -143,5 +148,5 @@
 
   p {
     margin: 0.5rem 0;
-    color: #4b5563; /* Medium gray text color */
+    color: #4b5563; 
   }

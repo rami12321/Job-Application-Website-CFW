@@ -78,4 +78,6 @@ export interface Youth {
   status: 'accepted' | 'rejected' | 'pending';
   notes?:string;
   jobCategory?:string[];
+  appliedJob?: { job: string; status: string }[]; // Updated to hold job and status
+
 }

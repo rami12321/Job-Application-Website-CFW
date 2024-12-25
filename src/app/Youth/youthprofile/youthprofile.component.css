@@ -5,16 +5,21 @@
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 1rem;
-    background: #f0f8ff;
-}
-.tab-container strong {
-  @apply text-lg font-bold text-gray-700 dark:text-gray-300;
+    margin: 0.25rem;
 }
 
-.tab-container span {
-  @apply text-base font-semibold size-3 text-gray-600 dark:text-gray-400;
+.field-container {
+  @apply flex flex-col md:flex-row items-start md:items-center gap-2;
 }
+
+.label {
+  @apply text-xl font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
+}
+
+.value {
+  @apply text-lg font-medium text-gray-700 dark:text-gray-400 px-2 py-2 m-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm;
+}
+
 
 :host ::ng-deep .p-tabview-nav {
     flex-direction: column;
