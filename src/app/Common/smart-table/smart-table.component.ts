@@ -47,6 +47,7 @@ interface Column {
 })
 export class SmartTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
   youthDialogVisible = false; // Controls dialog visibility
@@ -81,7 +82,7 @@ export class SmartTableComponent implements OnInit {
   nationalityOptions: string[] = [];
   selectedNationalities: string[] = [];
   excludedColumns: string[] = [
-
+    'active',
     'assignedYouths',
     'signature',
     'registrationStatus',
@@ -281,12 +282,12 @@ export class SmartTableComponent implements OnInit {
       (data: any[]) => {
         console.log('Fetched Employer Data:', data);
 
-        // Step 1: Filter by `status` if provided
-        let filteredData = this.status
-          ? data.filter((item) => item.status === this.status)
+        // Step 1: Filter by `status` if `active` is provided
+        let filteredData = this.active !== undefined
+          ? data.filter((item) => item.active === this.active)
           : data;
 
-        // Step 3: Configure columns dynamically if filtered data is available
+        // Step 2: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
           const filteredColumns = Object.keys(filteredData[0]).filter(
@@ -316,15 +317,16 @@ export class SmartTableComponent implements OnInit {
           }
         }
 
-        // Step 4: Update youth list and paginated products
+        // Step 3: Update youth list and paginated products
         this.employerList = filteredData;
         this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
       },
       (error) => {
-        console.error('Error fetching youth data:', error);
+        console.error('Error fetching employer data:', error);
       }
     );
   }
+
 
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
