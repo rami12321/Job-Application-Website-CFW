@@ -201,25 +201,14 @@
             <p class="text-center text-red-500">{{ noYouthMessage }}</p>
             }@else {
             <ng-template pTemplate="content">
-              @if(status=='waiting-E'){
-                <p-multiSelect
+              <p-multiSelect
                 [options]="youths"
                 [(ngModel)]="selectedYouths"
                 optionLabel="label"
                 dataKey="id"
                 placeholder="Select Youths"
                 styleClass="w-full"
-                ></p-multiSelect>
-              }@else{
-                <p-multiSelect
-                [options]="youths"
-                [(ngModel)]="selectedYouths"
-                optionLabel="label"
-                dataKey="id"
-                placeholder="Select Youths"
-                styleClass="w-full"
-                ></p-multiSelect>
-              }
+              ></p-multiSelect>
             </ng-template>
             }
 
@@ -272,11 +261,18 @@
             <i class="pi pi-clock"></i>
           </button>
           <button
-            *ngIf="action === 'assign'"
+            *ngIf="action === 'assign' && status === 'waiting-E'"
             type="button"
             class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            (click)="showYouthDialog(product.job, product.id)"
-
+            (click)="showYouthDialog(product.job, product.jobId)"
+          >
+            <i class="pi pi-user-plus"></i>
+          </button>
+          <button
+            *ngIf="action === 'assign' && status === 'assigned'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="showAssignedYouthDialog(product.job, product.jobId)"
           >
             <i class="pi pi-user-plus"></i>
           </button>
@@ -289,6 +285,56 @@
           >
             <i class="pi pi-file"></i>
           </button>
+
+          <p-dialog
+            [(visible)]="assignedYouthDialogVisible"
+            header="Youth Details"
+            [modal]="true"
+            [style]="{ width: '500px', height: '500px', padding:'10px'}"
+          >
+            <div *ngIf="assignedYouths.length > 0">
+              <h3 class="font-bold border-b">Assigned Youths</h3>
+              <ul>
+                <li *ngFor="let youth of assignedYouths">
+                  -{{ youth.label }}
+                </li>
+              </ul>
+            </div>
+            @if(unassignedYouths.length>0){
+            <div class="pt-7">
+              <h3 class="border-b font-bold">Assign More Youths</h3>
+              <ul>
+                  <p-multiSelect
+                    [options]="unassignedYouths"
+                    [(ngModel)]="selectedYouths"
+                    optionLabel="label"
+                    dataKey="id"
+                    placeholder="Select Youths"
+                    styleClass="w-full"
+                  ></p-multiSelect>
+              </ul>
+            </div>
+            }@else {
+            <p class="text-center pt-5 text-red-300 font-bold">no more youth Available to assign</p>
+            }
+
+            <ng-template pTemplate="footer">
+              <div class="flex flex-row justify-end gap-5">
+                <button
+                  pButton
+                  label="Assign"
+                  class="p-button-success px-4 py-2 text-white bg-cyan-600 hover:bg-cyan-400"
+                  (click)="assignYouthsToJob()"
+                ></button>
+                <button
+                  pButton
+                  label="Cancel"
+                  class="p-button-secondary px-4 py-2 text-white bg-slate-800 hover:bg-slate-700"
+                  (click)="assignedYouthDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
+          </p-dialog>
 
           <p-dialog
             [(visible)]="noteDialogVisible"

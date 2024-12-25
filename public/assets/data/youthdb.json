@@ -88,8 +88,18 @@
     "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "confirmation": "yes",
     "confirmPassword": "qawsedrf12",
-    "status": "accepted",
-    "notes": "jjj",
+    "status": "rejected",
+    "notes": "asd",
+    "appliedJob": [
+      "Social Worker",
+      "Nurse",
+      "Auto Electrician",
+      "Accountant Assistant",
+      "Admin Assistant",
+      "Assistant Veteranian",
+      "Administrative Support Officer"
+    ],
+    "beneficiary": true,
     "createdAt": "2024-12-19T12:34:56Z"
   },
   {
@@ -742,3 +752,5 @@
     "createdAt": "2024-11-19T12:34:56Z"
   }
 ]
+
+

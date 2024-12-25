@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-SignUp-Employer',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PasswordModule, HttpClientModule,FormsModule, 
+  imports: [CommonModule, ReactiveFormsModule, PasswordModule, HttpClientModule,FormsModule,
   ],
 
   templateUrl: './SignUp-Employer.component.html',
@@ -26,7 +26,7 @@ export class SignUpEmployerComponent implements AfterViewInit  {
   signatureImage: string | null = null;
   isSignatureModalOpen = false;
   verificationCode: string = '';
-
+  active=true
 
   @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
@@ -58,7 +58,7 @@ export class SignUpEmployerComponent implements AfterViewInit  {
   debugVerificationCode(): void {
     console.log('Verification Code:', this.verificationCode);
   }
-  
+
   hasError(controlName: string, errorCode: string): boolean {
     const control = this.signupForm.get(controlName);
     return !!control?.hasError(errorCode) && (control.dirty || control.touched || false);
@@ -88,7 +88,7 @@ export class SignUpEmployerComponent implements AfterViewInit  {
       alert('Please provide a signature.');
     }
   }
-  
+
 
   clearSignature(): void {
     this.signaturePad.clear();
@@ -104,6 +104,7 @@ export class SignUpEmployerComponent implements AfterViewInit  {
 
   createSignupModel(): Employer {
     return {
+active:this.active,
       id: this.generateUniqueId(),
       username: this.signupForm.value.email,
       password: this.signupForm.value.password,
@@ -114,45 +115,45 @@ export class SignUpEmployerComponent implements AfterViewInit  {
       whatsappNumber: this.signupForm.value.whatsappNumber,
       email: this.signupForm.value.email,
       area: this.signupForm.value.area,
-      signature: this.signatureImage || null, 
+      signature: this.signatureImage || null,
       role: 'Employer'
 
     };
   }
   generateUniqueId(): string {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-    const randomLetter = letters[Math.floor(Math.random() * letters.length)]; 
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const randomLetter = letters[Math.floor(Math.random() * letters.length)];
     const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-    return `${randomLetter}-${randomNumber}`; 
+    return `${randomLetter}-${randomNumber}`;
   }
   onSubmit(): void {
     // if (this.signupForm.invalid) {
     //   alert('Form is invalid. Please check the inputs.');
     //   return;
     // }
-  
+
     const verificationCode = this.signupForm.get('verificationCode')?.value.trim();
-  
+
     if (!verificationCode) {
       alert('Please enter a verification code.');
       return;
     }
-  
+
     // Check if the verification code exists
     this.verificationCodeService.getCodes().subscribe(
       (codes) => {
         const matchingCode = codes.find((item) => item.code === verificationCode);
-  
+
         if (matchingCode) {
           // Proceed with signup if the code is valid
           // Create the signup data, which will include the signature image
           const signupData = this.createSignupModel(); // This already includes the signatureImage
-  
+
           this.employerService.saveEmployerData(signupData).subscribe(
             (response) => {
               alert('Form data saved successfully!');
               console.log('Saved successfully:', response);
-  
+
               // Delete the used verification code
               this.verificationCodeService.deleteCode(verificationCode).subscribe(
                 () => console.log('Verification code deleted.'),
@@ -177,9 +178,9 @@ export class SignUpEmployerComponent implements AfterViewInit  {
     }
   ngOnInit() {
   }
-  
-  
-  
+
+
+
 
 
 }

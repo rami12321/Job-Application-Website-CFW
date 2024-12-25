@@ -1,18 +1,6 @@
 [
   {
-    "employerId": "34285768",
-    "job": "Auto Electrician",
-    "title": "hadh",
-    "numEmployees": 3,
-    "level": "",
-    "location": "",
-    "typeOfJob": "onsite",
-    "supervisorName": "asdasd",
-    "supervisorPosition": "eqwe",
-    "supervisorEmail": "dasda@asdda",
-    "supervisorPhone": "41465465"
-  },
-  {
+    "jobId": "A-61232388",
     "employerId": "L-18100564",
     "job": "Dental Assistant",
     "title": "qwertyuio",
@@ -25,7 +13,6 @@
     "supervisorEmail": "",
     "supervisorPhone": "",
     "status": "assigned",
-    "id": "A-61232388",
     "assignedYouths": [
       {
         "id": "34285768",
@@ -46,6 +33,7 @@
     ]
   },
   {
+    "jobId": "T-32416340",
     "employerId": "34285768",
     "job": "Translator",
     "title": "dasd",
@@ -57,10 +45,10 @@
     "supervisorPosition": "",
     "supervisorEmail": "",
     "supervisorPhone": "",
-    "status": "waiting-E",
-    "id": "T-32416340"
+    "status": "waiting-E"
   },
   {
+    "jobId": "G-55827737",
     "employerId": "L-18100564",
     "job": "Auto Electrician",
     "title": "New22",
@@ -72,8 +60,7 @@
     "supervisorPosition": "sdasd",
     "supervisorEmail": "123dasd",
     "supervisorPhone": "asdasdasd",
-    "status": "waiting-E",
-    "id": "G-55827737",
+    "status": "assigned",
     "assignedYouths": [
       {
         "id": "16479899",
@@ -94,6 +81,7 @@
     ]
   },
   {
+    "jobId": "D-53259704",
     "employerId": "L-18100564",
     "job": "Auto Electrician",
     "title": "123123",
@@ -105,10 +93,20 @@
     "supervisorPosition": "sdasd",
     "supervisorEmail": "asd",
     "supervisorPhone": "da",
-    "status": "waiting-E",
-    "id": "D-53259704"
+    "status": "assigned",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      }
+    ]
   },
   {
+    "jobId": "J-59716278",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "Data Entry",
@@ -121,7 +119,6 @@
     "supervisorEmail": "",
     "supervisorPhone": "",
     "status": "assigned",
-    "id": "J-59716278",
     "assignedYouths": [
       {
         "id": "16479899",
@@ -144,6 +141,7 @@
     ]
   },
   {
+    "jobId": "L-93833072",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -156,10 +154,10 @@
     "supervisorEmail": "kqpkm@gmail.com",
     "supervisorPhone": "233423",
     "status": "waiting-E",
-    "category": "Cars & Motors Electrican",
-    "id": "L-93833072"
+    "category": "Cars & Motors Electrican"
   },
   {
+    "jobId": "L-98345612",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -172,10 +170,10 @@
     "supervisorEmail": "ali.tech@gmail.com",
     "supervisorPhone": "23456789",
     "status": "waiting-E",
-    "category": "Cars & Motors Electrician",
-    "id": "L-98345612"
+    "category": "Cars & Motors Electrician"
   },
   {
+    "jobId": "L-98274361",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -187,33 +185,53 @@
     "supervisorPosition": "Senior Technician",
     "supervisorEmail": "nadia.seniortech@gmail.com",
     "supervisorPhone": "23647856",
-    "status": "asssigned",
+    "status": "in-progress",
     "category": "Cars & Motors Electrician",
-    "id": "L-98274361",
     "assignedYouths": [
       {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "accepted",
-        "isDisabled": false
+        "id": "F-39476821",
+        "firstName": "Jad",
+        "lastName": "Mansour",
+        "dob": "2000-05-19",
+        "cv": "C:\\fakepath\\Jad's Resume.pdf",
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved"
       },
       {
-        "id": "34285723",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "accepted",
-        "isDisabled": false
+        "id": "G-54862319",
+        "firstName": "Nadia",
+        "lastName": "Kassem",
+        "dob": "1999-07-04",
+        "cv": "C:\\fakepath\\Nadia's Resume.pdf",
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved"
+      },
+      {
+        "id": "H-29384567",
+        "firstName": "Kassem",
+        "lastName": "Omar",
+        "dob": "1995-02-18",
+        "cv": "C:\\fakepath\\Kassem's Resume.pdf",
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved"
+      },
+      {
+        "id": "A-34295763",
+        "firstName": "Yousef",
+        "lastName": "Al-Sayed",
+        "dob": "1996-11-15",
+        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved"
       }
     ]
   },
   {
+    "jobId": "L-98457329",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -227,7 +245,6 @@
     "supervisorPhone": "23874562",
     "status": "in-progress",
     "category": "Cars & Motors Electrician",
-    "id": "L-98457329",
     "assignedYouths": [
       {
         "id": "34285768",
@@ -240,292 +257,29 @@
         "isDisabled": false
       },
       {
-        "id": "14305200",
-        "firstName": "Rami",
-        "lastName": "Abou Eid",
-        "dob": "1997-09-25",
-        "cv": "C:\\fakepath\\Sara's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      }
-    ]
-  },
-  {
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 6,
-    "level": "entry",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Sara",
-    "supervisorPosition": "Team Lead",
-    "supervisorEmail": "sara.teamlead@gmail.com",
-    "supervisorPhone": "23987643",
-    "status": "assigned",
-    "category": "Cars & Motors Electrician",
-    "id": "L-93823347",
-    "assignedYouths": [
-      {
-        "id": "F-39476821",
-        "firstName": "Jad",
-        "lastName": "Mansour",
-        "dob": "2000-05-19",
-        "cv": "C:\\fakepath\\Jad's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "G-54862319",
-        "firstName": "Nadia",
-        "lastName": "Kassem",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Nadia's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "H-29384567",
-        "firstName": "Kassem",
-        "lastName": "Omar",
-        "dob": "1995-02-18",
-        "cv": "C:\\fakepath\\Kassem's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "I-70254863",
-        "firstName": "Rami",
-        "lastName": "Salman",
-        "dob": "1996-11-25",
-        "cv": "C:\\fakepath\\Rami's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "A-34295763",
-        "firstName": "Yousef",
-        "lastName": "Al-Sayed",
-        "dob": "1996-11-15",
-        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "B-76382945",
-        "firstName": "Mona",
-        "lastName": "Nabil",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Mona's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "C-45678321",
-        "firstName": "Ali",
-        "lastName": "Zain",
-        "dob": "1998-02-10",
-        "cv": "C:\\fakepath\\Ali's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
+        "status": "waiting",
+        "isDisabled": false,
+        "action": "accepted"
       },
       {
-        "id": "51379842",
+        "id": "E-76845213",
         "firstName": "Sara",
-        "lastName": "Nassar",
-        "dob": "2002-03-25",
+        "lastName": "Abdallah",
+        "dob": "1997-09-25",
         "cv": "C:\\fakepath\\Sara's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "26394875",
-        "firstName": "Ahmed",
-        "lastName": "Hassan",
-        "dob": "1998-05-10",
-        "cv": "C:\\fakepath\\Ahmed's Resume.pdf",
-        "status": "waiting"
+        "status": "waiting",
+        "isDisabled": false,
+        "action": "accepted"
       }
     ]
   },
   {
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 7,
-    "level": "mid",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Karim",
-    "supervisorPosition": "Lead Technician",
-    "supervisorEmail": "karim.leadtech@gmail.com",
-    "supervisorPhone": "24157894",
-    "status": "in-progress",
-    "category": "Cars & Motors Electrician",
-    "id": "L-98346720",
-    "assignedYouths": [
-      {
-        "id": "G-54862319",
-        "firstName": "Nadia",
-        "lastName": "Kassem",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Nadia's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "F-39476821",
-        "firstName": "Jad",
-        "lastName": "Mansour",
-        "dob": "2000-05-19",
-        "cv": "C:\\fakepath\\Jad's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "H-29384567",
-        "firstName": "Kassem",
-        "lastName": "Omar",
-        "dob": "1995-02-18",
-        "cv": "C:\\fakepath\\Kassem's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "I-70254863",
-        "firstName": "Rami",
-        "lastName": "Salman",
-        "dob": "1996-11-25",
-        "cv": "C:\\fakepath\\Rami's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "A-34295763",
-        "firstName": "Yousef",
-        "lastName": "Al-Sayed",
-        "dob": "1996-11-15",
-        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "C-45678321",
-        "firstName": "Ali",
-        "lastName": "Zain",
-        "dob": "1998-02-10",
-        "cv": "C:\\fakepath\\Ali's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      }
-    ]
-  },
-  {
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 8,
-    "level": "junior",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Rania",
-    "supervisorPosition": "Workshop Supervisor",
-    "supervisorEmail": "rania.supervisor@gmail.com",
-    "supervisorPhone": "25043218",
-    "status": "waiting-E",
-    "category": "Cars & Motors Electrician",
-    "id": "L-98347250"
-  },
-  {
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 3,
-    "level": "mid",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Omar",
-    "supervisorPosition": "Senior Technician",
-    "supervisorEmail": "omar.seniortech@gmail.com",
-    "supervisorPhone": "26547392",
-    "status": "in-progress",
-    "category": "Cars & Motors Electrician",
-    "id": "L-98349201",
-    "assignedYouths": [
-      {
-        "id": "I-70254863",
-        "firstName": "Rami",
-        "lastName": "Salman",
-        "dob": "1996-11-25",
-        "cv": "C:\\fakepath\\Rami's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "A-34295763",
-        "firstName": "Yousef",
-        "lastName": "Al-Sayed",
-        "dob": "1996-11-15",
-        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      }
-    ]
-  },
-  {
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 10,
-    "level": "entry",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Fadi",
-    "supervisorPosition": "Electrician Lead",
-    "supervisorEmail": "fadi.electricianlead@gmail.com",
-    "supervisorPhone": "26789234",
-    "status": "waiting-E",
-    "category": "Cars & Motors Electrician",
-    "id": "L-93823741"
-  },
-  {
+    "jobId": "L-98350231",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -539,7 +293,6 @@
     "supervisorPhone": "27893456",
     "status": "in-progress",
     "category": "Cars & Motors Electrician",
-    "id": "L-98350231",
     "assignedYouths": [
       {
         "id": "26394875",
@@ -584,6 +337,7 @@
     ]
   },
   {
+    "jobId": "L-93852219",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
@@ -596,7 +350,155 @@
     "supervisorEmail": "rami.workshopmanager@gmail.com",
     "supervisorPhone": "24987654",
     "status": "waiting-E",
-    "category": "Cars & Motors Electrician",
-    "id": "L-93852219"
+    "category": "Cars & Motors Electrician"
+  },
+  {
+    "jobId": "S-28390228",
+    "employerId": "F-70583249",
+    "job": "Nurse",
+    "title": "hadh",
+    "numEmployees": 7,
+    "level": "mid",
+    "location": "",
+    "typeOfJob": "hybrid",
+    "supervisorName": "asdasd",
+    "supervisorPosition": "sdaasd",
+    "supervisorEmail": "dasda@asddaasd",
+    "supervisorPhone": "1e123",
+    "status": "assigned",
+    "category": "Health",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "firstName": "Mohammad",
+        "lastName": "Sarhan",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "isDisabled": false,
+        "action": "accepted"
+      }
+    ]
+  },
+  {
+    "jobId": "W-95360296",
+    "employerId": "F-70583249",
+    "job": "Social Worker",
+    "title": "Social Worker",
+    "numEmployees": 10,
+    "level": "mid",
+    "location": "tripoli",
+    "typeOfJob": "hybrid",
+    "supervisorName": "asdas",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "assigned",
+    "category": "Social",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "username": "2-00425334",
+        "password": "qawsedrf12",
+        "role": "Youth",
+        "firstNameEn": "bashar",
+        "fatherNameEn": "hahaa",
+        "lastNameEn": "alsayyed",
+        "firstNameAr": "بشار",
+        "fatherNameAr": "عدنان",
+        "lastNameAr": "السيد",
+        "gender": "Male",
+        "dob": "2000-06-21",
+        "nationality": "Palestinian Refugee in Lebanon",
+        "registrationStatus": "Registered",
+        "familyRegistrationNumber": "1-45245234",
+        "personalRegistrationNumber": "2-00425334",
+        "mobilePhone": "96134567889",
+        "whatsapp": "96134567889",
+        "emergencyPhone": "96134567889",
+        "emergencyRelation": "Parent",
+        "email": "bashar.alsayyed.20@gmail.com",
+        "area": "North Lebanon",
+        "fullAddress": "سعسع",
+        "headfa": "Mother",
+        "campType": "Inside Camp",
+        "camp": "Nahr El Bared Palestinian Refugee Camp",
+        "jobOpportunitySource": "WhatsApp Message from Employment Services Team",
+        "educationGraduate": "no",
+        "educationLevel": "University Degree, Technical Licence (LT), University Diploma",
+        "major": "Computer Science Programming",
+        "institution": "BAU",
+        "graduationDate": "2021-07-21",
+        "gradplace": "tripoli",
+        "employmentOpportunities": "Short-term employment opportunities with external organizations",
+        "aboutYourself": "test test test test test testtest test test test test test test test test",
+        "placedByKfw": "yes",
+        "kfwYear": "test",
+        "question2": "no",
+        "innovationLabGraduate": "yes",
+        "innovationLabGradtype": [
+          "Social Entrepreneurship"
+        ],
+        "disability": "yes",
+        "disabilitySupport": "yes",
+        "disabilityTypes": [
+          "Psychosocial / Mental Health"
+        ],
+        "employed": "yes",
+        "seekingEmploymentDuration": "",
+        "isPrcsVolunteer": "yes",
+        "isFireBrigadesVolunteer": "yes",
+        "isAlShifaaVolunteer": "yes",
+        "experiences": [
+          {
+            "type": "Volunteer",
+            "employerName": "Company",
+            "employerPhone": "71453467",
+            "area": "North Lebanon",
+            "employmentType": "Monthly",
+            "jobTitle": "development",
+            "startDate": "2024-09-10",
+            "endDate": "2024-12-18",
+            "salary": 300,
+            "tasks": "test"
+          }
+        ],
+        "trainings": [
+          {
+            "institution": "test",
+            "certificate": "test",
+            "area": "North Lebanon",
+            "durationFrom": "2024-10-15",
+            "durationTo": "2024-12-03"
+          }
+        ],
+        "arabic": "fluent",
+        "english": "good",
+        "french": "null",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "coverLetter": "C:\\fakepath\\Bashar's Resume.pdf",
+        "identityCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "registrationCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "degree": "C:\\fakepath\\Bashar's Resume.pdf",
+        "prcsProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "fireProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "confirmation": "yes",
+        "confirmPassword": "qawsedrf12",
+        "status": "rejected",
+        "notes": "asd",
+        "appliedJob": [
+          "Social Worker",
+          "Nurse",
+          "Auto Electrician",
+          "Accountant Assistant",
+          "Admin Assistant",
+          "Assistant Veteranian",
+          "Administrative Support Officer"
+        ],
+        "beneficiary": true,
+        "createdAt": "2024-12-19T12:34:56Z"
+      }
+    ]
   }
 ]

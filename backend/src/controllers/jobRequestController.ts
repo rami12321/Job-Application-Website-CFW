@@ -54,10 +54,10 @@ export const createJobRequest = (req: Request, res: Response): void => {
   const jobRequests: Job[] = readFile();
 
 
-  const { id, ...jobRequestData } = req.body;
+  const { jobId, ...jobRequestData } = req.body;
   const newJobRequest: Job = {
+    jobId: generateUniqueId(),
     ...jobRequestData,
-    id: generateUniqueId(),
   };
 
 
@@ -82,7 +82,7 @@ function generateUniqueId(): string {
 export const getJobRequestById = (req: Request, res: Response): void => {
   const { id } = req.params;
   const jobRequests: Job[] = readFile();
-  const jobRequest = jobRequests.find((e) => e.id === id);
+  const jobRequest = jobRequests.find((e) => e.jobId === id);
 
   if (!jobRequest) {
     res.status(404).json({ message: `jobRequest with ID ${id} not found.` });
@@ -96,7 +96,7 @@ export const updateJobRequest = (req: Request, res: Response): void => {
   const { id } = req.params;
   const updatedData: Partial<Job> = req.body;
   let jobRequests: Job[] = readFile();
-  const jobRequestIndex = jobRequests.findIndex((e) => e.id === id);
+  const jobRequestIndex = jobRequests.findIndex((e) => e.jobId === id);
 
   if (jobRequestIndex === -1) {
     res.status(404).json({ message: `Employer with ID ${id} not found.` });
@@ -115,7 +115,7 @@ export const updateJobRequest = (req: Request, res: Response): void => {
 export const deleteJobRequest = (req: Request, res: Response): void => {
   const { id } = req.params;
   let jobRequests: Job[] = readFile();
-  const jobRequestIndex = jobRequests.findIndex((e) => e.id === id);
+  const jobRequestIndex = jobRequests.findIndex((e) => e.jobId === id);
 
   if (jobRequestIndex === -1) {
     res.status(404).json({ message: `Job Request with ID ${id} not found.` });
@@ -131,55 +131,37 @@ export const deleteJobRequest = (req: Request, res: Response): void => {
 export const assignYouthToJobRequest = (req: Request, res: Response): void => {
   const { id, youthId } = req.params;
   const jobRequests: Job[] = readFile();
-  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
+  const youthData: Youth[] = JSON.parse(
+    fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]'
+  );
 
-  const jobIndex = jobRequests.findIndex((job) => job.id === id);
-
+  const jobIndex = jobRequests.findIndex((job) => job.jobId === id);
 
   if (jobIndex === -1) {
     res.status(404).json({ message: `Job Request with ID ${id} not found.` });
     return;
   }
 
-
   const youth = youthData.find((y) => y.id === youthId);
-
 
   if (!youth) {
     res.status(404).json({ message: `Youth with ID ${youthId} not found.` });
     return;
   }
 
-
   if (!jobRequests[jobIndex].assignedYouths) {
     jobRequests[jobIndex].assignedYouths = [];
   }
 
-
   const existingYouthIndex = jobRequests[jobIndex].assignedYouths.findIndex((y) => y.id === youthId);
 
   if (existingYouthIndex !== -1) {
-
-    jobRequests[jobIndex].assignedYouths[existingYouthIndex] = {
-      ...jobRequests[jobIndex].assignedYouths[existingYouthIndex],
-      firstName: youth.firstNameEn,
-      lastName: youth.lastNameEn,
-      dob: youth.dob,
-      cv: youth.cv,
-      status: "waiting",
-    };
+    // Update existing youth assignment
+    jobRequests[jobIndex].assignedYouths[existingYouthIndex] = youth;
   } else {
-
-    jobRequests[jobIndex].assignedYouths.push({
-      id: youthId,
-      firstName: youth.firstNameEn,
-      lastName: youth.lastNameEn,
-      dob: youth.dob,
-      cv: youth.cv,
-      status: "waiting",
-    });
+    // Add new youth to the assignment list
+    jobRequests[jobIndex].assignedYouths.push(youth);
   }
-
 
   writeFile(jobRequests);
 
@@ -198,7 +180,7 @@ export const getAssignedYouthsByJobId = (req: Request, res: Response): void => {
   }
 
   const jobRequests: Job[] = readFile();
-  const filteredJobs = jobRequests.filter((job) => job.id === id);
+  const filteredJobs = jobRequests.filter((job) => job.jobId === id);
 
   if (filteredJobs.length === 0) {
     res.status(404).json({ message: `No job requests found for employer with ID ${id}` });
@@ -221,7 +203,7 @@ export const updateJobRequestStatus = (req: Request, res: Response): void => {
 
   const jobRequests: Job[] = readFile(); // Read the current job requests data
 
-  const jobIndex = jobRequests.findIndex((job) => job.id === id);
+  const jobIndex = jobRequests.findIndex((job) => job.jobId === id);
 
   // Check if the job request exists
   if (jobIndex === -1) {
