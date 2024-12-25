@@ -1,5 +1,5 @@
 export interface Employer {
-  id?: string; 
+  id?: string;
   username: string;
   password: string;
   organization: string;
@@ -10,7 +10,8 @@ export interface Employer {
   email: string;
   area: string;
   signature: string | null;
-  profileImage?: string; 
+  profileImage?: string;
     role: string;
+    active:boolean,
 
 }

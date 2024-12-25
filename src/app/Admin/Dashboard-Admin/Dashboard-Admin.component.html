@@ -1,52 +1,72 @@
 <div class="container mx-auto my-4 px-4 w-full">
   <div class="border-b">
 
-  <p-accordion [activeIndex]="0" class="w-full">
-    <p-accordionTab header="Youth">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
-        <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Registered Youth</h4>
-          <p class="text-3xl font-bold mt-2">{{ youthData.accepted }}</p>
-        </div>
-        <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Rejected Youth</h4>
-          <p class="text-3xl font-bold mt-2">{{ youthData.rejected }}</p>
-        </div>
-        <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Pending Youth</h4>
-          <p class="text-3xl font-bold mt-2">{{ youthData.pending }}</p>
-        </div>
+    <p-accordion [activeIndex]="0" class="w-full">
+      <p-accordionTab header="Youth">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
 
-        <div class="bg-blue-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Waiting-Lists</h4>
-          <p class="text-3xl font-bold mt-2">{{ youthData.waiting }}</p>
-        </div>
-      </div>
-    </p-accordionTab>
 
-    <p-accordionTab header="Employee" class="w-full">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
-        <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Registered Employee</h4>
-          <p class="text-3xl font-bold mt-2" id="totalEmployees">54</p>
+          <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-user-check text-xl"></i> <!-- Accepted Icon -->
+              <h4 class="font-medium text-white text-lg">Accepted Youth</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2">{{ youthData.accepted }}</p>
+          </div>
+
+
+          <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-user-times text-xl"></i> <!-- Rejected Icon -->
+              <h4 class="font-medium text-white text-lg">Rejected Youth</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2">{{ youthData.rejected }}</p>
+          </div>
+
+
+          <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-clock text-xl"></i> <!-- Pending Icon -->
+              <h4 class="font-medium text-white text-lg">Pending Youth</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2">{{ youthData.pending }}</p>
+          </div>
+
+          <div class="bg-blue-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-list text-xl"></i> <!-- Waiting List Icon -->
+              <h4 class="font-medium text-white text-lg">Waiting-Lists</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2">{{ youthData.waiting }}</p>
+          </div>
+
+
         </div>
-        <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Rejected Employee</h4>
-          <p class="text-3xl font-bold mt-2" id="totalProjects">21</p>
+      </p-accordionTab>
+
+      <p-accordionTab header="Employer" class="w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
+          <div class="bg-green-600 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-briefcase text-xl"></i> <!-- Active Employer Icon -->
+              <h4 class="font-medium text-white text-lg">Active Employer</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2" id="totalEmployees">{{employerData.active}}</p>
+          </div>
+          <div class="bg-red-400 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-user-slash text-xl"></i> <!-- Inactive Employer Icon -->
+              <h4 class="font-medium text-white text-lg">Inactive Employer</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2" id="totalProjects">{{employerData.inactive}}</p>
+          </div>
         </div>
-        <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow">
-          <h4 class="font-medium text-white text-lg">Pending Employee</h4>
-          <p class="text-3xl font-bold mt-2"id="activeEmployees">70</p>
-        </div>
-      </div>
-    </p-accordionTab>
-    <!-- <p-accordionTab header="Header III"> </p-accordionTab> -->
-  </p-accordion>
-</div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
 
   <div>
     <h1 class="font-bold text-2xl pt-4">Statistics :</h1>
     <app-youth-chart/>
   </div>
-
 </div>

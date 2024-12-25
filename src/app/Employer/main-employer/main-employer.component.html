@@ -240,29 +240,29 @@
             *ngFor="let job of paginatedWaitingJobs"
             class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
           >
-          
+
           <td
           class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
           *ngFor="let column of columns"
-          [ngClass]="{ 'no-wrap': column.key === 'id' }"
+          [ngClass]="{ 'no-wrap': column.key === 'jobId' }"
         >
           {{ job[column.key] }}
         </td>
-        
+
             <!-- Action Buttons -->
             <td class="px-6 py-4 border-b border-gray-300 text-center">
               <div class="flex space-x-2 justify-center">
 
-                
+
                 <button
   class="bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
   aria-label="Edit"
-  (click)="openEditModal(job.id ?? 'N/A')"
+  (click)="openEditModal(job.jobId ?? 'N/A')"
 >
   <i class="pi pi-pencil text-lg"></i>
 </button>
 
-  
+
                 <button
                   class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                   aria-label="Delete"
@@ -270,11 +270,11 @@
                 >
                   <i class="pi pi-trash text-lg"></i>
                 </button>
-  
+
                 <button
                   class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                   aria-label="Info"
-                  (click)="openModal(job.id ?? 'N/A')"
+                  (click)="openModal(job.jobId ?? 'N/A')"
                 >
                   <i class="pi pi-info text-lg"></i>
                 </button>
@@ -284,7 +284,7 @@
         </tbody>
       </table>
     </div>
-  
+
   <!-- Pagination Controls -->
   <div class="mt-6 flex justify-between items-center">
     <!-- Previous Button -->
@@ -486,23 +486,23 @@
                 *ngFor="let job of paginatedAssignedJobs"
                 class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
               >
-              
+
               <td
               class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
               *ngFor="let column of columns"
-              [ngClass]="{ 'no-wrap': column.key === 'id' }"
+              [ngClass]="{ 'no-wrap': column.key === 'jobId' }"
             >
               {{ job[column.key] }}
             </td>
-            
+
                 <!-- Action Buttons -->
                 <td class="px-6 py-4 border-b border-gray-300 text-center">
                   <div class="flex space-x-2 justify-center">
-    
-                    
 
-    
-      
+
+
+
+
                     <button
                       class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Delete"
@@ -510,11 +510,11 @@
                     >
                       <i class="pi pi-trash text-lg"></i>
                     </button>
-      
+
                     <button
                       class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Info"
-                      (click)="openModal(job.id ?? 'N/A')"
+                      (click)="openModal(job.jobId ?? 'N/A')"
                     >
                       <i class="pi pi-info text-lg"></i>
                     </button>
@@ -524,7 +524,7 @@
             </tbody>
           </table>
         </div>
-      
+
       <!-- Pagination Controls -->
       <div class="mt-6 flex justify-between items-center">
         <!-- Previous Button -->
@@ -535,14 +535,14 @@
         >
           Previous
         </button>
-    
+
         <!-- Page Numbers -->
         <div class="flex items-center space-x-2">
           <span class="text-sm text-gray-600"
             >      Page {{ currentPageAssigned }} of {{ Math.ceil(filteredAssignedJobs.length / itemsPerPage) }}</span
           >
         </div>
-    
+
         <!-- Next Button -->
         <button
           class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
@@ -552,7 +552,7 @@
           Next
         </button>
       </div>
-    
+
       <!-- Search Input -->
       <div class="mt-4 flex items-center space-x-2">
         <input
@@ -563,10 +563,10 @@
         />
       </div>
     </div>
-    
-    
 
-    
+
+
+
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       *ngIf="isModalOpen"
@@ -580,17 +580,17 @@
     >
       &times;
     </button>
-    
-    
+
+
         <!-- Job Details Component -->
         <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
         </app-job-request-details>
-    
+
         <!-- Close Button -->
-    
+
       </div>
     </div>
-    
+
     <div
       id="delete-confirm-modal"
       tabindex="-1"
@@ -699,23 +699,23 @@
                 *ngFor="let job of paginatedInProgressJobs"
                 class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
               >
-              
+
               <td
               class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
               *ngFor="let column of columns"
-              [ngClass]="{ 'no-wrap': column.key === 'id' }"
+              [ngClass]="{ 'no-wrap': column.key === 'jobId' }"
             >
               {{ job[column.key] }}
             </td>
-            
+
                 <!-- Action Buttons -->
                 <td class="px-6 py-4 border-b border-gray-300 text-center">
                   <div class="flex space-x-2 justify-center">
-    
-                    
 
-    
-      
+
+
+
+
                     <button
                       class="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Delete"
@@ -723,11 +723,11 @@
                     >
                       <i class="pi pi-trash text-lg"></i>
                     </button>
-      
+
                     <button
                       class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Info"
-                      (click)="openModal(job.id ?? 'N/A')"
+                      (click)="openModal(job.jobId ?? 'N/A')"
                     >
                       <i class="pi pi-info text-lg"></i>
                     </button>
@@ -737,7 +737,7 @@
             </tbody>
           </table>
         </div>
-      
+
       <!-- Pagination Controls -->
       <div class="mt-6 flex justify-between items-center">
         <!-- Previous Button -->
@@ -748,14 +748,14 @@
         >
           Previous
         </button>
-    
+
         <!-- Page Numbers -->
         <div class="flex items-center space-x-2">
           <span class="text-sm text-gray-600"
             >      Page {{ currentPageInProgress }} of {{ Math.ceil(filteredInProgressJobs.length / itemsPerPage) }}</span
           >
         </div>
-    
+
         <!-- Next Button -->
         <button
           class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
@@ -765,7 +765,7 @@
           Next
         </button>
       </div>
-    
+
       <!-- Search Input -->
       <div class="mt-4 flex items-center space-x-2">
         <input
@@ -776,10 +776,10 @@
         />
       </div>
     </div>
-    
-    
 
-    
+
+
+
     <div
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       *ngIf="isModalOpen"
@@ -793,17 +793,17 @@
     >
       &times;
     </button>
-    
-    
+
+
         <!-- Job Details Component -->
         <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
         </app-job-request-details>
-    
+
         <!-- Close Button -->
-    
+
       </div>
     </div>
-    
+
     <div
       id="delete-confirm-modal"
       tabindex="-1"

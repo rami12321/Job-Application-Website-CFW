@@ -91,14 +91,16 @@
     "status": "rejected",
     "notes": "asd",
     "appliedJob": [
+      "Social Worker",
+      "Nurse",
       "Auto Electrician",
       "Accountant Assistant",
       "Admin Assistant",
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "beneficiary":true,
-    "createdAt":"2024-12-19T12:34:56Z"
+    "beneficiary": true,
+    "createdAt": "2024-12-19T12:34:56Z"
   },
   {
     "id": "34285768",
@@ -197,9 +199,9 @@
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "beneficiary":false,
-    "createdAt":"2024-12-17T12:34:56Z"
-
+    "beneficiary": false,
+    "createdAt": "2024-12-17T12:34:56Z",
+    "notes": "dfghjkl"
   },
   {
     "id": "14305200",
@@ -331,8 +333,7 @@
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "createdAt":"2024-11-19T12:34:56Z"
-
+    "createdAt": "2024-11-19T12:34:56Z"
   },
   {
     "id": "14305600",
@@ -464,8 +465,7 @@
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "createdAt":"2024-11-19T12:34:56Z"
-
+    "createdAt": "2024-11-19T12:34:56Z"
   },
   {
     "id": "14305270",
@@ -591,14 +591,14 @@
     "mainTasks": "koko",
     "question2": "yes",
     "appliedJob": [
+      "Auto Electrician",
       "Dental Assistant",
       "Accountant Assistant",
       "Admin Assistant",
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "createdAt":"2024-11-19T12:34:56Z"
-
+    "createdAt": "2024-11-19T12:34:56Z"
   },
   {
     "id": "12305200",
@@ -730,8 +730,6 @@
       "Assistant Veteranian",
       "Administrative Support Officer"
     ],
-    "createdAt":"2024-11-19T12:34:56Z"
-
+    "createdAt": "2024-11-19T12:34:56Z"
   }
-
 ]

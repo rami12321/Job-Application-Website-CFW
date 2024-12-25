@@ -48,12 +48,6 @@ export class JobRequestService {
     const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
     return this.http.put(url, {}, { headers: { 'Content-Type': 'application/json' } });
   }
-
-
-
-
-
-
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
     return this.http.put(
