@@ -75,7 +75,7 @@ export interface Youth {
 
   status: 'accepted' | 'rejected' | 'pending' | 'waiting';
   notes?:string;
-  appliedJob?:string[];
+  appliedJob?: { job: string; status: string }[]; // Updated to hold job and status
   beneficiary?:boolean;
   createdAt:string;
 }

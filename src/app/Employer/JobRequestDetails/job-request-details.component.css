@@ -52,7 +52,17 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   z-index: 1000; /* Stays on top */
 }
+.field-container {
+  @apply flex flex-col md:flex-row items-start md:items-center gap-2;
+}
 
+.label {
+  @apply text-xl font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
+}
+
+.value {
+  @apply text-lg font-medium text-gray-700 dark:text-gray-400 px-2 py-2 m-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm;
+}
 .submit-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;

@@ -192,26 +192,32 @@
     "confirmation": "yes",
     "confirmPassword": "qawsedrf12",
     "status": "accepted",
-    "appliedJob": [
-      "Auto Electrician",
-      "Accountant Assistant",
-      "Admin Assistant",
-      "Assistant Veteranian",
-      "Administrative Support Officer"
-    ],
     "beneficiary": false,
     "createdAt": "2024-12-17T12:34:56Z",
-    "notes": "dfghjkl"
+    "appliedJob": [
+      {
+        "job": "Auto Electrician",
+        "status": "approved"
+      },
+      {
+        "job": "Diesel Mechanic",
+        "status": "rejected"
+      },
+      {
+        "job": "Auto Mechanic",
+        "status": "rejected"
+      }
+    ]
   },
   {
     "id": "14305200",
-    "username": "2-00000000",
+    "username": "2-00000001",
     "password": "123123.rR",
     "role": "Youth",
     "status": "accepted",
-    "firstNameEn": "rami",
+    "firstNameEn": "Rami",
     "fatherNameEn": "jawad",
-    "lastNameEn": "ahah",
+    "lastNameEn": "Abou Eid",
     "firstNameAr": "fhq",
     "fatherNameAr": "koko",
     "lastNameAr": "hfn",
@@ -326,14 +332,21 @@
     "tasks": "",
     "mainTasks": "koko",
     "question2": "yes",
+    "createdAt": "2024-11-19T12:34:56Z",
     "appliedJob": [
-      "Dental Assistant",
-      "Accountant Assistant",
-      "Admin Assistant",
-      "Assistant Veteranian",
-      "Administrative Support Officer"
-    ],
-    "createdAt": "2024-11-19T12:34:56Z"
+      {
+        "job": "Auto Electrician",
+        "status": "approved"
+      },
+      {
+        "job": "Auto Mechanic",
+        "status": "rejected"
+      },
+      {
+        "job": "Diesel Mechanic",
+        "status": "rejected"
+      }
+    ]
   },
   {
     "id": "14305600",
@@ -459,11 +472,18 @@
     "mainTasks": "koko",
     "question2": "yes",
     "appliedJob": [
-      "Dental Assistant",
-      "Accountant Assistant",
-      "Admin Assistant",
-      "Assistant Veteranian",
-      "Administrative Support Officer"
+      {
+        "job": "Auto Electrician",
+        "status": "waiting"
+      },
+      {
+        "job": "Diesel Mechanic",
+        "status": "waiting"
+      },
+      {
+        "job": "Auto Mechanic",
+        "status": "waiting"
+      }
     ],
     "createdAt": "2024-11-19T12:34:56Z"
   },
@@ -591,24 +611,30 @@
     "mainTasks": "koko",
     "question2": "yes",
     "appliedJob": [
-      "Auto Electrician",
-      "Dental Assistant",
-      "Accountant Assistant",
-      "Admin Assistant",
-      "Assistant Veteranian",
-      "Administrative Support Officer"
+      {
+        "job": "Auto Electrician",
+        "status": "waiting"
+      },
+      {
+        "job": "Diesel Mechanic",
+        "status": "waiting"
+      },
+      {
+        "job": "Auto Mechanic",
+        "status": "waiting"
+      }
     ],
     "createdAt": "2024-11-19T12:34:56Z"
   },
   {
-    "id": "12305200",
+    "id": "A-34295763",
     "username": "2-00000000",
     "password": "123123.rR",
     "role": "Youth",
     "status": "accepted",
-    "firstNameEn": "rami",
+    "firstNameEn": "Yousef",
     "fatherNameEn": "jawad",
-    "lastNameEn": "ahah",
+    "lastNameEn": "Al-Sayed",
     "firstNameAr": "fhq",
     "fatherNameAr": "koko",
     "lastNameAr": "hfn",
@@ -723,13 +749,8 @@
     "tasks": "",
     "mainTasks": "koko",
     "question2": "yes",
-    "appliedJob": [
-      "Dental Assistant",
-      "Accountant Assistant",
-      "Admin Assistant",
-      "Assistant Veteranian",
-      "Administrative Support Officer"
-    ],
     "createdAt": "2024-11-19T12:34:56Z"
   }
+]
+
 ]

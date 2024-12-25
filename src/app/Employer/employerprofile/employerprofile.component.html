@@ -24,7 +24,7 @@
         
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Organization: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.organization }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.organization }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['organization']"
@@ -34,7 +34,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (English): </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.fullNameEnglish }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.fullNameEnglish }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['fullNameEnglish']"
@@ -44,7 +44,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (Arabic): </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.fullNameArabic }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.fullNameArabic }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['fullNameArabic']"
@@ -54,7 +54,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.mobilePhone }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.mobilePhone }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['mobilePhone']"
@@ -64,7 +64,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp Number: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.whatsappNumber }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.whatsappNumber }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['whatsappNumber']"
@@ -74,7 +74,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email Address: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.email }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.email }}</span>
           <input
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['email']"
@@ -83,7 +83,7 @@
         </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area: </strong>
-          <span *ngIf="!isEditing['details']" class="text-lg font-medium text-gray-600 dark:text-gray-400 shadow-lg shadow-blue-200 dark:shadow-blue-800 rounded-md px-2 py-1 bg-blue-50 dark:bg-blue-900">{{ employer?.area }}</span>
+          <span *ngIf="!isEditing['details']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.area }}</span>
           <select
             *ngIf="isEditing['details']"
             [(ngModel)]="editModels['area']"

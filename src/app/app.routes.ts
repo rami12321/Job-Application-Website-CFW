@@ -67,6 +67,7 @@ export const routes: Routes = [
   },
   { path: 'youthsignup-details', component: YouthSignupDetailsComponent }, // Add this route
   { path: 'details-employer', component: DetailsEmployerComponent },
+  { path: 'youthsignup-details/:id', component: YouthSignupDetailsComponent }, // Add this route
 
 {
   path: 'employerprofile',

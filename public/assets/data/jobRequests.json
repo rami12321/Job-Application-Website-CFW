@@ -177,7 +177,7 @@
     "employerId": "F-70583249",
     "job": "Auto Electrician",
     "title": "intern",
-    "numEmployees": 4,
+    "numEmployees": 2,
     "level": "junior",
     "location": "Lebanon",
     "typeOfJob": "Full-Time",
@@ -243,7 +243,7 @@
     "supervisorPosition": "Manager",
     "supervisorEmail": "mohammad.manager@gmail.com",
     "supervisorPhone": "23874562",
-    "status": "assigned",
+    "status": "in-progress",
     "category": "Cars & Motors Electrician",
     "assignedYouths": [
       {
@@ -252,19 +252,9 @@
         "lastName": "Sarhan",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": false,
-        "action": "accepted"
+        "status": "approved",
+        "action": "approved",
+        "isDisabled": false
       },
       {
         "id": "16479899",
@@ -343,35 +333,6 @@
         "status": "approved",
         "isDisabled": false,
         "action": "approved"
-      },
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
-      },
-      {
-        "id": "D-21354987",
-        "firstName": "Layla",
-        "lastName": "Sami",
-        "dob": "2001-03-12",
-        "cv": "C:\\fakepath\\Layla's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true,
-        "action": "accepted"
-      },
-      {
-        "id": "E-76845213",
-        "firstName": "Sara",
-        "lastName": "Abdallah",
-        "dob": "1997-09-25",
-        "cv": "C:\\fakepath\\Sara's Resume.pdf",
-        "status": "waiting",
-        "isDisabled": true
       }
     ]
   },

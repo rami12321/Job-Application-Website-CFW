@@ -16,13 +16,19 @@ export class YouthServiceService {
   submitFormData(formData: any): Observable<any> {
     return this.http.post(this.apiUrl, formData);
   }
-
+  updateYouthAppliedJobs(youthId: number, appliedJobs: any): Observable<any> {
+    const url = `http://localhost:3000/youth/${youthId}/appliedJob`;
+    return this.http.put(url, { appliedJob: appliedJobs });  // Sending the array of applied jobs
+  }
+  
+  
+  
   getAllYouth(): Observable<any[]> {
     return this.http.get<any[]>(this.youthDbUrl);
   }
 
 
-  getYouthById(id: number): Observable<any> {
+  getYouthById(id: any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
@@ -37,7 +43,7 @@ export class YouthServiceService {
     const payload = { trainings };  // Payload only includes the 'trainings' field
     return this.http.put(url, payload);  // Make the PUT request
   }
-  updateYouth(id: number, updatedData: Partial<Youth>): Observable<Youth> {
+  updateYouth(id: any, updatedData: Partial<Youth>): Observable<Youth> {
     return this.http.put<Youth>(`${this.apiUrl}/${id}`, updatedData);
   }
 
@@ -75,9 +81,11 @@ export class YouthServiceService {
   getYouthNotesById(id: number): Observable<{ notes: string }> {
     return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
   }
-  getAppliedJobById(id: number): Observable<{ appliedJob: any }> {
-    return this.http.get<{ appliedJob: string }>(`${this.apiUrl}/${id}/appliedJob`);
+  getAppliedJobById(id: number): Observable<{ appliedJob: { job: string; status: string }[] }> {
+    return this.http.get<{ appliedJob: { job: string; status: string }[] }>(`${this.apiUrl}/${id}/appliedJob`);
   }
+  
+  
   getYouthByJob(job: string): Observable<any> {
     const url = `${this.apiUrl}/appliedJob/${encodeURIComponent(job)}`; // Encode the job name for safe URL usage
     return this.http.get<any>(url); // Adjust the response type if needed
