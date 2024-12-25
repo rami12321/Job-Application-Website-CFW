@@ -1,19 +1,15 @@
 import { Youth } from './youth';
-export interface AssignedYouth {
-  id: string;
-  firstName: string;
-  lastName: string;
-  dob: string; // Assuming it's a string or date format
-  cv: string; // Assuming the CV is a URL or path to the file
-  status: string;
-  action?: 'accepted' | 'rejected' | 'approved' | null; // Optional action property
-  isDisabled?: boolean; 
-
-}
-
+// export interface AssignedYouth {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   dob: string;
+//   cv: string;
+//   status: string;
+// }
 
 export interface Job {
-  id?: string;
+  jobId?: string;
   employerId: string;
   job: string;
   category?: string;  // Main category (e.g., "Design")
@@ -28,5 +24,5 @@ export interface Job {
   supervisorEmail: string;
   supervisorPhone: string;
   status: string;
-  assignedYouths?: AssignedYouth[];
+  assignedYouths?: Youth[];
 }

@@ -7,9 +7,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 1rem;
 }
-.field-container {
-  @apply flex flex-col md:flex-row items-start md:items-center gap-2;
-}
 
 .label {
   @apply text-xl font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
@@ -31,21 +28,7 @@
   border-left: 2px solid #d4edff;
 }
 
-/* Label styling */
-.label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0d6efd;
-  text-transform: capitalize;
-  margin-bottom: 0.5rem;
-}
 
-/* Value styling */
-.value {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #333333;
-}
 
 /* Signature section */
 .signature {
@@ -84,9 +67,7 @@
 .fixed.inset-0.bg-black.bg-opacity-50 {
   background: rgba(0, 0, 0, 0.5); /* Transparent black background */
 }
-.tab-container span {
-  @apply text-base font-medium text-gray-600 dark:text-gray-400;
-}
+
 
 /* Modal Container */
 .bg-white {

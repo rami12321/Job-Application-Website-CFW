@@ -1,16 +1,5 @@
 
-:host ::ng-deep .p-tabview {
-    display: flex;
-    height: calc(100vh - 100px);
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0.25rem;
-}
 
-.field-container {
-  @apply flex flex-col md:flex-row items-start md:items-center gap-2;
-}
 
 .label {
   @apply text-xl font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
@@ -20,27 +9,47 @@
   @apply text-lg font-medium text-gray-700 dark:text-gray-400 px-2 py-2 m-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm;
 }
 
+:host ::ng-deep .p-tabview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%; 
+  max-width: 100%; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0; 
+  background: #ffffff; 
+  overflow-x: hidden; 
+
+}
 
 :host ::ng-deep .p-tabview-nav {
-    flex-direction: column;
-    width: 280px; /* Increased width to ensure tabs fit without being cut off */
-    background: linear-gradient(90deg, #e6f7ff, #b3e4ff);
-    padding: 1rem; /* Added more padding to the tab box */
-    border-right: 1px solid #d4edff;
-    overflow-y: auto;
-    height: 100%; /* Ensure the tab navigation box stretches to fill the container */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; 
+  align-items: center;
+  background: #ffffff; 
+  padding: 0.4rem 1rem; 
+  border-bottom: 2px solid #d4edff;
+  gap: 0rem; 
+  margin: 0; 
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow-x: hidden; 
 }
 
 :host ::ng-deep .p-tabview-title {
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1rem; /* Slightly larger padding */
-    font-size: 1rem; /* Slightly larger font size */
-    font-weight: 600; /* More prominent font weight */
-    color: #0d6efd; /* Darker primary color for better visibility */
-    border-radius: 0.5rem;
-    background-color: #e6f7ff;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    text-transform: capitalize; /* Capitalize tab titles */
+  padding: 0.2rem 0.3rem; 
+  font-size: 1.045rem; 
+  font-weight: 500;
+  color: #0d6efd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: center;
+  white-space: nowrap; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
+  overflow-x:hidden
 }
 
 :host ::ng-deep .p-tabview-title:hover {
@@ -56,23 +65,22 @@
 }
 
 :host ::ng-deep .p-tabview-panels {
-    flex-grow: 1;
-    background: #ffffff;
-    color: #333333;
-    padding: 2rem;
-    overflow-y: auto;
-    border-radius: 0.5rem;
-    margin: 0.7rem;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1;
-    border-left: 2px solid #d4edff;
+  flex-grow: 1;
+  width: 100%; 
+  max-width: 100%; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  padding: 1rem; 
+  border-radius: 8px;
+  box-sizing: border-box; 
 }
 
 :host ::ng-deep .p-tabview-panel {
-    border-radius: 0.5rem;
+  padding: 0.8rem;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
 :host ::ng-deep .p-tabview-content {
     background: #f9fbff;
     color: #333333;

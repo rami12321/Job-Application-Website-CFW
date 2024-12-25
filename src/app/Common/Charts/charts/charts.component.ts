@@ -35,34 +35,113 @@ export class YouthChartComponent implements OnInit {
     );
   }
 
+  private shortenEducationLevel(level: string): string {
+    if (level.includes('University')) {
+      return 'University Degree';
+    } else if (level.includes('Short Term Course')) {
+      return 'Short Term Course';
+    } else if (level.includes('Technical Baccalaureate')) {
+      return 'Technical Baccalaureate';
+    } else if (level.includes('Higher Technical Degree')) {
+      return 'Higher Technical Degree';
+    } else {
+      return level; // Fallback to original level if no match
+    }
+  }
   ngOnInit() {
     this.youthService.getAllYouth().subscribe((youths) => {
       const totalYouths = youths.length;
+      const createdAtData = this.getCreatedAtDistribution(youths);
 
-      // Gender Distribution for Pie Chart
-      const genderData = this.getGenderDistribution(youths);
+    // Sort dates in chronological order
+    const sortedDates = Object.keys(createdAtData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+    const sortedCounts = sortedDates.map((date) => createdAtData[date]);
+
+    // Create Line Chart for CreatedAt
+    // this.createLineChart('createdAtChart', {
+    //   labels: sortedDates,
+    //   datasets: [
+    //     {
+    //       label: 'Youths Created Over Time',
+    //       data: sortedCounts,
+    //       borderColor: '#36A2EB',
+    //       backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //       fill: true,
+    //       tension: 0.4, // Smoother lines
+    //     },
+    //   ],
+    // });
+
+      // Map original education levels to shortened ones
+      const shortenedEducationLevels = youths.map((youth) => ({
+        ...youth,
+        educationLevel: this.shortenEducationLevel(youth.educationLevel),
+      }));
+
+      // Gender Distribution
+      const genderData = this.getDistribution(youths, 'gender');
       const genderPercentages = this.getPercentageDistribution(
         Object.values(genderData),
         totalYouths
       );
 
-      // Education Level Distribution for Pie Chart
-      const educationData = this.getEducationDistribution(youths);
-      const educationPercentages = this.getPercentageDistribution(
-        Object.values(educationData),
+      // Nationality Distribution
+      const nationalityData = this.getDistribution(youths, 'nationality');
+      const nationalityPercentages = this.getPercentageDistribution(
+        Object.values(nationalityData),
         totalYouths
       );
-
-      // Age Distribution for Bar Chart
       const ageData = this.getAgeDistribution(youths);
-      const agePercentages = this.getPercentageDistribution(
+      const agePercentage = this.getPercentageDistribution(
         Object.values(ageData),
         totalYouths
       );
+      const educationLevelData = this.getDistribution(
+        shortenedEducationLevels,
+        'educationLevel'
+      );
+      const educationLevelPercentage = this.getPercentageDistribution(
+        Object.values(educationLevelData),
+        totalYouths
+      );
 
-      // Create Pie Chart for Gender Distribution
+      // Area Distribution
+      const areaData = this.getDistribution(youths, 'area');
+      const areaPercentages = this.getPercentageDistribution(
+        Object.values(areaData),
+        totalYouths
+      );
+
+      // Category Distribution
+      const categoryData = this.getDistribution(youths, 'category');
+      const categoryPercentages = this.getPercentageDistribution(
+        Object.values(categoryData),
+        totalYouths
+      );
+
+      // Beneficiary Distribution
+      const beneficiaryData = this.getDistribution(youths, 'beneficiary');
+      const beneficiaryPercentages = this.getPercentageDistribution(
+        Object.values(beneficiaryData),
+        totalYouths
+      );
+
+      // Job Opportunity Source Distribution
+      const jobSourceData = this.getDistribution(
+        youths,
+        'jobOpportunitySource'
+      );
+      const jobSourcePercentages = this.getPercentageDistribution(
+        Object.values(jobSourceData),
+        totalYouths
+      );
+
+      // Create Charts
       this.createPieChart('genderChart', {
-        labels: this.appendPercentagesToLabels(Object.keys(genderData), genderPercentages),
+        labels: this.appendPercentagesToLabels(
+          Object.keys(genderData),
+          genderPercentages
+        ),
         datasets: [
           {
             label: 'Gender Distribution',
@@ -71,51 +150,129 @@ export class YouthChartComponent implements OnInit {
           },
         ],
       });
-
-      // Create Pie Chart for Education Level Distribution
-      this.createPieChart('educationChart', {
-        labels: this.appendPercentagesToLabels(Object.keys(educationData), educationPercentages),
-        datasets: [
-          {
-            label: 'Education Level Distribution',
-            data: Object.values(educationData),
-            backgroundColor: ['#4BC0C0', '#FFCE56', '#9966FF'],
-          },
-        ],
-      });
-
-      // Create Bar Chart for Age Distribution
       this.createBarChart('ageChart', {
-        labels: this.appendPercentagesToLabels(Object.keys(ageData), agePercentages),
+        labels: this.appendPercentagesToLabels(
+          Object.keys(ageData),
+          agePercentage
+        ),
         datasets: [
           {
             label: 'Age Distribution',
             data: Object.values(ageData),
-            backgroundColor: '#36A2EB',
+            backgroundColor: ['#FF6384', '#36A2EB'],
+          },
+        ],
+      });
+      this.createPieChart('educationLevelChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(educationLevelData),
+          educationLevelPercentage
+        ),
+        datasets: [
+          {
+            label: 'EducationLevel Distribution',
+            data: Object.values(educationLevelData),
+            backgroundColor: ['#FF6384', '#36A2EB', '#9966FF','#36A2EB'],
+          },
+        ],
+      });
+
+      this.createBarChart('nationalityChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(nationalityData),
+          nationalityPercentages
+        ),
+        datasets: [
+          {
+            label: 'Nationality Distribution',
+            data: Object.values(nationalityData),
+            backgroundColor: ['#FFCE56', '#4BC0C0', '#9966FF', '#36A2EB'],
+          },
+        ],
+      });
+
+      this.createBarChart('areaChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(areaData),
+          areaPercentages
+        ),
+        datasets: [
+          {
+            label: 'Area Distribution',
+            data: Object.values(areaData),
+            backgroundColor: '#9966FF',
+          },
+        ],
+      });
+
+      this.createPieChart('categoryChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(categoryData),
+          categoryPercentages
+        ),
+        datasets: [
+          {
+            label: 'Category Distribution',
+            data: Object.values(categoryData),
+            backgroundColor: ['#4BC0C0', '#FF6384', '#FFCE56'],
+          },
+        ],
+      });
+
+      this.createPieChart('beneficiaryChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(beneficiaryData),
+          beneficiaryPercentages
+        ),
+        datasets: [
+          {
+            label: 'Beneficiary Distribution',
+            data: Object.values(beneficiaryData),
+            backgroundColor: ['#36A2EB', '#9966FF', '#FF6384'],
+          },
+        ],
+      });
+
+      this.createBarChart('jobSourceChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(jobSourceData),
+          jobSourcePercentages
+        ),
+        datasets: [
+          {
+            label: 'Job Opportunity Source Distribution',
+            data: Object.values(jobSourceData),
+            backgroundColor: '#FFCE56',
           },
         ],
       });
     });
   }
 
-  private getGenderDistribution(youths: any[]): Record<string, number> {
+  // Generic method to get distribution
+  private getDistribution(
+    youths: any[],
+    field: string
+  ): Record<string, number> {
     return youths.reduce((acc, youth) => {
-      acc[youth.gender] = (acc[youth.gender] || 0) + 1;
+      acc[youth[field]] = (acc[youth[field]] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
   }
 
-  private getEducationDistribution(youths: any[]): Record<string, number> {
-    return youths.reduce((acc, youth) => {
-      acc[youth.educationLevel] = (acc[youth.educationLevel] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+  getCreatedAtDistribution(youths: any[]): { [key: string]: number } {
+    const distribution: { [key: string]: number } = {};
+    youths.forEach((youth) => {
+      const date = new Date(youth.createdAt).toLocaleDateString(); // Format date (e.g., "MM/DD/YYYY")
+      distribution[date] = (distribution[date] || 0) + 1;
+    });
+    return distribution;
   }
 
   private getAgeDistribution(youths: any[]): Record<string, number> {
     const currentYear = new Date().getFullYear();
     return youths.reduce((acc, youth) => {
-      const birthYear = new Date(youth.dob).getFullYear(); // Assuming `dob` is the date of birth
+      const birthYear = new Date(youth.dob).getFullYear(); // Assuming dob is the date of birth
       const age = currentYear - birthYear;
       const ageGroup = this.getAgeGroup(age); // Get age group (e.g., 18-20, 21-23, etc.)
       acc[ageGroup] = (acc[ageGroup] || 0) + 1;
@@ -130,11 +287,15 @@ export class YouthChartComponent implements OnInit {
   }
 
   private getPercentageDistribution(values: number[], total: number): number[] {
-    return values.map((value) => parseFloat(((value / total) * 100).toFixed(1))); // Convert to number after formatting
+    return values.map((value) =>
+      parseFloat(((value / total) * 100).toFixed(1))
+    ); // Convert to number after formatting
   }
 
-
-  private appendPercentagesToLabels(labels: string[], percentages: number[]): string[] {
+  private appendPercentagesToLabels(
+    labels: string[],
+    percentages: number[]
+  ): string[] {
     return labels.map((label, index) => `${label} (${percentages[index]}%)`);
   }
 

@@ -102,28 +102,28 @@
       >
         <button
           (click)="changeYouthTab('waiting')"
-          [class.bg-cyan-500]="activeYouthTab === 'waiting'"
+          [ngClass]="{'bg-cyan-500': activeYouthTab === 'waiting', 'text-white': activeYouthTab === 'waiting'}"
           class="px-4 py-2 rounded-md hover:bg-cyan-500 cursor-pointer text-center"
         >
           Waiting-List
         </button>
         <button
           (click)="changeYouthTab('accepted')"
-          [class.bg-green-500]="activeYouthTab === 'accepted'"
+          [ngClass]="{'bg-green-500': activeYouthTab === 'accepted', 'text-white': activeYouthTab === 'accepted'}"
           class="px-4 py-2 rounded-md hover:bg-green-500 cursor-pointer text-center"
         >
           Accepted
         </button>
         <button
           (click)="changeYouthTab('rejected')"
-          [class.bg-red-500]="activeYouthTab === 'rejected'"
+          [ngClass]="{'bg-red-500': activeYouthTab === 'rejected', 'text-white': activeYouthTab === 'rejected'}"
           class="px-4 py-2 rounded-md hover:bg-red-500 cursor-pointer text-center"
         >
           Rejected
         </button>
         <button
           (click)="changeYouthTab('pending')"
-          [class.bg-yellow-500]="activeYouthTab === 'pending'"
+          [ngClass]="{'bg-yellow-500': activeYouthTab === 'pending', 'text-white': activeYouthTab === 'pending'}"
           class="px-4 py-2 rounded-md hover:bg-yellow-500 cursor-pointer text-center"
         >
           Pending
@@ -233,10 +233,6 @@
         </div>
       </div>
     </div>
-    <!-- <div *ngIf="activeTab === 'job-request'">
-      <div class="container mx-auto p-4">
-        <app-smart-table class="p-10"  />
-      </div>
-    </div> -->
+
   </div>
 </div>

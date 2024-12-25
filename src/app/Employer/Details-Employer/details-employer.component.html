@@ -1,40 +1,40 @@
-<div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-  <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+<div class=" rounded-xl  p-6">
+  <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-8 mt-3">
     Employer Details
   </h3>
   <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
     <div class="grid grid-cols-2 gap-6 mt-4">
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Organization: </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Organization: </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.organization }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (English): </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Full Name (English): </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.fullNameEnglish }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Full Name (Arabic): </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Full Name (Arabic): </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.fullNameArabic }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Mobile Phone: </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Mobile Phone: </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.mobilePhone }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">WhatsApp Number: </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">WhatsApp Number: </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.whatsappNumber }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Email Address: </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Email Address: </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.email }}</span>
       </p>
       <p>
-        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Area: </strong> 
+        <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Area: </strong> 
         <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ employer?.area }}</span>
       </p>
       <div *ngIf="employer?.signature" class="mt-6">
         <p>
-          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Signature:</strong>
+          <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Signature:</strong>
         </p>
         
         <!-- Image with white card background -->

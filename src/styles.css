@@ -13,7 +13,7 @@
     @tailwind utilities;
 }
 .p-component-overlay {
-  background-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
   animation: fade-in 0.2s ease-in-out forwards !important; /* Bind the animation */
 }
 

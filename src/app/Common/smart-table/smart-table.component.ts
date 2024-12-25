@@ -17,6 +17,8 @@ import { DetailsEmployerComponent } from '../../Employer/Details-Employer/detail
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
+import { CheckboxModule } from 'primeng/checkbox';
+
 interface Column {
   field: string;
   header: string;
@@ -29,6 +31,7 @@ interface Column {
     CommonModule,
     MatTableModule,
     TableModule,
+    CheckboxModule,
     InputTextModule,
     PaginatorModule,
     MultiSelectModule,
@@ -47,15 +50,18 @@ export class SmartTableComponent implements OnInit {
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
   youthDialogVisible = false; // Controls dialog visibility
+  assignedYouthDialogVisible=false;
   youths: any[] = []; // Stores fetched youths
   selectedYouths: any[] = []; // Selected youths for assignment
   assignedYouths: any[] = []; // Youths fetched from the backend
+  unassignedYouths: any[] = []; // Youths fetched from the backend
+
   combinedYouths: any[] = []; // Combination of assigned and selected
-  selectedJob:string='';
-  currentEmployerId:string='';
+  selectedJob: string = '';
+  currentEmployerId: string = '';
   currentJob: string = ''; // Stores the current job being ass
   youthList: any[] = [];
-  assignedYouthList:any[]=[];
+  assignedYouthList: any[] = [];
   employerList: any[] = [];
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
@@ -75,8 +81,23 @@ export class SmartTableComponent implements OnInit {
   nationalityOptions: string[] = [];
   selectedNationalities: string[] = [];
   excludedColumns: string[] = [
+
     'assignedYouths',
     'signature',
+    'registrationStatus',
+    'emergencyPhone',
+    'emergencyRelation',
+    'jobOpportunitySource',
+    'employmentOpportunities',
+    'aboutYourself',
+    'placedByKfw',
+    'kfwYear',
+    'innovationLabGraduate',
+    'innovationLabGradtype',
+    'employed',
+    'isPrcsVolunteer',
+    'isFireBrigadesVolunteer',
+    'isAlShifaaVolunteer',
     'disability',
     'disabilityTypes',
     'disabilitySupport',
@@ -190,7 +211,7 @@ export class SmartTableComponent implements OnInit {
             this.selectedMajors.includes(item.major);
           const matchesArea =
             this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area.name);
+            this.selectedAreas.includes(item.area);
           const matchesEducationLevels =
             this.selectedEducationLevels.length === 0 ||
             this.selectedEducationLevels.includes(item.educationLevels);
@@ -404,8 +425,7 @@ export class SmartTableComponent implements OnInit {
   }
 
   //youth dialog
-  youthDialog:boolean= false;
-
+  youthDialog: boolean = false;
 
   updateStatus(id: number, newStatus: string): void {
     this.youthService.updateYouthStatus(id, newStatus).subscribe(
@@ -429,7 +449,7 @@ export class SmartTableComponent implements OnInit {
   visible: boolean = false;
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
-  noYouthMessage:string='';
+  noYouthMessage: string = '';
   loadLookupData(): void {
     this.lookupService.getLookupData().subscribe((data) => {
       this.areas = data.areas || [];
@@ -497,13 +517,13 @@ export class SmartTableComponent implements OnInit {
           this.youthsNotes = response.youths.map((youth: any) => {
             return {
               name: youth.name,
-              notes: youth.notes || '' // Default to empty if no notes available
+              notes: youth.notes || '', // Default to empty if no notes available
             };
           });
           this.noYouthMessage = ''; // Reset the message if youths are found
         } else {
           // If no youths are found, set an error message
-          this.noYouthMessage = "No youth for this job yet.";
+          this.noYouthMessage = 'No youth for this job yet.';
         }
 
         // Always open the dialog
@@ -512,14 +532,14 @@ export class SmartTableComponent implements OnInit {
       (error) => {
         console.error('Error fetching youths:', error);
         // If there was an error, set the error message
-        this.noYouthMessage = "Error fetching youths.";
+        this.noYouthMessage = 'Error fetching youths.';
         this.noteDialogVisible = true; // Show error message in the dialog
       }
     );
   }
 
   displayNoteDialog(youth: any): void {
-    this.selectedYouth = youth ;
+    this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
   showYouthDialog(job: string, selectedJob: string): void {
@@ -533,8 +553,10 @@ export class SmartTableComponent implements OnInit {
         this.youths = (response.youths || []).map((youth: any) => ({
           id: youth.id,
           name: youth.name,
-          beneficiary:youth.beneficiary,
-          label: `${youth.name} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}` // Add icon and text if beneficiary
+          beneficiary: youth.beneficiary,
+          label: `${youth.name} (${youth.id})${
+            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
+          }`, // Add icon and text if beneficiary
         }));
 
         console.log('Transformed youths array:', this.youths); // Log the transformed array
@@ -542,23 +564,29 @@ export class SmartTableComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching youths:', error);
-      }
+      },
     });
   }
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
-    console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
-
-
+    console.log(
+      'Selected Youths before assignment:',
+      JSON.stringify(this.selectedYouths, null, 2)
+    );
     const youthsAssigned = []; // Array to track successful assignments
-
     this.selectedYouths.forEach((youth: any) => {
-      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.firstName} ${youth.lastName}`);
-
+      console.log(
+        `Assigning Youth: ID=${youth.id}, Name=${youth.firstName} ${youth.lastName}`
+      );
       // Send only the youth ID to the backend; the backend will fetch the details
-      this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youth.id).subscribe({
+      this.JobRequestService.assignYouthToJobRequest(
+        this.selectedJob,
+        youth.id
+      ).subscribe({
         next: () => {
-          console.log(`Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`);
+          console.log(
+            `Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`
+          );
           youthsAssigned.push(youth); // Track successfully assigned youth
 
           // If all selected youths are assigned, update the job status
@@ -567,27 +595,120 @@ export class SmartTableComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error(`Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`, error);
-        }
+          console.error(
+            `Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`,
+            error
+          );
+        },
       });
     });
 
     this.youthDialogVisible = false;
   }
+  getAssignedYouths(jobId: string): void {
+    this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
+      next: (response: any) => {
+        console.log('Assigned Youths Response:', response);
 
+        // Transform the response into a format suitable for your UI
+        this.assignedYouths = response.map((youth: any) => ({
+          id: youth.id,
+          name: youth.name,
+          beneficiary: youth.beneficiary,
+          label: `${youth.name} (${youth.id})${
+            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
+          }`, // Add beneficiary indication
+        }));
 
-  private updateJobStatusToAssigned(): void {
-    this.JobRequestService.updateJobRequestStatus(this.selectedJob, 'assigned').subscribe({
-      next: () => {
-        console.log(`Job request ${this.selectedJob} status updated to 'assigned'.`);
-        this.fetchJobRequests()
-
+        console.log('Transformed Assigned Youths:', this.assignedYouths);
       },
       error: (error) => {
-        console.error(`Error updating job request ${this.selectedJob} status to 'assigned':`, error);
+        console.error(
+          `Error fetching assigned youths for job ${jobId}:`,
+          error
+        );
+      },
+    });
+    this.assignedYouthDialogVisible = false;
+
+  }
+  showAssignedYouthDialog(jobName: string, job: string): void {
+    this.currentJob = job; // Store the current job for context
+
+    // Fetch all youths for the job
+    this.youthService.getYouthByJob(jobName).subscribe({
+      next: (allYouthsResponse: any) => {
+        console.log('Response from getYouthByJob:', allYouthsResponse);
+
+        // Format all youths
+        const allYouths = (allYouthsResponse.youths || []).map((youth: any) => ({
+          id: youth.id,
+          name: youth.name || 'Unknown', // Fallback if name is missing
+          beneficiary: youth.beneficiary || false, // Fallback for beneficiary
+          label: `${youth.name || 'Unknown'} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
+        }));
+
+        console.log('Formatted All Youths:', allYouths);
+
+        // Fetch assigned youths for the job
+        this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
+          next: (assignedResponse: any) => {
+            console.log('Response from getAssignedYouthsByJobId:', assignedResponse);
+
+            // Format assigned youths
+            const assignedYouths = (assignedResponse || []).map((youth: any) => ({
+              id: youth.id,
+              name: youth.name || 'Unknown', // Fallback if name is missing
+              beneficiary: youth.beneficiary || false, // Fallback for beneficiary
+              label: `${youth.name || 'Unknown'} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
+            }));
+
+            console.log('Formatted Assigned Youths:', assignedYouths);
+
+            // Filter out assigned youths from all youths to get unassigned youths
+            this.unassignedYouths = allYouths.filter(
+              (youth: any) => !assignedYouths.some((assigned: any) => assigned.id === youth.id)
+            );
+
+            // Update assigned youths for display
+            this.assignedYouths = assignedYouths;
+
+            console.log('Unassigned Youths:', this.unassignedYouths);
+            console.log('Assigned Youths:', this.assignedYouths);
+
+            // Open the dialog to display assigned and unassigned youths
+            this.assignedYouthDialogVisible = true;
+          },
+          error: (error) => {
+            console.error('Error fetching assigned youths:', error);
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching all youths:', error);
       },
     });
   }
 
 
+
+  private updateJobStatusToAssigned(): void {
+    this.JobRequestService.updateJobRequestStatus(
+      this.selectedJob,
+      'assigned'
+    ).subscribe({
+      next: () => {
+        console.log(
+          `Job request ${this.selectedJob} status updated to 'assigned'.`
+        );
+        this.fetchJobRequests();
+      },
+      error: (error) => {
+        console.error(
+          `Error updating job request ${this.selectedJob} status to 'assigned':`,
+          error
+        );
+      },
+    });
+  }
 }

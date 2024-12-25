@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { YouthChartComponent } from '../../Common/Charts/charts/charts.component';
+import { EmployerService } from '../../Services/employer-service/employer-services.service';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
@@ -11,10 +12,12 @@ import { YouthChartComponent } from '../../Common/Charts/charts/charts.component
 })
 export class AdminDashboardComponent {
   youthData = { accepted: 0, rejected: 0, pending: 0, waiting:0};
-  constructor(private youthService: YouthServiceService) {}
+  employerData = { inactive: 0, active: 0};
+  constructor(private youthService: YouthServiceService ,private employerService: EmployerService) {}
 
   ngOnInit(): void {
     this.loadYouthData();
+    this.loadEmployerData();
   }
 
   loadYouthData(): void {
@@ -23,6 +26,12 @@ export class AdminDashboardComponent {
       this.youthData.rejected = data.filter((youth) => youth.status === 'rejected').length;
       this.youthData.pending = data.filter((youth) => youth.status === 'pending').length;
       this.youthData.waiting = data.filter((youth) => youth.status === 'waiting').length;
+    });
+  }
+  loadEmployerData(): void {
+    this.employerService.getAllEmployers().subscribe((data) => {
+      this.employerData.inactive = data.filter((employer) => employer.active ==false).length;
+      this.employerData.active = data.filter((employer) => employer.active ==true).length;
     });
   }
 

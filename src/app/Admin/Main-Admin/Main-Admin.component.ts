@@ -21,7 +21,7 @@ export class MainAdminComponent implements OnInit, OnDestroy {
 
 
   activeTab: string = 'dashboard';
-  activeYouthTab: string = 'accepted';
+  activeYouthTab: string = 'waiting';
   activeYouthTab1: string = 'waiting-E';
   generatedCode: string = "";
   errorMessage: string | null = null;

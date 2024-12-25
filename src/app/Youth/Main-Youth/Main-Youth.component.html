@@ -48,11 +48,11 @@
   
   
   
-  <p-accordion [style]="{ 'box-shadow': '0 4px 6px rgba(0, 0, 0, 0.1)', 'border-radius': '8px', 'overflow': 'hidden', 'width': '95%', 'max-width': '80rem', 'margin': '0 auto' }">
+  <p-accordion [style]="{ 'box-shadow': '0 4px 6px rgba(0, 0, 0, 0.1)', 'border-radius': '8px', 'overflow': 'hidden', 'width': '95%', 'max-width': '80rem', 'margin': '0 auto' }" [activeIndex]="0">
     <!-- Notifications Tab -->
-    <p-accordionTab header="Notifications" [style]="{ 'background': '#f7f9fc', 'padding': '0' }" [headerStyle]="{ 'font-size': '1.2rem'}">
+    <p-accordionTab header="Notifications" [style]="{ 'background': '#f7f9fc', 'padding': '0' }" [headerStyle]="{ 'font-size': '1.2rem'}" >
       
-      <div class="job-status-section p-6 max-w-4xl mx-auto rounded-lg">
+      <div class="job-status-section p-6 max-w-4xl  rounded-lg">
         <div class="space-y-6">
           @if(jobStatus === 'waiting') {
           <div class="alert bg-cyan-50 border-l-8 border-cyan-500 text-cyan-700 p-6 mb-6 rounded-lg shadow-md">
@@ -76,24 +76,27 @@
           <div class="alert bg-green-50 border-l-8 border-green-500 text-green-700 p-6 mb-6 rounded-lg shadow-md">
             @if(appliedJob) {
               <div class="flex flex-row mb-4">
-                <p class="font-semibold">Accepted. You can apply to a job.</p>
               </div>
             } @else {}
             <div>
               <!-- Check if there are active jobs -->
               <ng-container *ngIf="activeJobs.length > 0; else noActiveJobs">
-                <p class="font-semibold mb-4">You can edit your applied jobs:</p>
+                <div>
+                <p class="font-semibold mb-4" *ngIf="appliedJob?.status !== 'approved'">You can edit your applied jobs:</p>
                 <button 
                   *ngIf="appliedJob?.status !== 'approved'" 
                   (click)="acceptJob()" 
                   class="btn-primary">
                   Edit Jobs
                 </button>
+                </div>
+                <div>
                 <button 
                   *ngIf="appliedJob?.status === 'approved'" 
-                  class="btn-secondary-disabled">
+                  class="btn-secondary-disabled font-semibold mb-4">
                   No Modification Allowed
                 </button>
+              </div>
               </ng-container>
               <!-- If no active jobs exist -->
               <ng-template #noActiveJobs>
@@ -226,7 +229,7 @@
 
 <p-accordionTab header="My Account" [style]="{ 'background': '#f7f9fc', 'padding': '0' }" [headerStyle]="{ 'font-size': '1.2rem'}">
   <!-- Account Content -->
-  <div class="p-6 bg-white rounded-xl shadow-xl max-w-3xl mx-auto">
+  <div class="p-6 bg-white rounded-xl shadow-xl max-w-5xl ">
     <div class="flex justify-between items-center mb-6">
       <p class="text-2xl font-semibold text-gray-800">Account Settings</p>
       <button 
