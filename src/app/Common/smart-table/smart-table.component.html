@@ -238,11 +238,13 @@
             <app-details-employer
               *ngIf="selectedYouthId"
               [employerId]="selectedYouthId.toString()"
+              
             ></app-details-employer>
             } @else if (status === 'waiting-E' || status === 'assigned') {
             <app-job-request-details
               *ngIf="selectedYouthId"
               [jobId]="selectedYouthId.toString()"
+              
             ></app-job-request-details>
             } @else {
             <app-youthsignup-details

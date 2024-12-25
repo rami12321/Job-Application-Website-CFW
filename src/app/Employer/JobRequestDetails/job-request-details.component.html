@@ -1,12 +1,21 @@
 <div class="responsive-container">
-  <div class="mb-6 pb-4 bg-[#f0f8ff] dark:bg-[#1e90ff] rounded-xl shadow-lg p-6">
-    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+  <div class=" rounded-xl  p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-8 mt-3">
       Job Request Details
     </h3>
     
     <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
       <div class="grid grid-cols-2 gap-6 mt-4">
         <!-- Job Title -->
+        <p>
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Category:</strong>
+          
+          <!-- Display current category if not in editing mode -->
+          <span
+                class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+            {{ jobRequest?.category || 'Not available' }}
+          </span>
+          </p>
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
           <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
@@ -87,6 +96,8 @@
             <th class="px-6 py-4 border-b border-gray-300">First Name</th>
             <th class="px-6 py-4 border-b border-gray-300">Last Name</th>
             <th class="px-6 py-4 border-b border-gray-300">Date of Birth</th>
+            <th class="px-6 py-4 border-b border-gray-300">Phone Number</th>
+
             <th class="px-6 py-4 border-b border-gray-300">CV</th>
             <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
           </tr>
@@ -99,6 +110,8 @@
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.firstName }}</td>
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.lastName }}</td>
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.dob }}</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.mobilePhone }}</td>
+
             <td class="px-6 py-4 border-b border-gray-300 text-sm text-blue-600 underline">
               <a *ngIf="youth?.cv" [href]="youth.cv" target="_blank">View CV</a>
             </td>

@@ -11,6 +11,7 @@ import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../JobRequestDetails/job-request-details.component';
 import { JobRequestComponent } from '../JobRequestEdit/job-request.component';
 import { TabViewModule } from 'primeng/tabview';
+import { EmployerService } from '../../Services/employer-service/employer-services.service';
 
 @Component({
   selector: 'app-main-employer',
@@ -101,10 +102,12 @@ currentPageCompleted = 1;
     supervisorPhone: '',
     status: 'waiting-E',
   };
+  userName: string = '';
 
   constructor(
     private lookupService: LookupService,
-    private jobRequestService: JobRequestService
+    private jobRequestService: JobRequestService,
+    private employerservice: EmployerService
   ) { }
 
   ngOnInit(): void {
@@ -130,12 +133,16 @@ currentPageCompleted = 1;
     this.sortDirection = 'desc';
     const employerId = localStorage.getItem('userId');
     console.log('Employer ID from localStorage:', employerId);
-
-
+    if (employerId !== null) {
+      this.employerservice.getEmployerById(employerId).subscribe(
+        (response) => {
+          this.userName = response.fullNameEnglish || 'Unknown'; // Youth's name
+        })};
     if (!employerId) {
       console.error('Employer ID not found in localStorage');
       this.errorMessage = 'You must be logged in to view this data';
       return;
+
     }
 
 

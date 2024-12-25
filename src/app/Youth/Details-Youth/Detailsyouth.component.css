@@ -12,49 +12,49 @@
 }
 :host {
   display: block;
-  width: 100%; /* Ensures it occupies the full width of its container */
-  max-width: 100%; /* Prevents overflow */
-  overflow-x: hidden; /* Removes any horizontal scrollbars */
+  width: 100%; 
+  max-width: 100%; 
+  overflow-x: hidden; 
 }
 
 :host ::ng-deep .p-tabview {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%; /* Ensures it fits within its parent */
-  max-width: 100%; /* Prevents overflow */
+  width: 100%; 
+  max-width: 100%; 
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0; /* Remove extra margins */
-  background: #ffffff; /* Consistent background */
+  margin: 0; 
+  background: #ffffff; 
 }
 
 :host ::ng-deep .p-tabview-nav {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Align tabs to the left for a professional look */
+  justify-content: flex-start; 
   align-items: center;
-  background: #ffffff; /* Subtle background color for tabs */
-  padding: 0.4rem 1rem; /* Compact padding */
+  background: #ffffff; 
+  padding: 0.4rem 1rem; 
   border-bottom: 2px solid #d4edff;
-  gap: 0rem; /* Reduced gap between tabs */
-  margin: 0; /* Remove extra margins */
-  width: 100%; /* Ensure it spans the entire container width */
-  box-sizing: border-box; /* Includes padding and border in width calculation */
-  overflow-x: auto; /* Handle overflow gracefully for smaller screens */
+  gap: 0rem; 
+  margin: 0; 
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow-x: auto; 
 }
 
 :host ::ng-deep .p-tabview-title {
-  padding: 0.1rem 0.2rem; /* Compact padding for smaller tab sizes */
-  font-size: 1rem; /* Slightly smaller font size for professional appearance */
+  padding: 0.1rem 0.2rem; 
+  font-size: 1rem; 
   font-weight: 500;
   color: #0d6efd;
   border-radius: 5px;
   background-color: #ffffff;
   transition: background-color 0.2s ease, color 0.2s ease;
   text-align: center;
-  white-space: nowrap; /* Prevent wrapping */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for better distinction */
+  white-space: nowrap; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
 }
 
 :host ::ng-deep .p-tabview-title:hover {
@@ -71,13 +71,13 @@
 
 :host ::ng-deep .p-tabview-panels {
   flex-grow: 1;
-  width: 100%; /* Ensure panels fit container width */
-  max-width: 100%; /* Prevent overflow */
-  overflow-y: auto; /* Vertical scroll for content if needed */
-  overflow-x: hidden; /* Removes horizontal scroll */
-  padding: 1rem; /* Reduced padding */
+  width: 100%; 
+  max-width: 100%; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  padding: 1rem; 
   border-radius: 8px;
-  box-sizing: border-box; /* Includes padding and border in width calculation */
+  box-sizing: border-box; 
 }
 
 :host ::ng-deep .p-tabview-panel {
@@ -87,11 +87,11 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive adjustments */
+
 @media screen and (max-width: 768px) {
   :host ::ng-deep .p-tabview-nav {
-    flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
-    gap: 0.3rem; /* Smaller gap for tighter layout */
+    flex-wrap: wrap; 
+    gap: 0.3rem; 
   }
 
   :host ::ng-deep .p-tabview-title {
@@ -104,7 +104,7 @@
   }
 }
 
-/* Scrollbar styling for panels */
+
 :host ::ng-deep .p-tabview-panels::-webkit-scrollbar {
   width: 6px;
 }
