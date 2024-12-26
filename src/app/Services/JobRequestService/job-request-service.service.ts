@@ -65,5 +65,10 @@ getAssignedYouthsByJobId(id: string): Observable<AssignedYouth[]> {
 }
 
 
-
+ // Unassign Youth from Job Request
+ unassignYouthFromJobRequest(jobId: string, youthId: string): Observable<any> {
+  const url = `${this.JobRequestsUrl}/${jobId}/unassignYouth/${youthId}`;
+  return this.http.delete(url, { headers: { 'Content-Type': 'application/json' } });
 }
+}
+

@@ -189,6 +189,44 @@ export const assignYouthToJobRequest = (req: Request, res: Response): void => {
   });
 };
 
+export const unassignYouthFromJobRequest = (req: Request, res: Response): void => {
+  const { id, youthId } = req.params; // Extract jobRequest ID and youth ID from route parameters
+
+  const jobRequests: Job[] = readFile(); // Read the current job requests data
+
+  const jobIndex = jobRequests.findIndex((job) => job.jobId === id);
+
+  // Check if the job request exists
+  if (jobIndex === -1) {
+    res.status(404).json({ message: `Job Request with ID ${id} not found.` });
+    return;
+  }
+
+  const assignedYouths = jobRequests[jobIndex].assignedYouths || [];
+
+  // Check if the youth is assigned to the job
+  const youthIndex = assignedYouths.findIndex((youth) => youth.id === youthId);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${youthId} is not assigned to Job Request with ID ${id}.` });
+    return;
+  }
+
+  // Remove the youth from the assignedYouths array
+  assignedYouths.splice(youthIndex, 1);
+
+  // Update the job request
+  jobRequests[jobIndex].assignedYouths = assignedYouths;
+
+  // Save the updated job requests back to the file
+  writeFile(jobRequests);
+
+  res.status(200).json({
+    message: `Youth with ID ${youthId} has been unassigned from Job Request with ID ${id}.`,
+    updatedJobRequest: jobRequests[jobIndex],
+  });
+};
+
 export const getAssignedYouthsByJobId = (req: Request, res: Response): void => {
   const { id } = req.params;
 
