@@ -335,16 +335,8 @@
     "createdAt": "2024-11-19T12:34:56Z",
     "appliedJob": [
       {
-        "job": "Auto Electrician",
-        "status": "approved"
-      },
-      {
-        "job": "Auto Mechanic",
-        "status": "rejected"
-      },
-      {
-        "job": "Diesel Mechanic",
-        "status": "rejected"
+        "job": "Legal Volunteer",
+        "status": "waiting"
       }
     ]
   },
