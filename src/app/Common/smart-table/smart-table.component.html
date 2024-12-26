@@ -180,7 +180,7 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
-        <div class=" " *ngFor="let action of getActionsForRow(product.status)">
+        <div class=" " *ngFor="let action of getActionsForRow(product.status ,product.active)">
           @if(activeTab==='job-request'){
             <button
             *ngIf="action === 'view'"
@@ -251,13 +251,13 @@
             <app-details-employer
               *ngIf="selectedYouthId"
               [employerId]="selectedYouthId.toString()"
-              
+
             ></app-details-employer>
             }@else if(activeTab==='job-request' ) {
             <app-job-request-details
               *ngIf="selectedYouthId"
               [jobId]="selectedYouthId.toString()"
-              
+
             ></app-job-request-details>
             }@else {
             <app-youthsignup-details
@@ -267,6 +267,22 @@
             }
           </p-dialog>
 
+          <button
+            *ngIf="action === 'activate'"
+            type="button"
+            class="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600"
+            (click)="updateActiveStatus(product.id,true)"
+          >
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'deactivate'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="updateActiveStatus(product.id,false)"
+          >
+            <i class="pi pi-times"></i>
+          </button>
           <button
             *ngIf="action === 'pend'"
             type="button"

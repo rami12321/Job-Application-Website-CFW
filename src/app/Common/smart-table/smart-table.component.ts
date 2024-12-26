@@ -395,8 +395,14 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
-  getActionsForRow(status: string): string[] {
+  getActionsForRow(status: string ,active:boolean): string[] {
     // Return different actions based on the row's status
+    if(active){
+      return ['view','deactivate']
+    }else if(!active){
+      return ['view','activate']
+
+    }
     switch (status) {
       case 'accepted':
         return ['view', 'pend'];
@@ -412,6 +418,7 @@ export class SmartTableComponent implements OnInit {
         return ['view', 'assign'];
       default:
         return ['view', 'delete'];
+
     }
   }
 
@@ -452,6 +459,19 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
+  updateActiveStatus(id: string, isActive: boolean): void {
+    this.employerService.updateActiveStatus(id, isActive).subscribe(
+      (response) => {
+        console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
+
+        // Re-fetch the data to reflect changes
+        this.fetchEmployerData();
+      },
+      (error) => {
+        console.error('Error updating active status:', error);
+      }
+    );
+  }
   paginate(event: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);

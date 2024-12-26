@@ -9,6 +9,7 @@ export interface AssignedYouth {
 
 export interface Employer {
   id?: string;
+  active:boolean;
   username: string;
   password: string;
   organization: string;
@@ -19,6 +20,6 @@ export interface Employer {
   email: string;
   area: string;
   signature: string | null;
-  profileImage?: string; 
+  profileImage?: string;
   assignedYouths?: AssignedYouth[];
 }
