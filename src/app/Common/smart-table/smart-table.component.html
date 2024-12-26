@@ -181,7 +181,17 @@
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
         <div class=" " *ngFor="let action of getActionsForRow(product.status)">
-          <button
+          @if(activeTab==='job-request'){
+            <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog(product.jobId)"
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+          }@else {
+            <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
@@ -189,6 +199,9 @@
           >
             <i class="pi pi-eye"></i>
           </button>
+          }
+
+
           <!-- Youth Assignment Dialog -->
           <p-dialog
             class="youth"
@@ -234,18 +247,18 @@
             [style]="{ width: '95vw', height: '90vh', padding: '0', margin: '0' }"
             (onHide)="clearSelectedYouthId()"
           >
-            @if (!status) {
+            @if (activeTab==='employer') {
             <app-details-employer
               *ngIf="selectedYouthId"
               [employerId]="selectedYouthId.toString()"
             ></app-details-employer>
-            } @else if (status === 'waiting-E' || status === 'assigned') {
+            }@else if(activeTab==='job-request' ) {
             <app-job-request-details
               *ngIf="selectedYouthId"
               [jobId]="selectedYouthId.toString()"
               
             ></app-job-request-details>
-            } @else {
+            }@else {
             <app-youthsignup-details
               *ngIf="selectedYouthId"
               [youthId]="selectedYouthId"
@@ -289,11 +302,11 @@
 
           <p-dialog
             [(visible)]="assignedYouthDialogVisible"
-            header="Youth Details"
+
             [modal]="true"
-            [style]="{ width: '500px', height: '500px', padding:'10px'}"
+            [style]="{ width: '500px', height: '500px'}"
           >
-            <div *ngIf="assignedYouths.length > 0">
+            <div class="p-8" *ngIf="assignedYouths.length > 0">
               <h3 class="font-bold border-b">Assigned Youths</h3>
               <ul>
                 <li *ngFor="let youth of assignedYouths">
@@ -302,7 +315,7 @@
               </ul>
             </div>
             @if(unassignedYouths.length>0){
-            <div class="pt-7">
+            <div class="pt-5">
               <h3 class="border-b font-bold">Assign More Youths</h3>
               <ul>
                   <p-multiSelect
@@ -320,7 +333,7 @@
             }
 
             <ng-template pTemplate="footer">
-              <div class="flex flex-row justify-end gap-5">
+              <div class="flex flex-row justify-end gap-5 pb-5 pr-5">
                 <button
                   pButton
                   label="Assign"

@@ -47,6 +47,7 @@ interface Column {
 })
 export class SmartTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
   youthDialogVisible = false; // Controls dialog visibility
@@ -55,7 +56,7 @@ export class SmartTableComponent implements OnInit {
   selectedYouths: any[] = []; // Selected youths for assignment
   assignedYouths: any[] = []; // Youths fetched from the backend
   unassignedYouths: any[] = []; // Youths fetched from the backend
-
+  activeTab:string=''
   combinedYouths: any[] = []; // Combination of assigned and selected
   selectedJob: string = '';
   currentEmployerId: string = '';
@@ -81,7 +82,7 @@ export class SmartTableComponent implements OnInit {
   nationalityOptions: string[] = [];
   selectedNationalities: string[] = [];
   excludedColumns: string[] = [
-
+    'active',
     'assignedYouths',
     'signature',
     'registrationStatus',
@@ -139,6 +140,7 @@ export class SmartTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
+    this.setActiveTabFromLocalStorage();
 
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
@@ -168,6 +170,14 @@ export class SmartTableComponent implements OnInit {
         console.error('Error fetching lookup data:', error);
       }
     );
+  }
+
+  setActiveTabFromLocalStorage(): void {
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+      // Set the status based on the active tab
+      this.activeTab = activeTab;
+    }
   }
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
@@ -272,12 +282,12 @@ export class SmartTableComponent implements OnInit {
       (data: any[]) => {
         console.log('Fetched Employer Data:', data);
 
-        // Step 1: Filter by `status` if provided
-        let filteredData = this.status
-          ? data.filter((item) => item.status === this.status)
+        // Step 1: Filter by `status` if `active` is provided
+        let filteredData = this.active !== undefined
+          ? data.filter((item) => item.active === this.active)
           : data;
 
-        // Step 3: Configure columns dynamically if filtered data is available
+        // Step 2: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
           const filteredColumns = Object.keys(filteredData[0]).filter(
@@ -307,15 +317,16 @@ export class SmartTableComponent implements OnInit {
           }
         }
 
-        // Step 4: Update youth list and paginated products
+        // Step 3: Update youth list and paginated products
         this.employerList = filteredData;
         this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
       },
       (error) => {
-        console.error('Error fetching youth data:', error);
+        console.error('Error fetching employer data:', error);
       }
     );
   }
+
 
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
@@ -542,9 +553,11 @@ export class SmartTableComponent implements OnInit {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
   }
+
   showYouthDialog(job: string, selectedJob: string): void {
     this.selectedJob = selectedJob;
     this.currentJob = job; // Store the current job being assigned
+    this.selectedYouths = []; // Reset selectedYouths for this dialog
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
         console.log('Response from getYouthByJob:', response); // Log the response for debugging
@@ -573,11 +586,14 @@ export class SmartTableComponent implements OnInit {
       'Selected Youths before assignment:',
       JSON.stringify(this.selectedYouths, null, 2)
     );
+
     const youthsAssigned = []; // Array to track successful assignments
+
     this.selectedYouths.forEach((youth: any) => {
       console.log(
-        `Assigning Youth: ID=${youth.id}, Name=${youth.firstName} ${youth.lastName}`
+        `Assigning Youth: ID=${youth.id}, Name=${youth.name}`
       );
+
       // Send only the youth ID to the backend; the backend will fetch the details
       this.JobRequestService.assignYouthToJobRequest(
         this.selectedJob,
@@ -587,16 +603,30 @@ export class SmartTableComponent implements OnInit {
           console.log(
             `Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`
           );
+
+          // Update local state for assigned youths
+          this.assignedYouths.push({
+            id: youth.id,
+            name: youth.name,
+            beneficiary: youth.beneficiary,
+            label: youth.label,
+          });
+
+          // Remove the youth from unassigned youths
+          this.unassignedYouths = this.unassignedYouths.filter(
+            (unassigned: any) => unassigned.id !== youth.id
+          );
+
           youthsAssigned.push(youth); // Track successfully assigned youth
 
-          // If all selected youths are assigned, update the job status
+          // If all selected youths are assigned, optionally update the job status
           if (youthsAssigned.length === this.selectedYouths.length) {
             this.updateJobStatusToAssigned();
           }
         },
         error: (error) => {
           console.error(
-            `Error assigning youth ${youth.firstName} ${youth.lastName} (ID: ${youth.id}):`,
+            `Error assigning youth ${youth.name} (ID: ${youth.id}):`,
             error
           );
         },
@@ -605,6 +635,7 @@ export class SmartTableComponent implements OnInit {
 
     this.youthDialogVisible = false;
   }
+
   getAssignedYouths(jobId: string): void {
     this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
       next: (response: any) => {
@@ -633,9 +664,10 @@ export class SmartTableComponent implements OnInit {
 
   }
   showAssignedYouthDialog(jobName: string, job: string): void {
-    this.currentJob = job; // Store the current job for context
+    this.currentJob = jobName; // Store the current job for context
+    this.selectedJob=job
+    this.selectedYouths = []; // Reset selectedYouths for this dialog
 
-    // Fetch all youths for the job
     this.youthService.getYouthByJob(jobName).subscribe({
       next: (allYouthsResponse: any) => {
         console.log('Response from getYouthByJob:', allYouthsResponse);
@@ -645,12 +677,13 @@ export class SmartTableComponent implements OnInit {
           id: youth.id,
           name: youth.name || 'Unknown', // Fallback if name is missing
           beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-          label: `${youth.name || 'Unknown'} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
+          label: `${youth.name || 'Unknown'} (${youth.id})${
+            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
+          }`,
         }));
 
         console.log('Formatted All Youths:', allYouths);
 
-        // Fetch assigned youths for the job
         this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
           next: (assignedResponse: any) => {
             console.log('Response from getAssignedYouthsByJobId:', assignedResponse);
@@ -658,25 +691,26 @@ export class SmartTableComponent implements OnInit {
             // Format assigned youths
             const assignedYouths = (assignedResponse || []).map((youth: any) => ({
               id: youth.id,
-              name: youth.name || 'Unknown', // Fallback if name is missing
+              name: youth.firstNameEn || 'Unknown', // Fallback if name is missing
               beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-              label: `${youth.name || 'Unknown'} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
+              label: `${youth.firstNameEn || 'Unknown'} (${youth.id})${
+                youth.beneficiary ? ' ✅ (Beneficiary)' : ''
+              }`,
             }));
 
             console.log('Formatted Assigned Youths:', assignedYouths);
 
             // Filter out assigned youths from all youths to get unassigned youths
             this.unassignedYouths = allYouths.filter(
-              (youth: any) => !assignedYouths.some((assigned: any) => assigned.id === youth.id)
+              (youth: any) =>
+                !assignedYouths.some((assigned: any) => assigned.id === youth.id)
             );
 
-            // Update assigned youths for display
             this.assignedYouths = assignedYouths;
 
             console.log('Unassigned Youths:', this.unassignedYouths);
             console.log('Assigned Youths:', this.assignedYouths);
 
-            // Open the dialog to display assigned and unassigned youths
             this.assignedYouthDialogVisible = true;
           },
           error: (error) => {
@@ -689,8 +723,6 @@ export class SmartTableComponent implements OnInit {
       },
     });
   }
-
-
 
   private updateJobStatusToAssigned(): void {
     this.JobRequestService.updateJobRequestStatus(

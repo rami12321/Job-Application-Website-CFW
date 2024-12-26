@@ -23,6 +23,7 @@ export class MainAdminComponent implements OnInit, OnDestroy {
   activeTab: string = 'dashboard';
   activeYouthTab: string = 'waiting';
   activeYouthTab1: string = 'waiting-E';
+  activeEmployerTab:string='active';
   generatedCode: string = "";
   errorMessage: string | null = null;
   generatedCodes: string[] = []; // Store generated codes for display in a table
@@ -84,6 +85,7 @@ export class MainAdminComponent implements OnInit, OnDestroy {
     const savedTab = localStorage.getItem('activeTab');
     const savedYouthTab = localStorage.getItem('activeYouthTab');
     const savedYouthTab1 = localStorage.getItem('activeYouthTab1');
+    const savedEmployerTab = localStorage.getItem('activeEmployerTab');
 
     if (savedTab) {
       this.activeTab = savedTab;
@@ -93,6 +95,9 @@ export class MainAdminComponent implements OnInit, OnDestroy {
     }
     if (savedYouthTab1) {
       this.activeYouthTab1 = savedYouthTab1;
+    };
+    if (savedEmployerTab) {
+      this.activeEmployerTab = savedEmployerTab;
     };
     localStorage.setItem('role', 'admin');
     localStorage.setItem('authenticated', 'true');
@@ -106,6 +111,11 @@ export class MainAdminComponent implements OnInit, OnDestroy {
     this.activeYouthTab1 = tab;
     localStorage.setItem('activeYouthTab1', tab); // Save youth tab state to localStorage
   }
+  changeEmployerTab(tab: string): void {
+    this.activeEmployerTab = tab;
+    localStorage.setItem('activeEmployerTab', tab); // Save youth tab state to localStorage
+  }
+
 
   changeTab(tab: string): void {
     this.activeTab = tab;
