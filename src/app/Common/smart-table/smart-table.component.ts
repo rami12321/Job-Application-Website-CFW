@@ -644,9 +644,9 @@ export class SmartTableComponent implements OnInit {
         // Transform the response into a format suitable for your UI
         this.assignedYouths = response.map((youth: any) => ({
           id: youth.id,
-          name: youth.firstNameEn,
+          name: youth.name,
           beneficiary: youth.beneficiary,
-          label: `${youth.firstNameEn} (${youth.id})${
+          label: `${youth.name} (${youth.id})${
             youth.beneficiary ? ' ✅ (Beneficiary)' : ''
           }`, // Add beneficiary indication
         }));
