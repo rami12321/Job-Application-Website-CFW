@@ -14,6 +14,8 @@ import {
   LineElement,
   PointElement,
 } from 'chart.js';
+import { EmployerService } from '../../../Services/employer-service/employer-services.service';
+import { JobRequestService } from '../../../Services/JobRequestService/job-request-service.service';
 
 @Component({
   standalone: true,
@@ -23,6 +25,7 @@ import {
 })
 export class YouthChartComponent implements OnInit {
   private youthService = inject(YouthServiceService);
+  private jobRequestService = inject(JobRequestService);
 
   constructor() {
     // Register required Chart.js components
@@ -58,7 +61,9 @@ export class YouthChartComponent implements OnInit {
     this.youthService.getAllYouth().subscribe((youths) => {
       const totalYouths = youths.length;
       const createdAtData = this.getCreatedAtDistribution(youths);
-      const sortedDates = Object.keys(createdAtData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+      const sortedDates = Object.keys(createdAtData).sort(
+        (a, b) => new Date(a).getTime() - new Date(b).getTime()
+      );
       const sortedCounts = sortedDates.map((date) => createdAtData[date]);
 
       // Map original education levels to shortened ones
@@ -101,15 +106,8 @@ export class YouthChartComponent implements OnInit {
         totalYouths
       );
 
-      // Category Distribution
-      const categoryData = this.getDistribution(youths, 'category');
-      const categoryPercentages = this.getPercentageDistribution(
-        Object.values(categoryData),
-        totalYouths
-      );
-
       // Beneficiary Distribution
-      const beneficiaryData =this.getDistribution(youths, 'beneficiary');
+      const beneficiaryData = this.getDistribution(youths, 'beneficiary');
       const beneficiaryPercentages = this.getPercentageDistribution(
         Object.values(beneficiaryData),
         totalYouths
@@ -161,7 +159,7 @@ export class YouthChartComponent implements OnInit {
           {
             label: 'EducationLevel Distribution',
             data: Object.values(educationLevelData),
-            backgroundColor: ['#FF6384', '#36A2EB', '#9966FF','#36A2EB'],
+            backgroundColor: ['#FF6384', '#36A2EB', '#9966FF', '#36A2EB'],
           },
         ],
       });
@@ -194,19 +192,7 @@ export class YouthChartComponent implements OnInit {
         ],
       });
 
-      this.createPieChart('categoryChart', {
-        labels: this.appendPercentagesToLabels(
-          Object.keys(categoryData),
-          categoryPercentages
-        ),
-        datasets: [
-          {
-            label: 'Category Distribution',
-            data: Object.values(categoryData),
-            backgroundColor: ['#4BC0C0', '#FF6384', '#FFCE56'],
-          },
-        ],
-      });
+
 
       this.createPieChart('beneficiaryChart', {
         labels: this.appendPercentagesToLabels(
@@ -236,19 +222,47 @@ export class YouthChartComponent implements OnInit {
         ],
       });
 
-    this.createLineChart('createdAtChart', {
-      labels: sortedDates,
-      datasets: [
-        {
-          label: 'Youths Created Over Time',
-          data: sortedCounts,
-          borderColor: '#36A2EB',
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          fill: true,
-          tension: 0.4, // Smoother lines
-        },
-      ],
+      this.createLineChart('createdAtChart', {
+        labels: sortedDates,
+        datasets: [
+          {
+            label: 'Youths Created Over Time',
+            data: sortedCounts,
+            borderColor: '#36A2EB',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: true,
+            tension: 0.4, // Smoother lines
+          },
+        ],
+      });
     });
+
+    this.jobRequestService.getAllJobs().subscribe((jobs) => {
+      const totalJobs = jobs.length;
+
+      // Category Distribution
+      const categoryData = this.getDistribution(jobs, 'category');
+      const categoryPercentages = this.getPercentageDistribution(
+        Object.values(categoryData),
+        totalJobs
+      );
+
+      this.createPieChart('categoryChart', {
+        labels: this.appendPercentagesToLabels(
+          Object.keys(categoryData),
+          categoryPercentages
+        ),
+        datasets: [
+          {
+            label: 'Category Distribution',
+            data: Object.values(categoryData),
+            backgroundColor: [
+              '#4BC0C0', '#FF6384', '#FFCE56', '#36A2EB', '#FF9F40', '#FFCD56',
+              '#4BC0C0', '#F1A7C4', '#5A9EC9', '#A1C6D6', '#D1A4F7', '#FF77A9'
+            ]
+                      },
+        ],
+      });
     });
   }
 
@@ -262,7 +276,6 @@ export class YouthChartComponent implements OnInit {
       return acc;
     }, {} as Record<string, number>);
   }
-
 
   private getCreatedAtDistribution(youths: any[]): { [key: string]: number } {
     const distribution: { [key: string]: number } = {};

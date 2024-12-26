@@ -31,7 +31,7 @@ export class EmployerService {
   uploadProfileImage(employerId: string, payload: { image: string }): Observable<any> {
     return this.http.post<any>(`${this.employerDbUrl}/${employerId}/upload-profile-image`, payload);
   }
-  
+
 
   // Update an employer by ID
   updateEmployer(id: string, updatedEmployer: Partial<Employer>): Observable<Employer> {
@@ -51,4 +51,14 @@ export class EmployerService {
     });
   }
 
+  updateActiveStatus(employerId: string, isActive: boolean): Observable<Employer> {
+    const url = `${this.employerDbUrl}/${employerId}/updateStatus`;
+    return this.http.put<Employer>(url, { isActive });
+  }
+
+  // Get organization name by employer ID
+  getOrganizationNameById(id: string): Observable<{ organizationName: string }> {
+    const url = `${this.employerDbUrl}/${id}/organizationName`;
+    return this.http.get<{ organizationName: string }>(url);
+  }
 }

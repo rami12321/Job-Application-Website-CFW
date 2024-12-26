@@ -180,6 +180,9 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
+        <div class=" " *ngFor="let action of getActionsForRow(product.status ,product.active)">
+          @if(activeTab==='job-request'){
+            <button
       <div class=" " *ngFor="let action of getActionsForRow(product.status)">
         @if(activeTab === 'job-request') {
           <button
@@ -292,6 +295,22 @@
 
 
           <button
+            *ngIf="action === 'activate'"
+            type="button"
+            class="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600"
+            (click)="updateActiveStatus(product.id,true)"
+          >
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'deactivate'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="updateActiveStatus(product.id,false)"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+          <button
             *ngIf="action === 'pend'"
             type="button"
             class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
@@ -326,54 +345,78 @@
           </button>
 
           <p-dialog
-            [(visible)]="assignedYouthDialogVisible"
+          [(visible)]="assignedYouthDialogVisible"
+          [modal]="true"
+          [style]="{ width: '500px', height: '600px' }"
+          class="p-0 rounded-lg shadow-xl overflow-hidden"
+        >
+          <div class="p-6 bg-white rounded-lg flex flex-col h-full">
+            <!-- Title -->
+            <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">
+              Assigned Youths
+            </h2>
 
-            [modal]="true"
-            [style]="{ width: '500px', height: '500px'}"
-          >
-            <div class="p-8" *ngIf="assignedYouths.length > 0">
-              <h3 class="font-bold border-b">Assigned Youths</h3>
+            <!-- Assigned Youths Section -->
+            <div *ngIf="assignedYouths.length > 0" class="space-y-4">
               <ul>
-                <li *ngFor="let youth of assignedYouths">
-                  -{{ youth.label }}
+                <li
+                  *ngFor="let youth of assignedYouths"
+                  class="flex justify-between mb-3 items-center p-3 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
+                >
+                  <span class="text-gray-700 font-medium">- {{ youth.label }}</span>
+                  <button
+                    pButton
+                    class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md shadow-sm"
+                    (click)="unassignYouth(selectedJob, youth.id)"
+                  >
+                    Unassign
+                  </button>
                 </li>
               </ul>
             </div>
-            @if(unassignedYouths.length>0){
-            <div class="pt-5">
-              <h3 class="border-b font-bold">Assign More Youths</h3>
-              <ul>
-                  <p-multiSelect
-                    [options]="unassignedYouths"
-                    [(ngModel)]="selectedYouths"
-                    optionLabel="label"
-                    dataKey="id"
-                    placeholder="Select Youths"
-                    styleClass="w-full"
-                  ></p-multiSelect>
-              </ul>
-            </div>
-            }@else {
-            <p class="text-center pt-5 text-red-300 font-bold">no more youth Available to assign</p>
-            }
 
-            <ng-template pTemplate="footer">
-              <div class="flex flex-row justify-end gap-5 pb-5 pr-5">
-                <button
-                  pButton
-                  label="Assign"
-                  class="p-button-success px-4 py-2 text-white bg-cyan-600 hover:bg-cyan-400"
-                  (click)="assignYouthsToJob()"
-                ></button>
-                <button
-                  pButton
-                  label="Cancel"
-                  class="p-button-secondary px-4 py-2 text-white bg-slate-800 hover:bg-slate-700"
-                  (click)="assignedYouthDialogVisible = false"
-                ></button>
-              </div>
-            </ng-template>
-          </p-dialog>
+            <!-- Unassigned Youths Section -->
+            <div *ngIf="unassignedYouths.length > 0" class="mt-6">
+              <h2 class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4">
+                Assign More Youths
+              </h2>
+              <p-multiSelect
+                [options]="unassignedYouths"
+                [(ngModel)]="selectedYouths"
+                optionLabel="label"
+                dataKey="id"
+                placeholder="Select Youths"
+                styleClass="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-cyan-500"
+              ></p-multiSelect>
+            </div>
+
+            <!-- No More Youths Message -->
+            <p *ngIf="unassignedYouths.length === 0" class="text-center mt-6 text-gray-500 font-medium">
+              No more youth available to assign.
+            </p>
+
+            <!-- Footer -->
+            <div class="mt-auto pt-6 flex justify-end gap-4 border-t border-gray-300">
+              <button
+                pButton
+                class="bg-cyan-600 hover:bg-cyan-500 text-white py-2 px-4 rounded-md shadow-md"
+                [disabled]="unassignedYouths.length === 0"
+                (click)="assignYouthsToJob()"
+              >
+                Assign
+              </button>
+              <button
+                pButton
+                class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md shadow-md"
+                (click)="assignedYouthDialogVisible = false"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </p-dialog>
+
+
 
           <p-dialog
             [(visible)]="noteDialogVisible"

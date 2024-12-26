@@ -1,154 +1,5 @@
 [
   {
-    "jobId": "A-61232388",
-    "employerId": "L-18100564",
-    "job": "Dental Assistant",
-    "title": "qwertyuio",
-    "numEmployees": 10,
-    "level": "mid",
-    "location": "Akkar, LBN",
-    "typeOfJob": "onsite",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "in-progress",
-    "assignedYouths": [
-      {
-        "id": "34285768",
-        "name": "Mohammad",
-        "status": "approved",
-        "action": "approved",
-        "isDisabled": false
-      },
-      {
-        "id": "14305200",
-        "name": "rami",
-        "status": "waiting",
-        "firstName": "rami",
-        "lastName": "ahah",
-        "dob": "2005-06-15",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "action": "accepted",
-        "isDisabled": false
-      }
-    ]
-  },
-  {
-    "jobId": "T-32416340",
-    "employerId": "34285768",
-    "job": "Translator",
-    "title": "dasd",
-    "numEmployees": 9,
-    "level": "",
-    "location": "",
-    "typeOfJob": "",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "waiting-E"
-  },
-  {
-    "jobId": "G-55827737",
-    "employerId": "L-18100564",
-    "job": "Auto Electrician",
-    "title": "New22",
-    "numEmployees": 8,
-    "level": "mid",
-    "location": "",
-    "typeOfJob": "onsite",
-    "supervisorName": "asdasd",
-    "supervisorPosition": "sdasd",
-    "supervisorEmail": "123dasd",
-    "supervisorPhone": "asdasdasd",
-    "status": "in-progress",
-    "assignedYouths": [
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "approved",
-        "isDisabled": false
-      }
-    ]
-  },
-  {
-    "jobId": "D-53259704",
-    "employerId": "L-18100564",
-    "job": "Auto Electrician",
-    "title": "123123",
-    "numEmployees": 2,
-    "level": "mid",
-    "location": "dasdas",
-    "typeOfJob": "remote",
-    "supervisorName": "asdas",
-    "supervisorPosition": "sdasd",
-    "supervisorEmail": "asd",
-    "supervisorPhone": "da",
-    "status": "assigned",
-    "assignedYouths": [
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "accepted",
-        "isDisabled": false
-      },
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "approved",
-        "isDisabled": false
-      }
-    ]
-  },
-  {
-    "jobId": "J-59716278",
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "Data Entry",
-    "numEmployees": 2,
-    "level": "senior",
-    "location": "ddd",
-    "typeOfJob": "onsite",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "assigned",
-    "assignedYouths": [
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "rejected"
-      },
-      {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
-        "action": "rejected"
-      }
-    ]
-  },
-  {
     "jobId": "L-93833072",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
@@ -161,8 +12,125 @@
     "supervisorPosition": "all",
     "supervisorEmail": "kqpkm@gmail.com",
     "supervisorPhone": "233423",
-    "status": "waiting-E",
-    "category": "Cars & Motors Electrican"
+    "status": "assigned",
+    "category": "Cars & Motors Electrican",
+    "assignedYouths": [
+      {
+        "id": "34285768",
+        "username": "2-43228593",
+        "password": "qawsedrf12",
+        "role": "Youth",
+        "firstName": "Mohammad",
+        "fatherNameEn": "qasem",
+        "lastNameEn": "Sarhan",
+        "firstNameAr": "محمد",
+        "fatherNameAr": "قاسم",
+        "lastNameAr": "سرحان",
+        "gender": "Male",
+        "dob": "2000-06-21",
+        "nationality": "Palestinian Refugee in Lebanon",
+        "registrationStatus": "Registered",
+        "familyRegistrationNumber": "1-45245234",
+        "personalRegistrationNumber": "2-00425334",
+        "mobilePhone": "96134567889",
+        "whatsapp": "96134567889",
+        "emergencyPhone": "96134567889",
+        "emergencyRelation": "Parent",
+        "email": "bashar.alsayyed.20@gmail.com",
+        "area": "North Lebanon",
+        "fullAddress": "سعسع",
+        "headfa": "Mother",
+        "campType": "Inside Camp",
+        "camp": "Nahr El Bared Palestinian Refugee Camp",
+        "jobOpportunitySource": "WhatsApp Message from Employment Services Team",
+        "educationGraduate": "no",
+        "educationLevel": "University Degree, Technical Licence (LT), University Diploma",
+        "major": "Computer Science Programming",
+        "institution": "BAU",
+        "graduationDate": "2021-07-21",
+        "gradplace": "tripoli",
+        "employmentOpportunities": "Short-term employment opportunities with external organizations",
+        "aboutYourself": "test test test test test testtest test test test test test test test test",
+        "placedByKfw": "yes",
+        "kfwYear": "test",
+        "question2": "no",
+        "innovationLabGraduate": "yes",
+        "innovationLabGradtype": [
+          "Social Entrepreneurship"
+        ],
+        "disability": "yes",
+        "disabilitySupport": "yes",
+        "disabilityTypes": [
+          "Psychosocial / Mental Health"
+        ],
+        "employed": "yes",
+        "seekingEmploymentDuration": "",
+        "isPrcsVolunteer": "yes",
+        "isFireBrigadesVolunteer": "yes",
+        "isAlShifaaVolunteer": "yes",
+        "experiences": [
+          {
+            "type": "Volunteer",
+            "employerName": "Company",
+            "employerPhone": "71453467",
+            "area": "North Lebanon",
+            "employmentType": "Monthly",
+            "jobTitle": "development",
+            "startDate": "2024-09-10",
+            "endDate": "2024-12-18",
+            "salary": 300,
+            "tasks": "test"
+          }
+        ],
+        "trainings": [
+          {
+            "institution": "test",
+            "certificate": "test",
+            "area": "North Lebanon",
+            "durationFrom": "2024-10-15",
+            "durationTo": "2024-12-03"
+          }
+        ],
+        "arabic": "fluent",
+        "english": "good",
+        "french": "null",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "coverLetter": "C:\\fakepath\\Bashar's Resume.pdf",
+        "identityCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "registrationCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "degree": "C:\\fakepath\\Bashar's Resume.pdf",
+        "prcsProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "fireProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "confirmation": "yes",
+        "confirmPassword": "qawsedrf12",
+        "status": "accepted",
+        "beneficiary": false,
+        "createdAt": "2024-12-17T12:34:56Z",
+        "appliedJob": [
+          {
+            "job": "Auto Electrician",
+            "status": "approved"
+          },
+          {
+            "job": "Diesel Mechanic",
+            "status": "rejected"
+          },
+          {
+            "job": "Auto Mechanic",
+            "status": "rejected"
+          }
+        ]
+      },
+      {
+        "id": "14305200",
+        "firstName": "Rami",
+        "lastName": "Abou Eid",
+        "dob": "2005-06-15",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting"
+      }
+    ]
   },
   {
     "jobId": "L-98345612",
@@ -177,8 +145,113 @@
     "supervisorPosition": "Technician",
     "supervisorEmail": "ali.tech@gmail.com",
     "supervisorPhone": "23456789",
-    "status": "waiting-E",
-    "category": "Cars & Motors Electrician"
+    "status": "assigned",
+    "category": "Cars & Motors Electrician",
+    "assignedYouths": [
+      {
+        "id": "16479899",
+        "username": "2-00425334",
+        "password": "qawsedrf12",
+        "role": "Youth",
+        "firstName": "bashar",
+        "fatherNameEn": "hahaa",
+        "lastNameEn": "alsayyed",
+        "firstNameAr": "بشار",
+        "fatherNameAr": "عدنان",
+        "lastNameAr": "السيد",
+        "gender": "Male",
+        "dob": "2000-06-21",
+        "nationality": "Palestinian Refugee in Lebanon",
+        "registrationStatus": "Registered",
+        "familyRegistrationNumber": "1-45245234",
+        "personalRegistrationNumber": "2-00425334",
+        "mobilePhone": "96134567889",
+        "whatsapp": "96134567889",
+        "emergencyPhone": "96134567889",
+        "emergencyRelation": "Parent",
+        "email": "bashar.alsayyed.20@gmail.com",
+        "area": "North Lebanon",
+        "fullAddress": "سعسع",
+        "headfa": "Mother",
+        "campType": "Inside Camp",
+        "camp": "Nahr El Bared Palestinian Refugee Camp",
+        "jobOpportunitySource": "WhatsApp Message from Employment Services Team",
+        "educationGraduate": "no",
+        "educationLevel": "University Degree, Technical Licence (LT), University Diploma",
+        "major": "Computer Science Programming",
+        "institution": "BAU",
+        "graduationDate": "2021-07-21",
+        "gradplace": "tripoli",
+        "employmentOpportunities": "Short-term employment opportunities with external organizations",
+        "aboutYourself": "test test test test test testtest test test test test test test test test",
+        "placedByKfw": "yes",
+        "kfwYear": "test",
+        "question2": "no",
+        "innovationLabGraduate": "yes",
+        "innovationLabGradtype": [
+          "Social Entrepreneurship"
+        ],
+        "disability": "yes",
+        "disabilitySupport": "yes",
+        "disabilityTypes": [
+          "Psychosocial / Mental Health"
+        ],
+        "employed": "yes",
+        "seekingEmploymentDuration": "",
+        "isPrcsVolunteer": "yes",
+        "isFireBrigadesVolunteer": "yes",
+        "isAlShifaaVolunteer": "yes",
+        "experiences": [
+          {
+            "type": "Volunteer",
+            "employerName": "Company",
+            "employerPhone": "71453467",
+            "area": "North Lebanon",
+            "employmentType": "Monthly",
+            "jobTitle": "development",
+            "startDate": "2024-09-10",
+            "endDate": "2024-12-18",
+            "salary": 300,
+            "tasks": "test"
+          }
+        ],
+        "trainings": [
+          {
+            "institution": "test",
+            "certificate": "test",
+            "area": "North Lebanon",
+            "durationFrom": "2024-10-15",
+            "durationTo": "2024-12-03"
+          }
+        ],
+        "arabic": "fluent",
+        "english": "good",
+        "french": "null",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "coverLetter": "C:\\fakepath\\Bashar's Resume.pdf",
+        "identityCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "registrationCard": "C:\\fakepath\\Bashar's Resume.pdf",
+        "degree": "C:\\fakepath\\Bashar's Resume.pdf",
+        "prcsProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "fireProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
+        "confirmation": "yes",
+        "confirmPassword": "qawsedrf12",
+        "status": "rejected",
+        "notes": "asd",
+        "appliedJob": [
+          "Social Worker",
+          "Nurse",
+          "Auto Electrician",
+          "Accountant Assistant",
+          "Admin Assistant",
+          "Assistant Veteranian",
+          "Administrative Support Officer"
+        ],
+        "beneficiary": true,
+        "createdAt": "2024-12-19T12:34:56Z"
+      }
+    ]
   },
   {
     "jobId": "L-98274361",
@@ -409,7 +482,7 @@
         "username": "2-00425334",
         "password": "qawsedrf12",
         "role": "Youth",
-        "firstNameEn": "bashar",
+        "firstName": "bashar",
         "fatherNameEn": "hahaa",
         "lastNameEn": "alsayyed",
         "firstNameAr": "بشار",
@@ -508,5 +581,38 @@
         "createdAt": "2024-12-19T12:34:56Z"
       }
     ]
+  },
+  {
+    "jobId": "A-58164699",
+    "employerId": "F-70583249",
+    "job": "Assistant news editor",
+    "title": "dasd",
+    "numEmployees": 5,
+    "level": "senior",
+    "location": "asd",
+    "typeOfJob": "",
+    "supervisorName": "",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "waiting-E",
+    "category": "Media"
+  },
+  {
+    "jobId": "N-20183392",
+    "employerId": "F-70583249",
+    "job": "Arts Animator",
+    "title": "New artist",
+    "organizationName": "ahmad",
+    "numEmployees": 24,
+    "level": "mid",
+    "location": "dasdas",
+    "typeOfJob": "onsite",
+    "supervisorName": "daaaa",
+    "supervisorPosition": "daaaa",
+    "supervisorEmail": "daaas@gmail.com",
+    "supervisorPhone": "9604512578",
+    "status": "waiting-E",
+    "category": "Media"
   }
 ]

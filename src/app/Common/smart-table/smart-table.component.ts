@@ -398,8 +398,14 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
-  getActionsForRow(status: string): string[] {
+  getActionsForRow(status: string ,active:boolean): string[] {
     // Return different actions based on the row's status
+    if(active){
+      return ['view','deactivate']
+    }else if(!active){
+      return ['view','activate']
+
+    }
     switch (status) {
       case 'accepted':
         return ['view', 'pend'];
@@ -415,6 +421,7 @@ export class SmartTableComponent implements OnInit {
         return ['view', 'assign'];
       default:
         return ['view', 'delete'];
+
     }
   }
 
@@ -455,6 +462,19 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
+  updateActiveStatus(id: string, isActive: boolean): void {
+    this.employerService.updateActiveStatus(id, isActive).subscribe(
+      (response) => {
+        console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
+
+        // Re-fetch the data to reflect changes
+        this.fetchEmployerData();
+      },
+      (error) => {
+        console.error('Error updating active status:', error);
+      }
+    );
+  }
   paginate(event: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);
@@ -711,9 +731,9 @@ export class SmartTableComponent implements OnInit {
             // Format assigned youths
             const assignedYouths = (assignedResponse || []).map((youth: any) => ({
               id: youth.id,
-              name: youth.firstNameEn || 'Unknown', // Fallback if name is missing
+              name: youth.firstName || 'Unknown', // Fallback if name is missing
               beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-              label: `${youth.firstNameEn || 'Unknown'} (${youth.id})${
+              label: `${youth.firstName || 'Unknown'} (${youth.id})${
                 youth.beneficiary ? ' ✅ (Beneficiary)' : ''
               }`,
             }));
@@ -740,6 +760,36 @@ export class SmartTableComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching all youths:', error);
+      },
+    });
+  }
+
+  unassignYouth(jobId: string, youthId: string): void {
+    console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
+
+    this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
+      next: () => {
+        console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);
+
+        // Remove the youth from the assigned youths list
+        this.assignedYouths = this.assignedYouths.filter(
+          (youth: any) => youth.id !== youthId
+        );
+
+        // Add the youth back to the unassigned youths list
+        const youth = this.assignedYouths.find((y: any) => y.id === youthId);
+        if (youth) {
+          this.unassignedYouths.push(youth);
+        }
+
+        console.log('Updated Assigned Youths:', this.assignedYouths);
+        console.log('Updated Unassigned Youths:', this.unassignedYouths);
+      },
+      error: (error) => {
+        console.error(
+          `Error unassigning youth ID: ${youthId} from job ID: ${jobId}:`,
+          error
+        );
       },
     });
   }

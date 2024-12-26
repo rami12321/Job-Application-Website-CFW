@@ -31,6 +31,7 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
   styleUrls: ['./main-employer.component.css'],
 })
 export class MainEmployerComponent {
+  organizationName: string = ''; // To store organization name
   displayDialog: boolean = false;
   mainCategories: any[] = [];
   selectedCategory: string = '';
@@ -92,8 +93,10 @@ currentPageCompleted = 1;
     employerId: this.userId,
     job: '',
     title: '',
+    organizationName:this.organizationName,
     numEmployees: 0,
     level: '',
+    area:'',
     location: '',
     typeOfJob: '',
     supervisorName: '',
@@ -144,11 +147,22 @@ currentPageCompleted = 1;
       return;
 
     }
+    // Fetch organization name by employerId
+    this.employerservice.getOrganizationNameById(employerId).subscribe({
+      next: (response) => {
+        this.organizationName = response.organizationName || 'Unknown Organization';
+        console.log('Organization Name:', this.organizationName);
+      },
+      error: (err) => {
+        console.error('Error fetching organization name:', err);
+      }
+    });
 
 
 
     this.fetchJobTableData(employerId);
     this.totalPages = Math.ceil(this.filteredAssignedJobs.length / this.itemsPerPage);
+
 
   }
   onTabChange(event: any): void {
@@ -491,6 +505,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       ...this.jobDetails,       // Spread other job details
       job: this.selectedjob,    // Selected job (subcategory)
       category: this.selectedCategory, // Selected main category
+      organizationName:this.organizationName
     };
 
     // Save the job data
@@ -520,7 +535,9 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       job: '',
       title: '',
       numEmployees: 0,
+      organizationName:'',
       level: '',
+      area:'',
       location: '',
       typeOfJob: '',
       supervisorName: '',
