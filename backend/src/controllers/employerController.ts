@@ -248,4 +248,22 @@ export const assignYouthToEmployer = (req: Request, res: Response): void => {
   });
 };
 
+// Function to get the organization name by employer ID
+export const getOrganizationNameById = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const employers: Employer[] = readFile(); // Read all employers data
+
+  // Find the employer by ID
+  const employer = employers.find((e) => e.id === id);
+
+  if (!employer) {
+    // If employer not found, return a 404 error
+    res.status(404).json({ message: `Employer with ID ${id} not found.` });
+    return;
+  }
+
+  // If employer found, return the organization name
+  res.status(200).json({ organizationName: employer.organization });
+};
+
 

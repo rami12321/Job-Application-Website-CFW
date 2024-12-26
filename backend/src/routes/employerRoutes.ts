@@ -9,6 +9,7 @@ import {
   uploadProfileImage,
   assignYouthToEmployer,
   updateActiveStatus,
+  getOrganizationNameById,
 } from '../controllers/employerController';
 
 const router: Router = Router();
@@ -22,6 +23,7 @@ router.delete('/employer/:id', deleteEmployer);    // Delete employer by ID
 router.post('/employer/:id/upload-profile-image', uploadProfileImage);  // Upload profile image
 router.post('/employer/:id/assign/:youthId', assignYouthToEmployer);
 router.put('/employer/:id/updateStatus', updateActiveStatus);
+router.get('/employer/:id/organizationName', getOrganizationNameById);
 
 
 export default router;

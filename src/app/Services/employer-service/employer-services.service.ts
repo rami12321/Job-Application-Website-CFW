@@ -55,4 +55,10 @@ export class EmployerService {
     const url = `${this.employerDbUrl}/${employerId}/updateStatus`;
     return this.http.put<Employer>(url, { isActive });
   }
+
+  // Get organization name by employer ID
+  getOrganizationNameById(id: string): Observable<{ organizationName: string }> {
+    const url = `${this.employerDbUrl}/${id}/organizationName`;
+    return this.http.get<{ organizationName: string }>(url);
+  }
 }
