@@ -57,42 +57,41 @@ export class MainYouthComponent implements OnInit {
   ngOnInit() {
     const youthIdString = localStorage.getItem('userId');
     const youthId = youthIdString ? parseInt(youthIdString, 10) : null;
-
+  
     if (youthId !== null) {
       this.youthService.getAppliedJobById(youthId).subscribe(
         (response) => {
-          
+          console.log('API Response:', response);
           if (response.appliedJob && Array.isArray(response.appliedJob)) {
-            // Map over the applied jobs
             const allJobs = response.appliedJob.map((jobEntry, index) => ({
               title: jobEntry.job,
               req: `REQ-${index + 1}`,
               status: jobEntry.status,
               date: new Date().toLocaleDateString(),
             }));
-    
-            // Separate jobs into active and inactive
+      
             this.activeJobs = allJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
             this.inactiveJobs = allJobs.filter(job => job.status === 'rejected');
-  
+      
             this.appliedJob = this.activeJobs.find(job => job.status === 'approved') || null;
-
-    
-            
           } else {
             console.error('Unexpected appliedJob format:', response.appliedJob);
             this.activeJobs = [];
+            this.appliedJob = null;
           }
         },
         (error) => {
           console.error('Error fetching applied jobs:', error);
         }
+      
       );
-
-
     } else {
       console.error('Youth ID is null, cannot fetch applied job.');
     }
+  
+    // Fetch youth details and job categories...
+  
+  
     if (youthId !== null){
     this.youthService.getYouthById(youthId).subscribe(
       (response) => {

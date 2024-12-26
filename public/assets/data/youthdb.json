@@ -197,7 +197,7 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "approved"
+        "status": "rejected"
       },
       {
         "job": "Diesel Mechanic",
@@ -474,7 +474,7 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "waiting"
+        "status": "approved"
       },
       {
         "job": "Diesel Mechanic",
@@ -752,5 +752,3 @@
     "createdAt": "2024-11-19T12:34:56Z"
   }
 ]
-
-

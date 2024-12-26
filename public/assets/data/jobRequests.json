@@ -1,5 +1,4 @@
 [
-
   {
     "jobId": "A-61232388",
     "employerId": "L-18100564",
@@ -13,13 +12,14 @@
     "supervisorPosition": "",
     "supervisorEmail": "",
     "supervisorPhone": "",
-    "status": "assigned",
+    "status": "in-progress",
     "assignedYouths": [
       {
         "id": "34285768",
         "name": "Mohammad",
-        "status": "waiting",
-        "action": "accepted"
+        "status": "approved",
+        "action": "approved",
+        "isDisabled": false
       },
       {
         "id": "14305200",
@@ -29,7 +29,8 @@
         "lastName": "ahah",
         "dob": "2005-06-15",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "action": "accepted"
+        "action": "accepted",
+        "isDisabled": false
       }
     ]
   },
@@ -61,7 +62,7 @@
     "supervisorPosition": "sdasd",
     "supervisorEmail": "123dasd",
     "supervisorPhone": "asdasdasd",
-    "status": "assigned",
+    "status": "in-progress",
     "assignedYouths": [
       {
         "id": "16479899",
@@ -69,15 +70,9 @@
         "lastName": "alsayyed",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
-      },
-      {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
+        "status": "waiting",
+        "action": "approved",
+        "isDisabled": false
       }
     ]
   },
@@ -102,7 +97,19 @@
         "lastName": "alsayyed",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
+        "status": "waiting",
+        "action": "accepted",
+        "isDisabled": false
+      },
+      {
+        "id": "16479899",
+        "firstName": "bashar",
+        "lastName": "alsayyed",
+        "dob": "2000-06-21",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "waiting",
+        "action": "approved",
+        "isDisabled": false
       }
     ]
   },
@@ -366,7 +373,7 @@
     "supervisorPosition": "sdaasd",
     "supervisorEmail": "dasda@asddaasd",
     "supervisorPhone": "1e123",
-    "status": "assigned",
+    "status": "in-progress",
     "category": "Health",
     "assignedYouths": [
       {
@@ -375,9 +382,9 @@
         "lastName": "Sarhan",
         "dob": "2000-06-21",
         "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting",
+        "status": "approved",
         "isDisabled": false,
-        "action": "accepted"
+        "action": "approved"
       }
     ]
   },

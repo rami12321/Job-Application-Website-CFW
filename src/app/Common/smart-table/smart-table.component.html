@@ -180,26 +180,37 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
-        <div class=" " *ngFor="let action of getActionsForRow(product.status)">
-          @if(activeTab==='job-request'){
-            <button
+      <div class=" " *ngFor="let action of getActionsForRow(product.status)">
+        @if(activeTab === 'job-request') {
+          <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-            (click)="showDialog(product.jobId)"
+            (click)="showDialog(product.jobId, 'job-request')"
           >
             <i class="pi pi-eye"></i>
           </button>
-          }@else {
-            <button
+        } @else if(activeTab === 'employer') {
+          <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-            (click)="showDialog(product.id)"
+            (click)="showDialog(product.id, 'employer')"
           >
             <i class="pi pi-eye"></i>
           </button>
-          }
+        } @else {
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog(product.id, 'youthsignup')"
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+        }
+      
+      
 
 
           <!-- Youth Assignment Dialog -->
@@ -242,29 +253,43 @@
               </div>
             </ng-template>
           </p-dialog>
-          <p-dialog
-            [(visible)]="dialogVisible"
-            [style]="{ width: '95vw', height: '90vh', padding: '0', margin: '0' }"
-            (onHide)="clearSelectedYouthId()"
-          >
-            @if (activeTab==='employer') {
-            <app-details-employer
-              *ngIf="selectedYouthId"
-              [employerId]="selectedYouthId.toString()"
-            ></app-details-employer>
-            }@else if(activeTab==='job-request' ) {
-            <app-job-request-details
-              *ngIf="selectedYouthId"
-              [jobId]="selectedYouthId.toString()"
-              
-            ></app-job-request-details>
-            }@else {
-            <app-youthsignup-details
-              *ngIf="selectedYouthId"
-              [youthId]="selectedYouthId"
-            ></app-youthsignup-details>
-            }
-          </p-dialog>
+          <!-- Employer Details Dialog -->
+<p-dialog
+  [(visible)]="employerDialogVisible"
+  [style]="{ width: '85vw', height: '80vh', padding: '0', margin: '0' }"
+  (onHide)="clearSelectedYouthId()"
+>
+  <app-details-employer
+    *ngIf="selectedYouthId"
+    [employerId]="selectedYouthId.toString()"
+  ></app-details-employer>
+</p-dialog>
+
+<!-- Job Request Details Dialog -->
+<p-dialog
+  [(visible)]="jobRequestDialogVisible"
+  [style]="{ width: '70vw', height: '65vh', padding: '0', margin: '0' }"
+
+  (onHide)="clearSelectedYouthId()"
+>
+  <app-job-request-details
+    *ngIf="selectedYouthId"
+    [jobId]="selectedYouthId.toString()"
+  ></app-job-request-details>
+</p-dialog>
+
+<!-- Youth Signup Details Dialog -->
+<p-dialog
+  [(visible)]="youthSignupDialogVisible"
+  [style]="{ width: '82vw', height: '90vh', padding: '0'}"
+  (onHide)="clearSelectedYouthId()"
+>
+  <app-youthsignup-details
+    *ngIf="selectedYouthId"
+    [youthId]="selectedYouthId"
+  ></app-youthsignup-details>
+</p-dialog>
+
 
           <button
             *ngIf="action === 'pend'"
