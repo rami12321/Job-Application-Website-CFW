@@ -183,9 +183,7 @@
         <div class=" " *ngFor="let action of getActionsForRow(product.status ,product.active)">
           @if(activeTab==='job-request'){
             <button
-      <div class=" " *ngFor="let action of getActionsForRow(product.status)">
-        @if(activeTab === 'job-request') {
-          <button
+
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
