@@ -231,14 +231,13 @@
           </p-dialog>
           <p-dialog
             [(visible)]="dialogVisible"
-            [style]="{ width: '95vw', height: '90vh' }"
+            [style]="{ width: '95vw', height: '90vh', padding: '0', margin: '0' }"
             (onHide)="clearSelectedYouthId()"
           >
             @if (!status) {
             <app-details-employer
               *ngIf="selectedYouthId"
               [employerId]="selectedYouthId.toString()"
-              
             ></app-details-employer>
             } @else if (status === 'waiting-E' || status === 'assigned') {
             <app-job-request-details
