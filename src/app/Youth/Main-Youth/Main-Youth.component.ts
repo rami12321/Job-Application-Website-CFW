@@ -32,6 +32,7 @@ export class MainYouthComponent implements OnInit {
   activeJobs: any[] = [];
   activeIndex: number = 0;
   selectedJobTitle: string = '';
+  
   selectedJobDescription: string[] | null = null;
   
   // Define the sections and their statuses

@@ -244,18 +244,20 @@
           </p-dialog>
           <p-dialog
             [(visible)]="dialogVisible"
-            [style]="{ width: '80rem' }"
+            [style]="{ width: '95vw', height: '90vh' }"
             (onHide)="clearSelectedYouthId()"
           >
             @if (activeTab==='employer') {
             <app-details-employer
               *ngIf="selectedYouthId"
               [employerId]="selectedYouthId.toString()"
+              
             ></app-details-employer>
             }@else if(activeTab==='job-request' ) {
             <app-job-request-details
               *ngIf="selectedYouthId"
               [jobId]="selectedYouthId.toString()"
+              
             ></app-job-request-details>
             }@else {
             <app-youthsignup-details
