@@ -253,7 +253,6 @@
     "innovationLabGradtype": "Social Entrepreneurship",
     "disability": "yes",
     "disabilitySupport": "no",
-    "beneficiary": true,
     "disabilityTypes": [
       "Psychosocial / Mental Health",
       "Speech / communication",
@@ -350,7 +349,6 @@
     ]
   },
   {
-    "beneficiary": false,
     "id": "14305600",
     "username": "2-00020000",
     "password": "123123.rR",
@@ -479,7 +477,7 @@
         "status": "waiting"
       },
       {
-        "job": "Dental Assistant",
+        "job": "Diesel Mechanic",
         "status": "waiting"
       },
       {
@@ -490,8 +488,6 @@
     "createdAt": "2024-11-19T12:34:56Z"
   },
   {
-    "beneficiary": false,
-
     "id": "14305270",
     "username": "2-00000010",
     "password": "123123.rR",
@@ -620,7 +616,7 @@
         "status": "waiting"
       },
       {
-        "job": "Dental Assistant",
+        "job": "Diesel Mechanic",
         "status": "waiting"
       },
       {
@@ -631,8 +627,6 @@
     "createdAt": "2024-11-19T12:34:56Z"
   },
   {
-    "beneficiary": false,
-
     "id": "A-34295763",
     "username": "2-00000000",
     "password": "123123.rR",
