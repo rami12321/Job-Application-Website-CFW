@@ -57,42 +57,47 @@ export class MainYouthComponent implements OnInit {
   ngOnInit() {
     const youthIdString = localStorage.getItem('userId');
     const youthId = youthIdString ? parseInt(youthIdString, 10) : null;
-
+  
     if (youthId !== null) {
       this.youthService.getAppliedJobById(youthId).subscribe(
         (response) => {
-          
-          if (response.appliedJob && Array.isArray(response.appliedJob)) {
-            // Map over the applied jobs
-            const allJobs = response.appliedJob.map((jobEntry, index) => ({
+          console.log('Response from API:', response); // Debugging
+  
+          // Convert the array of strings to the expected format
+          if (response.appliedJobs && Array.isArray(response.appliedJobs)) {
+            const allJobs = response.appliedJobs.map((jobTitle, index) => ({
+              job: jobTitle,
+              status: 'waiting', // Default status
+            }));
+  
+            // Map to final format with additional fields
+            const mappedJobs = allJobs.map((jobEntry, index) => ({
               title: jobEntry.job,
               req: `REQ-${index + 1}`,
               status: jobEntry.status,
               date: new Date().toLocaleDateString(),
             }));
-    
-            // Separate jobs into active and inactive
-            this.activeJobs = allJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
-            this.inactiveJobs = allJobs.filter(job => job.status === 'rejected');
   
+            this.activeJobs = mappedJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
+            this.inactiveJobs = mappedJobs.filter(job => job.status === 'rejected');
             this.appliedJob = this.activeJobs.find(job => job.status === 'approved') || null;
-
-    
-            
           } else {
-            console.error('Unexpected appliedJob format:', response.appliedJob);
+            console.error('Unexpected appliedJobs format:', response.appliedJobs);
             this.activeJobs = [];
+            this.inactiveJobs = [];
           }
         },
         (error) => {
           console.error('Error fetching applied jobs:', error);
         }
       );
-
-
     } else {
-      console.error('Youth ID is null, cannot fetch applied job.');
+      console.error('Youth ID is null, cannot fetch applied jobs.');
     }
+  
+  
+  
+  
     if (youthId !== null){
     this.youthService.getYouthById(youthId).subscribe(
       (response) => {
