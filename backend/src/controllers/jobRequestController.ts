@@ -131,42 +131,98 @@ export const deleteJobRequest = (req: Request, res: Response): void => {
 export const assignYouthToJobRequest = (req: Request, res: Response): void => {
   const { id, youthId } = req.params;
   const jobRequests: Job[] = readFile();
-  const youthData: Youth[] = JSON.parse(
-    fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]'
-  );
+  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
 
   const jobIndex = jobRequests.findIndex((job) => job.jobId === id);
+
 
   if (jobIndex === -1) {
     res.status(404).json({ message: `Job Request with ID ${id} not found.` });
     return;
   }
 
+
   const youth = youthData.find((y) => y.id === youthId);
+
 
   if (!youth) {
     res.status(404).json({ message: `Youth with ID ${youthId} not found.` });
     return;
   }
 
+
   if (!jobRequests[jobIndex].assignedYouths) {
     jobRequests[jobIndex].assignedYouths = [];
   }
 
+
   const existingYouthIndex = jobRequests[jobIndex].assignedYouths.findIndex((y) => y.id === youthId);
 
   if (existingYouthIndex !== -1) {
-    // Update existing youth assignment
-    jobRequests[jobIndex].assignedYouths[existingYouthIndex] = youth;
+
+    jobRequests[jobIndex].assignedYouths[existingYouthIndex] = {
+      ...jobRequests[jobIndex].assignedYouths[existingYouthIndex],
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
+    };
   } else {
-    // Add new youth to the assignment list
-    jobRequests[jobIndex].assignedYouths.push(youth);
+
+    jobRequests[jobIndex].assignedYouths.push({
+      id: youthId,
+      firstName: youth.firstNameEn,
+      lastName: youth.lastNameEn,
+      dob: youth.dob,
+      cv: youth.cv,
+      status: "waiting",
+    });
   }
+
 
   writeFile(jobRequests);
 
   res.status(200).json({
     message: `Youth with ID ${youthId} has been assigned to Job Request with ID ${id}.`,
+    updatedJobRequest: jobRequests[jobIndex],
+  });
+};
+
+export const unassignYouthFromJobRequest = (req: Request, res: Response): void => {
+  const { id, youthId } = req.params; // Extract jobRequest ID and youth ID from route parameters
+
+  const jobRequests: Job[] = readFile(); // Read the current job requests data
+
+  const jobIndex = jobRequests.findIndex((job) => job.jobId === id);
+
+  // Check if the job request exists
+  if (jobIndex === -1) {
+    res.status(404).json({ message: `Job Request with ID ${id} not found.` });
+    return;
+  }
+
+  const assignedYouths = jobRequests[jobIndex].assignedYouths || [];
+
+  // Check if the youth is assigned to the job
+  const youthIndex = assignedYouths.findIndex((youth) => youth.id === youthId);
+
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${youthId} is not assigned to Job Request with ID ${id}.` });
+    return;
+  }
+
+  // Remove the youth from the assignedYouths array
+  assignedYouths.splice(youthIndex, 1);
+
+  // Update the job request
+  jobRequests[jobIndex].assignedYouths = assignedYouths;
+
+  // Save the updated job requests back to the file
+  writeFile(jobRequests);
+
+  res.status(200).json({
+    message: `Youth with ID ${youthId} has been unassigned from Job Request with ID ${id}.`,
     updatedJobRequest: jobRequests[jobIndex],
   });
 };

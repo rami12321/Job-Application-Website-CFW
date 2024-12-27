@@ -60,6 +60,13 @@
             </div>
             <p class="text-3xl font-bold mt-2" id="totalProjects">{{employerData.inactive}}</p>
           </div>
+          <div class="bg-yellow-500 text-white p-4 rounded-md shadow hover:shadow-lg transition-shadow flex flex-row items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-tasks text-xl"></i> <!-- Job Requests Icon -->
+              <h4 class="font-medium text-white text-lg">Job Requests</h4>
+            </div>
+            <p class="text-3xl font-bold mt-2" id="totalProjects">{{jobData.count}}</p>
+          </div>
         </div>
       </p-accordionTab>
     </p-accordion>

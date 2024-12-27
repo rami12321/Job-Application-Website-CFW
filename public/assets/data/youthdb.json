@@ -197,7 +197,7 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "approved"
+        "status": "rejected"
       },
       {
         "job": "Diesel Mechanic",
@@ -335,16 +335,8 @@
     "createdAt": "2024-11-19T12:34:56Z",
     "appliedJob": [
       {
-        "job": "Auto Electrician",
-        "status": "approved"
-      },
-      {
-        "job": "Auto Mechanic",
-        "status": "rejected"
-      },
-      {
-        "job": "Diesel Mechanic",
-        "status": "rejected"
+        "job": "Legal Volunteer",
+        "status": "waiting"
       }
     ]
   },
@@ -474,7 +466,7 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "waiting"
+        "status": "approved"
       },
       {
         "job": "Diesel Mechanic",
@@ -752,5 +744,3 @@
     "createdAt": "2024-11-19T12:34:56Z"
   }
 ]
-
-

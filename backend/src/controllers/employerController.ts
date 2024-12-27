@@ -132,8 +132,6 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
     res.status(400).json({ message: 'No image data provided.' });
     return;
   }
-
-
   const employers: Employer[] = readFile();
   const employer = employers.find((e) => e.id === id);
 
@@ -141,20 +139,12 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
     res.status(404).json({ message: `Employer with ID ${id} not found.` });
     return;
   }
-
-
   const imageKey = `${id}`;
-
-
   let images: { key: string; data: string }[] = [];
   if (fs.existsSync(imagesFilePath)) {
     images = JSON.parse(fs.readFileSync(imagesFilePath, 'utf-8') || '[]');
   }
-
-
   images.push({ key: imageKey, data: image });
-
-
   try {
     fs.writeFileSync(imagesFilePath, JSON.stringify(images, null, 2));
     console.log('Image data written to images.json');
@@ -163,8 +153,6 @@ export const uploadProfileImage = (req: Request, res: Response): void => {
     res.status(500).json({ message: 'Failed to save image data.' });
     return;
   }
-
-
   employer.profileImage = `/assets/data/images.json#${imageKey}`;
   writeFile(employers);
 
@@ -185,49 +173,56 @@ export const updateEmployer = (req: Request, res: Response): void => {
     res.status(404).json({ message: `Employer with ID ${id} not found.` });
     return;
   }
-
-
   const updatedEmployer = { ...employers[employerIndex], ...updatedData };
   employers[employerIndex] = updatedEmployer;
-
   writeFile(employers);
-
   res.status(200).json({ message: `Employer with ID ${id} updated successfully.`, updatedEmployer });
 };
-import { Youth } from '../models/youth';
 
-export const assignYouthToEmployer = (req: Request, res: Response): void => {
-  const { id, youthId } = req.params;
+export const updateActiveStatus = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const { isActive }: { isActive: boolean } = req.body; // Expecting a boolean value to update the active status
+
   let employers: Employer[] = readFile();
-  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
-
   const employerIndex = employers.findIndex((e) => e.id === id);
-
 
   if (employerIndex === -1) {
     res.status(404).json({ message: `Employer with ID ${id} not found.` });
     return;
   }
 
+  // Update the employer's active status
+  employers[employerIndex].active = isActive;
 
+  // Save the updated employer list
+  writeFile(employers);
+
+  res.status(200).json({
+    message: `Employer with ID ${id} active status updated successfully.`,
+    updatedEmployer: employers[employerIndex],
+  });
+};
+
+import { Youth } from '../models/youth';
+export const assignYouthToEmployer = (req: Request, res: Response): void => {
+  const { id, youthId } = req.params;
+  let employers: Employer[] = readFile();
+  const youthData: Youth[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../public/assets/data/youthdb.json'), 'utf-8') || '[]');
+  const employerIndex = employers.findIndex((e) => e.id === id);
+  if (employerIndex === -1) {
+    res.status(404).json({ message: `Employer with ID ${id} not found.` });
+    return;
+  }
   const youth = youthData.find((y) => y.id === youthId);
-
-
   if (!youth) {
     res.status(404).json({ message: `Youth with ID ${youthId} not found.` });
     return;
   }
-
-
   if (!employers[employerIndex].assignedYouths) {
     employers[employerIndex].assignedYouths = [];
   }
-
-
   const existingYouthIndex = employers[employerIndex].assignedYouths.findIndex((y) => y.id === youthId);
-
   if (existingYouthIndex !== -1) {
-
     employers[employerIndex].assignedYouths[existingYouthIndex] = {
       ...employers[employerIndex].assignedYouths[existingYouthIndex],
       firstName: youth.firstNameEn,
@@ -237,7 +232,6 @@ export const assignYouthToEmployer = (req: Request, res: Response): void => {
       status: "waiting",
     };
   } else {
-
     employers[employerIndex].assignedYouths.push({
       id: youthId,
       firstName: youth.firstNameEn,
@@ -247,13 +241,29 @@ export const assignYouthToEmployer = (req: Request, res: Response): void => {
       status: "waiting",
     });
   }
-
-
   writeFile(employers);
-
   res.status(200).json({
     message: `Youth with ID ${youthId} has been assigned to employer with ID ${id}.`,
     updatedEmployer: employers[employerIndex],
   });
 };
+
+// Function to get the organization name by employer ID
+export const getOrganizationNameById = (req: Request, res: Response): void => {
+  const { id } = req.params;
+  const employers: Employer[] = readFile(); // Read all employers data
+
+  // Find the employer by ID
+  const employer = employers.find((e) => e.id === id);
+
+  if (!employer) {
+    // If employer not found, return a 404 error
+    res.status(404).json({ message: `Employer with ID ${id} not found.` });
+    return;
+  }
+
+  // If employer found, return the organization name
+  res.status(200).json({ organizationName: employer.organization });
+};
+
 

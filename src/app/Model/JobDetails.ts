@@ -8,7 +8,9 @@ export interface Job {
   category?: string;  // Main category (e.g., "Design")
   title?: string;
   numEmployees: number;
+  organizationName:string;
   level: string;
+  area:string;
   location: string;
   typeOfJob: string;
   supervisorName: string;

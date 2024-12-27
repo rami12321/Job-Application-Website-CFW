@@ -19,8 +19,8 @@
     </span>
     Request Job
   </button>
-  
-  
+
+
 
   <!-- Dialog -->
   <p-dialog
@@ -30,166 +30,200 @@
     [style]="{ width: '50vw' }"
   class="shadow-lg"
   >
-    <div>
-      <h3 class="text-lg font-semibold mb-2 border-b">Step 1: Select Job</h3>
-      <label for="category" class="block text-sm font-medium text-gray-700 mt-3">
-        Job Category:</label>
-      <select
-        id="category"
-        [(ngModel)]="selectedCategory"
-        (change)="onSelectCategory(selectedCategory)"
-        class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        <option
-          *ngFor="let category of mainCategories"
-          [value]="category.value"
-        >
-          {{ category.label }}
-        </option>
-      </select>
+  <div>
+    <h3 class="text-2xl font-semibold text-gray-900 mb-4 border-b-2 border-gray-200 pb-2">Step 1: Select Job</h3>
+    <label for="category" class="block text-sm font-medium text-gray-700 mt-3">
+      Job Category:
+    </label>
+    <select
+      id="category"
+      [(ngModel)]="selectedCategory"
+      (change)="onSelectCategory(selectedCategory)"
+      class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option *ngFor="let category of mainCategories" [value]="category.value">
+        {{ category.label }}
+      </option>
+    </select>
 
-      @if(subcategories.length > 0){
+    <!-- Subcategory dropdown -->
+    <div *ngIf="subcategories.length > 0">
       <label
         for="subcategory"
         class="block text-sm font-medium text-gray-700 mt-2 mb-1"
         >Job:</label
       >
       <select
-        id="category"
+        id="subcategory"
         [(ngModel)]="selectedjob"
         (change)="onSelectJob(selectedjob)"
-        class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option *ngFor="let subcategory of subcategories" [value]="subcategory">
           {{ subcategory }}
         </option>
       </select>
-      }
     </div>
+  </div>
 
-    <div *ngIf="step1" class="mt-4">
-      <h3 class="text-lg font-semibold mb-2 border-b">Step 2: Enter Job Details</h3>
-      <form (ngSubmit)="submitForm()">
+  <div *ngIf="step1" class="mt-6">
+    <h3 class="text-2xl font-semibold text-gray-900 mb-4 border-b-2 border-gray-200 pb-2">Step 2: Enter Job Details</h3>
+    <form (ngSubmit)="submitForm()">
+      <div class="space-y-4">
         <!-- Job Title -->
-        <label for="jobTitle" class="block text-sm font-medium text-gray-700 mt-3">Job Title:</label>
-        <input
-          type="text"
-          id="jobTitle"
-          [(ngModel)]="jobDetails.title"
-          name="jobTitle"
-          placeholder="Enter job title"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="jobTitle" class="block text-sm font-medium text-gray-700">Job Title:</label>
+          <input
+            type="text"
+            id="jobTitle"
+            [(ngModel)]="jobDetails.title"
+            name="jobTitle"
+            placeholder="Enter job title"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
-        <label for="employees" class="block text-sm font-medium text-gray-700 mt-3">Number of Employees:</label>
-        <input
-          type="number"
-          id="employees"
-          [(ngModel)]="jobDetails.numEmployees"
-          name="employees"
-          placeholder="Enter number of employees"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <!-- Number of Employees -->
+        <div>
+          <label for="employees" class="block text-sm font-medium text-gray-700">Number of Employees:</label>
+          <input
+            type="number"
+            id="employees"
+            [(ngModel)]="jobDetails.numEmployees"
+            name="employees"
+            placeholder="Enter number of employees"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
         <!-- Job Level -->
-        <label for="level" class="block text-sm font-medium text-gray-700 mt-3">Job Level:</label>
-        <select
-          id="level"
-          [(ngModel)]="jobDetails.level"
-          name="level"
-          class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="junior">Junior</option>
-          <option value="mid">Mid-Level</option>
-          <option value="senior">Senior</option>
-        </select>
+        <div>
+          <label for="level" class="block text-sm font-medium text-gray-700">Job Level:</label>
+          <select
+            id="level"
+            [(ngModel)]="jobDetails.level"
+            name="level"
+            class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+          <option value="" disabled>Select Job Level</option>
+            <option value="junior">Junior</option>
+            <option value="mid">Mid-Level</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div>
 
+        <!-- Area -->
+        <div>
+          <label for="area" class="block text-sm font-medium text-gray-700">Area:</label>
+          <select
+          id="area"
+          [(ngModel)]="jobDetails.area"
+          name="area"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >   <option value="" disabled>Select an Area</option>
+            <option value="North Lebanon Area">North Lebanon Area</option>
+            <option value="Central Lebanon Area">Central Lebanon Area</option>
+            <option value="Beqaa Area">Beqaa Area</option>
+            <option value="Saida Area">Saida Area</option>
+            <option value="Tyre Area">Tyre Area</option>
+          </select>
+        </div>
         <!-- Location -->
-        <label for="location" class="block text-sm font-medium text-gray-700 mt-3">Location:</label>
-        <input
-          type="text"
-          id="location"
-          [(ngModel)]="jobDetails.location"
-          name="location"
-          placeholder="Enter job location"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
+          <input
+            type="text"
+            id="location"
+            [(ngModel)]="jobDetails.location"
+            name="location"
+            placeholder="Enter job location"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+
 
         <!-- Type of Job -->
-        <label for="typeOfJob" class="block text-sm font-medium text-gray-700 mt-3">Type of Job:</label>
-        <select
-          id="typeOfJob"
-          [(ngModel)]="jobDetails.typeOfJob"
-          name="typeOfJob"
-          class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="hybrid">Hybrid</option>
-          <option value="onsite">Onsite</option>
-          <option value="remote">Remote</option>
-        </select>
+        <div>
+          <label for="typeOfJob" class="block text-sm font-medium text-gray-700">Type of Job:</label>
+          <select
+            id="typeOfJob"
+            [(ngModel)]="jobDetails.typeOfJob"
+            name="typeOfJob"
+            class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+          <option value="" disabled>Select type of job</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="onsite">Onsite</option>
+            <option value="remote">Remote</option>
+          </select>
+        </div>
 
         <!-- Supervisor Name -->
-        <label for="supervisorName" class="block text-sm font-medium text-gray-700 mt-3">Supervisor Name:</label>
-        <input
-          type="text"
-          id="supervisorName"
-          [(ngModel)]="jobDetails.supervisorName"
-          name="supervisorName"
-          placeholder="Enter supervisor name"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="supervisorName" class="block text-sm font-medium text-gray-700">Supervisor Name:</label>
+          <input
+            type="text"
+            id="supervisorName"
+            [(ngModel)]="jobDetails.supervisorName"
+            name="supervisorName"
+            placeholder="Enter supervisor name"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
         <!-- Supervisor Position -->
-        <label for="supervisorPosition" class="block text-sm font-medium text-gray-700 mt-3"
-          >Supervisor Position:</label
-        >
-        <input
-          type="text"
-          id="supervisorPosition"
-          [(ngModel)]="jobDetails.supervisorPosition"
-          name="supervisorPosition"
-          placeholder="Enter supervisor position"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="supervisorPosition" class="block text-sm font-medium text-gray-700">Supervisor Position:</label>
+          <input
+            type="text"
+            id="supervisorPosition"
+            [(ngModel)]="jobDetails.supervisorPosition"
+            name="supervisorPosition"
+            placeholder="Enter supervisor position"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
         <!-- Supervisor Email -->
-        <label for="supervisorEmail" class="block text-sm font-medium text-gray-700 mt-3"
-          >Supervisor Email:</label
-        >
-        <input
-          type="email"
-          id="supervisorEmail"
-          [(ngModel)]="jobDetails.supervisorEmail"
-          name="supervisorEmail"
-          placeholder="Enter supervisor email"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="supervisorEmail" class="block text-sm font-medium text-gray-700">Supervisor Email:</label>
+          <input
+            type="email"
+            id="supervisorEmail"
+            [(ngModel)]="jobDetails.supervisorEmail"
+            name="supervisorEmail"
+            placeholder="Enter supervisor email"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
         <!-- Supervisor Phone Number -->
-        <label for="supervisorPhone" class="block text-sm font-medium text-gray-700 mt-3"
-          >Supervisor Phone Number:</label
-        >
-        <input
-          type="tel"
-          id="supervisorPhone"
-          [(ngModel)]="jobDetails.supervisorPhone"
-          name="supervisorPhone"
-          placeholder="Enter supervisor phone number"
-          class="block w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-          required
-        />
+        <div>
+          <label for="supervisorPhone" class="block text-sm font-medium text-gray-700">Supervisor Phone Number:</label>
+          <input
+            type="tel"
+            id="supervisorPhone"
+            [(ngModel)]="jobDetails.supervisorPhone"
+            name="supervisorPhone"
+            placeholder="Enter supervisor phone number"
+            class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
-        <div class="flex justify-end gap-2 mt-4">
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-4 mt-6">
           <button
             pButton
             label="Cancel"
-            class="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-500 focus:ring-4 focus:ring-red-300"
+            class="px-5 py-3 text-sm bg-red-600 text-white rounded-md hover:bg-red-500 focus:ring-4 focus:ring-red-300"
             (click)="closeDialog()"
             type="button"
           ></button>
@@ -197,11 +231,13 @@
             pButton
             label="Submit"
             icon="pi pi-check"
-            class="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-500 focus:ring-4 focus:ring-green-300"
+            class="px-5 py-3 text-sm bg-green-600 text-white rounded-md hover:bg-green-500 focus:ring-4 focus:ring-green-300"
+            type="submit"
           ></button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
+  </div>
   </p-dialog>
 </div>
 
@@ -255,7 +291,7 @@
                   >
                     {{ job[column.key] }}
                   </td>
-      
+
                   <!-- Action Buttons -->
                   <td class="px-6 py-4 border-b border-gray-300 text-center">
                     <div class="flex space-x-2 justify-center">
@@ -287,7 +323,7 @@
             </tbody>
           </table>
         </div>
-      
+
         <!-- Template for No Jobs -->
         <ng-template #noJobsTemplate>
           <tr>
@@ -299,8 +335,8 @@
             </td>
           </tr>
         </ng-template>
-        
-      
+
+
         <!-- Pagination Controls -->
         <div class="mt-6 flex justify-between items-center" *ngIf="paginatedWaitingJobs.length > 0">
           <button
@@ -321,7 +357,7 @@
             Next
           </button>
         </div>
-      
+
         <!-- Search Input -->
         <div class="mt-4 flex items-center space-x-2">
           <input
@@ -332,7 +368,7 @@
           />
         </div>
       </div>
-      
+
 
 <div
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -503,7 +539,7 @@
                 >
                   {{ job[column.key] }}
                 </td>
-    
+
                 <!-- Action Buttons -->
                 <td class="px-6 py-4 border-b border-gray-300 text-center">
                   <div class="flex space-x-2 justify-center">
@@ -514,7 +550,7 @@
                     >
                       <i class="pi pi-trash text-lg"></i>
                     </button>
-    
+
                     <button
                       class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Info"
@@ -529,7 +565,7 @@
           </tbody>
         </table>
       </div>
-    
+
       <!-- Template for No Assigned Jobs -->
       <ng-template #noAssignedJobsTemplate>
         <tr>
@@ -541,7 +577,7 @@
           </td>
         </tr>
       </ng-template>
-    
+
       <!-- Pagination Controls -->
       <div class="mt-6 flex justify-between items-center">
         <!-- Previous Button -->
@@ -552,14 +588,14 @@
         >
           Previous
         </button>
-    
+
         <!-- Page Numbers -->
         <div class="flex items-center space-x-2">
           <span class="text-sm text-gray-600">
             Page {{ currentPageAssigned }} of {{ Math.ceil(filteredAssignedJobs.length / itemsPerPage) }}
           </span>
         </div>
-    
+
         <!-- Next Button -->
         <button
           class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
@@ -569,7 +605,7 @@
           Next
         </button>
       </div>
-    
+
       <!-- Search Input -->
       <div class="mt-4 flex items-center space-x-2">
         <input
@@ -580,7 +616,7 @@
         />
       </div>
     </div>
-    
+
 
 
 
@@ -725,7 +761,7 @@
                 >
                   {{ job[column.key] }}
                 </td>
-    
+
                 <!-- Action Buttons -->
                 <td class="px-6 py-4 border-b border-gray-300 text-center">
                   <div class="flex space-x-2 justify-center">
@@ -736,7 +772,7 @@
                     >
                       <i class="pi pi-trash text-lg"></i>
                     </button>
-    
+
                     <button
                       class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
                       aria-label="Info"
@@ -751,7 +787,7 @@
           </tbody>
         </table>
       </div>
-    
+
       <!-- Template for No In-Progress Jobs -->
       <ng-template #noInProgressJobsTemplate>
         <tr>
@@ -763,7 +799,7 @@
           </td>
         </tr>
       </ng-template>
-    
+
       <!-- Pagination Controls -->
       <div class="mt-6 flex justify-between items-center">
         <!-- Previous Button -->
@@ -774,14 +810,14 @@
         >
           Previous
         </button>
-    
+
         <!-- Page Numbers -->
         <div class="flex items-center space-x-2">
           <span class="text-sm text-gray-600">
             Page {{ currentPageInProgress }} of {{ Math.ceil(filteredInProgressJobs.length / itemsPerPage) }}
           </span>
         </div>
-    
+
         <!-- Next Button -->
         <button
           class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
@@ -791,7 +827,7 @@
           Next
         </button>
       </div>
-    
+
       <!-- Search Input -->
       <div class="mt-4 flex items-center space-x-2">
         <input
@@ -802,7 +838,7 @@
         />
       </div>
     </div>
-    
+
 
 
 

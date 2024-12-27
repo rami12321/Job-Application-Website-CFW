@@ -20,6 +20,7 @@ export class JobRequestDetailsComponent {
   public jobRequest: Job | undefined;
   isApprovalModalOpen: boolean = false;
   selectedYouth: any | null = null;
+  showConfirmationModal = false;
 
   isEditing: { [key: string]: boolean } = {};
   editModels: { [key: string]: any } = {};
@@ -239,30 +240,50 @@ export class JobRequestDetailsComponent {
         error: (err) => console.error('Error updating youth status:', err),
       });
   }
-
   updateRowStates(): void {
     if (this.jobRequest) {
+
       this.approvedCount = this.jobRequest.assignedYouths?.filter(
         (youth) => youth.action === 'approved'
       ).length || 0;
 
-      this.jobRequest.assignedYouths?.forEach((youth) => {
+      console.log('Approved Youth Count (updateRowStates):', this.approvedCount);
 
+
+      this.jobRequest.assignedYouths?.forEach((youth) => {
         youth.isDisabled =
           this.approvedCount >= this.jobRequest!.numEmployees && youth.action !== 'approved';
       });
 
 
-      this.isSubmitEnabled = this.approvedCount === this.jobRequest.numEmployees;
+      this.isSubmitEnabled = this.approvedCount > 0;
+      console.log('Is Submit Enabled (updateRowStates):', this.isSubmitEnabled);
     }
+  }
+
+  checkSubmitCondition(): void {
+    if (this.approvedCount >= this.jobRequest!.numEmployees) {
+      this.submitJobRequests();
+    } else {
+      this.showConfirmationModal = true;
+    }
+  }
+
+  confirmSubmit(): void {
+    this.showConfirmationModal = false;
+    this.submitJobRequests();
+  }
+
+  cancelSubmit(): void {
+    this.showConfirmationModal = false;
   }
   submitJobRequests(): void {
     if (!this.jobRequest || !this.jobId) {
       console.error('Job request or job ID is undefined.');
       return;
     }
-  
-    // Update the assigned youth statuses
+
+
     const updatedYouths =
       this.jobRequest.assignedYouths
         ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
@@ -270,43 +291,43 @@ export class JobRequestDetailsComponent {
           ...youth,
           status: youth.action === 'approved' ? 'approved' : youth.status,
         })) ?? [];
-  
+
+
+    const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
+
     const updatedJobRequest = {
       ...this.jobRequest,
-      assignedYouths: updatedYouths,
+      assignedYouths: approvedYouths,
       status: 'in-progress',
     };
-  
-    // Update the job request
+
+
     this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
       next: () => {
         console.log('Job request submitted successfully.');
-  
+
         updatedYouths.forEach((youth) => {
           const isApproved = youth.status === 'approved';
-  
-          // Update the applied jobs for the youth
+
+
           this.updateYouthAppliedJobs(
-            youth.id, // Youth ID
-            this.jobRequest?.job || '', // Current job title
+            youth.id,
+            this.jobRequest?.job || '',
             isApproved ? 'approved' : 'rejected'
           );
         });
-  
+
         setTimeout(() => {
           window.location.reload();
-        }, 500); // Optional: Small delay for smoother reload
+        }, 500);
       },
       error: (err) => console.error('Error submitting job request:', err),
     });
   }
-  
-  /**
-   * Updates the status of all applied jobs for a youth.
-   * @param youthId - The ID of the youth
-   * @param currentJobTitle - The title of the current job to approve/reject
-   * @param newStatus - The new status for the current job
-   */
+
+
+
+
   updateYouthAppliedJobs(
     youthId: any,
     currentJobTitle: string,
@@ -316,20 +337,20 @@ export class JobRequestDetailsComponent {
       next: (youth) => {
         if (youth && youth.appliedJob) {
           console.log('Fetched youth record:', youth);
-  
-          // Update statuses for all applied jobs
+
+
           const updatedAppliedJobs = youth.appliedJob.map(
             (job: { job: string; status: string }) => {
-            if (job.job === currentJobTitle) {
-              return { ...job, status: newStatus }; // Update current job
-            } else if (job.status === 'waiting') {
-              return { ...job, status: 'rejected' }; // Reject other waiting jobs
-            }
-            return job; // Retain other statuses
-          });
-  
+              if (job.job === currentJobTitle) {
+                return { ...job, status: newStatus };
+              } else if (job.status === 'waiting') {
+                return { ...job, status: 'rejected' };
+              }
+              return job;
+            });
+
           const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
-  
+
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () =>
               console.log(
@@ -346,19 +367,22 @@ export class JobRequestDetailsComponent {
         console.error(`Error fetching youth data for ID: ${youthId}`, err),
     });
   }
-  
 
 
   initializeRowStates(): void {
-    this.approvedCount = this.jobRequest?.assignedYouths?.filter(
-      (youth) => youth.action === 'approved'
-    ).length || 0;
+    if (this.jobRequest) {
+      this.approvedCount = this.jobRequest.assignedYouths?.filter(
+        (youth) => youth.action === 'approved'
+      ).length || 0;
 
-    const numEmployee = this.jobRequest?.numEmployees ?? 0;
-    this.updateRowStates();
-    this.isSubmitEnabled = this.approvedCount === numEmployee;
+      console.log('Approved Youth Count (initializeRowStates):', this.approvedCount);
+
+      this.updateRowStates();
+
+      this.isSubmitEnabled = this.approvedCount > 0;
+      console.log('Is Submit Enabled (initializeRowStates):', this.isSubmitEnabled);
+    }
   }
-
 
 
   toggleYouthStatus(youth: any, action: string | null): void {
