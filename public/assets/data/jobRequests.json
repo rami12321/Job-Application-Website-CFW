@@ -512,5 +512,23 @@
     "supervisorPhone": "9604512578",
     "status": "waiting-E",
     "category": "Media"
+  },
+  {
+    "jobId": "H-28413970",
+    "employerId": "F-70583249",
+    "job": "Interior Designer",
+    "title": "dasd",
+    "organizationName": "ahmad",
+    "numEmployees": 9,
+    "level": "junior",
+    "area": "Central Lebanon Area",
+    "location": "asd",
+    "typeOfJob": "hybrid",
+    "supervisorName": "jkk",
+    "supervisorPosition": "",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "waiting-E",
+    "category": "Construction"
   }
 ]

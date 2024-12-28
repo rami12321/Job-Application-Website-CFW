@@ -36,6 +36,9 @@ export class MainEmployerComponent {
   mainCategories: any[] = [];
   selectedCategory: string = '';
   selectedjob: string = '';
+  selectedArea:string='';
+  selectedCampOption:string='';
+  selectedCampType:string='';
   step1: boolean = false;
   jobRequested: boolean = false;
   subcategories: string[] = [];
@@ -45,6 +48,9 @@ export class MainEmployerComponent {
   waitingSearchQuery: string = '';
   assignedSearchQuery: string = '';
   inProgressSearchQuery: string = '';
+  areaOptions: string[] = [];
+  campTypeOptions: string[] = [];
+  campOptions: string[] = [];
   completedSearchQuery: string = '';
   userId = localStorage.getItem('userId') || '';
 
@@ -97,6 +103,8 @@ currentPageCompleted = 1;
     numEmployees: 0,
     level: '',
     area:'',
+    campType: '',
+    camp: '',
     location: '',
     typeOfJob: '',
     supervisorName: '',
@@ -106,6 +114,8 @@ currentPageCompleted = 1;
     status: 'waiting-E',
   };
   userName: string = '';
+  lookupData: any = {};
+  areaData: any = {};
 
   constructor(
     private lookupService: LookupService,
@@ -114,6 +124,19 @@ currentPageCompleted = 1;
   ) { }
 
   ngOnInit(): void {
+    this.lookupService.getLookupData().subscribe(
+      (data) => {
+        this.lookupData = data;
+        this.areaOptions = this.lookupData.areas.map((area: any) => area.name);
+
+
+        console.log('Lookup data loaded:', this.lookupData);
+        console.log('Area option:', this.areaOptions);
+      },
+      (error) => {
+        console.error('Error loading lookup data:', error);
+      });
+
 
     this.lookupService.getJobCategories().subscribe({
       next: (data: any) => {
@@ -165,6 +188,36 @@ currentPageCompleted = 1;
 
 
   }
+  onAreaChange(selectedArea: string): void {
+    this.selectedArea=selectedArea
+    console.log('Selected Area:', this.selectedArea);
+    const area = this.lookupData.areas.find((a: any) => a.name === selectedArea);
+    if (area) {
+      this.campTypeOptions = area.options;
+      this.campOptions = []; // Clear camps until a camp type is selected
+    } else {
+      this.campTypeOptions = [];
+      this.campOptions = [];
+    }
+    console.log('Camp Type Options:', this.campTypeOptions);
+  }
+
+
+  onCampTypeChange(selectedCampType: string): void {
+    const area = this.lookupData.areas.find((a: any) => a.name === this.jobDetails.area);
+    console.log('area',area)
+    if (area) {
+      if (selectedCampType === 'Inside Camp') {
+        this.campOptions = area.camps;
+      } else {
+        this.campOptions = []; // Outside camp might have no predefined camps
+      }
+    } else {
+      this.campOptions = [];
+    }
+  }
+
+
   onTabChange(event: any): void {
     const statusMap = ['waiting-E', 'assigned', 'in-progress', 'completed'];
     const selectedStatus = statusMap[event.index];
@@ -538,6 +591,8 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       organizationName:'',
       level: '',
       area:'',
+      campType: '',
+      camp: '',
       location: '',
       typeOfJob: '',
       supervisorName: '',

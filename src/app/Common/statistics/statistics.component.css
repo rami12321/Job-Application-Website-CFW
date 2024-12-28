@@ -1,0 +1,13 @@
+/* Style the chart container */
+canvas {
+  display: block;
+  max-width: 500px; /* Set maximum width for the chart */
+  max-height: 300px; /* Set maximum height for the chart */
+  width: 500px;
+  margin: 0 auto; /* Center the chart */
+  border: 1px solid #ddd; /* Optional: Add a light border for visibility */
+  border-radius: 8px; /* Optional: Rounded corners */
+  padding: 10px; /* Optional: Padding for spacing */
+  background-color: #f9f9f9; /* Optional: Light background */
+}
+
