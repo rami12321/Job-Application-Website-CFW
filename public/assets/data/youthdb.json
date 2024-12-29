@@ -196,16 +196,20 @@
     "createdAt": "2024-12-17T12:34:56Z",
     "appliedJob": [
       {
-        "job": "Auto Electrician",
-        "status": "approved"
+        "job": "Web Developer",
+        "status": "waiting"
       },
       {
-        "job": "Diesel Mechanic",
-        "status": "rejected"
+        "job": "IT Technician",
+        "status": "waiting"
       },
       {
-        "job": "Auto Mechanic",
-        "status": "rejected"
+        "job": "IT Officer",
+        "status": "waiting"
+      },
+      {
+        "job": "Mobile Developer",
+        "status": "waiting"
       }
     ]
   },
@@ -491,7 +495,6 @@
   },
   {
     "beneficiary": false,
-
     "id": "14305270",
     "username": "2-00000010",
     "password": "123123.rR",
@@ -632,7 +635,6 @@
   },
   {
     "beneficiary": false,
-
     "id": "A-34295763",
     "username": "2-00000000",
     "password": "123123.rR",
@@ -758,5 +760,3 @@
     "createdAt": "2024-11-19T12:34:56Z"
   }
 ]
-
-

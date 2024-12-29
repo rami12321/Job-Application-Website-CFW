@@ -748,7 +748,7 @@ export class SmartTableComponent implements OnInit {
 
   unassignYouth(jobId: string, youthId: string): void {
     console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
-
+    
     this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
       next: () => {
         console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);

@@ -132,21 +132,31 @@
         </div> -->
         <div>
           <label for="area">Select Area:</label>
-          <select id="area" [(ngModel)]="selectedArea" (change)="onAreaChange(selectedArea)">
-            <option *ngFor="let area of areaOptions" [value]="area">{{ area }}</option>
+          <select
+          id="area"
+          [(ngModel)]="selectedArea"
+          [ngModelOptions]="{standalone: true}"
+          (change)="onAreaChange(selectedArea)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >            <option *ngFor="let area of areaOptions" [value]="area">{{ area }}</option>
           </select>
+
         </div>
 
         <div >
           <label for="campType">Select Camp Type:</label>
-          <select id="campType" [(ngModel)]="jobDetails.campType" (change)="onCampTypeChange('Inside Camp')">
+          <select id="campType" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.campType" (change)="onCampTypeChange(jobDetails.campType)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             <option *ngFor="let type of campTypeOptions" [value]="type">{{ type }}</option>
           </select>
         </div>
 
         <div >
           <label for="camp">Select Camp:</label>
-          <select id="camp" [(ngModel)]="jobDetails.camp">
+          <select id="camp" [(ngModel)]="jobDetails.camp" [ngModelOptions]="{standalone: true}"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
           </select>
         </div>

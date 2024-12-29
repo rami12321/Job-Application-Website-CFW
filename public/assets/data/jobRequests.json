@@ -530,5 +530,25 @@
     "supervisorPhone": "",
     "status": "waiting-E",
     "category": "Construction"
+  },
+  {
+    "jobId": "L-53691762",
+    "employerId": "F-70583249",
+    "job": "Translator",
+    "title": "Translator",
+    "organizationName": "ahmad",
+    "numEmployees": 10,
+    "level": "mid",
+    "area": "Tyre",
+    "campType": "Inside Camp",
+    "camp": "Burj El Shemali Palestinian Refugee Camp",
+    "location": "dasdas",
+    "typeOfJob": "onsite",
+    "supervisorName": "ahaaa",
+    "supervisorPosition": "aasaa",
+    "supervisorEmail": "aqwea",
+    "supervisorPhone": "123123123",
+    "status": "waiting-E",
+    "category": "Services"
   }
 ]

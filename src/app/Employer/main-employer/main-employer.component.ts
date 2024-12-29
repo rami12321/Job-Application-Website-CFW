@@ -12,12 +12,14 @@ import { JobRequestDetailsComponent } from '../JobRequestDetails/job-request-det
 import { JobRequestComponent } from '../JobRequestEdit/job-request.component';
 import { TabViewModule } from 'primeng/tabview';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-employer',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     DialogModule,
     MultiSelectModule,
     DropdownModule,
@@ -25,7 +27,8 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
     ButtonModule,
     JobRequestDetailsComponent,
     JobRequestComponent,
-    TabViewModule
+    TabViewModule,
+
   ],
   templateUrl: './main-employer.component.html',
   styleUrls: ['./main-employer.component.css'],
@@ -188,12 +191,12 @@ currentPageCompleted = 1;
 
 
   }
-  onAreaChange(selectedArea: string): void {
-    this.selectedArea=selectedArea
-    console.log('Selected Area:', this.selectedArea);
-    const area = this.lookupData.areas.find((a: any) => a.name === selectedArea);
-    if (area) {
-      this.campTypeOptions = area.options;
+  onAreaChange(area: string): void {
+    console.log('Selected Area:', area);
+    this.selectedArea=area
+    const Area = this.lookupData.areas.find((a: any) => a.name === area);
+    if (Area) {
+      this.campTypeOptions = Area.options;
       this.campOptions = []; // Clear camps until a camp type is selected
     } else {
       this.campTypeOptions = [];
@@ -204,7 +207,7 @@ currentPageCompleted = 1;
 
 
   onCampTypeChange(selectedCampType: string): void {
-    const area = this.lookupData.areas.find((a: any) => a.name === this.jobDetails.area);
+    const area = this.lookupData.areas.find((a: any) => a.name === this.selectedArea);
     console.log('area',area)
     if (area) {
       if (selectedCampType === 'Inside Camp') {
@@ -558,6 +561,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       ...this.jobDetails,       // Spread other job details
       job: this.selectedjob,    // Selected job (subcategory)
       category: this.selectedCategory, // Selected main category
+      area:this.selectedArea,
       organizationName:this.organizationName
     };
 
@@ -581,6 +585,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
 
   resetForm(): void {
     this.selectedCategory = '';
+    this.selectedArea = '';
     this.subcategories = [];
     this.jobDetails = {
       jobId: '',
