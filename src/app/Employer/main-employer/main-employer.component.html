@@ -152,14 +152,19 @@
           </select>
         </div>
 
-        <div >
+        <div *ngIf="selectedCampType === 'Inside Camp' && campOptions.length > 0">
           <label for="camp">Select Camp:</label>
-          <select id="camp" [(ngModel)]="jobDetails.camp" [ngModelOptions]="{standalone: true}"
-          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <select
+            id="camp"
+            [(ngModel)]="jobDetails.camp"
+            [ngModelOptions]="{ standalone: true }"
+            class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
           </select>
         </div>
+
+
 
         <!-- Location -->
         <div>

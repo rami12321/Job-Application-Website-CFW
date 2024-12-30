@@ -1,19 +1,40 @@
-<div class="bg-blue-50 text-center pb-12">
-  <!-- <img src="assets/homeImages/youthBanner.jpg" alt="Youth Unit Banner" class="w-full h-[400px] object-cover"> -->
-  <h1 class="text-4xl font-bold text-blue-800 pt-10">Welcome to the Youth Unit</h1>
-  <p class="text-lg text-gray-600 mt-4">
-    Empowering youth with opportunities and guidance.
-  </p>
-  <button routerLink="/login" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-    Get Started
-  </button>
+<app-main-navbar></app-main-navbar>
+<div
+  id="home"
+  class="bg-blue-50 text-center pb-24  "
+  style="background-image: url('assets/homeImages/teamwork.jpg'); background-size: cover; background-position: center;"
+>
+  <div class="relative z-10 h-full ">
+    <h1 class="text-5xl font-extrabold text-blue-800 pt-16">
+      Welcome to the Youth Unit
+    </h1>
+    <p class="text-xl text-white mt-6 max-w-3xl mx-auto">
+      Empowering youth with opportunities and guidance for a brighter future.
+    </p>
+    <button
+      routerLink="/login"
+      class="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+    >
+      Get Started
+    </button>
+  </div>
+
+
 </div>
 
-<!-- Include Features -->
-<app-features></app-features>
 
+<!-- Include Features -->
+<app-features id="features"></app-features>
+
+<app-animated-stat id="stats"></app-animated-stat>
 <!-- Other sections -->
 <app-statistics></app-statistics>
 
+<app-about-us class="relative z-10 mt-16"></app-about-us>
+
+
+<div id="contact">
+  <app-contact-form></app-contact-form>
+</div>
 <!-- Include Footer -->
 <app-footer></app-footer>

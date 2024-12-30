@@ -193,32 +193,48 @@ currentPageCompleted = 1;
   }
   onAreaChange(area: string): void {
     console.log('Selected Area:', area);
-    this.selectedArea=area
+    this.selectedArea = area;
+
     const Area = this.lookupData.areas.find((a: any) => a.name === area);
     if (Area) {
-      this.campTypeOptions = Area.options;
-      this.campOptions = []; // Clear camps until a camp type is selected
+      this.campTypeOptions = Area.options; // Update camp type options for the new area
+
+      // Update camp options based on the previously selected camp type
+      if (this.selectedCampType === 'Inside Camp') {
+        this.campOptions = Area.camps || [];
+      } else {
+        this.campOptions = []; // No camps for other types
+      }
     } else {
       this.campTypeOptions = [];
       this.campOptions = [];
     }
+
     console.log('Camp Type Options:', this.campTypeOptions);
+    console.log('Updated Camp Options:', this.campOptions);
   }
 
 
   onCampTypeChange(selectedCampType: string): void {
+    this.selectedCampType = selectedCampType; // Track the selected camp type
+    console.log('Selected Camp Type:', selectedCampType);
+
     const area = this.lookupData.areas.find((a: any) => a.name === this.selectedArea);
-    console.log('area',area)
+    console.log('Area Data:', area);
+
     if (area) {
       if (selectedCampType === 'Inside Camp') {
-        this.campOptions = area.camps;
+        this.campOptions = area.camps || [];
       } else {
-        this.campOptions = []; // Outside camp might have no predefined camps
+        this.campOptions = []; // Clear camps for other types
       }
     } else {
-      this.campOptions = [];
+      this.campOptions = []; // Reset camps if no area is selected
     }
+
+    console.log('Updated Camp Options:', this.campOptions);
   }
+
 
 
   onTabChange(event: any): void {
