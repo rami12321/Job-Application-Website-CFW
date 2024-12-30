@@ -81,8 +81,8 @@ export class YouthServiceService {
   getYouthNotesById(id: number): Observable<{ notes: string }> {
     return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
   }
-  getAppliedJobById(id: number): Observable<{ appliedJobs: string[] }> {
-    return this.http.get<{ appliedJobs: string[] }>(`${this.apiUrl}/${id}/appliedJob`);
+  getAppliedJobById(id: number): Observable<{ appliedJobs: { job: string; status: string }[] }> {
+    return this.http.get<{ appliedJobs: { job: string; status: string }[] }>(`${this.apiUrl}/${id}/appliedJob`);
   }
   
   

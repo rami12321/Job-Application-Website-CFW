@@ -120,21 +120,40 @@
               <div class="flex space-x-4 justify-center">
                 <!-- Employer View -->
                 <ng-container *ngIf="isEmployer(); else nonEmployerView">
-                  <ng-container *ngIf="youth.action === 'approved'; else actionButtons">
+                  <ng-container *ngIf="youth.action === 'approved' && youth.status==='approved'; else actionButtons">
                     <!-- Approved Status for Employers (Non-editable) -->
                     <button
+                    *ngIf="!youth.EmployerContract"
+
                       class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
                       aria-label="Approved Status"
                       data-tooltip="Approved"
                       disabled
+                      
                     >
                       <i class="pi pi-verified text-lg"></i>
                     </button>
+                  <button
+                  *ngIf="!youth.EmployerContract"
+
+                  class="tooltip w-10 h-10 bg-purple-500 hover:bg-purple-600 text-white rounded-full flex items-center justify-center shadow-md ml-2"
+                  aria-label="Read Contract"
+                  data-tooltip="Read Contract"
+                  (click)="openContractModal(youth)"
+                >
+                  <i class="pi pi-file text-lg"></i>
+                </button>
+                <span
+                *ngIf="youth.EmployerContract"
+                class="ml-2 px-3 py-1 bg-green-500 text-white text-sm rounded-full"
+              >
+                Contract Submitted
+              </span>
                   </ng-container>
                 
                   <!-- Accept and Reject Buttons for Employers (when action is not approved) -->
                   <ng-template #actionButtons>
-                    <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected'; else statusFlag">
+                    <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected' && !youth.EmployerContract; else statusFlag">
                       <button
                         class="tooltip w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
                         (click)="toggleYouthStatus(youth, 'accepted')"
@@ -187,7 +206,7 @@
       aria-label="Approved"
       (click)="openRevertModal(youth)"
       data-tooltip="Revert to Accepted"
-      [disabled]="youth.isDisabled || youth.action !== 'approved'"
+      [disabled]="youth.isDisabled || youth.status === 'approved'"
 
     >
       <i class="pi pi-verified text-lg"></i>
@@ -195,7 +214,7 @@
   </ng-container>
 
   <ng-template #actionStatus>
-    <ng-container *ngIf="youth.action === 'accepted'; else notAccepted">
+    <ng-container *ngIf="youth.action === 'accepted' ; else notAccepted">
       <!-- Accepted Status for Non-Employer -->
       <button
         class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md"
@@ -463,6 +482,249 @@
           </button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isContractModalOpen"
+  class="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50"
+>
+<div class="bg-white w-full max-w-3xl h-5/6 max-h-screen rounded-lg shadow-lg overflow-hidden">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center px-4 py-2 text-black">
+      <h2 class="text-lg font-semibold">Contract Details</h2>
+      <button
+        type="button"
+        class="text-black hover:bg-blue-800 p-2 rounded-full"
+        (click)="closeContractModal()"
+      >
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6 space-y-6 text-gray-800">
+      <!-- Contract Details Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Youth Name -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Youth Name</p>
+          <p class="text-lg">{{ selectedYouthName }}</p>
+        </div>
+
+        <!-- Job Title -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Job Title</p>
+          <p class="text-lg">{{ jobRequest?.title || 'No title available' }}</p>
+        </div>
+
+        <!-- Supervisor Name -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Supervisor Name</p>
+          <p class="text-lg">{{ jobRequest?.supervisorName }}</p>
+        </div>
+
+        <!-- Mobile Phone -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Mobile Phone</p>
+          <p class="text-lg">{{ jobRequest?.supervisorPhone }}</p>
+        </div>
+
+        <!-- Area -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Area</p>
+          <p class="text-lg">{{ jobRequest?.area || 'None selected' }}</p>
+        </div>
+
+        <!-- Organization Name -->
+        <div>
+          <p class="font-semibold text-sm text-gray-600 uppercase">Organization</p>
+          <p class="text-lg">{{ jobRequest?.organizationName }}</p>
+        </div>
+      </div>
+
+      <!-- Agreement Dates -->
+      <div class="mt-6">
+        <label
+          for="agreementStartDate"
+          class="block text-sm font-semibold text-gray-600 uppercase"
+        >
+          Agreement Start Date*
+        </label>
+        <input
+          type="date"
+          id="agreementStartDate"
+          class="block w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          [value]="agreementStartDate"
+          (change)="onAgreementStartDateChange($event)"
+          [(ngModel)]="agreementStartDate"
+        />
+        <p class="text-sm mt-2 text-gray-500">
+          Agreement End Date will be: 
+          <strong>{{ agreementEndDate || 'N/A' }}</strong>
+        </p>
+      </div>
+
+      <!-- Signature Section -->
+      <div>
+        <p class="font-semibold text-sm text-gray-600 uppercase mb-2">Signature*</p>
+        <div
+          id="signatureBox"
+          class="border border-gray-300 p-4 rounded-md flex items-center justify-center bg-gray-50 hover:bg-gray-100 cursor-pointer"
+          (click)="openSignaturePad()"
+        >
+          <img
+            *ngIf="signatureImage"
+            [src]="signatureImage"
+            alt="Signature"
+            class="max-h-24"
+          />
+          <p *ngIf="!signatureImage" class="text-gray-500">Click to add signature</p>
+        </div>
+        <div *ngIf="!signatureImage" class="text-sm text-red-600 mt-2">
+          Signature is required.
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isSignatureModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
+        <h3 class="text-sm font-medium text-gray-800 mb-2">Add Signature</h3>
+        <canvas
+        #signaturePad
+        width="600"
+        height="200"
+        class="border border-gray-300 rounded-md w-full"
+      ></canvas>
+      
+        <div class="flex justify-between mt-3">
+          <button
+            class="text-sm text-white bg-blue-700 px-4 py-1 rounded-md hover:bg-blue-800"
+            (click)="saveSignature()"
+          >
+            Save
+          </button>
+          <button
+            class="text-sm text-white bg-gray-500 px-4 py-1 rounded-md hover:bg-gray-600"
+            (click)="clearSignature()"
+          >
+            Retry
+          </button>
+          <button
+            class="text-sm text-gray-700 bg-gray-200 px-4 py-1 rounded-md hover:bg-gray-300"
+            (click)="closeSignaturePad()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+   
+
+  <!-- Terms and Agreement Modal -->
+<div
+*ngIf="isTermsModalOpen"
+class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
+>
+<div class="relative p-4 w-full max-w-2xl bg-white rounded-lg shadow dark:bg-gray-700">
+  <!-- Modal Header -->
+  <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Terms and Agreement</h3>
+    <button
+      type="button"
+      class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      (click)="closeTermsModal()"
+    >
+      <svg
+        class="w-4 h-4"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1l6 6m0 0l6 6M7 7L1 13M7 7l6-6"
+        />
+      </svg>
+      <span class="sr-only">Close modal</span>
+    </button>
+  </div>
+
+  <!-- Modal Body -->
+  <div class="p-4 space-y-4 max-h-[60vh] overflow-y-auto">
+    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+      {{ agreementText }}
+    </p>
+  </div>
+
+  <!-- Modal Footer -->
+  <div class="flex items-center p-4 mx-6 border-t dark:border-gray-600">
+    <button
+      type="button"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+      (click)="acceptTerms()"
+    >
+      I Accept
+    </button>
+    <button
+      type="button"
+      class="ml-3 py-2.5 px-5 text-sm font-medium text-gray-900 bg-white border rounded-lg hover:bg-gray-100 focus:ring-4 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+      (click)="closeTermsModal()"
+    >
+      Decline
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- Button to Open Modal -->
+<div class="mt-4 w-full md:w-auto pl-4">
+  <button
+    type="button"
+    class="w-full md:w-auto bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    (click)="openTermsModal()"
+  >
+    View Terms and Agreement
+  </button>
+</div>
+
+<!-- Modal Footer -->
+<div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 mt-6">
+  <button
+    [disabled]="!isTermsAccepted"
+    class="w-full md:w-auto bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-5 rounded-lg shadow-md transition-all duration-200 ease-in-out transform disabled:bg-gray-400 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
+    (click)="submitContract()"
+  >
+    Submit Contract
+  </button>
+
+  <button
+    (click)="closeContractModal()"
+    class="ml-4 py-3 px-6 text-sm font-semibold text-gray-900 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-200 ease-in-out"
+  >
+    Decline
+  </button>
+</div>
+
     </div>
   </div>
 </div>

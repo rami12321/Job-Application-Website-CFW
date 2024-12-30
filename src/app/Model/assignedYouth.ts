@@ -7,5 +7,13 @@ export interface AssignedYouth {
   status: string;
   action?: 'accepted' | 'rejected' | 'approved' | null;
   isDisabled?: boolean;
-
+  EmployerContract?: {
+    startDate: string;
+    signature: string;
+    agreementAccepted: boolean;
+  };
+  YouthContract?: {
+    signature: string;
+    agreementAccepted: boolean;
+  };
 }
