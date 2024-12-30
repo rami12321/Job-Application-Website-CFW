@@ -201,12 +201,16 @@
         "jobRequestId": "L-98457329"
       },
       {
-        "job": "Diesel Mechanic",
-        "status": "rejected"
+        "job": "IT Technician",
+        "status": "waiting"
       },
       {
-        "job": "Auto Mechanic",
-        "status": "rejected"
+        "job": "IT Officer",
+        "status": "waiting"
+      },
+      {
+        "job": "Mobile Developer",
+        "status": "waiting"
       }
     ]
   },

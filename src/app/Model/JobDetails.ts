@@ -10,7 +10,9 @@ export interface Job {
   numEmployees: number;
   organizationName:string;
   level: string;
-  area:string;
+  area: string;
+  campType: string;
+  camp?: string;
   location: string;
   typeOfJob: string;
   supervisorName: string;

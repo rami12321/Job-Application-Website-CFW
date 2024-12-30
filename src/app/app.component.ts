@@ -17,7 +17,7 @@ export class AppComponent {
 
   get showHeader(): boolean {
     // Add your condition for showing the header
-    return !location.pathname.includes('login') && !location.pathname.includes('signup-youth') && !location.pathname.includes('youthsignup-details') && !location.pathname.includes('signup-employer')&& !location.pathname.includes('details-employer');
+    return !location.pathname.includes('login') && !location.pathname.includes('signup-youth') && !location.pathname.includes('youthsignup-details') && !location.pathname.includes('signup-employer')&& !location.pathname.includes('details-employer') && !location.pathname.includes('home') ;
   }
 }
 

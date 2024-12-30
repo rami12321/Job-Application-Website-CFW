@@ -115,7 +115,7 @@
         </div>
 
         <!-- Area -->
-        <div>
+        <!-- <div>
           <label for="area" class="block text-sm font-medium text-gray-700">Area:</label>
           <select
           id="area"
@@ -129,7 +129,38 @@
             <option value="Saida Area">Saida Area</option>
             <option value="Tyre Area">Tyre Area</option>
           </select>
+        </div> -->
+        <div>
+          <label for="area">Select Area:</label>
+          <select
+          id="area"
+          [(ngModel)]="selectedArea"
+          [ngModelOptions]="{standalone: true}"
+          (change)="onAreaChange(selectedArea)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >            <option *ngFor="let area of areaOptions" [value]="area">{{ area }}</option>
+          </select>
+
         </div>
+
+        <div >
+          <label for="campType">Select Camp Type:</label>
+          <select id="campType" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.campType" (change)="onCampTypeChange(jobDetails.campType)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option *ngFor="let type of campTypeOptions" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <div >
+          <label for="camp">Select Camp:</label>
+          <select id="camp" [(ngModel)]="jobDetails.camp" [ngModelOptions]="{standalone: true}"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
+          </select>
+        </div>
+
         <!-- Location -->
         <div>
           <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
@@ -240,9 +271,6 @@
   </div>
   </p-dialog>
 </div>
-
-
-
 
   <p-tabView (onTabChange)="onTabChange($event)">
   <!-- Waiting Tab -->

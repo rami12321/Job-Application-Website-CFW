@@ -400,12 +400,13 @@ export class SmartTableComponent implements OnInit {
 
   getActionsForRow(status: string ,active:boolean): string[] {
     // Return different actions based on the row's status
-    if(active){
+    if(active==true){
       return ['view','deactivate']
-    }else if(!active){
+    }else if(active==false){
       return ['view','activate']
 
-    }
+    }else{
+
     switch (status) {
       case 'accepted':
         return ['view', 'pend'];
@@ -421,8 +422,9 @@ export class SmartTableComponent implements OnInit {
         return ['view', 'assign'];
       default:
         return ['view', 'delete'];
-
     }
+  }
+
   }
 
   performAction(action: string, item: any): void {
@@ -766,7 +768,7 @@ export class SmartTableComponent implements OnInit {
 
   unassignYouth(jobId: string, youthId: string): void {
     console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
-
+    
     this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
       next: () => {
         console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);
