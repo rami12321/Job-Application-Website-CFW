@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Job } from '../../Model/JobDetails';
-import { AssignedYouth } from '../../../../backend/src/models/employer';
+import { AssignedYouth } from '../../Model/assignedYouth';
 
 @Injectable({
   providedIn: 'root',
@@ -61,8 +61,9 @@ export class JobRequestService {
   // JobRequestService
 getAssignedYouthsByJobId(id: string): Observable<AssignedYouth[]> {
   const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
-  return this.http.get<AssignedYouth[]>(url); // Adjust the endpoint as per your backend API
+  return this.http.get<AssignedYouth[]>(url); 
 }
+
 
 
  // Unassign Youth from Job Request

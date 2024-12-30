@@ -197,7 +197,8 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "rejected"
+        "status": "approved",
+        "jobRequestId": "L-98457329"
       },
       {
         "job": "Diesel Mechanic",
@@ -335,8 +336,16 @@
     "createdAt": "2024-11-19T12:34:56Z",
     "appliedJob": [
       {
-        "job": "Legal Volunteer",
-        "status": "waiting"
+        "job": "Auto Mechanic",
+        "status": "rejected"
+      },
+      {
+        "job": "Auto Electrician",
+        "status": "approved"
+      },
+      {
+        "job": "Diesel Mechanic",
+        "status": "rejected"
       }
     ]
   },

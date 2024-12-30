@@ -304,6 +304,7 @@ export const checkRegistrationNumber = (req: Request, res: Response): void => {
   }
 };
 
+
 export const getAppliedJobById = (req: Request, res: Response): void => {
   const { id } = req.params; // Extract the ID from the request parameters
   const youths: Youth[] = readFile(); // Read all youth data from the file
@@ -322,11 +323,8 @@ export const getAppliedJobById = (req: Request, res: Response): void => {
     return;
   }
 
-  // Extract only the job names from the appliedJob array
-  const appliedJobs = youth.appliedJob.map((job) => job.job);
-
-  // Return the job names
-  res.status(200).json({ appliedJobs });
+  // Return the full appliedJob array
+  res.status(200).json({ appliedJobs: youth.appliedJob });
 };
 
 export const updateYouthNotes = (req: Request, res: Response): void => {
