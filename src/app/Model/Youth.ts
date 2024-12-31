@@ -2,6 +2,8 @@
 export interface Youth {
   [key: string]: any; // Add this line for dynamic indexing
 
+  isEdited?:boolean;
+  
   id: string;
   username: string;
   password: string;
@@ -79,5 +81,6 @@ export interface Youth {
   notes?:string;
   jobCategory?:string[];
   appliedJob?: { job: string; status: string }[]; // Updated to hold job and status
-
+  createdAt:string;
+  beneficiary?:boolean;
 }

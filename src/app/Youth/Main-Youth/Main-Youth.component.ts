@@ -32,9 +32,10 @@ export class MainYouthComponent implements OnInit {
   activeJobs: any[] = [];
   activeIndex: number = 0;
   selectedJobTitle: string = '';
-  
+  isEditing: boolean = false; // Add this property to your component class
+
   selectedJobDescription: string[] | null = null;
-  
+
   // Define the sections and their statuses
   sections: { [key: string]: boolean } = {
     'notifications': false,
@@ -61,7 +62,7 @@ export class MainYouthComponent implements OnInit {
     if (youthId !== null) {
       this.youthService.getAppliedJobById(youthId).subscribe(
         (response) => {
-          
+
           if (response.appliedJob && Array.isArray(response.appliedJob)) {
             // Map over the applied jobs
             const allJobs = response.appliedJob.map((jobEntry, index) => ({
@@ -70,15 +71,15 @@ export class MainYouthComponent implements OnInit {
               status: jobEntry.status,
               date: new Date().toLocaleDateString(),
             }));
-    
+
             // Separate jobs into active and inactive
             this.activeJobs = allJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
             this.inactiveJobs = allJobs.filter(job => job.status === 'rejected');
-  
+
             this.appliedJob = this.activeJobs.find(job => job.status === 'approved') || null;
 
-    
-            
+
+
           } else {
             console.error('Unexpected appliedJob format:', response.appliedJob);
             this.activeJobs = [];
@@ -124,7 +125,7 @@ export class MainYouthComponent implements OnInit {
   editProfile(): void {
     const userId = localStorage.getItem('userId'); // Get the user ID
     const role = localStorage.getItem('role'); // Get the user role
-  
+
     if (userId && role) {
       if (role.toLowerCase() === 'employer') {
         this.router.navigate(['/employerprofile', userId]);
@@ -153,7 +154,7 @@ export class MainYouthComponent implements OnInit {
       }
     );
   }
-  
+
   switchTab(tab: string): void {
     this.activeTab = tab;
   }

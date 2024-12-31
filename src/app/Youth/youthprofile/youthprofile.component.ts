@@ -81,7 +81,7 @@ export class YouthprofileComponent implements OnInit {
     this.lookupService.getMajors().subscribe((data) => {
       this.majors = data;
     });
-  
+
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (this.userId) {
@@ -101,23 +101,23 @@ export class YouthprofileComponent implements OnInit {
     this.storedPdfUrl = this.cvFileUrl;
 
   }
-  
+
   // Close the modal
 
 
 
 
-    
+
     onFileChange(event: Event, controlName: string): void {
       const input = event.target as HTMLInputElement;
-    
+
       if (input.files && input.files.length > 0) {
         const file = input.files[0];
         this.cvFileName = file.name; // Set the file name for display after saving
-    
+
         if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
           const fileReader = new FileReader();
-    
+
           fileReader.onload = () => {
             if (fileReader.result instanceof ArrayBuffer) {
               const blob = new Blob([fileReader.result], { type: 'application/pdf' });
@@ -127,11 +127,11 @@ export class YouthprofileComponent implements OnInit {
               console.error('Error: FileReader result is not an ArrayBuffer.');
             }
           };
-    
+
           fileReader.onerror = (error) => {
             console.error('Error reading file:', error);
           };
-    
+
           fileReader.readAsArrayBuffer(file); // Read the file as ArrayBuffer
         } else {
           console.error('Invalid file type. Only PDF, DOC, DOCX files are allowed.');
@@ -145,10 +145,10 @@ export class YouthprofileComponent implements OnInit {
         this.isEditing[field] = false; // Exit editing mode
       }
     }
-    
+
   onMajorChange(event: any): void {
     const selectedMajor = event.target.value;
-  
+
     if (selectedMajor === 'other') {
       this.isOtherMajorSelected = true;
       this.editModels['general'].get('major')?.setValue(''); // Clear the major field before user input
@@ -164,7 +164,7 @@ export class YouthprofileComponent implements OnInit {
   isCheckedLabType(type: string): boolean {
     return this.editModels['generalQuestions'].innovationLabGradtype?.includes(type);
   }
-  
+
   toggleLabType(type: string): void {
     const gradTypeArray = this.editModels['generalQuestions'].innovationLabGradtype || [];
     const index = gradTypeArray.indexOf(type);
@@ -175,13 +175,13 @@ export class YouthprofileComponent implements OnInit {
     }
     this.editModels['generalQuestions'].innovationLabGradtype = gradTypeArray;
   }
-  
+
   onAreaChange(selectedArea: string): void {
     if (selectedArea) {
       const selectedAreaData = this.lookupData.areas.find(
         (area: any) => area.name === selectedArea
       );
-  
+
       // Update campTypeOptions based on selected area
       this.campTypeOptions = selectedAreaData ? selectedAreaData.options : [];
       if (this.editModels['personal'].area !== this.youth?.area) {
@@ -199,11 +199,11 @@ export class YouthprofileComponent implements OnInit {
     }
   }
 
-  
+
   isCheckedDisabilityType(type: string): boolean {
     return this.editModels['generalQuestions'].disabilityTypes?.includes(type);
   }
-  
+
   toggleDisabilityType(type: string): void {
     const types = this.editModels['generalQuestions'].disabilityTypes || [];
     const index = types.indexOf(type);
@@ -214,7 +214,7 @@ export class YouthprofileComponent implements OnInit {
     }
     this.editModels['generalQuestions'].disabilityTypes = types;
   }
-  
+
   onCampTypeChange(selectedType: string): void {
     if (selectedType === 'Inside Camp') {
       const selectedArea = this.editModels['personal'].area;
@@ -223,7 +223,7 @@ export class YouthprofileComponent implements OnInit {
       );
       // Update camp options based on selected area
       this.campOptions = selectedAreaData ? selectedAreaData.camps : [];
-  
+
       // Restore previously filled camp if it exists
       if (this.youth?.campType === 'Inside Camp' && this.youth?.area === selectedArea) {
         this.editModels['personal'].camp = this.youth.camp;
@@ -244,7 +244,7 @@ export class YouthprofileComponent implements OnInit {
         () => console.log('Camp data deleted successfully.'),
         (error) => console.error('Failed to delete camp data:', error)
       );
-    }}  
+    }}
 
 openPdfModal(): void {
   if (this.storedPdfUrl) {
@@ -257,42 +257,42 @@ openPdfModal(): void {
   // Open the modal for file preview
   openPdfModal1(source: 'static' | 'uploaded'): void {
     console.log('Opening modal for:', source);
-  
+
     if (source === 'static') {
       this.storedPdfUrl = 'path/to/CV-Example.pdf'; // Replace with your actual static file URL
     }
-  
+
     // Ensure `isPdfModalOpen` controls a single modal instance
     this.isPdfModalOpen1 = true;
   }
-  
+
   closePdfModal1(): void {
     this.isPdfModalOpen1 = false;
   }
-  
+
   toggleEditExperience(index: number): void {
     if (this.youth?.experiences) {
       this.youth.experiences[index].isEditing = true;
     }
   }
-  
+
   cancelEditExperience(index: number): void {
     if (this.youth?.experiences) {
       this.youth.experiences[index].isEditing = false;
     }
   }
-  
+
   saveChangesexp(section: string, index: number): void {
     if (section === 'experience') {
       const updatedExperiences = this.youth!.experiences.map((experience) => {
         const { isEditing, ...experienceData } = experience;
         return experienceData;
       });
-  
+
       this.youthService.updateYouthExperience(this.youth!.id, updatedExperiences).subscribe({
         next: () => {
           console.log('Experience updated successfully');
-          this.youth!.experiences[index].isEditing = false;  
+          this.youth!.experiences[index].isEditing = false;
         },
         error: (err) => {
           console.error('Error updating experiences', err);
@@ -300,31 +300,31 @@ openPdfModal(): void {
       });
     }
   }
-  
-  
+
+
     toggleEditTraining(index: number): void {
       if (this.youth?.trainings) {
         this.youth.trainings[index].isEditing = true;
       }
     }
-  
+
     cancelEditTraining(index: number): void {
       if (this.youth?.trainings) {
         this.youth.trainings[index].isEditing = false;
       }
     }
-  
+
     saveChangesTraining(section: string, index: number): void {
       if (section === 'trainings') {
         const updatedTrainings = this.youth!.trainings.map((training) => {
           const { isEditing, ...trainingData } = training;
           return trainingData;
         });
-    
+
         this.youthService.updateYouthTraining(this.youth!.id, updatedTrainings).subscribe({
           next: () => {
             console.log('Training updated successfully');
-            this.youth!.trainings[index].isEditing = false;  
+            this.youth!.trainings[index].isEditing = false;
           },
           error: (err) => {
             console.error('Error updating training:', err);
@@ -343,7 +343,7 @@ openPdfModal(): void {
       }
       this.isEditing[field] = !this.isEditing[field];
     }
-    
+
   toggleEdit(section: string): void {
     this.isEditing[section] = true;
 
@@ -361,6 +361,16 @@ openPdfModal(): void {
       next: () => {
         console.log(`Section ${section} updated successfully`);
         this.isEditing[section] = false;
+
+        // Set isEdited to true after successfully updating the section
+        this.youthService.updateYouthIsEdited(this.userId!, true).subscribe({
+          next: () => {
+            console.log('isEdited field set to true successfully.');
+          },
+          error: (err) => {
+            console.error('Error setting isEdited field to true:', err);
+          },
+        });
       },
       error: (err) => {
         console.error(`Error updating section ${section}:`, err);
@@ -368,11 +378,12 @@ openPdfModal(): void {
     });
   }
 
+
   cancelEdit(section: string): void {
     this.isEditing[section] = false;
 
     this.editModels[section] = {};
   }
-  
+
 }
 

@@ -81,6 +81,8 @@ export class SmartTableComponent implements OnInit {
   selectedEducationLevels: string[] = []; // Define selectedMajors
   nationalityOptions: string[] = [];
   selectedNationalities: string[] = [];
+  selectedIsEdited: string[] = [];
+
   excludedColumns: string[] = [
     'active',
     'assignedYouths',
@@ -228,13 +230,16 @@ export class SmartTableComponent implements OnInit {
           const matchesNationalityOptions =
             this.selectedNationalities.length === 0 ||
             this.selectedNationalities.includes(item.nationalityOptions);
-
+            const matchesIsEdited =
+            this.selectedIsEdited.length === 0 ||
+            item.isEdited === this.selectedIsEdited;
           return (
             matchesGender &&
             matchesMajor &&
             matchesArea &&
             matchesEducationLevels &&
-            matchesNationalityOptions
+            matchesNationalityOptions&&
+            matchesIsEdited
           );
         });
 
@@ -748,7 +753,7 @@ export class SmartTableComponent implements OnInit {
 
   unassignYouth(jobId: string, youthId: string): void {
     console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
-    
+
     this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
       next: () => {
         console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);
