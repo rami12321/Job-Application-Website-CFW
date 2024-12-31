@@ -432,6 +432,7 @@ export class SmartTableComponent implements OnInit {
   performAction(action: string, item: any): void {
     if (action === 'view') {
       console.log('View action for:', item);
+
     } else if (action === 'pend') {
       this.updateStatus(item.id, 'pending');
     } else if (action === 'accept') {
@@ -441,12 +442,27 @@ export class SmartTableComponent implements OnInit {
     }
   }
 
+
   note: string = '';
   selectedYouth: any;
   showNoteDialog(youth: any): void {
     this.selectedYouth = youth;
     this.note = youth.note || ''; // If there's an existing note, pre-fill the input
     this.noteDialogVisible = true;
+  }
+  updateIsEdited(id: any): void {
+    // Call the service to update the `isEdited` field to `false`
+    this.youthService.updateYouthIsEdited(id, false).subscribe(
+      (response) => {
+        console.log(`Youth with ID ${id} marked as not edited`);
+
+        // Optionally, you can fetch the updated data after the status change
+        this.fetchYouthData();
+      },
+      (error) => {
+        console.error('Error updating isEdited status:', error);
+      }
+    );
   }
 
   //youth dialog
