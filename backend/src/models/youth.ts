@@ -79,6 +79,6 @@ export interface Youth {
   appliedJob?: { job: string; status: string }[]; // Updated to hold job and status
   beneficiary?:boolean;
   createdAt:string;
-  workStatus?:boolean;
+  workStatus?: boolean;
 
 }

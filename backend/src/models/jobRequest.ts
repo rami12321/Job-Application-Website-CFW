@@ -6,6 +6,7 @@ export interface AssignedYouth {
   dob: string;
   cv: string;
   status: string;
+
 }
 
 export interface Job {

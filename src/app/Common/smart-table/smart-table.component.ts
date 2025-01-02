@@ -65,6 +65,9 @@ export class SmartTableComponent implements OnInit {
   youthList: any[] = [];
   assignedYouthList: any[] = [];
   employerList: any[] = [];
+  employerDialogVisible = false;
+  jobRequestDialogVisible = false;
+  youthSignupDialogVisible = false;
   cols: Column[] = [];
   _selectedColumns: Column[] = [];
   savedColumns: Column[] = [];
@@ -534,11 +537,28 @@ export class SmartTableComponent implements OnInit {
   noYouthMessage: string = '';
 
   selectedYouthId: number | null = null;
-  showDialog(youthId: number): void {
-    this.selectedYouthId = youthId; // Pass the selected youth ID
-    this.dialogVisible = true;
+  showDialog(youthId: number, activeTab: string): void {
+    this.selectedYouthId = youthId; 
+  
+    // Reset all dialog visibility states
+    this.employerDialogVisible = false;
+    this.jobRequestDialogVisible = false;
+    this.youthSignupDialogVisible = false;
+  
+    // Show the appropriate dialog based on the active tab
+    switch (activeTab) {
+      case 'employer':
+        this.employerDialogVisible = true;
+        break;
+      case 'job-request':
+        this.jobRequestDialogVisible = true;
+        break;
+      case 'youthsignup':
+        this.youthSignupDialogVisible = true;
+        break;
+    }
   }
-
+  
   clearSelectedYouthId(): void {
     this.selectedYouthId = null; // Reset when dialog is closed
   }

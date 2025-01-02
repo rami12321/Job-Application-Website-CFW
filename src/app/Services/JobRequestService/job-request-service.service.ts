@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Job } from '../../Model/JobDetails';
-import { AssignedYouth } from '../../../../backend/src/models/employer';
+import { AssignedYouth } from '../../Model/assignedYouth';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,11 @@ export class JobRequestService {
   getAllJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(this.JobRequestsUrl);
   }
+  // Get all Job Requests
+getAllJobRequests(): Observable<Job[]> {
+  return this.http.get<Job[]>(this.JobRequestsUrl);
+}
+
   // Get Jobs by Employer ID
   getJobsByEmployerId(employerId: string): Observable<Job[]> {
     const url = `${this.JobRequestsUrl}/by-employer/${employerId}`;
@@ -58,15 +63,15 @@ export class JobRequestService {
       }
     );
   }
-  // JobRequestService
-getAssignedYouthsByJobId(id: string): Observable<AssignedYouth[]> {
+getAssignedYouthsByJobId(id: any): Observable<AssignedYouth[]> {
   const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
-  return this.http.get<AssignedYouth[]>(url); // Adjust the endpoint as per your backend API
+  return this.http.get<AssignedYouth[]>(url); 
 }
 
 
+
  // Unassign Youth from Job Request
- unassignYouthFromJobRequest(jobId: string, youthId: string): Observable<any> {
+ unassignYouthFromJobRequest(jobId: string, youthId: any): Observable<any> {
   const url = `${this.JobRequestsUrl}/${jobId}/unassignYouth/${youthId}`;
   return this.http.delete(url, { headers: { 'Content-Type': 'application/json' } });
 }

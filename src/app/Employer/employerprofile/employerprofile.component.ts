@@ -152,11 +152,7 @@ getProfileImage(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
       next: (data: Employer) => {
         this.employer = data;
-        if (this.employer?.signature) {
-          const signatureKey = this.employer.signature.split('#')[1]; // Extract key part
-          this.loadSignature(signatureKey);
-        }
-        this.loadProfileImage();  // After employer data is fetched, load the profile image
+ // After employer data is fetched, load the profile image
       },
       error: (err) => {
         console.error('Error fetching employer data:', err);

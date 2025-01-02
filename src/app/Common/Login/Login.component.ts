@@ -15,6 +15,7 @@ import { Router } from '@angular/router';  // Import Router
 })
 export class LoginComponent implements OnInit {
 
+  showPassword: boolean = false;
 
   tabs: string[] = ['Youth', 'Employer']; // Tab names
   activeTabIndex: number = 0; // Active tab index (default is Employer)
@@ -22,6 +23,9 @@ export class LoginComponent implements OnInit {
   // Function to set the active tab
   setActiveTab(index: number): void {
     this.activeTabIndex = index;
+  }
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   // Function to get the label for the submit button
