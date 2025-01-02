@@ -1,40 +1,52 @@
 <app-main-navbar></app-main-navbar>
+
 <div
   id="home"
-  class="bg-blue-50 text-center pb-24  "
+  class="relative text-center min-h-screen "
   style="background-image: url('assets/homeImages/teamwork.jpg'); background-size: cover; background-position: center;"
 >
-  <div class="relative z-10 h-full ">
-    <h1 class="text-5xl font-extrabold text-blue-800 pt-16">
+  <!-- Overlay -->
+
+  <!-- Content -->
+  <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-4 pt-10">
+    <h1 class="text-6xl font-bold leading-tight mb-6 drop-shadow-lg">
       Welcome to the Youth Unit
     </h1>
-    <p class="text-xl text-white mt-6 max-w-3xl mx-auto">
+    <p class="text-xl lg:text-2xl max-w-3xl mx-auto mb-8 leading-relaxed drop-shadow-lg">
       Empowering youth with opportunities and guidance for a brighter future.
     </p>
-    <button
+    <!-- <button
       routerLink="/login"
-      class="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+      class="mt-4 px-10 py-4 bg-blue-600 text-white font-semibold text-lg rounded-full shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-110"
     >
       Get Started
-    </button>
+    </button> -->
   </div>
 
+  <!-- About Us Section -->
+      <app-about-us></app-about-us>
 
 </div>
 
+<!-- Features Section -->
+<section id="features" class="py-16 bg-gray-100">
+  <app-features></app-features>
+</section>
 
-<!-- Include Features -->
-<app-features id="features"></app-features>
+<!-- Animated Stats -->
+<section id="stats" class="py-16">
+  <app-animated-stat></app-animated-stat>
+</section>
 
-<app-animated-stat id="stats"></app-animated-stat>
-<!-- Other sections -->
-<app-statistics></app-statistics>
+<!-- Statistics Section -->
+<section class="py-16 bg-gray-200">
+  <app-statistics></app-statistics>
+</section>
 
-<app-about-us class="relative z-10 mt-16"></app-about-us>
-
-
-<div id="contact">
+<!-- Contact Section -->
+<div id="contact" class="py-16 bg-white">
   <app-contact-form></app-contact-form>
 </div>
-<!-- Include Footer -->
+
+<!-- Footer -->
 <app-footer></app-footer>

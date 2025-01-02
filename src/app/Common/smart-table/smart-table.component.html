@@ -61,14 +61,14 @@
       <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
         Actions
       </th>
-      <th
+     <th
         *ngFor="let col of cols"
         class="border-b border-r px-2 py-1 text-sm text-gray-600"
       >
         @if (col.field === 'isEdited') {
         <p-dropdown
           [options]="[
-            { label: 'All', value: true || false },
+            { label: 'All', value: null},
             { label: 'Edited', value: true },
             { label: 'Not Edited', value: false }
           ]"
@@ -83,22 +83,7 @@
           }"
         ></p-dropdown>
 
-        <!-- <select
-          [(ngModel)]="selectedIsEdited"
-          (change)="fetchYouthData()"
-          [style]="{
-            background: 'white',
-            border: '1px solid #ddd',
-            'border-radius': '8px',
-            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-          }"
-          aria-label="Filter by Status"
-        >
-          <option [value]="null">All</option>
-          <option [value]="true">Edited</option>
-          <option [value]="false">Not Edited</option>
-        </select> -->
-        } @else if (col.header === 'Major') {
+        }@else if (col.header === 'Major') {
         <p-multiSelect
           [options]="majors"
           [(ngModel)]="selectedMajors"
@@ -212,19 +197,7 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
-        <!-- @if (product.isEdited) {
-        <i
-          class="pi pi-pencil text-green-500"
-          title="This row is edited"
-        ></i>
-      } @else {
-        <i
-          class="pi pi-circle text-gray-400"
-          title="This row is not edited"
-        ></i>
-      } -->
-
-        <div
+       <div
           class=" "
           *ngFor="
             let action of getActionsForRow(product.status, product.active)
@@ -523,30 +496,66 @@
         </div>
       </td>
       <td
-        *ngFor="let col of cols"
-        class="px-4 py-2 text-sm border-b border-r border-gray-300"
-      >
-        <!-- Check for isEdited Field -->
-        <ng-container *ngIf="col.field === 'isEdited'; else defaultCell">
+      *ngFor="let col of cols"
+      class="px-4 py-2 text-sm border-b border-r border-gray-300"
+    >
+      <!-- Conditional Rendering for Specific Fields -->
+      <ng-container [ngSwitch]="col.field">
+        <!-- isEdited Column -->
+        <ng-container *ngSwitchCase="'isEdited'">
           <div class="flex justify-center">
             <i
               *ngIf="product[col.field]"
-              class="pi pi-pencil text-green-500 text-lg"
+              class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
               title="Edited"
             ></i>
             <i
               *ngIf="!product[col.field]"
-              class="pi pi-circle text-gray-400 text-lg"
+              class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
               title="Not Edited"
             ></i>
           </div>
         </ng-container>
 
+        <!-- Beneficiary Column -->
+        <ng-container *ngSwitchCase="'beneficiary'">
+          <div class="flex justify-center">
+            <i
+              *ngIf="product[col.field]"
+              class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
+              title="Benefited"
+            ></i>
+            <i
+            *ngIf="!product[col.field]"
+            class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
+            title="Not Benefited"
+          ></i>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'appliedJob'">
+          <div>
+
+              <p *ngFor="let job of product[col.field]">
+              {{ job.job }}
+              </p>
+
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'createdAt'">
+          <div>
+            {{ formatDate(product[col.field]) }}
+
+
+          </div>
+        </ng-container>
+
         <!-- Default Cell Content -->
-        <ng-template #defaultCell>
-          {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
-        </ng-template>
-      </td>
+        <ng-container *ngSwitchDefault>
+          {{ col.field !== 'action' ? product[col.field] || 'N/A' : '' }}
+        </ng-container>
+      </ng-container>
+    </td>
+
     </tr>
   </ng-template>
 </p-table>

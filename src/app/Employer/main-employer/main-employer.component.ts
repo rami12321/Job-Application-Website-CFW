@@ -117,6 +117,7 @@ currentPageCompleted = 1;
     status: 'waiting-E',
   };
   userName: string = '';
+  active:boolean=false;
   lookupData: any = {};
   areaData: any = {};
 
@@ -166,6 +167,7 @@ currentPageCompleted = 1;
       this.employerservice.getEmployerById(employerId).subscribe(
         (response) => {
           this.userName = response.fullNameEnglish || 'Unknown'; // Youth's name
+          this.active=response.active || false;
         })};
     if (!employerId) {
       console.error('Employer ID not found in localStorage');

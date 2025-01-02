@@ -40,6 +40,7 @@ interface Column {
     YouthSignupDetailsComponent,
     DetailsEmployerComponent,
     JobRequestDetailsComponent,
+    TableModule
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -72,7 +73,7 @@ export class SmartTableComponent implements OnInit {
   jobs: Job[] = [];
   selectedGender: string[] = [];
   rowData: any = {}; // Or use the appropriate type for your data
-  areas: any[] = [];
+  areas: string[] = [];
   majors: string[] = [];
   genders: string[] = [];
   educationLevels: string[] = [];
@@ -156,7 +157,7 @@ export class SmartTableComponent implements OnInit {
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
 
-        this.areas = data.areas || [];
+        this.areas = (data.areas || []).map((area: any) => area.name);
         this.majors = data.majors || [];
         this.genders = data.genderOptions || [];
         this.educationLevels = data.educationLevels || [];
@@ -203,6 +204,22 @@ export class SmartTableComponent implements OnInit {
   saveSelectedColumnsToLocalStorage() {
     localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
   }
+  formatDate(dateString: string): string {
+    if (!dateString) {
+      return 'N/A'; // Handle missing dates gracefully
+    }
+
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }).format(date);
+  }
+
   fetchYouthData(): void {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
@@ -226,10 +243,10 @@ export class SmartTableComponent implements OnInit {
             this.selectedAreas.includes(item.area);
           const matchesEducationLevels =
             this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
+            this.selectedEducationLevels.includes(item.educationLevel);
           const matchesNationalityOptions =
             this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
+            this.selectedNationalities.includes(item.nationality);
             const matchesIsEdited =
             this.selectedIsEdited.length === 0 ||
             item.isEdited === this.selectedIsEdited;
@@ -332,6 +349,17 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
+  isEditedOptions = [
+    { label: 'All', value: null },
+    { label: 'Edited', value: true },
+    { label: 'Not Edited', value: false },
+  ];
+  dropdownStyle = {
+    background: 'white',
+    border: '1px solid #ddd',
+    'border-radius': '8px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)',
+  };
 
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
@@ -504,15 +532,7 @@ export class SmartTableComponent implements OnInit {
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
   noYouthMessage: string = '';
-  loadLookupData(): void {
-    this.lookupService.getLookupData().subscribe((data) => {
-      this.areas = data.areas || [];
-      this.majors = data.majors || [];
-      this.genders = data.genderOptions || [];
-      this.educationLevels = data.educationLevels || [];
-      this.nationalityOptions = data.nationalityOptions || [];
-    });
-  }
+
   selectedYouthId: number | null = null;
   showDialog(youthId: number): void {
     this.selectedYouthId = youthId; // Pass the selected youth ID
