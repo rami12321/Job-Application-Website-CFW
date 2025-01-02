@@ -8,9 +8,11 @@ export interface Job {
   category?: string;  // Main category (e.g., "Design")
   title?: string;
   numEmployees: number;
-  organizationName:string;
+  organizationName?:string;
   level: string;
-  area:string;
+  area: string;
+  campType: string;
+  camp?: string;
   location: string;
   typeOfJob: string;
   supervisorName: string;
@@ -19,6 +21,7 @@ export interface Job {
   supervisorPhone: string;
   status:string;
   assignedYouths?: AssignedYouth[];
+  createdDate?: string; // Add this property
 
 
 }

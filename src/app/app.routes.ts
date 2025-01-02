@@ -12,11 +12,12 @@ import { EmployerprofileComponent } from './Employer/employerprofile/employerpro
 import { JobRequestComponent } from './Employer/JobRequestEdit/job-request.component';
 import { JobRequestDetailsComponent } from './Employer/JobRequestDetails/job-request-details.component';
 import { candeactivateAdminGuard } from './guards/candeactivate-admin.guard';
+import { HomeComponent } from './Common/home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   { path: 'youthprofile/:id', component: YouthprofileComponent },
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
   },
 
   {
@@ -44,7 +49,7 @@ export const routes: Routes = [
     path: 'main-employer',
     component: MainEmployerComponent,
   },
-  
+
   {
     path: 'main-youth',
     component: MainYouthComponent,
@@ -82,5 +87,5 @@ export const routes: Routes = [
     component: MainAdminComponent, // Parent for steps
   }
 
-  
+
 ];

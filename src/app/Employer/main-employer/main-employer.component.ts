@@ -12,12 +12,14 @@ import { JobRequestDetailsComponent } from '../JobRequestDetails/job-request-det
 import { JobRequestComponent } from '../JobRequestEdit/job-request.component';
 import { TabViewModule } from 'primeng/tabview';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-employer',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     DialogModule,
     MultiSelectModule,
     DropdownModule,
@@ -25,7 +27,8 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
     ButtonModule,
     JobRequestDetailsComponent,
     JobRequestComponent,
-    TabViewModule
+    TabViewModule,
+
   ],
   templateUrl: './main-employer.component.html',
   styleUrls: ['./main-employer.component.css'],
@@ -36,6 +39,9 @@ export class MainEmployerComponent {
   mainCategories: any[] = [];
   selectedCategory: string = '';
   selectedjob: string = '';
+  selectedArea:string='';
+  selectedCampOption:string='';
+  selectedCampType:string='';
   step1: boolean = false;
   jobRequested: boolean = false;
   subcategories: string[] = [];
@@ -45,6 +51,9 @@ export class MainEmployerComponent {
   waitingSearchQuery: string = '';
   assignedSearchQuery: string = '';
   inProgressSearchQuery: string = '';
+  areaOptions: string[] = [];
+  campTypeOptions: string[] = [];
+  campOptions: string[] = [];
   completedSearchQuery: string = '';
   userId = localStorage.getItem('userId') || '';
 
@@ -97,6 +106,8 @@ currentPageCompleted = 1;
     numEmployees: 0,
     level: '',
     area:'',
+    campType: '',
+    camp: '',
     location: '',
     typeOfJob: '',
     supervisorName: '',
@@ -106,6 +117,8 @@ currentPageCompleted = 1;
     status: 'waiting-E',
   };
   userName: string = '';
+  lookupData: any = {};
+  areaData: any = {};
 
   constructor(
     private lookupService: LookupService,
@@ -114,6 +127,19 @@ currentPageCompleted = 1;
   ) { }
 
   ngOnInit(): void {
+    this.lookupService.getLookupData().subscribe(
+      (data) => {
+        this.lookupData = data;
+        this.areaOptions = this.lookupData.areas.map((area: any) => area.name);
+
+
+        console.log('Lookup data loaded:', this.lookupData);
+        console.log('Area option:', this.areaOptions);
+      },
+      (error) => {
+        console.error('Error loading lookup data:', error);
+      });
+
 
     this.lookupService.getJobCategories().subscribe({
       next: (data: any) => {
@@ -165,6 +191,36 @@ currentPageCompleted = 1;
 
 
   }
+  onAreaChange(area: string): void {
+    console.log('Selected Area:', area);
+    this.selectedArea=area
+    const Area = this.lookupData.areas.find((a: any) => a.name === area);
+    if (Area) {
+      this.campTypeOptions = Area.options;
+      this.campOptions = []; // Clear camps until a camp type is selected
+    } else {
+      this.campTypeOptions = [];
+      this.campOptions = [];
+    }
+    console.log('Camp Type Options:', this.campTypeOptions);
+  }
+
+
+  onCampTypeChange(selectedCampType: string): void {
+    const area = this.lookupData.areas.find((a: any) => a.name === this.selectedArea);
+    console.log('area',area)
+    if (area) {
+      if (selectedCampType === 'Inside Camp') {
+        this.campOptions = area.camps;
+      } else {
+        this.campOptions = []; // Outside camp might have no predefined camps
+      }
+    } else {
+      this.campOptions = [];
+    }
+  }
+
+
   onTabChange(event: any): void {
     const statusMap = ['waiting-E', 'assigned', 'in-progress', 'completed'];
     const selectedStatus = statusMap[event.index];
@@ -251,32 +307,33 @@ paginate(jobs: Job[], currentPage: number): Job[] {
     this.updatePaginatedData('inProgress');
     this.updatePaginatedData('completed');
       }
-
-  fetchJobTableData(employerId: string): void {
-    this.jobRequestService.getJobsByEmployerId(employerId).subscribe({
-      next: (data: Job[]) => {
-        this.jobs = data.sort((a, b) => {
-          const idA = a.jobId ?? '';
-          const idB = b.jobId ?? '';
-          return idB.localeCompare(idA);
+      fetchJobTableData(employerId: string): void {
+        this.jobRequestService.getJobsByEmployerId(employerId).subscribe({
+          next: (data: Job[]) => {
+            // Sort by creation date (or jobId) descending
+            this.jobs = data.sort((a, b) => {
+              const dateA = new Date(a.createdDate ?? 0).getTime(); // Use appropriate date field
+              const dateB = new Date(b.createdDate ?? 0).getTime();
+              return dateB - dateA; // Newest to oldest
+            });
+      
+            this.categorizeJobs(); // Categorize jobs after fetching
+            this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
+            this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
+            this.updatePaginatedData('waiting');
+            this.updatePaginatedData('assigned');
+            this.updatePaginatedData('inProgress');
+            this.updatePaginatedData('completed');
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.error('Error fetching job data:', err);
+            this.errorMessage = 'Error fetching job data';
+            this.isLoading = false;
+          },
         });
-
-        this.categorizeJobs(); // Categorize jobs after fetching
-        this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
-        this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
-        this.updatePaginatedData('waiting');
-        this.updatePaginatedData('assigned');
-        this.updatePaginatedData('inProgress');
-        this.updatePaginatedData('completed');
-                this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching job data:', err);
-        this.errorMessage = 'Error fetching job data';
-        this.isLoading = false;
-      },
-    });
-  }
+      }
+      
 
   openEditModal(jobId: string): void {
     this.selectedJobId = jobId;
@@ -363,32 +420,37 @@ paginate(jobs: Job[], currentPage: number): Job[] {
 
     console.log('Editing job with id:', id);
   }
-
   sortTable(key: string): void {
-    if (!(key in this.jobDetails)) {
+    if (!(key in this.jobs[0])) {
       console.error(`Invalid sorting key: ${key}`);
       return;
     }
+    
     this.sortDirection =
       this.sortKey === key && this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortKey = key;
-
+  
     const sortedJobs = [...this.jobs].sort((a, b) => {
-      const keyA = key as keyof Job;
-      const valueA = a[keyA]?.toString().toLowerCase() || '';
-      const valueB = b[keyA]?.toString().toLowerCase() || '';
-      if (this.sortDirection === 'asc') {
-        return valueA.localeCompare(valueB);
+      if (key === 'createdDate') {
+        const dateA = new Date(a.createdDate ?? 0).getTime();
+        const dateB = new Date(b.createdDate ?? 0).getTime();
+        return this.sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
       } else {
-        return valueB.localeCompare(valueA);
+        const valueA = (a[key as keyof Job] as string | number | undefined)?.toString().toLowerCase() || '';
+        const valueB = (b[key as keyof Job] as string | number | undefined)?.toString().toLowerCase() || '';
+        return this.sortDirection === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
       }
     });
+  
     this.jobs = sortedJobs;
     this.updatePaginatedData('waiting');
     this.updatePaginatedData('assigned');
     this.updatePaginatedData('inProgress');
     this.updatePaginatedData('completed');
-      }
+  }
+  
 
 
   deleteJob(id: string): void {
@@ -494,40 +556,41 @@ paginate(jobs: Job[], currentPage: number): Job[] {
   }
 
   submitForm(): void {
-    // Validate required fields
     if (!this.jobDetails.title || this.jobDetails.numEmployees <= 0) {
       console.error('Title and number of employees are required.');
       return;
     }
-
-    // Construct the job request object
+    
+  
     const jobRequest: Job = {
-      ...this.jobDetails,       // Spread other job details
-      job: this.selectedjob,    // Selected job (subcategory)
-      category: this.selectedCategory, // Selected main category
-      organizationName:this.organizationName
+      ...this.jobDetails,
+      job: this.selectedjob,
+      category: this.selectedCategory,
+      area: this.selectedArea,
+      organizationName: this.organizationName,
+      createdDate: new Date().toISOString(), // Ensure new job has a timestamp
     };
-
-    // Save the job data
+  
     this.jobRequestService.saveJobData(jobRequest).subscribe({
       next: (response) => {
         console.log('Job Request Submitted Successfully:', response);
         this.jobRequested = true;
         this.closeDialog();
 
-        // Reload the page to show updated data
         window.location.reload();
+
       },
       error: (err) => {
         console.error('Failed to submit job request:', err);
       },
     });
   }
-
+  
 
 
   resetForm(): void {
     this.selectedCategory = '';
+    this.selectedArea = '';
     this.subcategories = [];
     this.jobDetails = {
       jobId: '',
@@ -538,6 +601,8 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       organizationName:'',
       level: '',
       area:'',
+      campType: '',
+      camp: '',
       location: '',
       typeOfJob: '',
       supervisorName: '',

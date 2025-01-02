@@ -63,6 +63,23 @@
   padding-bottom: 40px; 
 }
 
+.actions-cell {
+  text-align: center;
+}
+
+.actions-cell .flex {
+  align-items: center; /* Ensures vertical alignment of badge and button */
+}
+
+.actions-cell a {
+  display: block;
+  font-size: 0.75rem;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 5px; /* Adds space between the button row and the link */
+}
 
 
 

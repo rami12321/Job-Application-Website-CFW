@@ -115,7 +115,7 @@
         </div>
 
         <!-- Area -->
-        <div>
+        <!-- <div>
           <label for="area" class="block text-sm font-medium text-gray-700">Area:</label>
           <select
           id="area"
@@ -129,7 +129,38 @@
             <option value="Saida Area">Saida Area</option>
             <option value="Tyre Area">Tyre Area</option>
           </select>
+        </div> -->
+        <div>
+          <label for="area">Select Area:</label>
+          <select
+          id="area"
+          [(ngModel)]="selectedArea"
+          [ngModelOptions]="{standalone: true}"
+          (change)="onAreaChange(selectedArea)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >            <option *ngFor="let area of areaOptions" [value]="area">{{ area }}</option>
+          </select>
+
         </div>
+
+        <div >
+          <label for="campType">Select Camp Type:</label>
+          <select id="campType" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.campType" (change)="onCampTypeChange(jobDetails.campType)"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option *ngFor="let type of campTypeOptions" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <div >
+          <label for="camp">Select Camp:</label>
+          <select id="camp" [(ngModel)]="jobDetails.camp" [ngModelOptions]="{standalone: true}"
+          class="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
+          </select>
+        </div>
+
         <!-- Location -->
         <div>
           <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
@@ -240,9 +271,6 @@
   </div>
   </p-dialog>
 </div>
-
-
-
 
   <p-tabView (onTabChange)="onTabChange($event)">
   <!-- Waiting Tab -->
@@ -936,10 +964,157 @@ style="max-height: 85vh;"
         </div>
       </div>
     </div>
-    </div></p-tabPanel>
+    </div>
+  </p-tabPanel>
+
+
 <p-tabPanel header="Completed" [headerStyleClass]="'completed-tab'">
-  <p>Completed jobs will go here.</p>
-</p-tabPanel>
+  <div class="overflow-x-auto">
+    <div class="max-w-5xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+          <thead>
+            <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+              <th
+                *ngFor="let column of columns"
+                class="px-6 py-4 border-b border-gray-300 cursor-pointer hover:bg-gray-300"
+                (click)="sortTable(column.key)"
+              >
+                <span class="flex items-center">
+                  {{ column.label }}
+                  <svg
+                    class="w-4 h-4 ml-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path [attr.d]="getSortIconPath(column.key)" />
+                  </svg>
+                </span>
+              </th>
+              <!-- Action Column -->
+              <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Check if there are in-progress jobs -->
+            <ng-container *ngIf="paginatedCompletedJobs.length > 0; else noCompleteJobsTemplate">
+              <tr
+                *ngFor="let job of paginatedCompletedJobs"
+                class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
+              >
+                <td
+                  class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700 font-semibold"
+                  *ngFor="let column of columns"
+                  [ngClass]="{ 'no-wrap': column.key === 'jobId' }"
+                >
+                  {{ job[column.key] }}
+                </td>
+
+                <!-- Action Buttons -->
+                <td class="px-6 py-4 border-b border-gray-300 text-center">
+                  <div class="flex space-x-2 justify-center">
+
+
+                    <button
+                      class="bg-green-500 text-white hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:outline-none rounded-full p-2 shadow-md transition-colors flex items-center"
+                      aria-label="Info"
+                      (click)="openModal(job.jobId ?? 'N/A')"
+                    >
+                      <i class="pi pi-info text-lg"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Template for No In-Progress Jobs -->
+      <ng-template #noCompleteJobsTemplate>
+        <tr>
+          <td colspan="7" class="text-center py-8">
+            <div class="flex flex-col items-center justify-center">
+              <img src="/assets/images/no-data.svg" alt="No in-progress jobs" class="mx-auto w-20 h-20 md:w-32 md:h-32" />
+              <p class="text-gray-600 mt-4 text-sm md:text-base font-medium">No Completed jobs at the moment.</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Pagination Controls -->
+      <div class="mt-6 flex justify-between items-center">
+        <!-- Previous Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+          (click)="prevPage('completed')"
+          [disabled]="currentPageCompleted === 1"
+        >
+          Previous
+        </button>
+
+        <!-- Page Numbers -->
+        <div class="flex items-center space-x-2">
+          <span class="text-sm text-gray-600">
+            Page {{ currentPageCompleted }} of {{ Math.ceil(filteredCompletedJobs.length / itemsPerPage) }}
+          </span>
+        </div>
+
+        <!-- Next Button -->
+        <button
+          class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+          (click)="nextPage('completed')"
+          [disabled]="currentPageCompleted === Math.ceil(filteredCompletedJobs.length / itemsPerPage)"
+        >
+          Next
+        </button>
+      </div>
+
+      <!-- Search Input -->
+      <div class="mt-4 flex items-center space-x-2">
+        <input
+          type="text"
+          class="px-4 py-2 border border-gray-300 rounded-md"
+          placeholder="Search"
+          [(ngModel)]="searchQuery"
+        />
+      </div>
+    </div>
+
+
+
+
+
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      *ngIf="isModalOpen"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg w-full max-w-6xl mx-4 p-6 relative "
+      >
+      <button
+      class="close-button"
+      (click)="closeModal()"
+    >
+      &times;
+    </button>
+
+
+        <!-- Job Details Component -->
+        <app-job-request-details [jobId]="selectedJobId" *ngIf="selectedJobId">
+        </app-job-request-details>
+
+        <!-- Close Button -->
+
+      </div>
+    </div>
+
+
+    </div>
+  </p-tabPanel>
 </p-tabView>
 
 
