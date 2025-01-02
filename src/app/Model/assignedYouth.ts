@@ -13,6 +13,10 @@ export interface AssignedYouth {
     agreementAccepted: boolean;
   };
   YouthContract?: {
+    mobilePhone: string;
+
+    startDate: string | null;
+
     signature: string;
     agreementAccepted: boolean;
   };

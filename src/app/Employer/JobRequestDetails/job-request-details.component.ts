@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, OnChanges, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Job } from '../../Model/JobDetails';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { ActivatedRoute } from '@angular/router';
@@ -8,24 +8,35 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import SignaturePad from 'signature_pad';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { Employer } from '../../Model/Employer';
+import { EmployerService } from '../../Services/employer-service/employer-services.service';
 
 @Component({
   selector: 'app-job-request-details',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, FormsModule],
+  imports: [CommonModule, MatTooltipModule, FormsModule, PdfViewerModule],
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
-export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterViewChecked{
+export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterViewChecked, OnChanges{
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
+  private userId: string | null = null;
+
   isContractModalOpen = false;
   agreementStartDate: string | null = null;
+  isPdfModalOpen: boolean = false;
+  storedPdfUrl: string | null = null;
   agreementEndDate: string | null = null;
   isApprovalModalOpen: boolean = false;
   selectedYouth: any | null = null;
+  isEmployerContractModalOpen = false;
+isYouthContractModalOpen = false;
+public employer: Employer | undefined; 
+selectedContract: any = null;
   showConfirmationModal = false;
-  signatureImage: string | null = null;
+  public signatureImage: string | null = null;
   isSignatureModalOpen = false;
   @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
@@ -37,8 +48,11 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   isTermsModalOpen = false;
   isTermsAccepted = false;
   isEditingSignature = false;
+  uploadedFileName: string | null = null;
+  isDeleteModalOpen = false;
+uploadedFileUrl: string | null = null;
   modalAction: string = '';
-  selectedYouthName: string = '';
+  selectedYouthName: string | null = null;
   isSubmitModalOpen = false;
   userRole: string | null = localStorage.getItem('role');
   currentPage = 1;
@@ -49,6 +63,7 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   paginatedAssignedYouths: any[] = [];
   isrevertModalOpen = false;
   isSignaturePadInitialized = false;
+  completeConfirmationModal = false; // Track modal visibility
 
   agreementText: string = `
 UNITED NATIONS RELIEF AND WORKS AGENCY FOR PALESTINE REFUGEES IN THE NEAR EAST
@@ -121,7 +136,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     private route: ActivatedRoute,
     private router: Router,
     private youthService: YouthServiceService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private employerService: EmployerService
 
   ) { }
 
@@ -139,6 +155,10 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       } else {
         console.error('Invalid or missing jobId');
       }
+
+  
+        if (this.userId) {
+          this.fetchEmployerDetails();}
     });
     this.updatePagination();
     if (!this.signatureImage) {
@@ -148,15 +168,39 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
   }
 
-  openTermsModal() {
-    this.isTermsModalOpen = true;
+  private fetchEmployerDetails(): void {
+    this.employerService.getEmployerById(this.userId!).subscribe({
+      next: (data: Employer) => {
+        this.employer = data;
+ // After employer data is fetched, load the profile image
+      },
+      error: (err) => {
+        console.error('Error fetching employer data:', err);
+      },
+    });
   }
 
-  // Close the Terms Modal
-  closeTermsModal() {
-    this.isTermsModalOpen = false;
-  }
+  confirmApproval(): void {
+    if (this.selectedYouth) {
+      if (this.modalAction === 'approve') {
+        this.selectedYouth.action = 'approved';
+      } else if (this.modalAction === 'reset') {
+        this.selectedYouth.action = 'accepted';
+      }
 
+      this.jobRequestService
+        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .subscribe({
+          next: () => {
+            console.log(`Youth status updated to: ${this.selectedYouth.action}`);
+            this.fetchJobRequestDetails();
+          },
+          error: (err) => console.error('Error updating youth status:', err),
+        });
+      this.isApprovalModalOpen = false;
+
+    }
+  }
 
   submitContract() {
     if (!this.selectedYouth || !this.signatureImage || !this.agreementStartDate || !this.isTermsAccepted || !this.jobRequest) {
@@ -190,6 +234,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         next: (response) => {
           console.log('Contract saved successfully:', response);
           this.closeContractModal();
+          this.fetchJobRequestDetails();
 
         },
         error: (err) => {
@@ -201,6 +246,276 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   
   
   
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['jobId'] && this.jobId) {
+      this.fetchJobRequestDetails();
+    }
+    if (changes['userId'] && this.userId) {
+      this.fetchEmployerDetails(); // Fetch data when userId changes
+    }
+  }
+
+  fetchJobRequestDetails(): void {
+    if (!this.jobId) {
+      console.error('Missing jobId, cannot fetch data');
+      return;
+    }
+
+    this.jobRequestService.getJobById(this.jobId).subscribe({
+      next: (data: Job) => {
+        console.log('Job request fetched successfully:', data);
+        this.jobRequest = {
+          ...data,
+          assignedYouths: data.assignedYouths || [],
+        };
+        this.updatePagination();
+        this.initializeRowStates();
+
+      },
+      error: (err) => {
+        console.error('Error fetching job request:', err);
+      },
+    });
+  }
+
+
+  updateYouthStatus(youth: any, action: 'accepted' | 'rejected'): void {
+    if (!this.jobRequest || !this.jobId) return;
+
+
+    youth.action = action;
+
+
+    const updatedYouth = {
+      ...youth,
+      status: action === 'accepted' ? 'approved' : 'rejected',
+    };
+
+
+    this.jobRequestService
+      .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
+      .subscribe({
+        next: () => console.log(`Youth status updated successfully to: ${action}`),
+        error: (err) => console.error('Error updating youth status:', err),
+      });
+  }
+  
+  updateYouthWithWorkStatus(youthId: any, workStatus: boolean): void {
+    this.youthService.getYouthById(youthId).subscribe({
+      next: (youth) => {
+        if (youth) {
+          // Create the updated youth object with the new workStatus
+          const updatedYouth = { ...youth, workStatus };
+  
+          // Update the youth record in the database (in youthdb.json)
+          this.youthService.updateYouth(youthId, updatedYouth).subscribe({
+            next: () => console.log(`Successfully updated workStatus for youth ID: ${youthId}`),
+            error: (err) => console.error(`Error updating youth workStatus for ID: ${youthId}`, err),
+          });
+        } else {
+          console.error(`Youth record not found for ID: ${youthId}`);
+        }
+      },
+      error: (err) => console.error(`Error fetching youth data for ID: ${youthId}`, err),
+    });
+  }
+    
+
+
+  updateYouthAppliedJobs(
+    youthId: any,
+    currentJobTitle: string,
+    newStatus: string,
+    approvedJobRequestId?: string // Optional parameter for approved job request ID
+  ): void {
+    this.youthService.getYouthById(youthId).subscribe({
+      next: (youth) => {
+        if (youth && youth.appliedJob) {
+          console.log('Fetched youth record:', youth);
+  
+          // Update the applied jobs array
+          const updatedAppliedJobs = youth.appliedJob.map(
+            (job: { job: string; status: string; jobRequestId?: string }) => {
+              if (job.job === currentJobTitle) {
+                console.log(`Updating job: ${job.job} to status: ${newStatus}`);
+                return {
+                  ...job,
+                  status: newStatus,
+                  jobRequestId: newStatus === 'approved' ? approvedJobRequestId : undefined, // Add jobRequestId only for approved jobs
+                };
+              } else if (job.status === 'waiting') {
+                console.log(`Marking job: ${job.job} as rejected`);
+                return { ...job, status: 'rejected' }; // Reject all other jobs with 'waiting' status
+              }
+              return job; // Return unchanged jobs
+            }
+          );
+  
+          // Create the updated youth object
+          const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
+          console.log('Updated youth object:', updatedYouth);
+  
+          // Update the youth record in the database
+          this.youthService.updateYouth(youthId, updatedYouth).subscribe({
+            next: () =>
+              console.log(`Successfully updated applied jobs for youth ID: ${youthId}`),
+            error: (err) =>
+              console.error(`Error updating youth record for ID: ${youthId}`, err),
+          });
+        } else {
+          console.error(`Youth record or applied jobs not found for ID: ${youthId}`);
+        }
+      },
+      error: (err) =>
+        console.error(`Error fetching youth data for ID: ${youthId}`, err),
+    });
+  }
+  markAsCompleted(): void {
+    if (!this.jobRequest || !this.jobId) {
+      console.error('Job request or job ID is undefined.');
+      return;
+    }
+  
+    const updatedJobRequest = {
+      ...this.jobRequest,
+      status: 'completed',
+    };
+  
+    const safeJobId = this.jobId ?? '';
+  
+    // Update job request status
+    this.jobRequestService.updateJob(safeJobId, updatedJobRequest).subscribe({
+      next: () => {
+        console.log('Job request marked as completed successfully.');
+  
+        // Process assigned youths
+        if (this.jobRequest!.assignedYouths) {
+          this.jobRequest!.assignedYouths.forEach((youth) => {
+            this.youthService.getYouthById(youth.id).subscribe({
+              next: (fetchedYouth) => {
+                if (fetchedYouth) {
+                  const approvedJob = fetchedYouth.appliedJob.find(
+                    (job: any) => job.status === 'approved'
+                  );
+  
+                  if (approvedJob) {
+                    // Update the approved job's status to "completed"
+                    approvedJob.status = 'completed';
+  
+                    // Remove other jobs from the appliedJob array
+                    fetchedYouth.appliedJob = fetchedYouth.appliedJob.filter(
+                      (job: any) => job.status === 'completed'
+                    );
+  
+                    // Update the youth data
+                    const updatedYouth = {
+                      ...fetchedYouth,
+                      workStatus: false,
+                      beneficiary: true,
+                    };
+  
+                    this.youthService.updateYouth(youth.id, updatedYouth).subscribe({
+                      next: () =>
+                        console.log(`Updated youth ID: ${youth.id} successfully.`),
+                      error: (err) =>
+                        console.error(`Error updating youth ID: ${youth.id}`, err),
+                    });
+                  }
+                }
+              },
+              error: (err) =>
+                console.error(`Error fetching youth data for ID: ${youth.id}`, err),
+            });
+          });
+        }
+  
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      },
+      error: (err) => console.error('Error updating job request status:', err),
+    });
+  }
+  
+  
+  openTermsModal() {
+    this.isTermsModalOpen = true;
+  }
+  openEmployerContractModal(contract: any): void {
+    this.selectedContract = contract;
+    this.isEmployerContractModalOpen = true;
+  }
+  
+  openYouthContractModal(contract: any): void {
+    this.selectedContract = contract;
+    this.isYouthContractModalOpen = true;
+  }
+  
+  closeEmployerContractModal(): void {
+    this.isEmployerContractModalOpen = false;
+    this.selectedContract = null;
+  }
+  
+  closeYouthContractModal(): void {
+    this.isYouthContractModalOpen = false;
+    this.selectedContract = null;
+  }
+  // Close the Terms Modal
+  closeTermsModal() {
+    this.isTermsModalOpen = false;
+  }
+  openPdfModal(fileUrl: string): void {
+    this.storedPdfUrl = fileUrl; // Set the URL of the uploaded file
+    this.isPdfModalOpen = true;  // Open the modal
+  }
+
+  // Method to close the modal
+  closePdfModal(): void {
+    this.isPdfModalOpen = false; // Close the modal
+    this.storedPdfUrl = null;    // Clear the file URL
+  }
+
+  // Handle file selection and upload logic here
+  onFileSelected(event: Event, youth: any): void {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+    if (file) {
+      // Handle file upload logic (set URL, file name, etc.)
+      youth.uploadedFileName = file.name; // Set the file name
+      // Assuming you'll upload the file and get a URL back
+      youth.uploadedFileUrl = URL.createObjectURL(file); // Temporary URL for local display
+    }
+  }
+
+  openDeleteModal(youth: any): void {
+    console.log('Opening delete modal for youth', youth);
+    this.selectedYouthName = `${youth.firstName} ${youth.lastName}`;
+    this.isDeleteModalOpen = true;
+    this.selectedYouth = youth;
+
+    this.cdr.detectChanges();  // Manually trigger change detection
+
+  }
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.selectedYouthName = null;
+  }
+  opencompleteModal(): void {
+    this.showConfirmationModal = true;
+  }
+
+  // Cancel and close the modal
+  cancelcompleteModal(): void {
+    this.completeConfirmationModal = false;
+  }
+
+  // Confirm completion
+  confirmCompletion(): void {
+    this.markAsCompleted();
+    this.showConfirmationModal = false; // Close the modal
+  }
+
+
   // Accept the Terms
   acceptTerms() {
     this.isTermsAccepted = true;
@@ -213,6 +528,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.selectedYouth = youth;
   }
   openContractModal(youth: any) {
+    this.signatureImage = this.employer?.signature || null; 
+
     this.isContractModalOpen = true;
     this.selectedYouthName = `${youth.firstName} ${youth.lastName}`;
 
@@ -284,6 +601,31 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.signatureImage = null;
   }
 
+  deleteYouth(youth: any): void {
+    const jobId = this.jobId; // Use the component's jobId
+    if (!jobId) {
+      console.error('Job ID is undefined. Cannot delete youth.');
+      alert('An error occurred: Job ID is missing.');
+      return;
+    }
+  
+    const youthId = youth.id;
+  
+      this.jobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
+        next: () => {
+          this.jobRequest!.assignedYouths = this.jobRequest!.assignedYouths!.filter(
+            (y) => y.id !== youthId
+          ); // Update the list locally
+          this.updatePagination();
+        },
+        error: (err) => {
+          console.error('Failed to delete youth:', err);
+          alert('An error occurred while trying to delete the youth.');
+        },
+      });
+    
+  }
+  
   onAgreementStartDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const date = input.value;
@@ -325,28 +667,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.modalAction = '';
     this.selectedYouthName = '';
     this.selectedYouth = null;
-  }
-
-  confirmApproval(): void {
-    if (this.selectedYouth) {
-      if (this.modalAction === 'approve') {
-        this.selectedYouth.action = 'approved';
-      } else if (this.modalAction === 'reset') {
-        this.selectedYouth.action = 'accepted';
-      }
-
-      this.jobRequestService
-        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
-        .subscribe({
-          next: () => {
-            console.log(`Youth status updated to: ${this.selectedYouth.action}`);
-            this.fetchJobRequestDetails();
-          },
-          error: (err) => console.error('Error updating youth status:', err),
-        });
-      this.isApprovalModalOpen = false;
-
-    }
   }
 
 
@@ -397,56 +717,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['jobId'] && this.jobId) {
-      this.fetchJobRequestDetails();
-    }
-  }
-
-  fetchJobRequestDetails(): void {
-    if (!this.jobId) {
-      console.error('Missing jobId, cannot fetch data');
-      return;
-    }
-
-    this.jobRequestService.getJobById(this.jobId).subscribe({
-      next: (data: Job) => {
-        console.log('Job request fetched successfully:', data);
-        this.jobRequest = {
-          ...data,
-          assignedYouths: data.assignedYouths || [],
-        };
-        this.updatePagination();
-        this.initializeRowStates();
-
-      },
-      error: (err) => {
-        console.error('Error fetching job request:', err);
-      },
-    });
-  }
-
-
-  updateYouthStatus(youth: any, action: 'accepted' | 'rejected'): void {
-    if (!this.jobRequest || !this.jobId) return;
-
-
-    youth.action = action;
-
-
-    const updatedYouth = {
-      ...youth,
-      status: action === 'accepted' ? 'approved' : 'rejected',
-    };
-
-
-    this.jobRequestService
-      .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
-      .subscribe({
-        next: () => console.log(`Youth status updated successfully to: ${action}`),
-        error: (err) => console.error('Error updating youth status:', err),
-      });
-  }
   updateRowStates(): void {
     if (this.jobRequest) {
 
@@ -490,8 +760,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       console.error('Job request or job ID is undefined.');
       return;
     }
-
-
+  
+    // Get all the youths that are approved for this job request
     const updatedYouths =
       this.jobRequest.assignedYouths
         ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
@@ -499,92 +769,68 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           ...youth,
           status: youth.action === 'approved' ? 'approved' : youth.status,
         })) ?? [];
-
-
+  
     const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
-
+  
+    // Update the current job request with the approved youths
     const updatedJobRequest = {
       ...this.jobRequest,
       assignedYouths: approvedYouths,
       status: 'in-progress',
     };
-
-
-    this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
-      next: () => {
-        console.log('Job request submitted successfully.');
-
-        updatedYouths.forEach((youth) => {
-          const isApproved = youth.status === 'approved';
-
-
-          this.updateYouthAppliedJobs(
-            youth.id,
-            this.jobRequest?.job || '',
-            isApproved ? 'approved' : 'rejected',
-            isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
-          );
-          
-          
-        });
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      },
-      error: (err) => console.error('Error submitting job request:', err),
-    });
-  }
-
-
-  updateYouthAppliedJobs(
-    youthId: any,
-    currentJobTitle: string,
-    newStatus: string,
-    approvedJobRequestId?: string // Optional parameter for approved job request ID
-  ): void {
-    this.youthService.getYouthById(youthId).subscribe({
-      next: (youth) => {
-        if (youth && youth.appliedJob) {
-          console.log('Fetched youth record:', youth);
-  
-          // Update the applied jobs array
-          const updatedAppliedJobs = youth.appliedJob.map(
-            (job: { job: string; status: string; jobRequestId?: string }) => {
-              if (job.job === currentJobTitle) {
-                console.log(`Updating job: ${job.job} to status: ${newStatus}`);
-                return {
-                  ...job,
-                  status: newStatus,
-                  jobRequestId: newStatus === 'approved' ? approvedJobRequestId : undefined, // Add jobRequestId only for approved jobs
-                };
-              } else if (job.status === 'waiting') {
-                console.log(`Marking job: ${job.job} as rejected`);
-                return { ...job, status: 'rejected' }; // Reject all other jobs with 'waiting' status
-              }
-              return job; // Return unchanged jobs
+    this.jobRequestService.getAllJobRequests().subscribe({
+      next: (allJobRequests) => {
+        allJobRequests.forEach((jobRequest) => {
+          // Ensure jobId is a string, defaulting to an empty string if undefined
+          const safeJobId = jobRequest.jobId ?? '';
+    
+          jobRequest.assignedYouths?.forEach((youth) => {
+            if (approvedYouths.some((approvedYouth) => approvedYouth.id === youth.id)) {
+              // Remove the youth from other job requests
+              this.jobRequestService.unassignYouthFromJobRequest(safeJobId, youth.id).subscribe({
+                next: () => {
+                  console.log(`Youth ${youth.id} removed from job request ${safeJobId}`);
+                },
+                error: (err) => console.error(`Error unassigning youth from job request ${safeJobId}:`, err),
+              });
             }
-          );
-  
-          // Create the updated youth object
-          const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
-          console.log('Updated youth object:', updatedYouth);
-  
-          // Update the youth record in the database
-          this.youthService.updateYouth(youthId, updatedYouth).subscribe({
-            next: () =>
-              console.log(`Successfully updated applied jobs for youth ID: ${youthId}`),
-            error: (err) =>
-              console.error(`Error updating youth record for ID: ${youthId}`, err),
           });
-        } else {
-          console.error(`Youth record or applied jobs not found for ID: ${youthId}`);
-        }
+        });
+    
+        // Ensure jobId is a string
+        const safeJobIdForUpdate = this.jobId ?? '';
+    
+        // Now update the current job request with the new youths
+        this.jobRequestService.updateJob(safeJobIdForUpdate, updatedJobRequest).subscribe({
+          next: () => {
+            console.log('Job request submitted successfully.');
+            updatedYouths.forEach((youth) => {
+              const isApproved = youth.status === 'approved';
+    
+              // Update the workStatus directly in the youth record in the youthdb.json file
+              if (isApproved) {
+                this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
+              }
+    
+              this.updateYouthAppliedJobs(
+                youth.id,
+                this.jobRequest?.job || '',
+                isApproved ? 'approved' : 'rejected',
+                isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
+              );
+            });
+    
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          },
+          error: (err) => console.error('Error submitting job request:', err),
+        });
       },
-      error: (err) =>
-        console.error(`Error fetching youth data for ID: ${youthId}`, err),
+      error: (err) => console.error('Error fetching all job requests:', err),
     });
-  }
+  }    
+  
   
 
   initializeRowStates(): void {

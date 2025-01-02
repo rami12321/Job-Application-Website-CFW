@@ -12,125 +12,9 @@
     "supervisorPosition": "all",
     "supervisorEmail": "kqpkm@gmail.com",
     "supervisorPhone": "233423",
-    "status": "assigned",
+    "status": "completed",
     "category": "Cars & Motors Electrican",
-    "assignedYouths": [
-      {
-        "id": "34285768",
-        "username": "2-43228593",
-        "password": "qawsedrf12",
-        "role": "Youth",
-        "firstName": "Mohammad",
-        "fatherNameEn": "qasem",
-        "lastNameEn": "Sarhan",
-        "firstNameAr": "محمد",
-        "fatherNameAr": "قاسم",
-        "lastNameAr": "سرحان",
-        "gender": "Male",
-        "dob": "2000-06-21",
-        "nationality": "Palestinian Refugee in Lebanon",
-        "registrationStatus": "Registered",
-        "familyRegistrationNumber": "1-45245234",
-        "personalRegistrationNumber": "2-00425334",
-        "mobilePhone": "96134567889",
-        "whatsapp": "96134567889",
-        "emergencyPhone": "96134567889",
-        "emergencyRelation": "Parent",
-        "email": "bashar.alsayyed.20@gmail.com",
-        "area": "North Lebanon",
-        "fullAddress": "سعسع",
-        "headfa": "Mother",
-        "campType": "Inside Camp",
-        "camp": "Nahr El Bared Palestinian Refugee Camp",
-        "jobOpportunitySource": "WhatsApp Message from Employment Services Team",
-        "educationGraduate": "no",
-        "educationLevel": "University Degree, Technical Licence (LT), University Diploma",
-        "major": "Computer Science Programming",
-        "institution": "BAU",
-        "graduationDate": "2021-07-21",
-        "gradplace": "tripoli",
-        "employmentOpportunities": "Short-term employment opportunities with external organizations",
-        "aboutYourself": "test test test test test testtest test test test test test test test test",
-        "placedByKfw": "yes",
-        "kfwYear": "test",
-        "question2": "no",
-        "innovationLabGraduate": "yes",
-        "innovationLabGradtype": [
-          "Social Entrepreneurship"
-        ],
-        "disability": "yes",
-        "disabilitySupport": "yes",
-        "disabilityTypes": [
-          "Psychosocial / Mental Health"
-        ],
-        "employed": "yes",
-        "seekingEmploymentDuration": "",
-        "isPrcsVolunteer": "yes",
-        "isFireBrigadesVolunteer": "yes",
-        "isAlShifaaVolunteer": "yes",
-        "experiences": [
-          {
-            "type": "Volunteer",
-            "employerName": "Company",
-            "employerPhone": "71453467",
-            "area": "North Lebanon",
-            "employmentType": "Monthly",
-            "jobTitle": "development",
-            "startDate": "2024-09-10",
-            "endDate": "2024-12-18",
-            "salary": 300,
-            "tasks": "test"
-          }
-        ],
-        "trainings": [
-          {
-            "institution": "test",
-            "certificate": "test",
-            "area": "North Lebanon",
-            "durationFrom": "2024-10-15",
-            "durationTo": "2024-12-03"
-          }
-        ],
-        "arabic": "fluent",
-        "english": "good",
-        "french": "null",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "coverLetter": "C:\\fakepath\\Bashar's Resume.pdf",
-        "identityCard": "C:\\fakepath\\Bashar's Resume.pdf",
-        "registrationCard": "C:\\fakepath\\Bashar's Resume.pdf",
-        "degree": "C:\\fakepath\\Bashar's Resume.pdf",
-        "prcsProof": "C:\\fakepath\\Bashar's Resume.pdf",
-        "fireProof": "C:\\fakepath\\Bashar's Resume.pdf",
-        "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
-        "confirmation": "yes",
-        "confirmPassword": "qawsedrf12",
-        "status": "accepted",
-        "beneficiary": false,
-        "createdAt": "2024-12-17T12:34:56Z",
-        "appliedJob": [
-          {
-            "job": "Auto Electrician",
-            "status": "approved"
-          },
-          {
-            "job": "Diesel Mechanic",
-            "status": "rejected"
-          },
-          {
-            "job": "Auto Mechanic",
-            "status": "rejected"
-          }
-        ]
-      },
-      {
-        "id": "14305200",
-        "firstName": "Rami",
-        "lastName": "Abou Eid",
-        "dob": "2005-06-15",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "waiting"
-      }
-    ]
+    "assignedYouths": []
   },
   {
     "jobId": "L-98345612",
@@ -237,7 +121,7 @@
         "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
         "confirmation": "yes",
         "confirmPassword": "qawsedrf12",
-        "status": "accepted",
+        "status": "waiting",
         "notes": "asd",
         "appliedJob": [
           "Social Worker",
@@ -249,7 +133,9 @@
           "Administrative Support Officer"
         ],
         "beneficiary": true,
-        "createdAt": "2024-12-19T12:34:56Z"
+        "createdAt": "2024-12-19T12:34:56Z",
+        "isDisabled": false,
+        "action": "accepted"
       }
     ]
   },
@@ -266,7 +152,7 @@
     "supervisorPosition": "Senior Technician",
     "supervisorEmail": "nadia.seniortech@gmail.com",
     "supervisorPhone": "23647856",
-    "status": "in-progress",
+    "status": "completed",
     "category": "Cars & Motors Electrician",
     "assignedYouths": [
       {
@@ -278,36 +164,6 @@
         "status": "approved",
         "isDisabled": false,
         "action": "accepted"
-      },
-      {
-        "id": "G-54862319",
-        "firstName": "Nadia",
-        "lastName": "Kassem",
-        "dob": "1999-07-04",
-        "cv": "C:\\fakepath\\Nadia's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "H-29384567",
-        "firstName": "Kassem",
-        "lastName": "Omar",
-        "dob": "1995-02-18",
-        "cv": "C:\\fakepath\\Kassem's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
-      },
-      {
-        "id": "A-34295763",
-        "firstName": "Yousef",
-        "lastName": "Al-Sayed",
-        "dob": "1996-11-15",
-        "cv": "C:\\fakepath\\Yousef's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved"
       }
     ]
   },
@@ -337,21 +193,6 @@
         "status": "approved",
         "action": "approved",
         "isDisabled": false
-      },
-      {
-        "id": "16479899",
-        "firstName": "bashar",
-        "lastName": "alsayyed",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "approved",
-        "action": "approved",
-        "isDisabled": false,
-        "EmployerContract": {
-          "startDate": "2024-12-23",
-          "signature": "data:image/png;base64,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",
-          "agreementAccepted": true
-        }
       }
     ]
   },
@@ -368,7 +209,7 @@
     "supervisorPosition": "Service Manager",
     "supervisorEmail": "zeinab.servicemanager@gmail.com",
     "supervisorPhone": "27893456",
-    "status": "in-progress",
+    "status": "completed",
     "category": "Cars & Motors Electrician",
     "assignedYouths": [
       {
@@ -379,7 +220,12 @@
         "cv": "C:\\fakepath\\Ahmed's Resume.pdf",
         "status": "approved",
         "isDisabled": false,
-        "action": "approved"
+        "action": "approved",
+        "EmployerContract": {
+          "startDate": "2025-01-20",
+          "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAADn5JREFUeF7t3dmvrfcYB/Bvq2poDSWGJubEcIFQDTeGGmO4oTFcCIkrRMRf4Y9whxsJEcSFKWaNoUiIlihKTA0lIuap1q95jwhnd699PI+z93o+KznpOadrPft9Ps/vJN+877t+7yXxIkCAAAECBAgQKBW4pLSaYgQIECBAgAABAhGwLAICBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKESBAgAABAgQELGuAAAECBAgQIFAsIGAVgypHgAABAgQIEBCwrAECBAgQIECAQLGAgFUMqhwBAgQIECBAQMCyBggQIECAAAECxQICVjGocgQIECBAgAABAcsaIECAAAECBAgUCwhYxaDKERgm8IQkT0ny0iTXJLkqyfuTvC3JHcMstEuAAIF/CQhYFgMBAicReFySFyR50y5IPekuPrj+37dOUth7CRAgcEgCAtYhTVMvBOoE7pXk+iSPSfLEJNclefCe5d+X5DXOYO2p5W0ECBykgIB1kGPVFIETC6zLe69K8uotVO1T4G9Jvri7PPiVJLfuPn9TkluS/HSfD3sPAQIEDllAwDrk6eqNwPkFLk/yzC1IPSvJ6/eEWkHqxiQ3JPne9vs9P+ptBAgQmCUgYM2at25nCjw0yeuSrDB1bZKrj2H4y3Zmap2d+k2SD+/ObN08k07XBAgQuDABAevC3HyKwGkWuGK7Cf0lSZ6/x4Hevl3e+2iSd+4+e9sen/EWAgQIELgLAQHL8iBw9gUuS/K8JM/e3QP12l1IetQeLX17C1XvSfIBN6TvIeYtBAgQOIGAgHUCLG8lcIoErkzy9i1MPTXJw485tp8k+VKS9Q2/r+7uu/rBKerFoRAgQODgBASsgxuphg5UYG2b8IokT0/y1iSX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",
+          "agreementAccepted": true
+        }
       },
       {
         "id": "51379842",
@@ -410,56 +256,6 @@
         "status": "approved",
         "isDisabled": false,
         "action": "approved"
-      }
-    ]
-  },
-  {
-    "jobId": "L-93852219",
-    "employerId": "F-70583249",
-    "job": "Auto Electrician",
-    "title": "intern",
-    "numEmployees": 6,
-    "level": "junior",
-    "location": "Lebanon",
-    "typeOfJob": "Full-Time",
-    "supervisorName": "Rami",
-    "supervisorPosition": "Workshop Manager",
-    "supervisorEmail": "rami.workshopmanager@gmail.com",
-    "supervisorPhone": "24987654",
-    "status": "waiting-E",
-    "category": "Cars & Motors Electrician"
-  },
-  {
-    "jobId": "S-28390228",
-    "employerId": "F-70583249",
-    "job": "Nurse",
-    "title": "hadh",
-    "numEmployees": 7,
-    "level": "mid",
-    "location": "",
-    "typeOfJob": "hybrid",
-    "supervisorName": "asdasd",
-    "supervisorPosition": "sdaasd",
-    "supervisorEmail": "dasda@asddaasd",
-    "supervisorPhone": "1e123",
-    "status": "in-progress",
-    "organizationName": "ahmad",
-    "category": "Health",
-    "assignedYouths": [
-      {
-        "id": "34285768",
-        "firstName": "Mohammad",
-        "lastName": "Sarhan",
-        "dob": "2000-06-21",
-        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
-        "status": "approved",
-        "isDisabled": false,
-        "action": "approved",
-        "EmployerContract": {
-          "startDate": "2024-12-18",
-          "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAADz1JREFUeF7t3UmLbWcVBuA3drHFaGIXxSbRqKDYd7EBBQca/AOOguDAseBEnDj25zjVgYqa2Ec09j3GLkZsEjWK1pJ94CI31EnVd+quVec5UCR4637n3c/akZd99vn2dfEiQIAAAQIECBBYKnDd0tUsRoAAAQIECBAgEAXLSUCAAAECBAgQWCygYC0GtRwBAgQIECBAQMFyDhAgQIAAAQIEFgsoWItBLUeAAAECBAgQULCcAwQIECBAgACBxQIK1mJQyxEgQIAAAQIEFCznAAECBAgQIEBgsYCCtRjUcgQIECBAgAABBcs5QIAAAQIECBBYLKBgLQa1HAECBAgQIEBAwXIOECBAgAABAgQWCyhYi0EtR4AAAQIECBBQsJwDBAgQIECAAIHFAgrWYlDLESBAgAABAgQULOcAAQIECBAgQGCxgIK1GNRyBAgQIECAAAEFyzlAgAABAgQIEFgsoGAtBrUcAQIECBAgQEDBcg4QIECAAAECBBYLKFiLQS1HgAABAgQIEFCwnAMECBAgQIAAgcUCCtZiUMsRIECAAAECBBQs5wABAgQIECBAYLGAgrUY1HIECBAgQIAAAQXLOUCAAAECBAgQWCygYC0GtRwBAgQIECBAQMFyDhAgQIAAAQIEFgsoWItBLUeAAAECBAgQULCcAwQIECBAgACBxQIK1mJQyxEgQIAAAQIEFCznAAECBAgQIEBgsYCCtRjUcgQIECBAgAABBcs5QIAAAQIECBBYLKBgLQa1HAECBAgQIEBAwXIOECBAgAABAgQWCyhYi0EtR4AAAQIECBBQsJwDBAgQIECAAIHFAgrWYlDLESBAgAABAgQULOcAAQIECBAgQGCxgIK1GNRyBAgQIECAAAEFyzlAgAABAgQIEFgsoGAtBrUcAQIECBAgQEDBcg4QIECAAAECBBYLKFiLQS1HgAABAgQIEFCwnAMECBAgQIAAgcUCCtZiUMsRIECAAAECBBQs5wABAgQIECBAYLGAgrUY1HIECBAgQIAAAQXLOUCAAIHDCtyU5EPbW7wmyeOT3JLk1Un+meSdSb552AhWJ0DgogUUrIsW934ECFxGgZuTvC7JHUluTPLuJM/a40AfTnJ7kq/u8bt+hQCBQQIK1qBhiUqAwDUTeEOSZyd5wnbl6TnbP29N8oIkf0/yxKuk+1eSu5LUP6tMfTnJv5Pck+SPSX62/VyzA/PGBAgcRkDBOoyrVQkQmCPwpJOSc2eSx2xXk6oIvSlJ/f/jK085jCpWVZLu3UrT95L8JskDSb41h0BSAgRWCyhYq0WtR4BAN4FXJXlLkroX6s3bPVD1sVx9lHfa6wdJ7tuuPtWVqN9fUZy+luQvpy3gzwkQOE4BBes45+6oCVwmgduS3JDk7Unqo7sqUnUF6mlJXnLKgX47yf0n9059JcmDSX6c5JfbT/27FwECBM4koGCdic1fIkDgAgXqqlPd31T3O1VpqhvIX5/khUn+tJWrq8X5c5JvJPnt9hFe/U7dTF5Xne5O8tAFHoO3IkDgyAQUrCMbuMMl0FDgsUk+sN1AXuWpbiSv7QxenuSpj5C3ytFPkvwhSX2M9+sk39k+wvtdku82PE6RCBA4IgEF64iG7VAJXEOB5yV5cZJXbHtA1cd4b9y2MnjRFbn+k+RL2z1Pu4/r6qO7uuJUrypVv7iGx+GtCRAgsJeAgrUXk18iQGAPgdo48/rthvIqU7WZZn2MV9/Ee8r29+uKU11p+lWSH23fuKtv3v1jK1Z7vI1fIUCAQH8BBav/jCQk0EGgtjJ4x1ag6p6ouhfqtVtxqm/p1Z/vXnWP02e27QuqPH0/SV2Z+uJ2ZarD8chAgACBgwooWAfltTiBMQJ19akKVH0Lr646PTfJy7a9oepK1NVetd9T3etUm2fWnk9179NuH6gxBy4oAQIEDiGgYB1C1ZoEegk8PcmHt6tH79m+RffebSfxuifqtFdtplnbGNS9T/UtvHpunh3IT1Pz5wQIHLWAgnXU43fwl0SgvnH3ke1juPdt36h72xmP7QvbvVE/T/L1bS3PyTsjpr9GgMDxCihYxzt7Rz5HoJ6B98EkL03yriSP2+MRLqcdXX1Trz7iq93I6+pUXZGq7Q68CBAgQGCBgIK1ANESBBYI1Dft6qd2Hq+f9++xC/lpb/vT7R6p2myzHixc90nVzuX1uBcvAgQIEDiggIJ1QFxLE/g/gdq6oMpT7f90c5K3blsZ1BWqs77+tt0Xtdtcs244r//t82dd0N8jQIAAgfMLKFjnN7QCgSsF6qHC9e273f5PtcFmPdblGedg2j3yZfcNvXu3Z+XVtgdeBAgQINBQQMFqOBSR2gnUN+1uT/LXJPWNunqUS32cd2OS+m9od2/UIz3WZZ8Dqmfq1cd39dy82vqgbjB/IMnn9vnLfocAAQIEegkoWL3mIc1hBepjufp4rj6Sq3+/bXtQcG1jUJtl3nDYt//fg4mrRNUjYOqn7omqb+vdc+D3tTwBAgQIXLCAgnXB4N7uoAIf2x4QXI9jeeb2sytV9c27i3jVLub1zby6sfz+rUTVTeV3XcSbew8CBAgQ6CGgYPWYgxTnF/hokk+df5m9V6grUbsNOD+b5IeuRO1t5xcJECBw6QUUrEs/4qM5wE8m+cQBjvbhky0T7k5y38nHi5/e9ouqfaMePMB7WZIAAQIELomAgnVJBukw8uSTR8F8PMlNWxmqG9PreXr1uj5Jfbvvaud73Ui+uwdqt+VBXZmq7Q7qo8a6UuVFgAABAgQelYCC9ai4/PJwgecnuXXbufyh4cciPgECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCihYM+cmNQECBAgQINBYQMFqPBzRCBAgQIAAgZkCCtbMuUlNgAABAgQINBZQsBoPRzQCBAgQIEBgpoCCNXNuUhMgQIAAAQKNBRSsxsMRjQABAgQIEJgpoGDNnJvUBAgQIECAQGMBBavxcEQjQIAAAQIEZgooWDPnJjUBAgQIECDQWEDBajwc0QgQIECAAIGZAgrWzLlJTYAAAQIECDQWULAaD0c0AgQIECBAYKaAgjVzblITIECAAAECjQUUrMbDEY0AAQIECBCYKaBgzZyb1AQIECBAgEBjAQWr8XBEI0CAAAECBGYKKFgz5yY1AQIECBAg0FhAwWo8HNEIECBAgACBmQIK1sy5SU2AAAECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCihYM+cmNQECBAgQINBYQMFqPBzRCBAgQIAAgZkCCtbMuUlNgAABAgQINBZQsBoPRzQCBAgQIEBgpoCCNXNuUhMgQIAAAQKNBRSsxsMRjQABAgQIEJgpoGDNnJvUBAgQIECAQGMBBavxcEQjQIAAAQIEZgooWDPnJjUBAgQIECDQWEDBajwc0QgQIECAAIGZAgrWzLlJTYAAAQIECDQWULAaD0c0AgQIECBAYKaAgjVzblITIECAAAECjQUUrMbDEY0AAQIECBCYKaBgzZyb1AQIECBAgEBjAQWr8XBEI0CAAAECBGYKKFgz5yY1AQIECBAg0FhAwWo8HNEIECBAgACBmQIK1sy5SU2AAAECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCihYM+cmNQECBAgQINBYQMFqPBzRCBAgQIAAgZkCCtbMuUlNgAABAgQINBZQsBoPRzQCBAgQIEBgpoCCNXNuUhMgQIAAAQKNBRSsxsMRjQABAgQIEJgpoGDNnJvUBAgQIECAQGMBBavxcEQjQIAAAQIEZgooWDPnJjUBAgQIECDQWEDBajwc0QgQIECAAIGZAgrWzLlJTYAAAQIECDQWULAaD0c0AgQIECBAYKaAgjVzblITIECAAAECjQUUrMbDEY0AAQIECBCYKaBgzZyb1AQIECBAgEBjAQWr8XBEI0CAAAECBGYKKFgz5yY1AQIECBAg0FhAwWo8HNEIECBAgACBmQIK1sy5SU2AAAECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCihYM+cmNQECBAgQINBYQMFqPBzRCBAgQIAAgZkCCtbMuUlNgAABAgQINBZQsBoPRzQCBAgQIEBgpoCCNXNuUhMgQIAAAQKNBRSsxsMRjQABAgQIEJgpoGDNnJvUBAgQIECAQGMBBavxcEQjQIAAAQIEZgooWDPnJjUBAgQIECDQWEDBajwc0QgQIECAAIGZAgrWzLlJTYAAAQIECDQWULAaD0c0AgQIECBAYKaAgjVzblITIECAAAECjQUUrMbDEY0AAQIECBCYKaBgzZyb1AQIECBAgEBjAQWr8XBEI0CAAAECBGYKKFgz5yY1AQIECBAg0FhAwWo8HNEIECBAgACBmQIK1sy5SU2AAAECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCihYM+cmNQECBAgQINBYQMFqPBzRCBAgQIAAgZkCCtbMuUlNgAABAgQINBZQsBoPRzQCBAgQIEBgpoCCNXNuUhMgQIAAAQKNBRSsxsMRjQABAgQIEJgpoGDNnJvUBAgQIECAQGMBBavxcEQjQIAAAQIEZgooWDPnJjUBAgQIECDQWEDBajwc0QgQIECAAIGZAgrWzLlJTYAAAQIECDQWULAaD0c0AgQIECBAYKaAgjVzblITIECAAAECjQUUrMbDEY0AAQIECBCYKaBgzZyb1AQIECBAgEBjAQWr8XBEI0CAAAECBGYKKFgz5yY1AQIECBAg0FhAwWo8HNEIECBAgACBmQIK1sy5SU2AAAECBAg0FlCwGg9HNAIECBAgQGCmgII1c25SEyBAgAABAo0FFKzGwxGNAAECBAgQmCmgYM2cm9QECBAgQIBAYwEFq/FwRCNAgAABAgRmCvwXVwy5yTsVcKkAAAAASUVORK5CYII=",
-          "agreementAccepted": true
-        }
       }
     ]
   },
@@ -587,39 +383,6 @@
     ]
   },
   {
-    "jobId": "A-58164699",
-    "employerId": "F-70583249",
-    "job": "Assistant news editor",
-    "title": "dasd",
-    "numEmployees": 5,
-    "level": "senior",
-    "location": "asd",
-    "typeOfJob": "",
-    "supervisorName": "",
-    "supervisorPosition": "",
-    "supervisorEmail": "",
-    "supervisorPhone": "",
-    "status": "waiting-E",
-    "category": "Media"
-  },
-  {
-    "jobId": "N-20183392",
-    "employerId": "F-70583249",
-    "job": "Arts Animator",
-    "title": "New artist",
-    "organizationName": "ahmad",
-    "numEmployees": 24,
-    "level": "mid",
-    "location": "dasdas",
-    "typeOfJob": "onsite",
-    "supervisorName": "daaaa",
-    "supervisorPosition": "daaaa",
-    "supervisorEmail": "daaas@gmail.com",
-    "supervisorPhone": "9604512578",
-    "status": "waiting-E",
-    "category": "Media"
-  },
-  {
     "jobId": "Y-17744944",
     "employerId": "F-70583249",
     "job": "Auto Electrician",
@@ -628,12 +391,35 @@
     "numEmployees": 1,
     "level": "junior",
     "area": "North Lebanon Area",
+    "campType": "Inside Camp",
+    "camp": "Nahr El Bared Palestinian Refugee Camp",
     "location": "Akkar, LBN",
     "typeOfJob": "onsite",
     "supervisorName": "Rami",
     "supervisorPosition": "Manager",
     "supervisorEmail": "test@gmail.com",
     "supervisorPhone": "97979797",
+    "status": "completed",
+    "category": "Cars & Motors Electrican",
+    "assignedYouths": []
+  },
+  {
+    "jobId": "E-56440061",
+    "employerId": "F-70583249",
+    "job": "Auto Electrician",
+    "title": "Web Developer",
+    "organizationName": "ahmad",
+    "numEmployees": 1,
+    "level": "junior",
+    "area": "North Lebanon",
+    "campType": "Inside Camp",
+    "camp": "Nahr El Bared Palestinian Refugee Camp",
+    "location": "Akkar, LBN",
+    "typeOfJob": "hybrid",
+    "supervisorName": "Rami",
+    "supervisorPosition": "Manager",
+    "supervisorEmail": "asdads@gmail.com",
+    "supervisorPhone": "23434",
     "status": "in-progress",
     "category": "Cars & Motors Electrican",
     "assignedYouths": [
@@ -641,17 +427,75 @@
         "id": "14305200",
         "firstName": "Rami",
         "lastName": "Abou Eid",
-        "dob": "1998-05-10",
-        "cv": "C:\\fakepath\\Ahmed's Resume.pdf",
+        "dob": "2005-06-15",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
         "status": "approved",
         "isDisabled": false,
         "action": "approved",
         "EmployerContract": {
-          "startDate": "2024-12-26",
-          "signature": "data:image/png;base64,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gAABAgS6CAhYXZh1QoAAAQIECIwkIGCNtNrmSoAAAQIECHQRELC6MOuEAAECBAgQGElAwBpptc2VAAECBAgQ6CIgYHVh1gkBAgQIECAwkoCANdJqmysBAgQIECDQRUDA6sKsEwIECBAgQGAkAQFrpNU2VwIECBAgQKCLgIDVhVknBAgQIECAwEgCAtZIq22uBAgQIECAQBcBAasLs04IECBAgACBkQQErJFW21wJECBAgACBLgICVhdmnRAgQIAAAQIjCQhYI622uRIgQIAAAQJdBASsLsw6IUCAAAECBEYSELBGWm1zJUCAAAECBLoICFhdmHVCgAABAgQIjCQgYI202uZKgAABAgQIdBEQsLow64QAAQIECBAYSUDAGmm1zZUAAQIECBDoIiBgdWHWCQECBAgQIDCSgIA10mqbKwECBAgQINBFQMDqwqwTAgQIECBAYCQBAWuk1TZXAgQIECBAoIuAgNWFWScECBAgQIDASAIC1kirba4ECBAgQIBAFwEBqwuzTggQIECAAIGRBASskVbbXAkQIECAAIEuAgJWF2adECBAgAABAiMJCFgjrba5EiBAgAABAl0EBKwuzDohQIAAAQIERhIQsEZabXMlQIAAAQIEuggIWF2YdUKAAAECBAiMJCBgjbTa5kqAAAECBAh0ERCwujDrhAABAgQIEBhJQMAaabXNlQABAgQIEOgiIGB1YdYJAQIECBAgMJKAgDXSapsrAQIECBAg0EVAwOrCrBMCBAgQIEBgJAEBa6TVNlcCBAgQIECgi4CA1YVZJwQIECBAgMBIAgLWSKttrgQIECBAgEAXAQGrC7NOCBAgQIAAgZEEBKyRVttcCRAgQIAAgS4CAlYXZp0QIECAAAECIwkIWCOttrkSIECAAAECXQQErC7MOiFAgAABAgRGEhCwRlptcyVAgAABAgS6CAhYXZh1QoAAAQIECIwkIGCNtNrmSoAAAQIECHQRELC6MOuEAAECBAgQGElAwBpptc2VAAECBAgQ6CIgYHVh1gkBAgQIECAwkoCANdJqmysBAgQIECDQRUDA6sKsEwIECBAgQGAkAQFrpNU2VwIECBAgQKCLgIDVhVknBAgQIECAwEgCAtZIq22uBAgQIECAQBcBAasLs04IECBAgACBkQQErJFW21wJECBAgACBLgICVhdmnRAgQIAAAQIjCQhYI622uRIgQIAAAQJdBASsLsw6IUCAAAECBEYSELBGWm1zJUCAAAECBLoICFhdmHVCgAABAgQIjCQgYI202uZKgAABAgQIdBEQsLow64QAAQIECBAYSUDAGmm1zZUAAQIECBDoIiBgdWHWCQECBAgQIDCSgIA10mqbKwECBAgQINBFQMDqwqwTAgQIECBAYCQBAWuk1TZXAgQIECBAoIuAgNWFWScECBAgQIDASAIC1kirba4ECBAgQIBAFwEBqwuzTggQIECAAIGRBASskVbbXAkQIECAAIEuAv8FoAQd2JjQxdcAAAAASUVORK5CYII=",
+          "startDate": "2025-01-01",
+          "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAADA9JREFUeF7t3c+r7HMcx/HXTUREpNyNQrHARpQluropa2EnC0WxkbJk528gZaUkuhu37oZc+Rnltw3KQmFhoyzk13z5WKh7mpnveU3MzONs/Drzuvc85r14ds6YeyQ+CBAgQIAAAQIEqgJHqmvGCBAgQIAAAQIEIrAcAQECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILB25wYuTXJ9kluT3DL++tn4d7vzVfpKCBAgQIDAFggIrC14kpKcneSBJJcnuSbJBUkuSXJVkouXfAlPLv77E9vxZfpdEiBAgACB3RAQWP+/5/GGEU+3J7ktydXjn+f+Tq9L8vncB3scAQIECBAgsL6AwFrfrP2Is5LcO74z9ViSc2f+Am8l+SXJJ0l+TDL9ePDFmVseRoAAAQIECBxCQGAdAu8QDz2e5P4kd6+58d3iMV8keTPJe0l+GjH1aZLf19zy6QQIECBAgMCGBATWhmAPmH1w8R2qp5JcuMIv+06SH5J8kGT6+6+TfLnC43wKAQIECBAg8B8LCKzNPQHnJLknyZWL7zI9suR1VD8neSPJq0k+SnJqc78tywQIECBAgMCmBQRWT/iiEVJ3Jrl5yewfSd4fIfX2iKvpx30+CBAgQIAAgR0QEFjznsSbkhwdr3s6tvgR3h1Jrl1hanrd1HNJXho//lvhIT6FAAECBAgQ2DYBgXXwM3Z+kseTXJZkCqrp7RPmfEyvnXo2yQtJvpoz4DEECBAgQIDAdgkIrH8/X1NIPTzef2p6U885H7+N/8vvlSQve2H6HEKPIUCAAAEC2y0gsP5+/q5Ict/ibQ8eHe+Svs6zOr2e6t3xOqqTSU57y4R1+HwuAQIECBDYPYF9D6yHFm/Iedf4c/vWeXa/XXyX6/URU08nmSLLBwECBAgQIEDgL4F9DazXZkTV9PqpE4t3XH8+ycdJfnVDBAgQIECAAIEzCexrYJ3pO07TG3remGT67tR5Sb5JMv3Ib3p/qg+TfO+ECBAgQIAAAQKrCOxrYP3zHazpHdKfGe+U7g9EXuVifA4BAgQIECCwVGBfA2spjE8gQIAAAQIECMwVEFhz5TyOAAECBAgQIHCAgMByGgQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAwJ9svk7J2gTYOgAAAABJRU5ErkJggg==",
           "agreementAccepted": true
         }
       }
     ]
+  },
+  {
+    "jobId": "J-91848683",
+    "employerId": "F-70583249",
+    "job": "Auto Electrician",
+    "title": "Data Entry Clerk",
+    "organizationName": "ahmad",
+    "numEmployees": 1,
+    "level": "junior",
+    "area": "North Lebanon",
+    "campType": "Outside Camp",
+    "camp": "",
+    "location": "Akkar",
+    "typeOfJob": "hybrid",
+    "supervisorName": "Osama Al Ali",
+    "supervisorPosition": "jlnk",
+    "supervisorEmail": "",
+    "supervisorPhone": "",
+    "status": "waiting-E",
+    "category": "Cars & Motors Electrican",
+    "createdDate": "2025-01-02T11:58:27.986Z"
+  },
+  {
+    "jobId": "W-53468719",
+    "employerId": "F-70583249",
+    "job": "Interior Designer",
+    "title": "Web Developer",
+    "organizationName": "ahmad",
+    "numEmployees": 1,
+    "level": "mid",
+    "area": "Saida",
+    "campType": "Inside Camp",
+    "camp": "Mieh Mieh Palestinian Refugee Camp",
+    "location": "Tripoli, North, LBN",
+    "typeOfJob": "hybrid",
+    "supervisorName": "Osama Al Ali",
+    "supervisorPosition": "ccd",
+    "supervisorEmail": "ousama.al.ali@live.com",
+    "supervisorPhone": "7678",
+    "status": "in-progress",
+    "category": "Construction",
+    "createdDate": "2025-01-02T11:59:02.330Z",
+    "assignedYouths": [
+      {
+        "id": "14305200",
+        "firstName": "Rami",
+        "lastName": "Abou Eid",
+        "dob": "2005-06-15",
+        "cv": "C:\\fakepath\\Bashar's Resume.pdf",
+        "status": "approved",
+        "isDisabled": false,
+        "action": "approved",
+        "EmployerContract": {
+          "startDate": "2025-01-01",
+          "signature": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAADA9JREFUeF7t3c+r7HMcx/HXTUREpNyNQrHARpQluropa2EnC0WxkbJk528gZaUkuhu37oZc+Rnltw3KQmFhoyzk13z5WKh7mpnveU3MzONs/Drzuvc85r14ds6YeyQ+CBAgQIAAAQIEqgJHqmvGCBAgQIAAAQIEIrAcAQECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILDcAAECBAgQIECgLCCwyqDmCBAgQIAAAQICyw0QIECAAAECBMoCAqsMao4AAQIECBAgILB25wYuTXJ9kluT3DL++tn4d7vzVfpKCBAgQIDAFggIrC14kpKcneSBJJcnuSbJBUkuSXJVkouXfAlPLv77E9vxZfpdEiBAgACB3RAQWP+/5/GGEU+3J7ktydXjn+f+Tq9L8vncB3scAQIECBAgsL6AwFrfrP2Is5LcO74z9ViSc2f+Am8l+SXJJ0l+TDL9ePDFmVseRoAAAQIECBxCQGAdAu8QDz2e5P4kd6+58d3iMV8keTPJe0l+GjH1aZLf19zy6QQIECBAgMCGBATWhmAPmH1w8R2qp5JcuMIv+06SH5J8kGT6+6+TfLnC43wKAQIECBAg8B8LCKzNPQHnJLknyZWL7zI9suR1VD8neSPJq0k+SnJqc78tywQIECBAgMCmBQRWT/iiEVJ3Jrl5yewfSd4fIfX2iKvpx30+CBAgQIAAgR0QEFjznsSbkhwdr3s6tvgR3h1Jrl1hanrd1HNJXho//lvhIT6FAAECBAgQ2DYBgXXwM3Z+kseTXJZkCqrp7RPmfEyvnXo2yQtJvpoz4DEECBAgQIDAdgkIrH8/X1NIPTzef2p6U885H7+N/8vvlSQve2H6HEKPIUCAAAEC2y0gsP5+/q5Ict/ibQ8eHe+Svs6zOr2e6t3xOqqTSU57y4R1+HwuAQIECBDYPYF9D6yHFm/Iedf4c/vWeXa/XXyX6/URU08nmSLLBwECBAgQIEDgL4F9DazXZkTV9PqpE4t3XH8+ycdJfnVDBAgQIECAAIEzCexrYJ3pO07TG3remGT67tR5Sb5JMv3Ib3p/qg+TfO+ECBAgQIAAAQKrCOxrYP3zHazpHdKfGe+U7g9EXuVifA4BAgQIECCwVGBfA2spjE8gQIAAAQIECMwVEFhz5TyOAAECBAgQIHCAgMByGgQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAgMByAwQIECBAgACBsoDAKoOaI0CAAAECBAgILDdAgAABAgQIECgLCKwyqDkCBAgQIECAwJ9svk7J2gTYOgAAAABJRU5ErkJggg==",
+          "agreementAccepted": true
+        }
+      }]
   }
 ]

@@ -6,6 +6,7 @@ export interface Youth {
   username: string;
   password: string;
   role: string;
+  beneficiary?:boolean;
 
   // Personal Information
   firstNameEn: string;
@@ -78,6 +79,6 @@ export interface Youth {
   status: 'accepted' | 'rejected' | 'pending';
   notes?:string;
   jobCategory?:string[];
-  appliedJob?: { job: string; status: string }[]; // Updated to hold job and status
-
+  appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
+  workStatus?: boolean;
 }
