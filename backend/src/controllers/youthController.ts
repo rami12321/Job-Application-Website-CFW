@@ -400,7 +400,8 @@ const filteredYouths = youths.filter((y) =>
     id:y.id,
     name: y.firstNameEn+ ' ' +y.lastNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
     notes: y.notes || [] ,// Default to empty array if no notes available
-    beneficiary: y.beneficiary ||false // Default to empty array if no notes available
+    beneficiary: y.beneficiary ||false ,// Default to empty array if no notes available
+    workStatus:y.workStatus||false
   }));
 
   // Send the response with the matching youths

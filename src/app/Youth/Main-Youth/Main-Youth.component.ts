@@ -104,9 +104,9 @@ export class MainYouthComponent implements OnInit {
       this.youthService.getAppliedJobById(youthId).subscribe(
         (response) => {
 
-          if (response.appliedJob && Array.isArray(response.appliedJob)) {
+          if (response.appliedJobs && Array.isArray(response.appliedJobs)) {
             // Map over the applied jobs
-            const allJobs = response.appliedJob.map((jobEntry, index) => ({
+            const allJobs = response.appliedJobs.map((jobEntry, index) => ({
               title: jobEntry.job,
               req: `REQ-${index + 1}`,
               status: jobEntry.status || 'waiting',
