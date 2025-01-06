@@ -10,6 +10,9 @@
     'border-radius': '8px',
     'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
   }"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
 >
   <ng-template pTemplate="caption">
     <p-multiSelect
@@ -65,8 +68,25 @@
         *ngFor="let col of cols"
         class="border-b border-r px-2 py-1 text-sm text-gray-600"
       >
-        <!-- Using @if for conditional rendering -->
-        @if (col.header === 'Major') {
+        @if (col.field === 'isEdited') {
+        <p-dropdown
+          [options]="[
+            { label: 'All', value: null },
+            { label: 'Edited', value: true },
+            { label: 'Not Edited', value: false }
+          ]"
+          [(ngModel)]="selectedIsEdited"
+          (onChange)="fetchYouthData()"
+          placeholder="Filter by Status"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        ></p-dropdown>
+
+        }@else if (col.header === 'Major') {
         <p-multiSelect
           [options]="majors"
           [(ngModel)]="selectedMajors"
@@ -105,7 +125,7 @@
             </div>
           </ng-template>
         </p-multiSelect>
-        }@else if(col.header=="Area"){
+        }@else if(col.header=="Area" && activeTab==='youth'){
         <p-multiSelect
           [options]="areas"
           [(ngModel)]="selectedAreas"
@@ -121,11 +141,31 @@
           }"
           ><ng-template let-option pTemplate="item">
             <div class="flex items-center absolute z-50">
-              {{ option.name }}
+              {{ option }}
             </div>
           </ng-template>
         </p-multiSelect>
-        }@else if(col.header=="Education Level"){
+        }@else if(col.header=="Area" && activeTab==='employer'){
+          <p-multiSelect
+            [options]="areas"
+            [(ngModel)]="selectedAreas"
+            [showClear]="true"
+            (onChange)="fetchEmployerData()"
+            placeholder="Select Area"
+            appendTo="body"
+            [style]="{
+              background: 'white',
+              border: '1px solid #ddd',
+              'border-radius': '8px',
+              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            }"
+            ><ng-template let-option pTemplate="item">
+              <div class="flex items-center absolute z-50">
+                {{ option }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+          }@else if(col.header=="Education Level"){
         <p-multiSelect
           [options]="educationLevels"
           [(ngModel)]="selectedEducationLevels"
@@ -163,6 +203,42 @@
             </div>
           </ng-template>
         </p-multiSelect>
+
+        }@else if(col.header=="Beneficiary"){
+          <p-dropdown
+          [options]="[
+            { label: 'All', value: null },
+            { label: 'Benefited', value: true },
+            { label: 'Not Benefited', value: false }
+          ]"
+          [(ngModel)]="selectedIsBeneficiary"
+          (onChange)="fetchYouthData()"
+          placeholder="Filter by Status"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        ></p-dropdown>
+        }@else if(col.header=="Applied Job"){
+          <div class="relative w-full">
+            <!-- Search Input -->
+            <input
+              type="text"
+              placeholder="Search Applied Job"
+              class="border p-2 rounded w-full pr-10"
+              [(ngModel)]="appliedJobFilter"
+              (keyup.enter)="fetchYouthData()"
+            />
+            <!-- Clear Icon Inside Input -->
+            <i
+              *ngIf="appliedJobFilter"
+              class="pi pi-times absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+              (click)="clearFilter()"
+            ></i>
+          </div>
+
         }@else {
         <!-- Text filter for other columns -->
         <p-columnFilter
@@ -180,10 +256,14 @@
       <td
         class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
       >
-        <div class=" " *ngFor="let action of getActionsForRow(product.status ,product.active)">
+        <div
+          class=" "
+          *ngFor="
+            let action of getActionsForRow(product.status, product.active)
+          "
+        >
           @if(activeTab==='job-request'){
-            <button
-
+          <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
@@ -191,7 +271,7 @@
           >
             <i class="pi pi-eye"></i>
           </button>
-        } @else if(activeTab === 'employer') {
+          }@else if(activeTab === 'employer') {
           <button
             *ngIf="action === 'view'"
             type="button"
@@ -200,19 +280,18 @@
           >
             <i class="pi pi-eye"></i>
           </button>
-        } @else {
+          }@else {
           <button
             *ngIf="action === 'view'"
             type="button"
             class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-            (click)="showDialog(product.id, 'youthsignup')"
+            (click)="
+              showDialog(product.id, activeTab); updateIsEdited(product.id)
+            "
           >
             <i class="pi pi-eye"></i>
           </button>
-        }
-      
-      
-
+          }
 
           <!-- Youth Assignment Dialog -->
           <p-dialog
@@ -255,48 +334,56 @@
             </ng-template>
           </p-dialog>
           <!-- Employer Details Dialog -->
-<p-dialog
-  [(visible)]="employerDialogVisible"
-  [style]="{ width: '85vw', height: '80vh', padding: '0', margin: '0' }"
-  (onHide)="clearSelectedYouthId()"
->
-  <app-details-employer
-    *ngIf="selectedYouthId"
-    [employerId]="selectedYouthId.toString()"
-  ></app-details-employer>
-</p-dialog>
+          <p-dialog
+            [(visible)]="employerDialogVisible"
+            [style]="{
+              width: '85vw',
+              height: '80vh',
+              padding: '0',
+              margin: '0'
+            }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-details-employer
+              *ngIf="selectedYouthId"
+              [employerId]="selectedYouthId.toString()"
+            ></app-details-employer>
+          </p-dialog>
 
-<!-- Job Request Details Dialog -->
-<p-dialog
-  [(visible)]="jobRequestDialogVisible"
-  [style]="{ width: '70vw', height: '65vh', padding: '0', margin: '0' }"
+          <!-- Job Request Details Dialog -->
+          <p-dialog
+            [(visible)]="jobRequestDialogVisible"
+            [style]="{
+              width: '70vw',
+              height: '65vh',
+              padding: '0',
+              margin: '0'
+            }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-job-request-details
+              *ngIf="selectedYouthId"
+              [jobId]="selectedYouthId.toString()"
+            ></app-job-request-details>
+          </p-dialog>
 
-  (onHide)="clearSelectedYouthId()"
->
-  <app-job-request-details
-    *ngIf="selectedYouthId"
-    [jobId]="selectedYouthId.toString()"
-  ></app-job-request-details>
-</p-dialog>
-
-<!-- Youth Signup Details Dialog -->
-<p-dialog
-  [(visible)]="youthSignupDialogVisible"
-  [style]="{ width: '85vw', height: '90vh', padding: '0'}"
-  (onHide)="clearSelectedYouthId()"
->
-  <app-youthsignup-details
-    *ngIf="selectedYouthId"
-    [youthId]="selectedYouthId"
-  ></app-youthsignup-details>
-</p-dialog>
-
+          <!-- Youth Signup Details Dialog -->
+          <p-dialog
+            [(visible)]="youthSignupDialogVisible"
+            [style]="{ width: '85vw', height: '90vh', padding: '0' }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-youthsignup-details
+              *ngIf="selectedYouthId"
+              [youthId]="selectedYouthId"
+            ></app-youthsignup-details>
+          </p-dialog>
 
           <button
             *ngIf="action === 'activate'"
             type="button"
             class="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600"
-            (click)="updateActiveStatus(product.id,true)"
+            (click)="updateActiveStatus(product.id, true)"
           >
             <i class="pi pi-check"></i>
           </button>
@@ -304,7 +391,658 @@
             *ngIf="action === 'deactivate'"
             type="button"
             class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-            (click)="updateActiveStatus(product.id,false)"
+            (click)="updateActiveStatus(product.id, false)"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+          <button
+            *ngIf="action === 'pend'"
+            type="button"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="showNoteDialog(product)"
+          >
+            <i class="pi pi-clock"></i>
+          </button>
+          <button
+            *ngIf="action === 'assign' && status === 'waiting-E'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="showYouthDialog(product.job, product.jobId)"
+          >
+            <i class="pi pi-user-plus"></i>
+          </button>
+          <button
+            *ngIf="action === 'assign' && status === 'assigned'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="showAssignedYouthDialog(product.job, product.jobId)"
+          >
+            <i class="pi pi-user-plus"></i>
+          </button>
+          <button
+            *ngIf="action === 'notes'"
+            type="button"
+            class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="displayNoteDialog(product)"
+          >
+            <i class="pi pi-file"></i>
+          </button>
+
+          <p-dialog
+            [(visible)]="assignedYouthDialogVisible"
+            [modal]="true"
+            [style]="{ width: '500px', height: '600px' }"
+            class="p-0 rounded-lg shadow-xl overflow-hidden"
+          >
+            <div class="p-6 bg-white rounded-lg flex flex-col h-full">
+              <!-- Title -->
+              <h2
+                class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4"
+              >
+                Assigned Youths
+              </h2>
+
+              <!-- Assigned Youths Section -->
+              <div *ngIf="assignedYouths.length > 0" class="space-y-4">
+                <ul>
+                  <li
+                    *ngFor="let youth of assignedYouths"
+                    class="flex justify-between mb-3 items-center p-3 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
+                  >
+                    <span class="text-gray-700 font-medium"
+                      >- {{ youth.label }}</span
+                    >
+                    <button
+                      pButton
+                      class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md shadow-sm"
+                      (click)="unassignYouth(selectedJob, youth.id)"
+                    >
+                      Unassign
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Unassigned Youths Section -->
+              <div *ngIf="unassignedYouths.length > 0" class="mt-6">
+                <h2
+                  class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4"
+                >
+                  Assign More Youths
+                </h2>
+                <p-multiSelect
+                  [options]="unassignedYouths"
+                  [(ngModel)]="selectedYouths"
+                  optionLabel="label"
+                  dataKey="id"
+                  placeholder="Select Youths"
+                  styleClass="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-cyan-500"
+                ></p-multiSelect>
+              </div>
+
+              <!-- No More Youths Message -->
+              <p
+                *ngIf="unassignedYouths.length === 0"
+                class="text-center mt-6 text-gray-500 font-medium"
+              >
+                No more youth available to assign.
+              </p>
+
+              <!-- Footer -->
+              <div
+                class="mt-auto pt-6 flex justify-end gap-4 border-t border-gray-300"
+              >
+                <button
+                  pButton
+                  class="bg-cyan-600 hover:bg-cyan-500 text-white py-2 px-4 rounded-md shadow-md"
+                  [disabled]="unassignedYouths.length === 0"
+                  (click)="assignYouthsToJob()"
+                >
+                  Assign
+                </button>
+                <button
+                  pButton
+                  class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md shadow-md"
+                  (click)="assignedYouthDialogVisible = false"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </p-dialog>
+          <p-dialog
+            [(visible)]="noteDialogVisible"
+            [closable]="false"
+            [style]="{ width: '500px', borderRadius: '12px', padding: '0' }"
+          >
+            <!-- Header -->
+            <ng-template pTemplate="header">
+              <div
+                class="flex justify-between w-full items-center bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 py-3 rounded-t-lg shadow-lg"
+              >
+                <span class="text-xl font-semibold">Update Notes</span>
+                <button
+                  pButton
+                  icon="pi pi-times"
+                  class="p-button-rounded p-button-text text-white hover:text-gray-200 transition-all"
+                  type="button"
+                  (click)="noteDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
+
+            <!-- Content -->
+            <div class="p-6">
+              <textarea
+                rows="6"
+                pInputTextarea
+                [(ngModel)]="note"
+                placeholder="Enter your notes here..."
+                class="w-full p-4 border border-gray-300 rounded-lg shadow-md focus:ring-4 focus:ring-blue-400 focus:outline-none transition-all duration-200"
+              ></textarea>
+            </div>
+
+            <!-- Footer -->
+            <ng-template pTemplate="footer">
+              <div
+                class="flex justify-end gap-4 p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg"
+              >
+                <button
+                  pButton
+                  class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg px-6 py-2 transition duration-300 transform hover:scale-105"
+                  type="button"
+                  label="Save"
+                  (click)="
+                    updateNotes(selectedYouth.id, note);
+                    noteDialogVisible = false
+                  "
+                ></button>
+                <button
+                  pButton
+                  class="bg-gray-500 hover:bg-gray-600 text-white rounded-lg px-6 py-2 transition-all duration-300"
+                  type="button"
+                  label="Cancel"
+                  (click)="noteDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
+          </p-dialog>
+
+          <button
+            *ngIf="action === 'accept'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="performAction('accept', product)"
+          >
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'reject'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="performAction('reject', product)"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+      </td>
+      <td
+        *ngFor="let col of cols"
+        class="px-4 py-2 text-sm border-b border-r border-gray-300"
+      >
+        <!-- Conditional Rendering for Specific Fields -->
+        <ng-container [ngSwitch]="col.field">
+          <!-- isEdited Column -->
+          <ng-container *ngSwitchCase="'isEdited'">
+            <div class="flex justify-center">
+              <i
+                *ngIf="product[col.field]"
+                class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
+                title="Edited"
+              ></i>
+              <i
+                *ngIf="!product[col.field]"
+                class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
+                title="Not Edited"
+              ></i>
+            </div>
+          </ng-container>
+
+          <!-- Beneficiary Column -->
+          <ng-container *ngSwitchCase="'beneficiary'">
+            <div class="flex justify-center">
+              <i
+                *ngIf="product[col.field]"
+                class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
+                title="Benefited"
+              ></i>
+              <i
+                *ngIf="!product[col.field]"
+                class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
+                title="Not Benefited"
+              ></i>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'appliedJob'">
+            <div *ngIf="product[col.field] && product[col.field].length > 0">
+              <ul>
+                <li *ngFor="let job of product[col.field]">
+                  {{ job.job }}
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="!product[col.field] || product[col.field].length === 0">
+              N/A
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'createdAt'">
+            <div>
+              {{ formatDate(product[col.field]) }}
+            </div>
+          </ng-container>
+
+          <!-- Default Cell Content -->
+          <ng-container *ngSwitchDefault>
+            {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
+          </ng-container>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+}@else{
+
+<p-table
+  class="p-10"
+  [value]="paginatedProducts"
+  [tableStyle]="{
+    'min-width': '50rem',
+    background: 'black',
+    border: '1px solid #ddd',
+    'border-radius': '8px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+  }"
+  [rows]="5"
+  [paginator]="true"
+  [rowsPerPageOptions]="[5, 10, 20]"
+>
+  <ng-template pTemplate="caption">
+    <p-multiSelect
+      display="chip"
+      [options]="savedColumns"
+      [(ngModel)]="cols"
+      optionLabel="header"
+      selectedItemsLabel="{0} columns selected"
+      [style]="{
+        background: 'white',
+        border: '1px solid #ddd',
+        'border-radius': '8px',
+        'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+      }"
+      placeholder="Choose Columns"
+      (onChange)="saveSelectedColumnsToLocalStorage()"
+    >
+    </p-multiSelect>
+    <button
+      (click)="resetSelectedColumns()"
+      class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
+    >
+      Reset columns
+    </button>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="border-r"></th>
+
+      <th
+        *ngFor="let col of cols"
+        class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
+        pSortableColumn="{{ col.field }}"
+      >
+        @if(col.field !=='action'){
+        <div class="flex flex-col">
+          <!-- Header Label and Sort Icon -->
+          <div class="flex justify-between items-center mb-2">
+            <span>{{ col.header }}</span>
+            <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
+          </div>
+          <!-- Column Filter -->
+        </div>
+        }
+      </th>
+    </tr>
+    <tr>
+      <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
+        Actions
+      </th>
+      <th
+        *ngFor="let col of cols"
+        class="border-b border-r px-2 py-1 text-sm text-gray-600"
+      >
+        @if (col.field === 'isEdited') {
+        <p-dropdown
+          [options]="[
+            { label: 'All', value: null },
+            { label: 'Edited', value: true },
+            { label: 'Not Edited', value: false }
+          ]"
+          [(ngModel)]="selectedIsEdited"
+          (onChange)="fetchYouthData()"
+          placeholder="Filter by Status"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        ></p-dropdown>
+
+        }@else if (col.header === 'Major') {
+        <p-multiSelect
+          [options]="majors"
+          [(ngModel)]="selectedMajors"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Majors"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        >
+          <ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Beneficiary"){
+          <p-dropdown
+          [options]="[
+            { label: 'All', value: null },
+            { label: 'Benefited', value: true },
+            { label: 'Not Benefited', value: false }
+          ]"
+          [(ngModel)]="selectedIsBeneficiary"
+          (onChange)="fetchYouthData()"
+          placeholder="Filter by Status"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        ></p-dropdown>
+        }@else if(col.header=="Gender"){
+        <p-multiSelect
+          [options]="genders"
+          [(ngModel)]="selectedGender"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Gender"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Area" && activeTab==='youth'){
+          <p-multiSelect
+            [options]="areas"
+            [(ngModel)]="selectedAreas"
+            [showClear]="true"
+            (onChange)="fetchYouthData()"
+            placeholder="Select Area"
+            appendTo="body"
+            [style]="{
+              background: 'white',
+              border: '1px solid #ddd',
+              'border-radius': '8px',
+              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            }"
+            ><ng-template let-option pTemplate="item">
+              <div class="flex items-center absolute z-50">
+                {{ option }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+          }@else if(col.header=="Area" && activeTab==='employer'){
+            <p-multiSelect
+              [options]="areas"
+              [(ngModel)]="selectedAreas"
+              [showClear]="true"
+              (onChange)="fetchEmployerData()"
+              placeholder="Select Area"
+              appendTo="body"
+              [style]="{
+                background: 'white',
+                border: '1px solid #ddd',
+                'border-radius': '8px',
+                'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+              }"
+              ><ng-template let-option pTemplate="item">
+                <div class="flex items-center absolute z-50">
+                  {{ option }}
+                </div>
+              </ng-template>
+            </p-multiSelect>
+            }@else if(col.header=="Education Level"){
+        <p-multiSelect
+          [options]="educationLevels"
+          [(ngModel)]="selectedEducationLevels"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Education Level"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Nationality"){
+        <p-multiSelect
+          [options]="nationalityOptions"
+          [(ngModel)]="selectedNationalities"
+          [showClear]="true"
+          (onChange)="fetchYouthData()"
+          placeholder="Select Nationality"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          ><ng-template let-option pTemplate="item">
+            <div class="flex items-center">
+              {{ option }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        }@else if(col.header=="Applied Job"){
+          <div class="relative w-full">
+            <!-- Search Input -->
+            <input
+              type="text"
+              placeholder="Search Applied Job"
+              class="border p-2 rounded w-full pr-10"
+              [(ngModel)]="appliedJobFilter"
+              (keyup.enter)="fetchYouthData()"
+            />
+            <!-- Clear Icon Inside Input -->
+            <i
+              *ngIf="appliedJobFilter"
+              class="pi pi-times absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+              (click)="clearFilter()"
+            ></i>
+          </div>
+
+        }@else {
+        <!-- Text filter for other columns -->
+        <p-columnFilter
+          [type]="'text'"
+          [field]="col.field"
+          [showClearButton]="true"
+        ></p-columnFilter>
+        }
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
+      <td
+        class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
+      >
+        <div
+          class=" "
+          *ngFor="
+            let action of getActionsForRow(product.status, product.active)
+          "
+        >
+          @if(activeTab==='job-request'){
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog(product.jobId, 'job-request')"
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+          } @else if(activeTab === 'employer') {
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog(product.id, 'employer')"
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+          }@else {
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="
+              showDialog(product.id, activeTab); updateIsEdited(product.id)
+            "
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+          }
+
+          <!-- Youth Assignment Dialog -->
+          <p-dialog
+            class="youth"
+            [(visible)]="youthDialogVisible"
+            header="Assign Youths"
+            [style]="{ width: '500px', height: '500px' }"
+            [modal]="true"
+          >
+            @if(noYouthMessage){
+            <p class="text-center text-red-500">{{ noYouthMessage }}</p>
+            }@else {
+            <ng-template pTemplate="content">
+              <p-multiSelect
+                [options]="youths"
+                [(ngModel)]="selectedYouths"
+                optionLabel="label"
+                dataKey="id"
+                placeholder="Select Youths"
+                styleClass="w-full"
+              ></p-multiSelect>
+            </ng-template>
+            }
+
+            <ng-template pTemplate="footer">
+              <div class="flex flex-row justify-end gap-5">
+                <button
+                  pButton
+                  label="Assign"
+                  class="p-button-success px-4 py-2 text-white bg-cyan-600 hover:bg-cyan-400"
+                  (click)="assignYouthsToJob()"
+                ></button>
+                <button
+                  pButton
+                  label="Cancel"
+                  class="p-button-secondary px-4 py-2 text-white bg-slate-800 hover:bg-slate-700"
+                  (click)="youthDialogVisible = false"
+                ></button>
+              </div>
+            </ng-template>
+          </p-dialog>
+          <!-- Employer Details Dialog -->
+          <p-dialog
+            [(visible)]="employerDialogVisible"
+            [style]="{
+              width: '85vw',
+              height: '80vh',
+              padding: '0',
+              margin: '0'
+            }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-details-employer
+              *ngIf="selectedYouthId"
+              [employerId]="selectedYouthId.toString()"
+            ></app-details-employer>
+          </p-dialog>
+
+          <!-- Job Request Details Dialog -->
+          <p-dialog
+            [(visible)]="jobRequestDialogVisible"
+            [style]="{
+              width: '70vw',
+              height: '65vh',
+              padding: '0',
+              margin: '0'
+            }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-job-request-details
+              *ngIf="selectedYouthId"
+              [jobId]="selectedYouthId.toString()"
+            ></app-job-request-details>
+          </p-dialog>
+
+          <!-- Youth Signup Details Dialog -->
+          <p-dialog
+            [(visible)]="youthSignupDialogVisible"
+            [style]="{ width: '85vw', height: '90vh', padding: '0' }"
+            (onHide)="clearSelectedYouthId()"
+          >
+            <app-youthsignup-details
+              *ngIf="selectedYouthId"
+              [youthId]="selectedYouthId"
+            ></app-youthsignup-details>
+          </p-dialog>
+
+          <button
+            *ngIf="action === 'activate'"
+            type="button"
+            class="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600"
+            (click)="updateActiveStatus(product.id, true)"
+          >
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'deactivate'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="updateActiveStatus(product.id, false)"
           >
             <i class="pi pi-times"></i>
           </button>
@@ -343,78 +1081,87 @@
           </button>
 
           <p-dialog
-          [(visible)]="assignedYouthDialogVisible"
-          [modal]="true"
-          [style]="{ width: '500px', height: '600px' }"
-          class="p-0 rounded-lg shadow-xl overflow-hidden"
-        >
-          <div class="p-6 bg-white rounded-lg flex flex-col h-full">
-            <!-- Title -->
-            <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">
-              Assigned Youths
-            </h2>
-
-            <!-- Assigned Youths Section -->
-            <div *ngIf="assignedYouths.length > 0" class="space-y-4">
-              <ul>
-                <li
-                  *ngFor="let youth of assignedYouths"
-                  class="flex justify-between mb-3 items-center p-3 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
-                >
-                  <span class="text-gray-700 font-medium">- {{ youth.label }}</span>
-                  <button
-                    pButton
-                    class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md shadow-sm"
-                    (click)="unassignYouth(selectedJob, youth.id)"
-                  >
-                    Unassign
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Unassigned Youths Section -->
-            <div *ngIf="unassignedYouths.length > 0" class="mt-6">
-              <h2 class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4">
-                Assign More Youths
+            [(visible)]="assignedYouthDialogVisible"
+            [modal]="true"
+            [style]="{ width: '500px', height: '600px' }"
+            class="p-0 rounded-lg shadow-xl overflow-hidden"
+          >
+            <div class="p-6 bg-white rounded-lg flex flex-col h-full">
+              <!-- Title -->
+              <h2
+                class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4"
+              >
+                Assigned Youths
               </h2>
-              <p-multiSelect
-                [options]="unassignedYouths"
-                [(ngModel)]="selectedYouths"
-                optionLabel="label"
-                dataKey="id"
-                placeholder="Select Youths"
-                styleClass="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-cyan-500"
-              ></p-multiSelect>
-            </div>
 
-            <!-- No More Youths Message -->
-            <p *ngIf="unassignedYouths.length === 0" class="text-center mt-6 text-gray-500 font-medium">
-              No more youth available to assign.
-            </p>
+              <!-- Assigned Youths Section -->
+              <div *ngIf="assignedYouths.length > 0" class="space-y-4">
+                <ul>
+                  <li
+                    *ngFor="let youth of assignedYouths"
+                    class="flex justify-between mb-3 items-center p-3 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
+                  >
+                    <span class="text-gray-700 font-medium"
+                      >- {{ youth.label }}</span
+                    >
+                    <button
+                      pButton
+                      class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md shadow-sm"
+                      (click)="unassignYouth(selectedJob, youth.id)"
+                    >
+                      Unassign
+                    </button>
+                  </li>
+                </ul>
+              </div>
 
-            <!-- Footer -->
-            <div class="mt-auto pt-6 flex justify-end gap-4 border-t border-gray-300">
-              <button
-                pButton
-                class="bg-cyan-600 hover:bg-cyan-500 text-white py-2 px-4 rounded-md shadow-md"
-                [disabled]="unassignedYouths.length === 0"
-                (click)="assignYouthsToJob()"
+              <!-- Unassigned Youths Section -->
+              <div *ngIf="unassignedYouths.length > 0" class="mt-6">
+                <h2
+                  class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4"
+                >
+                  Assign More Youths
+                </h2>
+                <p-multiSelect
+                  [options]="unassignedYouths"
+                  [(ngModel)]="selectedYouths"
+                  optionLabel="label"
+                  dataKey="id"
+                  placeholder="Select Youths"
+                  styleClass="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-cyan-500"
+                ></p-multiSelect>
+              </div>
+
+              <!-- No More Youths Message -->
+              <p
+                *ngIf="unassignedYouths.length === 0"
+                class="text-center mt-6 text-gray-500 font-medium"
               >
-                Assign
-              </button>
-              <button
-                pButton
-                class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md shadow-md"
-                (click)="assignedYouthDialogVisible = false"
+                No more youth available to assign.
+              </p>
+
+              <!-- Footer -->
+              <div
+                class="mt-auto pt-6 flex justify-end gap-4 border-t border-gray-300"
               >
-                Cancel
-              </button>
+                <button
+                  pButton
+                  class="bg-cyan-600 hover:bg-cyan-500 text-white py-2 px-4 rounded-md shadow-md"
+                  [disabled]="unassignedYouths.length === 0"
+                  (click)="assignYouthsToJob()"
+                >
+                  Assign
+                </button>
+                <button
+                  pButton
+                  class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md shadow-md"
+                  (click)="assignedYouthDialogVisible = false"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
-        </p-dialog>
-
-
+          </p-dialog>
 
           <p-dialog
             [(visible)]="noteDialogVisible"
@@ -496,21 +1243,61 @@
         *ngFor="let col of cols"
         class="px-4 py-2 text-sm border-b border-r border-gray-300"
       >
-        {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
+        <!-- Conditional Rendering for Specific Fields -->
+        <ng-container [ngSwitch]="col.field">
+          <!-- isEdited Column -->
+          <ng-container *ngSwitchCase="'isEdited'">
+            <div class="flex justify-center">
+              <i
+                *ngIf="product[col.field]"
+                class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
+                title="Edited"
+              ></i>
+              <i
+                *ngIf="!product[col.field]"
+                class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
+                title="Not Edited"
+              ></i>
+            </div>
+          </ng-container>
+
+          <!-- Beneficiary Column -->
+          <ng-container *ngSwitchCase="'beneficiary'">
+            <div class="flex justify-center">
+              <i
+                *ngIf="product[col.field]"
+                class="pi pi-circle bg-green-600 rounded-full text-green-600 text-lg"
+                title="Benefited"
+              ></i>
+              <i
+                *ngIf="!product[col.field]"
+                class="pi pi-circle bg-red-600 text-red-600 rounded-full text-lg"
+                title="Not Benefited"
+              ></i>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'appliedJob'">
+            <div>
+              <p *ngFor="let job of product[col.field]">
+                {{ job.job }}
+              </p>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'createdAt'">
+            <div>
+              {{ formatDate(product[col.field]) }}
+            </div>
+          </ng-container>
+
+          <!-- Default Cell Content -->
+          <ng-container *ngSwitchDefault>
+            {{ col.field !== "action" ? product[col.field] || "N/A" : "" }}
+          </ng-container>
+        </ng-container>
       </td>
     </tr>
   </ng-template>
 </p-table>
-
-<p-paginator
-  class="bg-white border-t border-gray-300"
-  [rows]="10"
-  [rowsPerPageOptions]="[5, 10, 20]"
-  (onPageChange)="paginate($event)"
->
-</p-paginator>
-}@else{
-
 <div
   class="flex flex-col justify-center items-center text-gray-500 py-10 bg-gradient-to-b from-gray-100 to-gray-50 rounded-lg shadow-md"
 >
@@ -528,4 +1315,5 @@
   </svg>
   <p class="text-lg font-semibold">No Data Available</p>
 </div>
+
 }

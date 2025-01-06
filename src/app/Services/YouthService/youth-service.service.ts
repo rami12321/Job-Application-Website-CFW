@@ -20,9 +20,9 @@ export class YouthServiceService {
     const url = `http://localhost:3000/youth/${youthId}/appliedJob`;
     return this.http.put(url, { appliedJob: appliedJobs });  // Sending the array of applied jobs
   }
-  
-  
-  
+
+
+
   getAllYouth(): Observable<any[]> {
     return this.http.get<any[]>(this.youthDbUrl);
   }
@@ -84,9 +84,9 @@ export class YouthServiceService {
   getAppliedJobById(id: number): Observable<{ appliedJobs: { job: string; status: string }[] }> {
     return this.http.get<{ appliedJobs: { job: string; status: string }[] }>(`${this.apiUrl}/${id}/appliedJob`);
   }
-  
-  
-  
+
+
+
   getYouthByJob(job: string): Observable<any> {
     const url = `${this.apiUrl}/appliedJob/${encodeURIComponent(job)}`; // Encode the job name for safe URL usage
     return this.http.get<any>(url); // Adjust the response type if needed
@@ -95,5 +95,9 @@ export class YouthServiceService {
   assignYouthToJob(jobId: string, youthId: string): Observable<any> {
     const url = `${this.apiUrl}/${jobId}/${youthId}`;
     return this.http.post(url, {});
+  }
+  updateYouthIsEdited(id: number, isEdited: boolean): Observable<any> {
+    const url = `${this.apiUrl}/${id}/isEdited`;
+    return this.http.patch(url, { isEdited });
   }
 }

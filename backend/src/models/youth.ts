@@ -1,4 +1,5 @@
 export interface Youth {
+  isEdited?:boolean;
   id: string;
   username: string;
   password: string;

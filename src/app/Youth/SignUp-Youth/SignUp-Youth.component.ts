@@ -1133,10 +1133,8 @@ export class SignUpYouthComponent implements OnInit {
   }
 
   generateUniqueId(): string {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const randomLetter = letters[Math.floor(Math.random() * letters.length)];
     const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-    return `${randomLetter}-${randomNumber}`;
+    return `${randomNumber}`;
   }
 
 

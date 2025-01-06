@@ -37,7 +37,8 @@ export const createYouth = (req: Request, res: Response): void => {
   // Add the createdAt field to the newYouth object
   const youthWithTimestamp: Youth = {
     ...newYouth,
-    createdAt,  // Add the createdAt field with the current timestamp
+    createdAt,
+    isEdited:false,  // Add the createdAt field with the current timestamp
   };
 
   // Add the new youth with the timestamp to the list
@@ -399,9 +400,59 @@ const filteredYouths = youths.filter((y) =>
     id:y.id,
     name: y.firstNameEn+ ' ' +y.lastNameEn || 'Unknown', // Use firstNameEn if available, otherwise 'Unknown'
     notes: y.notes || [] ,// Default to empty array if no notes available
-    beneficiary: y.beneficiary ||false // Default to empty array if no notes available
+    beneficiary: y.beneficiary ||false ,// Default to empty array if no notes available
+    workStatus:y.workStatus||false
   }));
 
   // Send the response with the matching youths
   res.status(200).json({ youths: result });
+};
+
+export const updateYouthIsEdited = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract the youth ID from request parameters
+  const { isEdited }: { isEdited: boolean } = req.body; // Extract the `isEdited` field from the request body
+
+  // Read the current youth data
+  let youths: Youth[] = readFile();
+  const youthIndex = youths.findIndex((y) => y.id === id);
+
+  // Check if the youth exists
+  if (youthIndex === -1) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Update the `isEdited` field
+  youths[youthIndex].isEdited = isEdited;
+
+  // Save the updated data back to the file
+  fs.writeFile(filePath, JSON.stringify(youths, null, 2), 'utf8', (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error writing updated youth data to file.' });
+    }
+
+    // Respond with the updated youth data
+    res.status(200).json({
+      message: `Youth with ID ${id} 'isEdited' updated successfully.`,
+      updatedYouth: youths[youthIndex],
+    });
+  });
+};
+
+// Get the isEdited status of a youth by ID
+export const getYouthIsEditedStatusById = (req: Request, res: Response): void => {
+  const { id } = req.params; // Extract the youth ID from request parameters
+  const youths: Youth[] = readFile(); // Read the youth data from the file
+
+  // Find the youth by ID
+  const youth = youths.find((y) => y.id === id);
+
+  // Check if the youth exists
+  if (!youth) {
+    res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    return;
+  }
+
+  // Respond with the isEdited status
+  res.status(200).json({ isEdited: youth.isEdited || false });
 };

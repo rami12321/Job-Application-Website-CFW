@@ -33,7 +33,7 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   selectedYouth: any | null = null;
   isEmployerContractModalOpen = false;
 isYouthContractModalOpen = false;
-public employer: Employer | undefined; 
+public employer: Employer | undefined;
 selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
@@ -156,7 +156,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         console.error('Invalid or missing jobId');
       }
 
-  
+
         if (this.userId) {
           this.fetchEmployerDetails();}
     });
@@ -207,13 +207,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       console.error('All fields are required to submit the contract.');
       return;
     }
-  
+
     const contractDetails = {
       startDate: this.agreementStartDate,
       signature: this.signatureImage,
       agreementAccepted: this.isTermsAccepted,
     };
-  
+
     // Update the selected youth in the assignedYouths array
     this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map((youth) => {
       if (youth.id === this.selectedYouth.id) {
@@ -224,10 +224,10 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
       return youth;
     });
-  
+
     // Log to verify the updated job request structure
     console.log('Updated jobRequest:', this.jobRequest);
-  
+
     this.jobRequestService
       .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
       .subscribe({
@@ -242,10 +242,10 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         },
       });
   }
-  
-  
-  
-  
+
+
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['jobId'] && this.jobId) {
       this.fetchJobRequestDetails();
@@ -299,14 +299,14 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         error: (err) => console.error('Error updating youth status:', err),
       });
   }
-  
+
   updateYouthWithWorkStatus(youthId: any, workStatus: boolean): void {
     this.youthService.getYouthById(youthId).subscribe({
       next: (youth) => {
         if (youth) {
           // Create the updated youth object with the new workStatus
           const updatedYouth = { ...youth, workStatus };
-  
+
           // Update the youth record in the database (in youthdb.json)
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () => console.log(`Successfully updated workStatus for youth ID: ${youthId}`),
@@ -319,7 +319,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       error: (err) => console.error(`Error fetching youth data for ID: ${youthId}`, err),
     });
   }
-    
+
 
 
   updateYouthAppliedJobs(
@@ -332,7 +332,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       next: (youth) => {
         if (youth && youth.appliedJob) {
           console.log('Fetched youth record:', youth);
-  
+
           // Update the applied jobs array
           const updatedAppliedJobs = youth.appliedJob.map(
             (job: { job: string; status: string; jobRequestId?: string }) => {
@@ -350,11 +350,11 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
               return job; // Return unchanged jobs
             }
           );
-  
+
           // Create the updated youth object
           const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
           console.log('Updated youth object:', updatedYouth);
-  
+
           // Update the youth record in the database
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () =>
@@ -375,19 +375,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       console.error('Job request or job ID is undefined.');
       return;
     }
-  
+
     const updatedJobRequest = {
       ...this.jobRequest,
       status: 'completed',
     };
-  
+
     const safeJobId = this.jobId ?? '';
-  
+
     // Update job request status
     this.jobRequestService.updateJob(safeJobId, updatedJobRequest).subscribe({
       next: () => {
         console.log('Job request marked as completed successfully.');
-  
+
         // Process assigned youths
         if (this.jobRequest!.assignedYouths) {
           this.jobRequest!.assignedYouths.forEach((youth) => {
@@ -397,23 +397,23 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
                   const approvedJob = fetchedYouth.appliedJob.find(
                     (job: any) => job.status === 'approved'
                   );
-  
+
                   if (approvedJob) {
                     // Update the approved job's status to "completed"
                     approvedJob.status = 'completed';
-  
+
                     // Remove other jobs from the appliedJob array
                     fetchedYouth.appliedJob = fetchedYouth.appliedJob.filter(
                       (job: any) => job.status === 'completed'
                     );
-  
+
                     // Update the youth data
                     const updatedYouth = {
                       ...fetchedYouth,
                       workStatus: false,
                       beneficiary: true,
                     };
-  
+
                     this.youthService.updateYouth(youth.id, updatedYouth).subscribe({
                       next: () =>
                         console.log(`Updated youth ID: ${youth.id} successfully.`),
@@ -428,7 +428,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             });
           });
         }
-  
+
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -436,8 +436,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       error: (err) => console.error('Error updating job request status:', err),
     });
   }
-  
-  
+
+
   openTermsModal() {
     this.isTermsModalOpen = true;
   }
@@ -445,17 +445,17 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.selectedContract = contract;
     this.isEmployerContractModalOpen = true;
   }
-  
+
   openYouthContractModal(contract: any): void {
     this.selectedContract = contract;
     this.isYouthContractModalOpen = true;
   }
-  
+
   closeEmployerContractModal(): void {
     this.isEmployerContractModalOpen = false;
     this.selectedContract = null;
   }
-  
+
   closeYouthContractModal(): void {
     this.isYouthContractModalOpen = false;
     this.selectedContract = null;
@@ -528,7 +528,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.selectedYouth = youth;
   }
   openContractModal(youth: any) {
-    this.signatureImage = this.employer?.signature || null; 
+    this.signatureImage = this.employer?.signature || null;
 
     this.isContractModalOpen = true;
     this.selectedYouthName = `${youth.firstName} ${youth.lastName}`;
@@ -608,9 +608,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       alert('An error occurred: Job ID is missing.');
       return;
     }
-  
+
     const youthId = youth.id;
-  
+
       this.jobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
         next: () => {
           this.jobRequest!.assignedYouths = this.jobRequest!.assignedYouths!.filter(
@@ -623,27 +623,27 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           alert('An error occurred while trying to delete the youth.');
         },
       });
-    
+
   }
-  
+
   onAgreementStartDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const date = input.value;
-  
+
     this.agreementStartDate = date;
-  
+
     // Calculate the end date (100 days after the start date)
     const startDate = new Date(date);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 100);
-  
+
     // Format the date as YYYY-MM-DD
     const year = endDate.getFullYear();
     const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
     const day = endDate.getDate().toString().padStart(2, '0');
     this.agreementEndDate = `${year}-${month}-${day}`;
   }
-  
+
   closeApprovalModal(): void {
     this.isApprovalModalOpen = false;
     this.modalAction = '';
@@ -754,13 +754,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   cancelSubmit(): void {
     this.showConfirmationModal = false;
   }
-  
+
   submitJobRequests(): void {
     if (!this.jobRequest || !this.jobId) {
       console.error('Job request or job ID is undefined.');
       return;
     }
-  
+
     // Get all the youths that are approved for this job request
     const updatedYouths =
       this.jobRequest.assignedYouths
@@ -769,9 +769,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           ...youth,
           status: youth.action === 'approved' ? 'approved' : youth.status,
         })) ?? [];
-  
+
     const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
-  
+
     // Update the current job request with the approved youths
     const updatedJobRequest = {
       ...this.jobRequest,
@@ -891,7 +891,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     return this.userRole === 'Admin' || !this.userRole;
   }
 
-  
+
   saveChanges(): void {
     if (!this.editModels) return;
 
