@@ -178,7 +178,6 @@
         "durationTo": "2024-12-03"
       }
     ],
-    
     "arabic": "fluent",
     "english": "good",
     "french": "null",
@@ -192,28 +191,18 @@
     "alShifaaProof": "C:\\fakepath\\Bashar's Resume.pdf",
     "confirmation": "yes",
     "confirmPassword": "qawsedrf12",
-    "status": "accepted",
+    "status": "rejected",
     "createdAt": "2024-12-17T12:34:56Z",
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "rejected"
-      },
-      {
-        "job": "IT Technician",
-        "status": "rejected"
-      },
-      {
-        "job": "IT Officer",
-        "status": "rejected"
-      },
-      {
-        "job": "Mobile Developer",
-        "status": "rejected"
+        "status": "completed",
+        "jobRequestId": "O-44102601"
       }
     ],
     "workStatus": false,
-    "beneficiary": true
+    "beneficiary": true,
+    "notes": "kyyu"
   },
   {
     "id": "14305200",
@@ -354,7 +343,7 @@
         "status": "rejected"
       }
     ],
-    "workStatus": false,
+    "workStatus": true,
     "beneficiary": true
   },
   {
@@ -483,15 +472,16 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "approved"
+        "status": "approved",
+        "jobRequestId": "J-31527582"
       },
       {
         "job": "Diesel Mechanic",
-        "status": "waiting"
+        "status": "rejected"
       },
       {
         "job": "Auto Mechanic",
-        "status": "waiting"
+        "status": "rejected"
       }
     ],
     "createdAt": "2024-11-19T12:34:56Z"
@@ -622,18 +612,20 @@
     "appliedJob": [
       {
         "job": "Auto Electrician",
-        "status": "waiting"
+        "status": "approved",
+        "jobRequestId": "J-31527582"
       },
       {
         "job": "Diesel Mechanic",
-        "status": "waiting"
+        "status": "rejected"
       },
       {
         "job": "Auto Mechanic",
-        "status": "waiting"
+        "status": "rejected"
       }
     ],
-    "createdAt": "2024-11-19T12:34:56Z"
+    "createdAt": "2024-11-19T12:34:56Z",
+    "workStatus": true
   },
   {
     "id": "A-34295763",

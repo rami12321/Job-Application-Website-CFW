@@ -778,40 +778,24 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       assignedYouths: approvedYouths,
       status: 'in-progress',
     };
+  
     this.jobRequestService.getAllJobRequests().subscribe({
-      next: (allJobRequests) => {
-        allJobRequests.forEach((jobRequest) => {
-          // Ensure jobId is a string, defaulting to an empty string if undefined
-          const safeJobId = jobRequest.jobId ?? '';
-    
-          jobRequest.assignedYouths?.forEach((youth) => {
-            if (approvedYouths.some((approvedYouth) => approvedYouth.id === youth.id)) {
-              // Remove the youth from other job requests
-              this.jobRequestService.unassignYouthFromJobRequest(safeJobId, youth.id).subscribe({
-                next: () => {
-                  console.log(`Youth ${youth.id} removed from job request ${safeJobId}`);
-                },
-                error: (err) => console.error(`Error unassigning youth from job request ${safeJobId}:`, err),
-              });
-            }
-          });
-        });
-    
+      next: () => {
         // Ensure jobId is a string
         const safeJobIdForUpdate = this.jobId ?? '';
-    
+  
         // Now update the current job request with the new youths
         this.jobRequestService.updateJob(safeJobIdForUpdate, updatedJobRequest).subscribe({
           next: () => {
             console.log('Job request submitted successfully.');
             updatedYouths.forEach((youth) => {
               const isApproved = youth.status === 'approved';
-    
+  
               // Update the workStatus directly in the youth record in the youthdb.json file
               if (isApproved) {
                 this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
               }
-    
+  
               this.updateYouthAppliedJobs(
                 youth.id,
                 this.jobRequest?.job || '',
@@ -819,7 +803,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
                 isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
               );
             });
-    
+  
             setTimeout(() => {
               window.location.reload();
             }, 500);
@@ -829,8 +813,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       },
       error: (err) => console.error('Error fetching all job requests:', err),
     });
-  }    
-  
+  }
   
 
   initializeRowStates(): void {
