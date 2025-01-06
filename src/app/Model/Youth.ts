@@ -2,6 +2,8 @@
 export interface Youth {
   [key: string]: any; // Add this line for dynamic indexing
 
+  isEdited?:boolean;
+
   id: string;
   username: string;
   password: string;
