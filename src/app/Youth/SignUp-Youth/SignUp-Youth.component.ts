@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
-import {  YouthServiceService } from '../../Services/YouthService/youth-service.service';
-import { Youth} from '../../Model/Youth';
+import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
+import { Youth } from '../../Model/Youth';
 import { PasswordModule } from 'primeng/password';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +17,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 @Component({
   selector: 'app-sign-up-youth',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,PasswordModule,StepperModule, ButtonModule, HttpClientModule,PdfViewerModule],
+  imports: [ReactiveFormsModule, CommonModule, PasswordModule, StepperModule, ButtonModule, HttpClientModule, PdfViewerModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './SignUp-Youth.component.html',
@@ -31,10 +31,10 @@ export class SignUpYouthComponent implements OnInit {
   experienceDetailsForm: FormGroup;
   requiredDocumentsForm: FormGroup;
   formSubmitted: boolean = false;
-  showPatternError = false; 
+  showPatternError = false;
   pdfSrc: Uint8Array | null = null;
   showModal: boolean = false;
-  storedPdfUrl: string | null = null;  
+  storedPdfUrl: string | null = null;
   pdfKey: number = 0;
 
   private areaData: any;
@@ -67,40 +67,40 @@ export class SignUpYouthComponent implements OnInit {
   jobOpportunityOptions: string[] = [];
   educationLevels: string[] = [];
   additionalQuestions: any[] = [];
-  isOtherMajorSelected = false; // To track if "Other" is selected
+  isOtherMajorSelected = false;
   cvFileName: string | null = null;
   cvFileUrl: string | null = null;
   coverLetterFileName: string | null = null;
   coverLetterFileUrl: string | null = null;
-  
+
   identityCardFileName: string | null = null;
   identityCardFileUrl: string | null = null;
-  
+
   registrationCardFileName: string | null = null;
   registrationCardFileUrl: string | null = null;
-  
+
   degreeFileName: string | null = null;
   degreeFileUrl: string | null = null;
-  
+
   prcsProofFileName: string | null = null;
   prcsProofFileUrl: string | null = null;
-  
+
   fireProofFileName: string | null = null;
   fireProofFileUrl: string | null = null;
-  
+
   alShifaaProofFileName: string | null = null;
   alShifaaProofFileUrl: string | null = null;
 
-  isPdfModalclOpen: boolean = false; // Controls the visibility of the modal
+  isPdfModalclOpen: boolean = false;
 
-  isPdfModalOpen: boolean = false; // Controls the visibility of the modal
+  isPdfModalOpen: boolean = false;
   isPdfModalIdentityCardOpen: boolean = false;
   isPdfModalRegistrationCardOpen: boolean = false;
   isPdfModalDegreeOpen: boolean = false;
   isPdfModalPrcsProofOpen: boolean = false;
   isPdfModalFireProofOpen: boolean = false;
   isPdfModalAlShifaaProofOpen: boolean = false;
-  // Modal state
+
   currentPdfUrl: string | null = null;
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
@@ -166,7 +166,7 @@ export class SignUpYouthComponent implements OnInit {
       educationGraduate: ['', Validators.required],
       educationLevel: ['', Validators.required],
       major: ['', Validators.required],
-      otherMajor: ['', this.isOtherMajorSelected ? Validators.required : null], 
+      otherMajor: ['', this.isOtherMajorSelected ? Validators.required : null],
 
       institution: ['', Validators.required],
       graduationDate: ['', Validators.required],
@@ -179,7 +179,7 @@ export class SignUpYouthComponent implements OnInit {
     this.generalQuestionsForm = this.fb.group({
       placedByKfw: ['', Validators.required],
       kfwYear: [''],
-      stcgraduate : ['', Validators.required],
+      stcgraduate: ['', Validators.required],
 
       innovationLabGraduate: ['', Validators.required],
       innovationLabGradtype: this.fb.array([]),
@@ -238,7 +238,7 @@ export class SignUpYouthComponent implements OnInit {
       confirmPassword: ['', Validators.required],
 
 
-        },{ validators: this.passwordsMatch });
+    }, { validators: this.passwordsMatch });
 
 
 
@@ -322,7 +322,7 @@ export class SignUpYouthComponent implements OnInit {
     });
     this.personalInfoForm
       .get('personalRegistrationNumber')
-      ?.valueChanges.pipe(debounceTime(400)) // Wait 300ms after user stops typing
+      ?.valueChanges.pipe(debounceTime(400))
       .subscribe(() => {
         this.updatePatternError();
       });
@@ -340,7 +340,7 @@ export class SignUpYouthComponent implements OnInit {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
 
-    // Return error if passwords don't match
+
     return password && confirmPassword && password === confirmPassword ? null : { 'passwordsMismatch': true };
   }
 
@@ -514,7 +514,7 @@ export class SignUpYouthComponent implements OnInit {
 
 
   nextStep(): void {
-    if ( this.step < this.stepLabels.length) {
+    if (this.step < this.stepLabels.length) {
       this.step++;
     }
   }
@@ -550,12 +550,12 @@ export class SignUpYouthComponent implements OnInit {
   onNextStep() {
     if (this.step < this.stepLabels.length) {
       this.step++;
-      console.log('Navigated to step:', this.step); // Debug
+      console.log('Navigated to step:', this.step);
     }
   }
 
   goToStep(step: number) {
-    console.log('Changing to step:', step); // Check if this is triggered
+    console.log('Changing to step:', step);
     this.step = step;
   }
   get disabilityTypes(): FormArray {
@@ -568,324 +568,324 @@ export class SignUpYouthComponent implements OnInit {
     const disabilityArray = this.disabilityTypes;
 
     if (disabilityArray.value.includes(value)) {
-      // Remove the value if already selected
+
       const index = disabilityArray.value.indexOf(value);
       disabilityArray.removeAt(index);
     } else {
-      // Add the value if not selected
+
       disabilityArray.push(this.fb.control(value));
     }
   }
 
 
-// Get the FormArray for computerSkills
-get computerSkills(): FormArray {
-  return this.trainingsAndSkillsForm.get('skills.computerSkills') as FormArray;
-}
 
-// Check if a value is selected
-isCheckedCs(value: string): boolean {
-  return this.computerSkills.value.includes(value);
-}
-
-get innovationLabGradtype(): FormArray {
-  return this.generalQuestionsForm.get('innovationLabGradtype') as FormArray;
-}
-
-isCheckedLabType(value: string): boolean {
-  return this.innovationLabGradtype.value.includes(value);
-}
-
-
-toggleCheckbox(value: string): void {
-  const skillsArray = this.computerSkills;
-
-  if (skillsArray.value.includes(value)) {
-    const index = skillsArray.value.indexOf(value);
-    skillsArray.removeAt(index);
-  } else {
-    skillsArray.push(this.fb.control(value));
+  get computerSkills(): FormArray {
+    return this.trainingsAndSkillsForm.get('skills.computerSkills') as FormArray;
   }
-}
-toggleLabType(value: string): void {
-  const labTypeArray = this.innovationLabGradtype;
 
-  if (labTypeArray.value.includes(value)) {
-    const index = labTypeArray.value.indexOf(value);
-    labTypeArray.removeAt(index);
-  } else {
-    labTypeArray.push(this.fb.control(value));
+
+  isCheckedCs(value: string): boolean {
+    return this.computerSkills.value.includes(value);
   }
-}
 
-get arabicControl(): FormControl {
-  return this.languageSkills.get('arabic') as FormControl;
-}
-
-get englishControl(): FormControl {
-  return this.languageSkills.get('english') as FormControl;
-}
-
-get frenchControl(): FormControl {
-  return this.languageSkills.get('french') as FormControl;
-}
-
-get languageSkills(): FormGroup {
-  return this.trainingsAndSkillsForm.get('skills') as FormGroup;
-}
-isCheckedL(value: string): boolean {
-  return this.languageSkills.value.includes(value);
-}
-
-
-openPdfModalDegree(): void {
-  if (this.degreeFileUrl) {
-    this.isPdfModalDegreeOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.degreeFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
+  get innovationLabGradtype(): FormArray {
+    return this.generalQuestionsForm.get('innovationLabGradtype') as FormArray;
   }
-}
 
-closePdfModalDegree(): void {
-  this.isPdfModalDegreeOpen = false;
-}
-openPdfModalPrcsProof(): void {
-  if (this.prcsProofFileUrl) {
-    this.isPdfModalPrcsProofOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.prcsProofFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
+  isCheckedLabType(value: string): boolean {
+    return this.innovationLabGradtype.value.includes(value);
   }
-}
 
-closePdfModalPrcsProof(): void {
-  this.isPdfModalPrcsProofOpen = false;
-}
 
-onFileChangePrcsProof(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
+  toggleCheckbox(value: string): void {
+    const skillsArray = this.computerSkills;
 
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.prcsProofFileName = file.name;
-
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
-
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.prcsProofFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.prcsProofFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+    if (skillsArray.value.includes(value)) {
+      const index = skillsArray.value.indexOf(value);
+      skillsArray.removeAt(index);
+    } else {
+      skillsArray.push(this.fb.control(value));
     }
   }
-}
+  toggleLabType(value: string): void {
+    const labTypeArray = this.innovationLabGradtype;
 
-openPdfModalAlShifaaProof(): void {
-  if (this.alShifaaProofFileUrl) {
-    this.isPdfModalAlShifaaProofOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.alShifaaProofFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
-  }
-}
-
-closePdfModalAlShifaaProof(): void {
-  this.isPdfModalAlShifaaProofOpen = false;
-}
-
-onFileChangeAlShifaaProof(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.alShifaaProofFileName = file.name;
-
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
-
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.alShifaaProofFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.alShifaaProofFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+    if (labTypeArray.value.includes(value)) {
+      const index = labTypeArray.value.indexOf(value);
+      labTypeArray.removeAt(index);
+    } else {
+      labTypeArray.push(this.fb.control(value));
     }
   }
-}
-openPdfModalFireProof(): void {
-  if (this.fireProofFileUrl) {
-    this.isPdfModalFireProofOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.fireProofFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
+
+  get arabicControl(): FormControl {
+    return this.languageSkills.get('arabic') as FormControl;
   }
-}
 
-closePdfModalFireProof(): void {
-  this.isPdfModalFireProofOpen = false;
-}
+  get englishControl(): FormControl {
+    return this.languageSkills.get('english') as FormControl;
+  }
 
-onFileChangeFireProof(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
+  get frenchControl(): FormControl {
+    return this.languageSkills.get('french') as FormControl;
+  }
 
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.fireProofFileName = file.name;
+  get languageSkills(): FormGroup {
+    return this.trainingsAndSkillsForm.get('skills') as FormGroup;
+  }
+  isCheckedL(value: string): boolean {
+    return this.languageSkills.value.includes(value);
+  }
 
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
 
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.fireProofFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.fireProofFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+  openPdfModalDegree(): void {
+    if (this.degreeFileUrl) {
+      this.isPdfModalDegreeOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.degreeFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
     }
   }
-}
 
-onFileChangeDegree(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.degreeFileName = file.name;
-
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
-
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.degreeFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.degreeFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+  closePdfModalDegree(): void {
+    this.isPdfModalDegreeOpen = false;
+  }
+  openPdfModalPrcsProof(): void {
+    if (this.prcsProofFileUrl) {
+      this.isPdfModalPrcsProofOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.prcsProofFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
     }
   }
-}
-openPdfModalRegistrationCard(): void {
-  if (this.registrationCardFileUrl) {
-    this.isPdfModalRegistrationCardOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.registrationCardFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
+
+  closePdfModalPrcsProof(): void {
+    this.isPdfModalPrcsProofOpen = false;
   }
-}
 
-closePdfModalRegistrationCard(): void {
-  this.isPdfModalRegistrationCardOpen = false;
-}
+  onFileChangePrcsProof(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
 
-onFileChangeRegistrationCard(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.prcsProofFileName = file.name;
 
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.registrationCardFileName = file.name;
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
 
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.prcsProofFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.prcsProofFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
 
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.registrationCardFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.registrationCardFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
 
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+        fileReader.readAsArrayBuffer(file);
+      }
     }
   }
-}
-openPdfModalIdentityCard(): void {
-  if (this.identityCardFileUrl) {
-    this.isPdfModalIdentityCardOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.identityCardFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
-  }
-}
 
-closePdfModalIdentityCard(): void {
-  this.isPdfModalIdentityCardOpen = false;
-}
-
-onFileChangeIdentityCard(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.identityCardFileName = file.name;
-
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
-
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.identityCardFileUrl = URL.createObjectURL(blob);
-          console.log('PDF Blob URL created:', this.identityCardFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);
+  openPdfModalAlShifaaProof(): void {
+    if (this.alShifaaProofFileUrl) {
+      this.isPdfModalAlShifaaProofOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.alShifaaProofFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
     }
   }
-}
-  // Open modal with the selected file
+
+  closePdfModalAlShifaaProof(): void {
+    this.isPdfModalAlShifaaProofOpen = false;
+  }
+
+  onFileChangeAlShifaaProof(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.alShifaaProofFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.alShifaaProofFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.alShifaaProofFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+  }
+  openPdfModalFireProof(): void {
+    if (this.fireProofFileUrl) {
+      this.isPdfModalFireProofOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.fireProofFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
+    }
+  }
+
+  closePdfModalFireProof(): void {
+    this.isPdfModalFireProofOpen = false;
+  }
+
+  onFileChangeFireProof(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.fireProofFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.fireProofFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.fireProofFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+  }
+
+  onFileChangeDegree(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.degreeFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.degreeFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.degreeFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+  }
+  openPdfModalRegistrationCard(): void {
+    if (this.registrationCardFileUrl) {
+      this.isPdfModalRegistrationCardOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.registrationCardFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
+    }
+  }
+
+  closePdfModalRegistrationCard(): void {
+    this.isPdfModalRegistrationCardOpen = false;
+  }
+
+  onFileChangeRegistrationCard(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.registrationCardFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.registrationCardFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.registrationCardFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+  }
+  openPdfModalIdentityCard(): void {
+    if (this.identityCardFileUrl) {
+      this.isPdfModalIdentityCardOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.identityCardFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
+    }
+  }
+
+  closePdfModalIdentityCard(): void {
+    this.isPdfModalIdentityCardOpen = false;
+  }
+
+  onFileChangeIdentityCard(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.identityCardFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.identityCardFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.identityCardFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+  }
+
   openPdfModalr(fileType: string) {
     switch (fileType) {
       case 'cv':
@@ -916,234 +916,235 @@ onFileChangeIdentityCard(event: Event, controlName: string): void {
     this.isPdfModalOpen = true;
   }
 
-  // Close the modal
+
   closePdfModalr() {
     this.isPdfModalOpen = false;
     this.currentPdfUrl = null;
   }
 
-openPdfModal(): void {
-  if (this.storedPdfUrl) {
-    this.isPdfModalOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.storedPdfUrl);
-  } else {
-    console.error('No PDF content available to display.');
-  }
-}
-
-
-
-// Function to close the modal
-closePdfModal(): void {
-
-  this.isPdfModalOpen = false;
-
-}
-
-
-openPdfModalcl(): void {
-  if (this.coverLetterFileUrl) {
-    this.isPdfModalclOpen = true;
-    console.log('PDF Blob URL ready for modal:', this.coverLetterFileUrl);
-  } else {
-    console.error('No PDF content available to display.');
-  }
-}
-
-
-
-// Function to close the modal
-closePdfModalcl(): void {
-
-  this.isPdfModalclOpen = false;
-
-}
-
-onFileChangecl(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.coverLetterFileName = file.name;
-
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
-
-      fileReader.onload = () => {
-        if (fileReader.result instanceof ArrayBuffer) {
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.coverLetterFileUrl = URL.createObjectURL(blob);  // Store the Object URL
-          console.log('PDF Blob URL created:', this.coverLetterFileUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
-
-      fileReader.readAsArrayBuffer(file);  // Read the file as ArrayBuffer
-    }}
+  openPdfModal(): void {
+    if (this.storedPdfUrl) {
+      this.isPdfModalOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.storedPdfUrl);
+    } else {
+      console.error('No PDF content available to display.');
     }
-      // Update the form control value with the file name (not the blob UR
-onFileChange(event: Event, controlName: string): void {
-  const input = event.target as HTMLInputElement;
+  }
 
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.cvFileName = file.name;
 
-    if (file.type === 'application/pdf') {
-      const fileReader = new FileReader();
 
-      fileReader.onload = () => {
-        // Create a Blob URL from the ArrayBuffer
-        if (fileReader.result instanceof ArrayBuffer) {
-          // Create a Blob URL (for PDF files)
-          const blob = new Blob([fileReader.result], { type: 'application/pdf' });
-          this.storedPdfUrl = URL.createObjectURL(blob);  // Store the Object URL
-          console.log('PDF Blob URL created:', this.storedPdfUrl);
-        } else {
-          console.error('Error: FileReader result is not an ArrayBuffer.');
-        }
-      };
 
-      fileReader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
+  closePdfModal(): void {
 
-      fileReader.readAsArrayBuffer(file);  // Read the file as ArrayBuffer
-      
-  
-      // Update the form control value with the file name (not the blob URL)
-    }
+    this.isPdfModalOpen = false;
 
   }
-}
 
 
-openFileModal(): void {
-  this.showModal = true;
-}
-
-// Close the modal
-closeFileModal(): void {
-  this.showModal = false;
-}
-
-
-
-
-
-updatePatternError() {
-  const control = this.personalInfoForm.get('personalRegistrationNumber');
-  if (control?.errors?.['pattern']) {
-    setTimeout(() => {
-      this.showPatternError = control.errors?.['pattern'] ? true : false;
-    }, 300);
-  } else {
-    this.showPatternError = false;
-  }
-}
-
-    saveToJson(): void {
-      const youth = this.createYouthModel();
-      this.allUsersData.push(youth);
-
-      const json = JSON.stringify(this.allUsersData, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-
-      link.click();
-      URL.revokeObjectURL(url);
-      this.formSubmitted = true;
-
-      setTimeout(() => {
-        this.formSubmitted = false;
-      }, 3000);
+  openPdfModalcl(): void {
+    if (this.coverLetterFileUrl) {
+      this.isPdfModalclOpen = true;
+      console.log('PDF Blob URL ready for modal:', this.coverLetterFileUrl);
+    } else {
+      console.error('No PDF content available to display.');
     }
-    onMajorChange(event: any): void {
-      const selectedMajor = event.target.value;
-    
-      if (selectedMajor === 'other') {
-        this.isOtherMajorSelected = true;
-        this.generalForm.get('major')?.setValue(''); // Clear the major field before user input
-        this.generalForm.get('major')?.setValidators([Validators.required]); // Make major field required when custom input is provided
-        this.generalForm.get('major')?.updateValueAndValidity();
-      } else {
-        this.isOtherMajorSelected = false;
-        this.generalForm.get('major')?.setValidators([Validators.required]); // Keep it required when selecting a standard option
-        this.generalForm.get('major')?.updateValueAndValidity();
+  }
+
+
+
+
+  closePdfModalcl(): void {
+
+    this.isPdfModalclOpen = false;
+
+  }
+
+  onFileChangecl(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.coverLetterFileName = file.name;
+
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          if (fileReader.result instanceof ArrayBuffer) {
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.coverLetterFileUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.coverLetterFileUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
       }
     }
-    
-    
-    createYouthModel(): Youth {
+  }
 
-      return {
-        id: this.generateUniqueId(),
-        username: this.personalInfoForm.value.personalRegistrationNumber,
-        password: this.requiredDocumentsForm.value.password,
-        role: 'Youth',
-        status: 'waiting',
-        // Personal Information
-        ...this.personalInfoForm.value,
+  onFileChange(event: Event, controlName: string): void {
+    const input = event.target as HTMLInputElement;
 
-        // General Information
-        ...this.generalForm.value,
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.cvFileName = file.name;
 
-        // General Questions
-        ...this.generalQuestionsForm.value,
-        innovationLabGradtype: this.generalQuestionsForm.value.innovationLabGradtype,
-        disabilityTypes: this.generalQuestionsForm.value.disabilityTypes,
+      if (file.type === 'application/pdf') {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+
+          if (fileReader.result instanceof ArrayBuffer) {
+
+            const blob = new Blob([fileReader.result], { type: 'application/pdf' });
+            this.storedPdfUrl = URL.createObjectURL(blob);
+            console.log('PDF Blob URL created:', this.storedPdfUrl);
+          } else {
+            console.error('Error: FileReader result is not an ArrayBuffer.');
+          }
+        };
+
+        fileReader.onerror = (error) => {
+          console.error('Error reading file:', error);
+        };
+
+        fileReader.readAsArrayBuffer(file);
 
 
-        // Experience Details
-        experiences: this.experienceDetailsForm.value.experiences,
 
-        // Trainings and Skills
-        trainings: this.trainingsAndSkillsForm.value.trainings,
-        computerSkills: this.trainingsAndSkillsForm.value.computerSkills,
-        arabic: this.skillsForm.value.arabic,
-        english: this.skillsForm.value.english,
-        french: this.skillsForm.value.french,
-        // Required Documents
-        ...this.requiredDocumentsForm.value,
-      };
-    }
-
-    onSubmit(): void {
-      const youth = this.createYouthModel();
-
-      this.youthService.submitFormData(youth).subscribe(
-        (response) => {
-          console.log('Form data submitted successfully:', response);
-          alert('Form data saved successfully!');
-        },
-        (error) => {
-          console.error('Error submitting form data:', error);
-          alert('Failed to save form data.');
-        }
-      );
-    }
-
-    generateUniqueId(): string {
-      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-      const randomLetter = letters[Math.floor(Math.random() * letters.length)]; 
-      const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-      return `${randomLetter}-${randomNumber}`; 
-    }
-    
-    
+      }
 
     }
+  }
 
 
-  
+  openFileModal(): void {
+    this.showModal = true;
+  }
+
+
+  closeFileModal(): void {
+    this.showModal = false;
+  }
+
+
+
+
+
+  updatePatternError() {
+    const control = this.personalInfoForm.get('personalRegistrationNumber');
+    if (control?.errors?.['pattern']) {
+      setTimeout(() => {
+        this.showPatternError = control.errors?.['pattern'] ? true : false;
+      }, 300);
+    } else {
+      this.showPatternError = false;
+    }
+  }
+
+  saveToJson(): void {
+    const youth = this.createYouthModel();
+    this.allUsersData.push(youth);
+
+    const json = JSON.stringify(this.allUsersData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+
+    link.click();
+    URL.revokeObjectURL(url);
+    this.formSubmitted = true;
+
+    setTimeout(() => {
+      this.formSubmitted = false;
+    }, 3000);
+  }
+  onMajorChange(event: any): void {
+    const selectedMajor = event.target.value;
+
+    if (selectedMajor === 'other') {
+      this.isOtherMajorSelected = true;
+      this.generalForm.get('major')?.setValue('');
+      this.generalForm.get('major')?.setValidators([Validators.required]);
+      this.generalForm.get('major')?.updateValueAndValidity();
+    } else {
+      this.isOtherMajorSelected = false;
+      this.generalForm.get('major')?.setValidators([Validators.required]);
+      this.generalForm.get('major')?.updateValueAndValidity();
+    }
+  }
+
+
+  createYouthModel(): Youth {
+
+    return {
+      id: this.generateUniqueId(),
+      username: this.personalInfoForm.value.personalRegistrationNumber,
+      password: this.requiredDocumentsForm.value.password,
+      role: 'Youth',
+      status: 'waiting',
+
+      ...this.personalInfoForm.value,
+
+
+      ...this.generalForm.value,
+
+
+      ...this.generalQuestionsForm.value,
+      innovationLabGradtype: this.generalQuestionsForm.value.innovationLabGradtype,
+      disabilityTypes: this.generalQuestionsForm.value.disabilityTypes,
+
+
+
+      experiences: this.experienceDetailsForm.value.experiences,
+
+
+      trainings: this.trainingsAndSkillsForm.value.trainings,
+      computerSkills: this.trainingsAndSkillsForm.value.computerSkills,
+      arabic: this.skillsForm.value.arabic,
+      english: this.skillsForm.value.english,
+      french: this.skillsForm.value.french,
+
+      ...this.requiredDocumentsForm.value,
+    };
+  }
+
+  onSubmit(): void {
+    const youth = this.createYouthModel();
+
+    this.youthService.submitFormData(youth).subscribe(
+      (response) => {
+        console.log('Form data submitted successfully:', response);
+        alert('Form data saved successfully!');
+      },
+      (error) => {
+        console.error('Error submitting form data:', error);
+        alert('Failed to save form data.');
+      }
+    );
+  }
+
+  generateUniqueId(): string {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+    const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+    return `${randomLetter}-${randomNumber}`;
+  }
+
+
+
+}
+
+
+
 
 
 
