@@ -19,7 +19,9 @@ import {
   getYouthByJob,
   updateAppliedJob,
   updateJob,
-  
+  updateYouthIsEdited,
+  getYouthIsEditedStatusById,
+
 } from '../controllers/youthController';
 // import { assignYouthToJob } from '../controllers/jobRequestController';
 
@@ -59,5 +61,7 @@ router.put('/:id/jobCategory', updateJob);
 
 // router.post('/jobs/:jobId/:youthId', assignYouthToJob);
 router.post('/check-registration', checkRegistrationNumber);
+router.patch('/:id/isEdited', updateYouthIsEdited);
+router.get('/:id/isEdited', getYouthIsEditedStatusById);
 
 export default router;

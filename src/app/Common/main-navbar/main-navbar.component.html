@@ -1,0 +1,104 @@
+<nav class="bg-blue-600 shadow-md sticky top-0 w-full z-50 px-10">
+  <div class="container mx-auto flex justify-between items-center px-6 py-4">
+    <!-- Logo Section -->
+    <div class="flex items-center space-x-3">
+
+      <h1 class="text-2xl font-bold text-white tracking-wide">
+        KFW
+      </h1>
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="hidden md:flex space-x-6 items-center">
+      <li>
+        <a
+          href="#home"
+          class="text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="#about"
+          class="text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          About Us
+        </a>
+      </li>
+      <li>
+        <a
+          href="#stats"
+          class="text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Statistics
+        </a>
+      </li>
+      <li>
+        <a
+          href="#contact"
+          class="text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Contact Us
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Toggle -->
+    <div class="md:hidden">
+      <button
+        id="menuToggle"
+        class="text-white hover:text-gray-200 focus:outline-none"
+      >
+        <i class="pi pi-bars text-2xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-blue-700">
+    <ul class="flex flex-col space-y-4 p-4">
+      <li>
+        <a
+          href="#home"
+          class="block text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="#about"
+          class="block text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          About Us
+        </a>
+      </li>
+      <li>
+        <a
+          href="#stats"
+          class="block text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Statistics
+        </a>
+      </li>
+      <li>
+        <a
+          href="#contact"
+          class="block text-white font-semibold hover:text-gray-200 transition duration-300"
+        >
+          Contact Us
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>

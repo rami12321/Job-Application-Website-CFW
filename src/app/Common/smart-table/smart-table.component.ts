@@ -18,6 +18,7 @@ import { JobRequestService } from '../../Services/JobRequestService/job-request-
 import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { debounceTime, Subject } from 'rxjs';
 
 interface Column {
   field: string;
@@ -40,6 +41,13 @@ interface Column {
     YouthSignupDetailsComponent,
     DetailsEmployerComponent,
     JobRequestDetailsComponent,
+    TableModule,
+    CommonModule,
+    TableModule,
+    MultiSelectModule,
+
+
+
   ],
   providers: [YouthServiceService],
   templateUrl: './smart-table.component.html',
@@ -75,7 +83,7 @@ export class SmartTableComponent implements OnInit {
   jobs: Job[] = [];
   selectedGender: string[] = [];
   rowData: any = {}; // Or use the appropriate type for your data
-  areas: any[] = [];
+  areas: string[] = [];
   majors: string[] = [];
   genders: string[] = [];
   educationLevels: string[] = [];
@@ -84,7 +92,13 @@ export class SmartTableComponent implements OnInit {
   selectedEducationLevels: string[] = []; // Define selectedMajors
   nationalityOptions: string[] = [];
   selectedNationalities: string[] = [];
+  selectedIsEdited: string[] = [];
+  selectedIsBeneficiary: string[] = [];
+  allProducts: any[] = []; // Array to hold all data
+  appliedJobFilter: string = '';
+
   excludedColumns: string[] = [
+    'workStatus',
     'active',
     'assignedYouths',
     'signature',
@@ -133,13 +147,20 @@ export class SmartTableComponent implements OnInit {
     'prcsProof',
   ];
   filteredCols: Column[] = []; // New array to hold filtered columns
+  private appliedJobFilterSubject = new Subject<string>();
 
   constructor(
     private youthService: YouthServiceService,
     private employerService: EmployerService,
     private JobRequestService: JobRequestService,
     private lookupService: LookupService
-  ) {}
+
+  ) {
+    this.appliedJobFilterSubject.pipe(debounceTime(300)).subscribe((filterValue) => {
+      this.appliedJobFilter = filterValue;
+      this.fetchYouthData();
+    });
+  }
 
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
@@ -156,8 +177,9 @@ export class SmartTableComponent implements OnInit {
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
+        this.allProducts = data; // Initialize with all data
 
-        this.areas = data.areas || [];
+        this.areas = (data.areas || []).map((area: any) => area.name);
         this.majors = data.majors || [];
         this.genders = data.genderOptions || [];
         this.educationLevels = data.educationLevels || [];
@@ -174,6 +196,7 @@ export class SmartTableComponent implements OnInit {
       }
     );
   }
+
 
   setActiveTabFromLocalStorage(): void {
     const activeTab = localStorage.getItem('activeTab');
@@ -204,17 +227,45 @@ export class SmartTableComponent implements OnInit {
   saveSelectedColumnsToLocalStorage() {
     localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
   }
+  formatDate(dateString: string): string {
+    if (!dateString) {
+      return 'N/A'; // Handle missing dates gracefully
+    }
+
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }).format(date);
+  }
+
+  filteredData: any[] = []; // Holds the filtered data
   fetchYouthData(): void {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
+
+        this.allProducts = data; // Assign the data only if it's an array
+
+        // Map appliedJobText for filtering and display
+        this.youthList = data.map((item) => ({
+          ...item,
+          appliedJobText: Array.isArray(item.appliedJob)
+            ? item.appliedJob.map((job: any) => job.job || '').join(', ')
+            : '', // Combine all job.job values into a single string or default to an empty string
+        }));
+        console.log('Processed Youth List:', this.youthList);
 
         // Step 1: Filter by `status` if provided
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
 
-        // Step 2: Apply filters for gender, major, and area
+        // Step 2: Apply filters for gender, major, area, and appliedJobText
         filteredData = filteredData.filter((item) => {
           const matchesGender =
             this.selectedGender.length === 0 ||
@@ -227,43 +278,58 @@ export class SmartTableComponent implements OnInit {
             this.selectedAreas.includes(item.area);
           const matchesEducationLevels =
             this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevels);
+            this.selectedEducationLevels.includes(item.educationLevel);
           const matchesNationalityOptions =
             this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationalityOptions);
+            this.selectedNationalities.includes(item.nationality);
+          const matchesIsEdited =
+            this.selectedIsEdited === null || // Check if null for all
+            this.selectedIsEdited.length === 0 ||
+            item.isEdited === this.selectedIsEdited;
+          const matchesIsBeneficiary =
+            this.selectedIsBeneficiary === null || // Check if null for all
+            this.selectedIsBeneficiary.length === 0 ||
+            item.beneficiary === this.selectedIsBeneficiary;
+
+          // Updated logic for matchesAppliedJob
+          const matchesAppliedJob =
+            !this.appliedJobFilter || // Check if the applied job filter is empty
+            (item.appliedJob || []).some((job: any) =>
+              (job.job || '').toLowerCase().includes(this.appliedJobFilter.toLowerCase())
+            );
 
           return (
             matchesGender &&
             matchesMajor &&
             matchesArea &&
             matchesEducationLevels &&
-            matchesNationalityOptions
+            matchesNationalityOptions &&
+            matchesIsEdited &&
+            matchesIsBeneficiary &&
+            matchesAppliedJob
           );
         });
 
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
-          // Exclude unwanted columns
           const filteredColumns = Object.keys(filteredData[0]).filter(
             (key) => !this.excludedColumns.includes(key)
           );
 
-          // Map filtered columns to the format expected by PrimeNG
           this.cols = filteredColumns.map((key) => ({
             field: key,
             header: this.capitalize(key),
           }));
+
           const savedColumns = localStorage.getItem('selectedColumns');
           if (savedColumns) {
             this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns]; // Synchronize `cols`
+            this.cols = [...this._selectedColumns];
           } else {
-            // Default to all columns if no saved state
             this._selectedColumns = this.cols;
             this.cols = [...this._selectedColumns];
           }
 
-          // Initialize _selectedColumns with all columns except "Action"
           if (this.savedColumns) {
             this.savedColumns = this.cols;
           } else {
@@ -273,12 +339,40 @@ export class SmartTableComponent implements OnInit {
 
         // Step 4: Update youth list and paginated products
         this.youthList = filteredData;
+        this.filteredData = [...this.youthList];
         this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage);
       },
       (error) => {
         console.error('Error fetching youth data:', error);
       }
     );
+  }
+  clearFilter(): void {
+    this.appliedJobFilter = ''; // Clear the filter input
+    this.fetchYouthData(); // Reload the data without the filter
+  }
+  filterAppliedJob(event: Event): void {
+    console.log('event'+event)
+    const inputElement = event.target as HTMLInputElement;
+    const keyword = inputElement?.value ? String(inputElement.value).toLowerCase() : ''; // Ensure it's a string
+
+    console.log('Keyword:', keyword); // Debugging
+
+    if (!Array.isArray(this.allProducts)) {
+      console.error('allProducts is not an array:', this.allProducts);
+      return;
+    }
+
+    this.paginatedProducts = this.allProducts.filter((product: any) =>
+      product.appliedJob?.some((job: any) =>
+        String(job.job).toLowerCase().includes(keyword)
+      )
+    );
+
+    console.log('Filtered paginatedProducts:', this.paginatedProducts);
+  }
+  onAppliedJobFilterChange(value: string): void {
+    this.appliedJobFilterSubject.next(value);
   }
   fetchEmployerData(): void {
     this.employerService.getAllEmployers().subscribe(
@@ -290,6 +384,14 @@ export class SmartTableComponent implements OnInit {
           ? data.filter((item) => item.active === this.active)
           : data;
 
+          filteredData = filteredData.filter((item) => {
+            const matchesArea =
+              this.selectedAreas.length === 0 ||
+              this.selectedAreas.includes(item.area);
+            return (
+              matchesArea
+            );
+          });
         // Step 2: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -312,6 +414,8 @@ export class SmartTableComponent implements OnInit {
             this.cols = [...this._selectedColumns];
           }
 
+
+
           // Initialize _selectedColumns with all columns except "Action"
           if (this.savedColumns) {
             this.savedColumns = this.cols;
@@ -330,6 +434,17 @@ export class SmartTableComponent implements OnInit {
     );
   }
 
+  isEditedOptions = [
+    { label: 'All', value: null },
+    { label: 'Edited', value: true },
+    { label: 'Not Edited', value: false },
+  ];
+  dropdownStyle = {
+    background: 'white',
+    border: '1px solid #ddd',
+    'border-radius': '8px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)',
+  };
 
   fetchJobRequests(): void {
     this.JobRequestService.getAllJobs().subscribe(
@@ -430,6 +545,7 @@ export class SmartTableComponent implements OnInit {
   performAction(action: string, item: any): void {
     if (action === 'view') {
       console.log('View action for:', item);
+
     } else if (action === 'pend') {
       this.updateStatus(item.id, 'pending');
     } else if (action === 'accept') {
@@ -439,6 +555,7 @@ export class SmartTableComponent implements OnInit {
     }
   }
 
+
   note: string = '';
   selectedYouth: any;
   showNoteDialog(youth: any): void {
@@ -446,6 +563,21 @@ export class SmartTableComponent implements OnInit {
     this.note = youth.note || ''; // If there's an existing note, pre-fill the input
     this.noteDialogVisible = true;
   }
+  updateIsEdited(id: any): void {
+    // Call the service to update the `isEdited` field to `false`
+    this.youthService.updateYouthIsEdited(id, false).subscribe(
+      (response) => {
+        console.log(`Youth with ID ${id} marked as not edited`);
+
+        // Optionally, you can fetch the updated data after the status change
+        this.fetchYouthData();
+      },
+      (error) => {
+        console.error('Error updating isEdited status:', error);
+      }
+    );
+  }
+
 
   //youth dialog
   youthDialog: boolean = false;
@@ -486,24 +618,16 @@ export class SmartTableComponent implements OnInit {
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
   noYouthMessage: string = '';
-  loadLookupData(): void {
-    this.lookupService.getLookupData().subscribe((data) => {
-      this.areas = data.areas || [];
-      this.majors = data.majors || [];
-      this.genders = data.genderOptions || [];
-      this.educationLevels = data.educationLevels || [];
-      this.nationalityOptions = data.nationalityOptions || [];
-    });
-  }
+
   selectedYouthId: number | null = null;
   showDialog(youthId: number, activeTab: string): void {
-    this.selectedYouthId = youthId; 
-  
+    this.selectedYouthId = youthId;
+
     // Reset all dialog visibility states
     this.employerDialogVisible = false;
     this.jobRequestDialogVisible = false;
     this.youthSignupDialogVisible = false;
-  
+
     // Show the appropriate dialog based on the active tab
     switch (activeTab) {
       case 'employer':
@@ -517,7 +641,7 @@ export class SmartTableComponent implements OnInit {
         break;
     }
   }
-  
+
   clearSelectedYouthId(): void {
     this.selectedYouthId = null; // Reset when dialog is closed
   }
@@ -604,8 +728,11 @@ export class SmartTableComponent implements OnInit {
       next: (response: any) => {
         console.log('Response from getYouthByJob:', response); // Log the response for debugging
 
+        // Filter youths with workStatus === false
+        const filteredYouths = (response.youths || []).filter((youth: any) => !youth.workStatus);
+
         // Transform youths to include a label for display
-        this.youths = (response.youths || []).map((youth: any) => ({
+        this.youths = filteredYouths.map((youth: any) => ({
           id: youth.id,
           name: youth.name,
           beneficiary: youth.beneficiary,
@@ -614,7 +741,7 @@ export class SmartTableComponent implements OnInit {
           }`, // Add icon and text if beneficiary
         }));
 
-        console.log('Transformed youths array:', this.youths); // Log the transformed array
+        console.log('Filtered and transformed youths array:', this.youths); // Log the transformed array
         this.youthDialogVisible = true; // Open the dialog
       },
       error: (error) => {
@@ -622,6 +749,7 @@ export class SmartTableComponent implements OnInit {
       },
     });
   }
+
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
     console.log(
@@ -707,24 +835,26 @@ export class SmartTableComponent implements OnInit {
   }
   showAssignedYouthDialog(jobName: string, job: string): void {
     this.currentJob = jobName; // Store the current job for context
-    this.selectedJob=job
+    this.selectedJob = job;
     this.selectedYouths = []; // Reset selectedYouths for this dialog
 
     this.youthService.getYouthByJob(jobName).subscribe({
       next: (allYouthsResponse: any) => {
         console.log('Response from getYouthByJob:', allYouthsResponse);
 
-        // Format all youths
-        const allYouths = (allYouthsResponse.youths || []).map((youth: any) => ({
-          id: youth.id,
-          name: youth.name || 'Unknown', // Fallback if name is missing
-          beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-          label: `${youth.name || 'Unknown'} (${youth.id})${
-            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-          }`,
-        }));
+        // Filter and format all youths
+        const allYouths = (allYouthsResponse.youths || [])
+          .filter((youth: any) => !youth.workStatus) // Include only youths with workStatus === false
+          .map((youth: any) => ({
+            id: youth.id,
+            name: youth.name || 'Unknown', // Fallback if name is missing
+            beneficiary: youth.beneficiary || false, // Fallback for beneficiary
+            label: `${youth.name || 'Unknown'} (${youth.id})${
+              youth.beneficiary ? ' ✅ (Beneficiary)' : ''
+            }`,
+          }));
 
-        console.log('Formatted All Youths:', allYouths);
+        console.log('Filtered and Formatted All Youths:', allYouths);
 
         this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
           next: (assignedResponse: any) => {
@@ -766,9 +896,10 @@ export class SmartTableComponent implements OnInit {
     });
   }
 
+
   unassignYouth(jobId: string, youthId: string): void {
     console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
-    
+
     this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
       next: () => {
         console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);

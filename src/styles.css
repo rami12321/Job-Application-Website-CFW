@@ -25,3 +25,6 @@
       background-color: transparent !important;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
