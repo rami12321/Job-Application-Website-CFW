@@ -1,0 +1,125 @@
+.popup {
+  background-color: #fff;
+  border: 1px solid #ddd; /* Slightly softer border color */
+  padding: 24px; /* More padding for better spacing */
+  width: 90%; /* Make it responsive */
+  max-width: 400px; /* Set a maximum width */
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+  border-radius: 8px; /* Rounded corners for modern look */
+  animation: fadeIn 0.3s ease-in-out;
+}
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions {
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-actions button:hover {
+  background-color: #0056b3;
+}
+
+button {
+  margin: 8px 4px; /* Reduced margin between buttons */
+}
+
+.btn-primary, .btn-secondary {
+  background-color: #1d4ed8; /* Blue */
+  color: white;
+  font-weight: 600;
+  padding: 12px 22px; /* Smaller padding for a more balanced button size */
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  font-size: 16px; /* Adjust font size for better readability */
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  background-color: #2563eb; /* Lighter blue */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+  background-color: #d1d5db; /* Gray */
+  color: #374151; /* Darker gray */
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb; /* Lighter gray */
+  color: #1f2937; /* Dark gray */
+}
+
+.btn-close {
+  background-color: #d1d5db; /* Subtle gray for the close button */
+  color: #374151; /* Darker gray text */
+  font-weight: 600;
+  padding: 10px 20px; /* Slightly smaller padding */
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* Adjust font size for better readability */
+}
+
+.btn-close:hover {
+  background-color: #e5e7eb; /* Light hover effect */
+  color: #1f2937; /* Darker text on hover */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .popup {
+    width: 90%;
+  }
+  button {
+    width: 100%; /* Make buttons stack and full width */
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .popup {
+    padding: 16px; /* Reduce padding on small screens */
+  }
+  .btn-primary, .btn-secondary, .btn-close {
+    font-size: 14px; /* Adjust font size for smaller buttons */
+    padding: 10px 20px; /* Adjust padding */
+  }
+}

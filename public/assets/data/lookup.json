@@ -1,0 +1,693 @@
+{
+
+  "areas": [
+    {
+      "name": "Tyre",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Rashidieh Palestinian Refugee Camp",
+        "El Buss Palestinian Refugee Camp",
+        "Burj El Shemali Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "Saida",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Mieh Mieh Palestinian Refugee Camp",
+        "Ein El Hilweh Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "North Lebanon",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Nahr El Bared Palestinian Refugee Camp",
+        "Baddawi Palestinian Refugee Camp"
+      ]
+    },
+    {
+      "name": "Beqaa",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": ["Wavel Palestinian Refugee Camp"]
+    },
+    {
+      "name": "Beirut and Mount Lebanon",
+      "options": ["Outside Camp", "Inside Camp"],
+      "camps": [
+        "Shatila Palestinian Refugee Camp",
+        "Mar Elias Palestinian Refugee Camp",
+        "Dbayeh Palestinian Refugee Camp",
+        "Burj El Barajneh Palestinian Camp"
+      ]
+    }
+  ],
+  "majors": [
+    "Translation",
+    "Theatre Arts",
+    "Teaching Diploma",
+    "Statistics",
+    "Speech Therapy",
+    "Special Education Diploma",
+    "Sociology",
+    "Religion",
+    "Radio Television",
+    "Public Relations",
+    "Public Health",
+    "Psychology",
+    "Political Science",
+    "Physiotherapy",
+    "Physics",
+    "Philosophy",
+    "Pharmacy",
+    "Occupational Therapy",
+    "Nursing",
+    "Medical Lab Sciences",
+    "Mechanical Engineering",
+    "Mathematics",
+    "Mass Communication",
+    "Marketing",
+    "Management Information Systems",
+    "Law",
+    "Journalism",
+    "International Relations Affairs",
+    "International Business Management",
+    "Interior Design",
+    "Interior Architecture",
+    "Industrial Engineering",
+    "Human Resources Management",
+    "Hospitality,Tourism, Travel",
+    "History",
+    "Graphic Design",
+    "Geography",
+    "French Literature",
+    "Food Science & Safety",
+    "Food Nutrition",
+    "Finance",
+    "Fashion Design",
+    "Environmental Science",
+    "English Literature",
+    "Electrical Engineering",
+    "Early Childhood Education",
+    "Design Visual Communications",
+    "Dentistry",
+    "Computer Science Programming",
+    "Computer Networking",
+    "Computer Engineering",
+    "Computer and Communication Engineering",
+    "Civil Engineering",
+    "Cinematography",
+    "Chemistry",
+    "Chemical Engineering",
+    "Business Administration Management",
+    "Biomedical Engineering",
+    "Biology",
+    "Biochemistry",
+    "Art History",
+    "Architectural Engineering",
+    "Arabic Literature",
+    "Agriculture Engineering",
+    "Accounting Information System",
+    "Accounting"
+  ],
+  "Role":[
+    "Admin",
+    "Employer",
+    "Youth"
+  ],
+  "genderOptions": ["Male", "Female"],
+  "nationalityOptions": [
+    "Palestinian Refugee in Lebanon",
+    "Palestinian Refugee from Syria",
+    "Lebanese",
+    "Syrian",
+    "Non-ID"
+  ],
+  "registrationStatusOptions": [
+    "Registered",
+    "Not Registered",
+    "Palestinian Not-ID"
+  ],
+  "headfaOptions": ["Father", "Mother", "Husband", "Brother", "Sister", "Me"],
+  "relationshipOptions": ["Parent", "Partner", "Sibling"],
+  "employmentOpportunitiesOptions": [
+    "Short-term employment opportunities with external organizations",
+    "Short-term employment opportunities in UNRWA",
+    "Both"
+  ],
+  "jobOpportunityOptions": [
+    "WhatsApp Message from Employment Services Team",
+    "WhatsApp Message from Area Offices",
+    "UNRWA's Facebook Page",
+    "NGOs",
+    "Friends"
+  ],
+  "educationLevels": [
+    "University Degree, Technical Licence (LT), University Diploma",
+    "Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center",
+    "Technical Baccalaureate (BT) or equivalent from Siblin Training Center (STC)",
+    "Higher Technical Degree (TS) or equivalent from Siblin Training Center (STC)"
+  ],
+  "youthStatus": [
+    "accepted",
+    "rejected",
+    "pending",
+    "waiting"
+  ],
+  "jobCategories": [
+    {
+      "categories": {
+        "Business": [
+          "Accountant",
+          "Accountant Assistant",
+          "Admin Assistant",
+          "Administrative Support Officer",
+          "Assistant Veteranian",
+          "Communication Assistant",
+          "Customer service Employee",
+          "Data Entry Clerk",
+          "Data Management Officer",
+          "Enumerator & Community Engagement Officer",
+          "Finance Officer",
+          "HR Assistant",
+          "HR Officer",
+          "MIS Officer",
+          "Office Equipment & Computer Maintenance Technician",
+          "Procurement Assistant",
+          "Procurement Officer",
+          "Public Relation Assistant",
+          "Public Relation Officer",
+          "Researcher",
+          "Sales Assistant",
+          "Sales Officer",
+          "Fundraising Assistant",
+          "Grants Assistant",
+          "Community Liaison Assistant",
+          "Field Inspection Assistant",
+          "Finance Assistant",
+          "Monitoring Officer",
+          "Project Assistant ",
+          "Property Inspection Assistant "
+        ],
+        "Cars & Motors Electrican": [
+          "Auto Electrician",
+          "Auto Mechanic",
+          "Diesel Mechanic"
+        ],
+        "Construction": [
+          "Interior Architect",
+          "Interior Designer"
+        ],
+        "Crafts": [
+          "Barber",
+          "Blacksmith",
+          "Carpenter",
+          "Chef Assistant ",
+          "Electronics Technician",
+          "Fashion Designer",
+          "Fitness Trainer",
+          "General CCTV Electrician",
+          "General Electrician",
+          "Graphic Designer",
+          "Hair dresser",
+          "HVAC & refrigerator Technician",
+          "Lathe Technician",
+          "Manicure & Pedicure Technician",
+          "Plumbing technician",
+          "Sheet Metal Fabricator",
+          "Solar Technician",
+          "Sports Coach",
+          "Sustainable Farming Technician",
+          "Tailor",
+          "Welder"
+        ],
+        "Digital": [
+          "IT Officer",
+          "IT Technician",
+          "Mobile Developer",
+          "Web Developer"
+        ],
+        "Education": [
+          "Arabic Teacher",
+          "Biochemist",
+          "Chemistry Teacher",
+          "Early Childhood Teacher",
+          "English Teacher",
+          "French Teacher",
+          "Mathematic Teacher",
+          "Religion Teacher",
+          "Science Teacher",
+          "Socials Teacher",
+          "Special Education Assistant",
+          "Special Education Provider",
+          "shadow teacher"
+        ],
+        "Engineering": [
+          "Agriculture Scientist",
+          "Architect Assistant",
+          "Architecture Engineer",
+          "Assistant Civil Engineer",
+          "Assistant Floor Supervisor",
+          "Assistant Mechanical Engineer",
+          "Biomedical Engineer",
+          "Civil Engineer",
+          "CNC Engineer",
+          "Communication Engineer",
+          "Electric Engineer",
+          "Electromechanical Engineer",
+          "Electronics Engineer",
+          "Industrial Engineer",
+          "Mechanical Engineer"
+        ],
+        "Health": [
+          "Dental Assistant",
+          "Dentist Assistant",
+          "Food Safety Tehnical Assistant",
+          "Food Scientist",
+          "Medical Lab Analyst",
+          "Medical Lab Technichian",
+          "Nurse",
+          "Nurse Assistant",
+          "Nutritionist",
+          "Occupational Therapist",
+          "Paramedic",
+          "Pharmacist Assistant",
+          "Pharmacy Assistant",
+          "Phsycologist Assistant",
+          "Physiotherapist",
+          "Physiotherapy assistant",
+          "Labaratory Scientist",
+          "Radiology Technician ",
+          "Speech Therapisat",
+          "X-ray technician",
+          "Environmental health officer"
+        ],
+        "Industrial": [
+          "Industrial Electricity Technician",
+          "Industrial Mechanics",
+          "Machining & Industrial Mechanics Technician"
+        ],
+        "Media": [
+          "Arts Animator",
+          "Assistant news editor",
+          "Communication & Digital Media Officer",
+          "Digital Marketing Assistant",
+          "Journalist",
+          "Marketing Officer",
+          "Photo-Videographer",
+          "Studio Operator Assistant"
+        ],
+        "Services": [
+          "Legal Volunteer",
+          "Translator"
+        ],
+        "Social": [
+          "PSS Animator",
+          "Social Worker"
+        ]
+      }
+    }
+  ],
+
+  
+    "jobs": {
+      "Accountant": {
+        "description": ["Record", "Ensure", "Participate", "Manage", "Assist", "Prepare", "Assist", "Maintain", "Verify"]
+      },
+      "Accountant Assistant": {
+        "description": ["Assist", "Prepare", "Assist", "Handle"]
+      },
+      "Admin Assistant": {
+        "description": ["Assist", "Schedule", "Coordinate", "Organize", "Prepare"]
+      },
+      "Administrative Support Officer": {
+        "description": ["Support", "Manage", "Prepare", "Coordinate"]
+      },
+      "Assistant Veteranian": {
+        "description": ["Assist", "Examine", "Treat", "Monitor"]
+      },
+      "Communication Assistant": {
+        "description": ["Assist", "Manage", "Coordinate", "Write"]
+      },
+      "Customer service Employee": {
+        "description": ["Assist", "Respond", "Resolve", "Support"]
+      },
+      "Data Entry Clerk": {
+        "description": ["Enter", "Verify", "Organize", "Maintain"]
+      },
+      "Data Management Officer": {
+        "description": ["Manage", "Ensure", "Verify", "Analyze"]
+      },
+      "Enumerator & Community Engagement Officer": {
+        "description": ["Conduct", "Collect", "Engage", "Analyze"]
+      },
+      "Finance Officer": {
+        "description": ["Manage", "Record", "Prepare", "Monitor"]
+      },
+      "HR Assistant": {
+        "description": ["Assist", "Manage", "Organize", "Coordinate"]
+      },
+      "HR Officer": {
+        "description": ["Manage", "Oversee", "Organize", "Assist"]
+      },
+      "MIS Officer": {
+        "description": ["Manage", "Oversee", "Maintain", "Implement"]
+      },
+      "Office Equipment & Computer Maintenance Technician": {
+        "description": ["Maintain", "Repair", "Install", "Troubleshoot"]
+      },
+      "Procurement Assistant": {
+        "description": ["Assist", "Order", "Maintain", "Support"]
+      },
+      "Procurement Officer": {
+        "description": ["Manage", "Analyze", "Procure", "Verify"]
+      },
+      "Public Relation Assistant": {
+        "description": ["Assist", "Coordinate", "Support", "Organize"]
+      },
+      "Public Relation Officer": {
+        "description": ["Coordinate", "Manage", "Promote", "Build"]
+      },
+      "Researcher": {
+        "description": ["Research", "Analyze", "Prepare", "Present"]
+      },
+      "Sales Assistant": {
+        "description": ["Assist", "Support", "Promote", "Sell"]
+      },
+      "Sales Officer": {
+        "description": ["Sell", "Promote", "Analyze", "Manage"]
+      },
+      "Fundraising Assistant": {
+        "description": ["Assist", "Organize", "Promote", "Support"]
+      },
+      "Grants Assistant": {
+        "description": ["Assist", "Manage", "Support", "Prepare"]
+      },
+      "Community Liaison Assistant": {
+        "description": ["Coordinate", "Assist", "Support", "Organize"]
+      },
+      "Field Inspection Assistant": {
+        "description": ["Inspect", "Report", "Assist", "Verify"]
+      },
+      "Finance Assistant": {
+        "description": ["Assist", "Verify", "Record", "Prepare"]
+      },
+      "Monitoring Officer": {
+        "description": ["Monitor", "Analyze", "Report", "Verify"]
+      },
+      "Project Assistant": {
+        "description": ["Assist", "Organize", "Prepare", "Coordinate"]
+      },
+      "Property Inspection Assistant": {
+        "description": ["Inspect", "Report", "Assist", "Verify"]
+      },
+      "Auto Electrician": {
+        "description": ["1. Diagnose electrical issues in vehicles and determine appropriate repairs.", "2. Repair or replace faulty electrical components such as alternators, starters, and wiring harnesses.", "3. Install and repair vehicle lighting systems, including headlights, brake lights, and turn signals.","4. Test electrical systems using diagnostic tools and equipment to ensure proper functioning.","5. Perform preventative maintenance on electrical systems to avoid future breakdowns.",
+        "6. Keep accurate records of repairs and maintenance activities.",
+      "7. Adhere to safety procedures and guidelines while working on electrical systems."]
+      },
+      "Auto Mechanic": {
+        "description": ["1. Perform routine maintenance tasks, such as oil changes, tire rotations, and filter replacements.", "2. Diagnose and repair mechanical issues in vehicles, including engines, transmissions, and braking systems.", "3. Conduct vehicle inspections to identify any potential issues or safety concerns.", "4. Use diagnostic tools and equipment to troubleshoot complex mechanical problems.", "5. Keep accurate records of repairs, maintenance activities, and parts inventory.", "6. Adhere to safety procedures and guidelines while working on vehicles.", "7. Communicate effectively with customers regarding repair options and timelines."]
+      },
+      "Diesel Mechanic": {
+        "description": ["1. Inspect, diagnose, and repair diesel engines and related systems.", "2. Perform routine maintenance on diesel vehicles and equipment, including oil changes, tire rotations, and brake adjustments.", "3. Troubleshoot and resolve mechanical, electrical, and hydraulic issues.", "4. Use diagnostic tools and equipment to test vehicle components.", "5. ssist in disassembling and reassembling engines and components for repair or maintenance.","6. Maintain accurate records of repairs, services, and parts used.", "7. Follow safety protocols and ensure a clean and organized work environment."]
+      },
+      "Interior Architect": {
+        "description": ["Design", "Plan", "Manage"]
+      },
+      "Interior Designer": {
+        "description": ["Design", "Plan", "Decorate"]
+      },
+      "Barber": {
+        "description": ["Cut", "Style", "Shave"]
+      },
+      "Blacksmith": {
+        "description": ["Forge", "Shape", "Repair"]
+      },
+      "Carpenter": {
+        "description": ["Build", "Install", "Repair"]
+      },
+      "Chef Assistant": {
+        "description": ["Prepare", "Assist", "Organize"]
+      },
+      "Electronics Technician": {
+        "description": ["Repair", "Maintain", "Install"]
+      },
+      "Fashion Designer": {
+        "description": ["Design", "Create", "Fit"]
+      },
+      "Fitness Trainer": {
+        "description": ["Train", "Guide", "Instruct"]
+      },
+      "General CCTV Electrician": {
+        "description": ["Install", "Maintain", "Repair"]
+      },
+      "General Electrician": {
+        "description": ["Install", "Maintain", "Repair"]
+      },
+      "Graphic Designer": {
+        "description": ["Design", "Create", "Edit"]
+      },
+      "Hair dresser": {
+        "description": ["Cut", "Style", "Treat"]
+      },
+      "HVAC & refrigerator Technician": {
+        "description": ["Repair", "Install", "Maintain"]
+      },
+      "Lathe Technician": {
+        "description": ["Operate", "Monitor", "Repair"]
+      },
+      "Manicure & Pedicure Technician": {
+        "description": ["Treat", "Design", "Maintain"]
+      },
+      "Plumbing technician": {
+        "description": ["Repair", "Install", "Maintain"]
+      },
+      "Sheet Metal Fabricator": {
+        "description": ["Fabricate", "Shape", "Install"]
+      },
+      "Solar Technician": {
+        "description": ["Install", "Maintain", "Inspect"]
+      },
+      "Sports Coach": {
+        "description": ["Coach", "Guide", "Instruct"]
+      },
+      "Sustainable Farming Technician": {
+        "description": ["Manage", "Implement", "Monitor"]
+      },
+      "Tailor": {
+        "description": ["Sew", "Alter", "Design"]
+      },
+      "Welder": {
+        "description": ["Weld", "Repair", "Fabricate"]
+      },
+      "IT Officer": {
+        "description": ["Manage", "Support", "Maintain"]
+      },
+      "IT Technician": {
+        "description": ["Install", "Repair", "Maintain"]
+      },
+      "Mobile Developer": {
+        "description": ["Develop", "Code", "Test"]
+      },
+      "Web Developer": {
+        "description": ["Develop", "Design", "Code"]
+      },
+      "Arabic Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Biochemist": {
+        "description": ["Research", "Analyze", "Study"]
+      },
+      "Chemistry Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Early Childhood Teacher": {
+        "description": ["Teach", "Guide", "Instruct"]
+      },
+      "English Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "French Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Mathematic Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Religion Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Science Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Socials Teacher": {
+        "description": ["Teach", "Instruct", "Guide"]
+      },
+      "Special Education Assistant": {
+        "description": ["Assist", "Support", "Guide"]
+      },
+      "Special Education Provider": {
+        "description": ["Provide", "Support", "Guide"]
+      },
+      "shadow teacher": {
+        "description": ["Assist", "Guide", "Instruct"]
+      },
+      "Agriculture Scientist": {
+        "description": ["Research", "Analyze", "Study"]
+      },
+      "Architect Assistant": {
+        "description": ["Assist", "Design", "Draft"]
+      },
+      "Architecture Engineer": {
+        "description": ["Design", "Plan", "Build"]
+      },
+      "Assistant Civil Engineer": {
+        "description": ["Assist", "Design", "Analyze"]
+      },
+      "Assistant Floor Supervisor": {
+        "description": ["Supervise", "Assist", "Manage"]
+      },
+      "Assistant Mechanical Engineer": {
+        "description": ["Assist", "Design", "Analyze"]
+      },
+      "Biomedical Engineer": {
+        "description": ["Design", "Analyze", "Develop"]
+      },
+      "Civil Engineer": {
+        "description": ["Design", "Analyze", "Build"]
+      },
+      "CNC Engineer": {
+        "description": ["Operate", "Analyze", "Design"]
+      },
+      "Communication Engineer": {
+        "description": ["Design", "Maintain", "Analyze"]
+      },
+      "Electric Engineer": {
+        "description": ["Design", "Analyze", "Install"]
+      },
+      "Electromechanical Engineer": {
+        "description": ["Design", "Analyze", "Build"]
+      },
+      "Electronics Engineer": {
+        "description": ["Design", "Analyze", "Build"]
+      },
+      "Industrial Engineer": {
+        "description": ["Design", "Analyze", "Optimize"]
+      },
+      "Mechanical Engineer": {
+        "description": ["Design", "Analyze", "Build"]
+      },
+      "Dental Assistant": {
+        "description": ["Assist", "Prepare", "Monitor"]
+      },
+      "Dentist Assistant": {
+        "description": ["Assist", "Prepare", "Monitor"]
+      },
+      "Food Safety Technical Assistant": {
+        "description": ["Assist", "Inspect", "Monitor"]
+      },
+      "Food Scientist": {
+        "description": ["Research", "Analyze", "Develop"]
+      },
+      "Medical Lab Analyst": {
+        "description": ["Analyze", "Test", "Monitor"]
+      },
+      "Medical Lab Technician": {
+        "description": ["Analyze", "Test", "Monitor"]
+      },
+      "Nurse": {
+        "description": ["Care", "Assist", "Monitor"]
+      },
+      "Nurse Assistant": {
+        "description": ["Assist", "Care", "Monitor"]
+      },
+      "Nutritionist": {
+        "description": ["Advise", "Support", "Monitor"]
+      },
+      "Occupational Therapist": {
+        "description": ["Assess", "Guide", "Monitor"]
+      },
+      "Paramedic": {
+        "description": ["Assist", "Monitor", "Respond"]
+      },
+      "Pharmacist Assistant": {
+        "description": ["Assist", "Dispense", "Monitor"]
+      },
+      "Pharmacy Assistant": {
+        "description": ["Assist", "Dispense", "Monitor"]
+      },
+      "Psychologist Assistant": {
+        "description": ["Assist", "Observe", "Support"]
+      },
+      "Physiotherapist": {
+        "description": ["Assess", "Treat", "Monitor"]
+      },
+      "Physiotherapy Assistant": {
+        "description": ["Assist", "Observe", "Support"]
+      },
+      "Laboratory Scientist": {
+        "description": ["Analyze", "Test", "Monitor"]
+      },
+      "Radiology Technician": {
+        "description": ["Operate", "Analyze", "Monitor"]
+      },
+      "Speech Therapist": {
+        "description": ["Assess", "Treat", "Guide"]
+      },
+      "X-ray Technician": {
+        "description": ["Operate", "Analyze", "Monitor"]
+      },
+      "Environmental Health Officer": {
+        "description": ["Inspect", "Monitor", "Assess"]
+      },
+      "Industrial Electricity Technician": {
+        "description": ["Install", "Maintain", "Repair"]
+      },
+      "Industrial Mechanics": {
+        "description": ["Repair", "Install", "Maintain"]
+      },
+      "Machining & Industrial Mechanics Technician": {
+        "description": ["Repair", "Install", "Maintain"]
+      },
+      "Arts Animator": {
+        "description": ["Animate", "Design", "Create"]
+      },
+      "Assistant News Editor": {
+        "description": ["Assist", "Edit", "Write"]
+      },
+      "Communication & Digital Media Officer": {
+        "description": ["Manage", "Coordinate", "Promote"]
+      },
+      "Digital Marketing Assistant": {
+        "description": ["Assist", "Coordinate", "Promote"]
+      },
+      "Journalist": {
+        "description": ["Write", "Report", "Edit"]
+      },
+      "Marketing Officer": {
+        "description": ["Market", "Promote", "Analyze"]
+      },
+      "Photo-Videographer": {
+        "description": ["Capture", "Edit", "Create"]
+      },
+      "Studio Operator Assistant": {
+        "description": ["Assist", "Operate", "Monitor"]
+      },
+      "Legal Volunteer": {
+        "description": ["Assist", "Research", "Support"]
+      },
+      "Translator": {
+        "description": ["Translate", "Interpret", "Support"]
+      },
+      "PSS Animator": {
+        "description": ["Assist", "Create", "Monitor"]
+      },
+      "Social Worker": {
+        "description": ["Support", "Guide", "Assist"]
+      }
+    }
+  
+  
+  
+  }
+

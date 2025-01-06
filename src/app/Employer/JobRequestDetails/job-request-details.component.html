@@ -1,0 +1,1148 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+
+<div class="responsive-container px-4 mx-2">
+  <div class=" rounded-xl  px-4 mx-2 h-full">
+    <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+      Job Request Details
+    </h3>
+    
+    <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+      <div class="grid grid-cols-2 gap-6 mt-4">
+        <!-- Job Title -->
+        <p>
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Category:</strong>
+          
+          <!-- Display current category if not in editing mode -->
+          <span
+                class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+            {{ jobRequest?.category || 'Not available' }}
+          </span>
+          </p>
+        <p>
+          <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
+          <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+            {{ jobRequest?.title }}
+          </span>
+        </p>
+      <!-- Number of Employees -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.numEmployees }}
+        </span>
+      </p>
+      <!-- Job Level -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.level }}
+        </span>
+      </p>
+
+      <!-- Location -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.location }}
+        </span>
+      </p>
+
+      <!-- Type of Job -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.typeOfJob }}
+        </span>
+      </p>
+      <!-- Supervisor Name -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.supervisorName }}
+        </span>
+      </p>
+      <!-- Supervisor Position -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.supervisorPosition }}
+        </span>
+      </p>
+      <!-- Supervisor Email -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.supervisorEmail }}
+        </span>
+      </p>
+
+      <!-- Supervisor Phone -->
+      <p>
+        <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
+        <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+          {{ jobRequest?.supervisorPhone }}
+        </span>
+      </p>
+    </div>
+    
+  </div>
+
+  <div *ngIf="hasAssignedYouths" class="max-w-6xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
+    <!-- Search Input -->
+
+  
+    <!-- Table -->
+    <div class="overflow-x-hidden mt-4">
+      <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
+        <thead>
+          <tr class="bg-gray-200 text-left text-sm font-semibold text-gray-800">
+            <th class="px-6 py-4 border-b border-gray-300">First Name</th>
+            <th class="px-6 py-4 border-b border-gray-300">Last Name</th>
+            <th class="px-6 py-4 border-b border-gray-300">Date of Birth</th>
+            <th class="px-6 py-4 border-b border-gray-300">Phone Number</th>
+
+            <th class="px-6 py-4 border-b border-gray-300">CV</th>
+            <th class="px-6 py-4 border-b border-gray-300 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let youth of paginatedAssignedYouths"
+            class="hover:bg-blue-100 transition-colors ease-in-out duration-150"
+          >
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.firstName }}</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.lastName }}</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.dob }}</td>
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-gray-700">{{ youth?.mobilePhone }}</td>
+
+            <td class="px-6 py-4 border-b border-gray-300 text-sm text-blue-600 underline">
+              <a *ngIf="youth?.cv" [href]="youth.cv" target="_blank">View CV</a>
+            </td>
+            <td class="px-6 py-4 border-b border-gray-300 text-center">
+              <div class="flex space-x-4 justify-center">
+                <!-- Employer View -->
+                <ng-container *ngIf="isEmployer() && jobRequest?.status!=='completed'; else nonEmployerView">
+                  <ng-container *ngIf="youth.action === 'approved' && youth.status==='approved' ; else actionButtons">
+                    <button
+                    *ngIf="!youth.EmployerContract"
+
+                      class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
+                      aria-label="Approved Status"
+                      data-tooltip="Approved"
+                      disabled
+                      
+                    >
+                      <i class="pi pi-verified text-lg"></i>
+                    </button>
+                  <button
+                  *ngIf="!youth.EmployerContract"
+
+                  class="tooltip w-10 h-10 bg-purple-500 hover:bg-purple-600 text-white rounded-full flex items-center justify-center shadow-md ml-2"
+                  aria-label="Read Contract"
+                  data-tooltip="Read Contract"
+                  (click)="openContractModal(youth)"
+                >
+                  <i class="pi pi-file text-lg"></i>
+                </button>
+                <div class="actions-cell px-0 py-2 text-center">
+                  <div class="flex flex-col items-center space-y-2">
+                    <!-- Row for Badge and Upload Button -->
+                    <div class="flex items-center space-x-2">
+                      <!-- Submitted Badge -->
+                      <span
+                        *ngIf="youth.EmployerContract"
+                        class="flex items-center px-3 py-1 bg-green-500 text-white text-xs rounded-full"
+                      >
+                        <i class="fas fa-check-circle mr-1"></i> Submitted
+                      </span>
+                
+                      <!-- Upload Button -->
+                      <label
+                        *ngIf="youth.EmployerContract"
+                        class="flex items-center px-3 py-1 bg-blue-500 text-white text-xs rounded-full hover:bg-blue-600 cursor-pointer"
+                      >
+                        <i class="fas fa-upload mr-1"></i> Upload
+                        <input
+                          type="file"
+                          hidden
+                          (change)="onFileSelected($event, youth)"
+                        />
+                      </label>
+                    </div>
+                
+                    <!-- Uploaded File Link -->
+                    <a
+                      *ngIf="youth.uploadedFileName"
+                      href="javascript:void(0)"
+                      (click)="openPdfModal(youth.uploadedFileUrl)"
+                      class="block text-blue-600 text-xs underline hover:text-blue-800 truncate"
+                      title="{{ youth.uploadedFileName }}"
+                    >
+                      {{ youth.uploadedFileName }}
+                    </a>
+                  </div>
+                
+                  <!-- Modal for File Preview -->
+                  <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                    <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+                      <button
+                        (click)="closePdfModal()"
+                        class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+                      >
+                        <span class="text-xl font-bold">&times;</span>
+                      </button>
+                      <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+                      <!-- PDF viewer or other type of viewer for different file types -->
+                      <pdf-viewer *ngIf="storedPdfUrl" [src]="storedPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                  </ng-container>
+                
+                  <!-- Accept and Reject Buttons for Employers (when action is not approved) -->
+                  <ng-template #actionButtons>
+                    <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected' && !youth.EmployerContract; else statusFlag">
+                      <button
+                        class="tooltip w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        (click)="toggleYouthStatus(youth, 'accepted')"
+                        aria-label="Accept Youth"
+                        data-tooltip="Accept Youth"
+                      >
+                        <i class="pi pi-check text-lg"></i>
+                      </button>
+                      <button
+                        class="tooltip w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        (click)="toggleYouthStatus(youth, 'rejected')"
+                        aria-label="Reject Youth"
+                        data-tooltip="Reject Youth"
+                      >
+                        <i class="pi pi-times text-lg"></i>
+                      </button>
+                    </ng-container>
+                
+                    <!-- Status Flag for Accepted or Rejected -->
+                    <ng-template #statusFlag>
+                      <button
+                        *ngIf="youth.action === 'accepted'"
+                        class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        aria-label="Accepted Status"
+                        (click)="toggleYouthStatus(youth, null)"
+                        data-tooltip="Reset to Pending"
+                      >
+                        <i class="pi pi-check-circle text-lg"></i>
+                      </button>
+                      <button
+                        *ngIf="youth.action === 'rejected'"
+                        class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center focus:outline-none shadow-md"
+                        aria-label="Rejected Status"
+                        (click)="toggleYouthStatus(youth, null)"
+                        data-tooltip="Reset to Pending"
+                      >
+                        <i class="pi pi-times-circle text-lg"></i>
+                      </button>
+                    </ng-template>
+                  </ng-template>
+                </ng-container>
+            
+<!-- Non-Employer View -->
+<ng-template #nonEmployerView>
+  <!-- Check Approved Status -->
+  <ng-container 
+    class="relative min-h-screen flex flex-col justify-between" 
+    *ngIf="youth.action === 'approved'; else actionStatus"
+  >
+  <div class="flex items-center space-x-2">
+    <!-- Employer Contract Flag -->
+    <button
+    *ngIf="youth.EmployerContract"
+    class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-green-600 transition-colors"
+    aria-label="Employer Contract"
+    data-tooltip="Employer Contract"
+    (click)="openEmployerContractModal(youth.EmployerContract)"
+  >
+    <i class="pi pi-briefcase text-lg"></i>
+  </button>
+  
+  <button
+    *ngIf="youth.YouthContract"
+    class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-600 transition-colors"
+    aria-label="Youth Contract"
+    data-tooltip="Youth Contract"
+    (click)="openYouthContractModal(youth.YouthContract)"
+  >
+    <i class="pi pi-user text-lg"></i>
+  </button>
+  
+
+<button
+  *ngIf="youth.action === 'approved' && jobRequest?.status === 'in-progress'"
+  class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors"
+  aria-label="Delete"
+  (click)="openDeleteModal(youth)"
+>
+  <i class="pi pi-trash text-lg"></i>
+</button>
+<div 
+  *ngIf="isEmployerContractModalOpen" 
+  id="employer-contract-modal" 
+  tabindex="-1" 
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+>
+  <div class="bg-white w-full max-w-4xl h-[80vh] overflow-y-auto rounded-lg shadow-2xl">
+    <!-- Header -->
+    <div class="sticky top-0 flex justify-between items-center px-6 py-4 bg-gradient-to-r from-green-600 to-green-400 text-white rounded-t-lg">
+      <h2 class="text-3xl font-extrabold">Employer Contract Details</h2>
+      <button 
+        type="button" 
+        class="text-white hover:bg-red-500 p-3 rounded-full transition ease-in-out duration-150"
+        (click)="closeEmployerContractModal()"
+        aria-label="Close"
+      >
+        <i class="pi pi-times text-3xl"></i>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-8 space-y-10">
+      <!-- Employer Details -->
+      <section>
+        <h3 class="text-2xl font-semibold mb-4 text-left">Employer Details</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Job:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ jobRequest?.job }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Organization:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ jobRequest?.organizationName }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Supervisor:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ jobRequest?.supervisorName }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Supervisor Email:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ jobRequest?.supervisorEmail }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Supervisor Phone:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ jobRequest?.supervisorPhone }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contract Details -->
+      <section>
+        <h3 class="text-2xl font-semibold mb-4 text-left">Contract Details</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Youth Name:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.firstName }} {{ youth.lastName }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Start Date:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.EmployerContract.startDate }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Agreement Accepted:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.EmployerContract.agreementAccepted }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Signature:</strong>
+            <div class="mt-2">
+              <img 
+                class="w-40 h-20 border rounded-lg shadow-md object-contain" 
+                [src]="youth.EmployerContract.signature" 
+                alt="Signature"
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div 
+  *ngIf="isYouthContractModalOpen" 
+  id="youth-contract-modal" 
+  tabindex="-1" 
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+>
+  <div class="bg-white w-full max-w-4xl h-[80vh] overflow-y-auto rounded-lg shadow-2xl">
+    <!-- Header -->
+    <div class="sticky top-0 flex justify-between items-center px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-t-lg">
+      <h2 class="text-3xl font-bold">Youth Contract Details</h2>
+      <button 
+        type="button" 
+        class="text-white hover:bg-red-500 p-3 rounded-full transition ease-in-out duration-150"
+        (click)="closeYouthContractModal()"
+        aria-label="Close"
+      >
+        <i class="pi pi-times text-3xl"></i>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-8 space-y-10">
+      <!-- Youth Details -->
+      <section>
+        <h3 class="text-2xl font-semibold mb-4 text-left" >Youth Details</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Name:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.firstName }} {{ youth.lastName }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">ID:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.id }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Date of Birth:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.dob }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Status:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.status }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Youth Contract -->
+      <section>
+        <h3 class="text-2xl font-semibold mb-4 text-left">Youth Contract</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Mobile Phone:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.YouthContract.mobilePhone }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Start Date:</strong>
+            <span class="text-lg font-medium text-gray-700">{{ youth.YouthContract.startDate }}</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <strong class="text-lg">Signature:</strong>
+            <div class="mt-2">
+              <img 
+                class="w-40 h-20 border rounded-lg shadow-md object-contain" 
+                [src]="youth.YouthContract.signature" 
+                alt="Signature"
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!-- Delete Confirmation Modal -->
+    <div 
+    *ngIf="isDeleteModalOpen"
+    id="delete-confirm-modal"
+    tabindex="-1"
+    [class.hidden]="!isDeleteModalOpen"
+    class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"
+  >
+  
+      <div class="relative p-4 w-full max-w-md max-h-full">
+        <div
+          class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
+        >
+          <!-- Close Modal Button -->
+          <button
+            type="button"
+            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="closeDeleteModal()"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <!-- Modal Content -->
+          <div class="p-4 md:p-5 text-center" >
+            <svg
+              class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete <strong>{{ selectedYouthName }}</strong
+              >?
+            </h3>
+            <button
+              type="button"
+              class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              (click)="deleteYouth(youth)"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              type="button"
+              class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              (click)="closeDeleteModal()"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>   
+
+  </div>
+  
+
+    <!-- Approved Button -->
+    <button
+      *ngIf="!youth.EmployerContract && !youth.YouthContract"
+      class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
+      aria-label="Approved"
+      (click)="openRevertModal(youth)"
+      data-tooltip="Approved"
+      [disabled]="youth.isDisabled || youth.status === 'approved'"
+    >
+      <i class="pi pi-verified text-lg"></i>
+    </button>
+
+
+  </ng-container>
+
+  <ng-template #actionStatus>
+    <ng-container *ngIf="youth.action === 'accepted'; else notAccepted">
+      <!-- Accepted Status for Non-Employer -->
+      <button
+        class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="Mark as Approved"
+        (click)="openApprovalModal(youth, 'approve')"
+        [disabled]="youth.isDisabled"
+
+        data-tooltip="Mark as Approved"
+      >
+        <i class="pi pi-check-circle text-lg"></i>
+      </button>
+    </ng-container>
+
+    <!-- Rejected Status or Waiting for Non-Employer -->
+    <ng-template #notAccepted>
+      <button
+        *ngIf="youth.action === 'rejected'"
+        class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="Rejected"
+        data-tooltip="Rejected"
+      >
+        <i class="pi pi-times-circle text-lg"></i>
+      </button>
+      <div
+        *ngIf="!youth.action"
+        class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-md"
+        aria-label="waiting"
+        data-tooltip="Waiting for action"
+      >
+        <i class="pi pi-clock text-lg"></i>
+      </div>
+    </ng-template>
+    
+  </ng-template>
+
+</ng-template>
+
+<!-- Modal for Approval -->
+<div
+  *ngIf="isApprovalModalOpen"
+  id="approval-modal"
+  tabindex="-1"
+  class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+      <!-- Close Button -->
+      <button
+        type="button"
+        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        (click)="closeApprovalModal()"
+      >
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      
+      <!-- Modal Content -->
+      <div class="p-4 md:p-5 text-center">
+        <!-- Icon -->
+        <svg
+          class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        
+        <!-- Modal Text -->
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Are you sure you want to mark this youth as "Final Approved"?
+        </h3>
+        
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button
+            (click)="confirmApproval()"
+            type="button"
+            class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+          >
+            Yes, Approve
+          </button>
+          
+          <button
+            (click)="closeApprovalModal()"
+            type="button"
+            class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            No, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isrevertModalOpen" id="approval-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+      <!-- Close Button -->
+      <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="closeRModal()">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+
+      <!-- Modal Content -->
+      <div class="p-4 md:p-5 text-center">
+        <!-- Icon -->
+        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+
+        <!-- Modal Text -->
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Are you sure you want to Undo the "Final Approve"?
+        </h3>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button (click)="confirmRevert()" type="button" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+            Yes, Revert
+          </button>
+          
+          <button (click)="closeRModal()" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            No, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+              </div>
+
+            </td>
+            
+            
+          </tr>
+          
+        </tbody>
+      </table>
+
+    </div>
+
+  
+    <!-- Pagination Controls -->
+    <div class="mt-6 flex justify-between items-center">
+      <button
+        class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <div class="flex items-center space-x-2">
+        <span class="text-sm text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button
+        class="px-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+</div>
+  
+<div>
+  <button
+    *ngIf="!isEmployer() && jobRequest?.status === 'assigned'"
+    (click)="checkSubmitCondition()"
+    [disabled]="!isSubmitEnabled"
+
+    class="submit-button"
+  >
+    Submit
+  </button>
+</div>
+<div>
+  <!-- Submit Button -->
+  <button
+    *ngIf="!isEmployer() && jobRequest?.status === 'in-progress' && !isEmployerContractModalOpen &&  !isYouthContractModalOpen"
+    (click)="completeConfirmationModal = true"
+    class="submit-button"
+  >
+    Submit
+  </button>
+
+  <!-- Confirmation Modal -->
+  <div
+    *ngIf="completeConfirmationModal"
+    class="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
+  >
+    <div class="relative p-4 w-full max-w-lg bg-white rounded-lg shadow-lg">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <button
+          type="button"
+          class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          (click)="cancelcompleteModal()"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+        <div class="p-4 md:p-5 text-center">
+          <svg
+            class="mx-auto mb-4 text-gray-400 w-16 h-16 dark:text-gray-200"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          <h3 class="mb-5 text-xl font-medium text-gray-800 dark:text-gray-200">
+            Are you sure you want to mark this job request as completed?
+          </h3>
+          <div class="flex justify-center gap-4">
+            <button
+              type="button"
+              class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-6 py-3"
+              (click)="confirmCompletion()"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              type="button"
+              class="py-2.5 px-6 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              (click)="opencompleteModal()"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="showConfirmationModal"
+  class="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
+>
+  <div class="relative p-4 w-full max-w-lg bg-white rounded-lg shadow-lg">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <button
+        type="button"
+        class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        (click)="cancelSubmit()"
+      >
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5 text-center">
+        <svg
+          class="mx-auto mb-4 text-gray-400 w-16 h-16 dark:text-gray-200"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        <h3 class="mb-5 text-xl font-medium text-gray-800 dark:text-gray-200">
+          The number of approved youths is less than the number of employees requested. Are you sure you want to submit?
+        </h3>
+        <div class="flex justify-center gap-4">
+          <button
+            type="button"
+            class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-6 py-3"
+            (click)="confirmSubmit()"
+          >
+            Yes, I'm sure
+          </button>
+          <button
+            type="button"
+            class="py-2.5 px-6 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            (click)="cancelSubmit()"
+          >
+            No, cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isContractModalOpen"
+  class="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50"
+>
+  <div class="bg-white w-full max-w-3xl h-5/6 max-h-screen rounded-lg shadow-lg overflow-y-auto">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-t-lg">
+      <h2 class="text-xl font-bold">Contract Details</h2>
+      <button
+        type="button"
+        class="hover:bg-blue-700 p-2 rounded-full"
+        (click)="closeContractModal()"
+      >
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6 space-y-8 text-gray-800">
+      <!-- Contract Details Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <!-- Youth Name -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Youth Name</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ selectedYouthName || 'N/A' }}</p>
+        </div>
+
+        <!-- Job Title -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Job Title</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.title || 'No title available' }}</p>
+        </div>
+
+        <!-- Supervisor Name -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Supervisor Name</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.supervisorName || 'N/A' }}</p>
+        </div>
+
+        <!-- Mobile Phone -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Mobile Phone</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.supervisorPhone || 'N/A' }}</p>
+        </div>
+
+        <!-- Area -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Area</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.area || 'None selected' }}</p>
+        </div>
+
+        <!-- Camp Type -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Camp Type</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.campType || 'N/A' }}</p>
+        </div>
+
+        <!-- Camp Name -->
+        <div *ngIf="jobRequest?.campType == 'Inside Camp'">
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Camp Name</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.camp || 'N/A' }}</p>
+        </div>
+
+        <!-- Organization Name -->
+        <div>
+          <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Organization</p>
+          <p class="text-lg font-medium text-gray-900 mt-1">{{ jobRequest?.organizationName || 'N/A' }}</p>
+        </div>
+      </div>
+
+      <!-- Agreement Dates -->
+      <div class="mt-6">
+        <label
+          for="agreementStartDate"
+          class="block text-sm font-semibold text-gray-600 uppercase tracking-wide"
+        >
+          Agreement Start Date*
+        </label>
+        <input
+          type="date"
+          id="agreementStartDate"
+          class="block w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          [value]="agreementStartDate"
+          (change)="onAgreementStartDateChange($event)"
+          [(ngModel)]="agreementStartDate"
+        />
+        <p class="text-sm mt-2 text-gray-600">
+          Agreement End Date will be:
+          <strong class="text-gray-900">{{ agreementEndDate || 'N/A' }}</strong>
+        </p>
+      </div>
+
+
+
+      <!-- Signature Section -->
+      <!-- Signature Section -->
+<div>
+  <p class="font-semibold text-sm text-gray-600 uppercase mb-2">Signature*</p>
+  <div
+    id="signatureBox"
+    class="border border-gray-300 p-4 rounded-md flex items-center justify-center bg-gray-50 hover:bg-gray-100 cursor-pointer"
+    (click)="openSignaturePad()"
+  >
+    <img
+      *ngIf="signatureImage"
+      [src]="signatureImage"
+      alt="Signature"
+      class="max-h-24"
+    />
+    <p *ngIf="!signatureImage" class="text-gray-500">Click to add signature</p>
+  </div>
+  <div *ngIf="!signatureImage" class="text-sm text-red-600 mt-2">
+    Signature is required.
+  </div>
+</div>
+
+    </div>
+    <div *ngIf="isSignatureModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
+        <h3 class="text-sm font-medium text-gray-800 mb-2">Add Signature</h3>
+        <canvas
+        #signaturePad
+        width="600"
+        height="200"
+        class="border border-gray-300 rounded-md w-full"
+      ></canvas>
+      
+        <div class="flex justify-between mt-3">
+          <button
+            class="text-sm text-white bg-blue-700 px-4 py-1 rounded-md hover:bg-blue-800"
+            (click)="saveSignature()"
+          >
+            Save
+          </button>
+          <button
+            class="text-sm text-white bg-gray-500 px-4 py-1 rounded-md hover:bg-gray-600"
+            (click)="clearSignature()"
+          >
+            Retry
+          </button>
+          <button
+            class="text-sm text-gray-700 bg-gray-200 px-4 py-1 rounded-md hover:bg-gray-300"
+            (click)="closeSignaturePad()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+   
+
+  <!-- Terms and Agreement Modal -->
+<div
+*ngIf="isTermsModalOpen"
+class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50"
+>
+<div class="relative p-4 w-full max-w-2xl bg-white rounded-lg shadow dark:bg-gray-700">
+  <!-- Modal Header -->
+  <div class="flex items-center justify-between p-4 border-b dark:border-gray-600">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Terms and Agreement</h3>
+    <button
+      type="button"
+      class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      (click)="closeTermsModal()"
+    >
+      <svg
+        class="w-4 h-4"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1l6 6m0 0l6 6M7 7L1 13M7 7l6-6"
+        />
+      </svg>
+      <span class="sr-only">Close modal</span>
+    </button>
+  </div>
+
+  <!-- Modal Body -->
+  <div class="p-4 space-y-4 max-h-[60vh] overflow-y-auto">
+    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+      {{ agreementText }}
+    </p>
+  </div>
+
+  <!-- Modal Footer -->
+  <div class="flex items-center p-4 mx-6 border-t dark:border-gray-600">
+    <button
+      type="button"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700"
+      (click)="acceptTerms()"
+    >
+      I Accept
+    </button>
+    <button
+      type="button"
+      class="ml-3 py-2.5 px-5 text-sm font-medium text-gray-900 bg-white border rounded-lg hover:bg-gray-100 focus:ring-4 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+      (click)="closeTermsModal()"
+    >
+      Decline
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- Button to Open Modal -->
+<div class="mt-4 w-full md:w-auto pl-4">
+  <button
+    type="button"
+    class="w-full md:w-auto bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    (click)="openTermsModal()"
+  >
+    View Terms and Agreement
+  </button>
+</div>
+
+<!-- Modal Footer -->
+<div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 mt-6">
+  <button
+    [disabled]="!isTermsAccepted"
+    class="w-full md:w-auto bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-5 rounded-lg shadow-md transition-all duration-200 ease-in-out transform disabled:bg-gray-400 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
+    (click)="submitContract()"
+  >
+    Submit Contract
+  </button>
+
+  <button
+    (click)="closeContractModal()"
+    class="ml-4 py-3 px-6 text-sm font-semibold text-gray-900 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-200 ease-in-out"
+  >
+    Decline
+  </button>
+</div>
+
+    </div>
+  </div>
+</div>

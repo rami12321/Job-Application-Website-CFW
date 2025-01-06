@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up - Youth</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    >
+
+    <style>
+      .header {
+        background: linear-gradient(90deg, #1e90ff, #39b2fd);
+        border-radius: 10px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        color: white;
+      }
+      .header-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 2rem;
+      }
+      .header-subtitle {
+        font-size: 1rem;
+        margin-top: 0.25rem;
+        opacity: 0.85;
+      }
+      @media (min-width: 768px) {
+        .header-title {
+          font-size: 2rem;
+          line-height: 2.5rem;
+        }
+        .header-subtitle {
+          font-size: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+
+
+<body class="responsive-container card shadow-md bg-white rounded-lg">
+  <div class="header mx-auto mt-6 p-4 text-center w-[95%] sm:w-[95%] max-w-6xl">
+    <h1 class="header-title">NGOs and CSOs Request Form</h1>
+    <p class="header-subtitle">CFW Youth Component Phase 4</p>
+  </div>
+  <div class="card shadow-md bg-white rounded-lg">
+
+    <div class="p-6 bg-gradient-to-r from-[#f0faff] to-[#d0e8ff] dark:bg-gradient-to-r dark:from-[#a3c8ff] dark:to-[#7faeff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+      <div class="flex flex-col items-center">
+        <div class="flex justify-center flex-wrap gap-6 p-6 w-full max-w-5xl">
+          <img src="assets/images/unrwa_logo-removebg-preview.png" alt="UNRWA Logo" class="w-28 h-28 object-contain" />
+          <img src="assets/images/germancooporation-removebg-preview.png" alt="German Cooperation Logo" class="w-28 h-28 object-contain" />
+          <img src="assets/images/kfwlogo-removebg-preview.png" alt="KFW Logo" class="w-28 h-28 object-contain" />
+          <img src="assets/images/euflag-removebg-preview.png" alt="EU Logo" class="w-28 h-28 object-contain" />
+        </div>
+    
+        <div class="text-center mt-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-blue-900">
+            Cash for Work Phase 4: Youth Component
+          </h2>
+          <p class="text-base sm:text-lg font-medium text-gray-700 mt-2">
+            Short-Term Employment Opportunity Application
+          </p>
+        </div>
+    
+        <div class="w-[85%] h-[1px] bg-blue-400 rounded-full my-8"></div>
+      </div>
+
+
+
+
+<form [formGroup]="signupForm" class="space-y-6" >
+
+
+  
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="verificationCode">Verification Code *</label>
+    <input 
+      id="verificationCode" 
+      formControlName="verificationCode" 
+      placeholder="Enter Verification Code" 
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required
+    />
+    <p *ngIf="signupForm.get('verificationCode')?.invalid && signupForm.get('verificationCode')?.touched" class="text-red-600 text-sm mt-2">
+      Verification code is required.
+    </p>
+  </div>
+  
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="organization">Name of the Organization/Agency/Association*</label>
+    <input type="text" id="organization" formControlName="organization"  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+    <p *ngIf="signupForm.get('organization')?.invalid && signupForm.get('organization')?.touched" class="text-red-600 text-sm mt-2">
+      Organization name is required.
+    </p>
+  </div>
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="fullNameEnglish">Full Name (in English)*</label>
+    <input type="text" id="fullNameEnglish" formControlName="fullNameEnglish"  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+    <p *ngIf="signupForm.get('fullNameEnglish')?.invalid && signupForm.get('fullNameEnglish')?.touched" class="text-red-600 text-sm mt-2">
+      Full Name (in English) is required.
+    </p>
+  </div>
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="fullNameArabic">Full Name (in Arabic)*</label>
+    <input type="text" id="fullNameArabic" formControlName="fullNameArabic"  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+    <p *ngIf="signupForm.get('fullNameArabic')?.invalid && signupForm.get('fullNameArabic')?.touched" class="text-red-600 text-sm mt-2">
+      Full Name (in Arabic) is required.
+    </p>
+  </div>
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="mobilePhone">Mobile Phone*</label>
+    <input
+      type="tel"
+      id="mobilePhone"
+      formControlName="mobilePhone"
+      required
+      pattern="961\d{8}"
+      placeholder="96103000000"
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+
+    />
+    <p *ngIf="signupForm.get('mobilePhone')?.invalid && signupForm.get('mobilePhone')?.touched" class="text-red-600 text-sm mt-2">
+      Mobile Phone is required and must match the pattern 961XXXXXXXX.
+    </p>
+  </div>
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="whatsappNumber">WhatsApp Number*</label>
+    <input type="tel" id="whatsappNumber" formControlName="whatsappNumber"  class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+    <p *ngIf="signupForm.get('whatsappNumber')?.invalid && signupForm.get('whatsappNumber')?.touched" class="text-red-600 text-sm mt-2">
+      WhatsApp Number is required.
+    </p>
+  </div>
+
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="area">Area*</label>
+    <select id="area" formControlName="area" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <option value="" disabled>Select an Area</option>
+      <option value="North Lebanon Area">North Lebanon Area</option>
+      <option value="Central Lebanon Area">Central Lebanon Area</option>
+      <option value="Beqaa Area">Beqaa Area</option>
+      <option value="Saida Area">Saida Area</option>
+      <option value="Tyre Area">Tyre Area</option>
+    </select>
+    <p *ngIf="signupForm.get('area')?.invalid && signupForm.get('area')?.touched" class="text-red-600 text-sm mt-2">
+      Area selection is required.
+    </p>
+  </div>
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="email">Email Address *</label>
+    <input type="email" id="email" formControlName="email" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required/>
+    <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="text-red-600 text-sm mt-2">
+      A valid email address is required.
+    </p>
+  </div>
+
+
+  
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="password" class="block text-sm font-medium mb-2">Password *</label>
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      placeholder="Enter your password"
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+    <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+      <small class="text-danger" style="color: red" *ngIf="signupForm.get('password')?.hasError('required')">
+        Password is required.
+      </small>
+    </div>
+  </div>
+  
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="confirmPassword" class="block text-sm font-medium mb-2">Confirm Password *</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      formControlName="confirmPassword"
+      placeholder="Confirm your password"
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+    <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.hasError('passwordsMismatch')">
+      <small class="text-danger" style="color: red">Passwords do not match!</small>
+    </div>
+  </div>
+  
+
+
+  <div class="space-y-6 border-b border-gray-300 pb-6">
+    <label for="signatureBox">Signature*</label>
+    <div
+      id="signatureBox"
+      class="signature-box"
+      (click)="openSignaturePad()"
+      [style.cursor]="'pointer'"
+    >
+      <img
+        *ngIf="signatureImage"
+        [src]="signatureImage"
+        alt="Signature"
+        class="saved-signature"
+      />
+      <p *ngIf="!signatureImage">Click to add signature</p>
+    </div>
+    <div *ngIf="!signatureImage && signupForm.touched" class="text-red-600 text-sm mt-2">
+      Signature is required.
+    </div>
+    <div *ngIf="signatureImage" class="signature-buttons">
+      <button type="button" (click)="deleteSignature()">Delete</button>
+      <button type="button" (click)="openSignaturePad()">Retry</button>
+    </div>
+  </div>
+  
+  <!-- Modal for Signature -->
+  <div class="modal" [class.show]="isSignatureModalOpen">
+    <div class="modal-content">
+      <canvas
+        #signaturePad
+        width="600"
+        height="200"
+        style="border: 1px solid #ccc;"
+      ></canvas>
+      <div class="modal-actions">
+        <button (click)="clearSignature()">Retry</button>
+        <button (click)="saveSignature()">Save</button>
+        <button (click)="closeSignaturePad()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="flex justify-between items-center mt-8">
+    <button type="button" (click)="onSubmit()" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+      Submit
+    </button>
+  </div></form>
+</div>
+
+</div>
+
+</body>
+</html>

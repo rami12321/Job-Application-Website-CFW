@@ -1,0 +1,249 @@
+::ng-deep input {
+  border: 2px solid #ddd; /* Adjust the border color and size */
+  border-radius: 4px;    /* Optional: Rounded corners */
+  padding: 4px;          /* Add spacing inside the input */
+  box-shadow: none;      /* Remove any shadow if present */
+}
+.fixed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Box */
+.bg-white {
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+/* Close Button */
+button.absolute {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+:host ::ng-deep .p-tabview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%; /* Ensures it fits within its parent */
+  max-width: 100%; /* Prevents overflow */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0; /* Remove extra margins */
+  background: #ffffff; /* Consistent background */
+}
+:host ::ng-deep .p-tabview-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; /* Align tabs to the left for a professional look */
+  align-items: center;
+  background: #ffffff; /* Subtle background color for tabs */
+  padding: 0rem 22rem; /* Compact padding */
+  border-bottom: 2px solid #d4edff;
+  gap: 0rem; /* Reduced gap between tabs */
+  margin-top: 2rem; /* Remove extra margins */
+  width: 100%; /* Ensure it spans the entire container width */
+  box-sizing: border-box; /* Includes padding and border in width calculation */
+  overflow-x: hidden; /* Handle overflow gracefully for smaller screens */
+  overflow-y: hidden; /* Vertical scroll for content if needed */
+
+}
+
+/* General Tab Styling */
+:host ::ng-deep .p-tabview-title {
+  margin: 0.7rem 0;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: capitalize;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for a polished look */
+}
+
+/* Waiting Tab - Changed to Blue */
+:host ::ng-deep .waiting-tab .p-tabview-title {
+  background-color: #e3f2fd; /* Light blue */
+  color: #1976d2; /* Dark blue */
+}
+
+:host ::ng-deep .waiting-tab:hover .p-tabview-title,
+:host ::ng-deep .waiting-tab.p-highlight .p-tabview-title {
+  background-color: #1976d2; /* Strong blue */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3); /* Tab-specific hover shadow */
+}
+
+/* Assigned Tab - Changed to Purple */
+:host ::ng-deep .assigned-tab .p-tabview-title {
+  background-color: #f3e5f5; /* Light purple */
+  color: #8e24aa; /* Purple */
+}
+
+:host ::ng-deep .assigned-tab:hover .p-tabview-title,
+:host ::ng-deep .assigned-tab.p-highlight .p-tabview-title {
+  background-color: #8e24aa; /* Vibrant purple */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(142, 36, 170, 0.3);
+}
+
+/* In Progress Tab - Changed to Orange */
+:host ::ng-deep .in-progress-tab .p-tabview-title {
+  background-color: #fff3e0; /* Light orange */
+  color: #ff9800; /* Orange */
+}
+
+:host ::ng-deep .in-progress-tab:hover .p-tabview-title,
+:host ::ng-deep .in-progress-tab.p-highlight .p-tabview-title {
+  background-color: #ff9800; /* Strong orange */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}
+
+/* Completed Tab - Stays Green */
+:host ::ng-deep .completed-tab .p-tabview-title {
+  background-color: #e8f5e9; /* Light green */
+  color: #388e3c; /* Green */
+}
+
+:host ::ng-deep .completed-tab:hover .p-tabview-title,
+:host ::ng-deep .completed-tab.p-highlight .p-tabview-title {
+  background-color: #388e3c; /* Calm green */
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(56, 142, 60, 0.3);
+}
+/* Optional styles for the announcement */
+.text-sm {
+  font-size: 0.875rem; /* Adjust font size */
+}
+.bg-yellow-200 {
+  background-color: #fff3b0; /* Adjust background color */
+}
+.text-black {
+  color: #333333; /* Adjust text color */
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+/* Close Button Styling */
+.close-button {
+  position: absolute;
+  top: 1rem;  /* Adjusts button position for better spacing */
+  right: 1rem;  /* Adjusts button position for better spacing */
+  background-color: transparent;
+  color: #4A4A4A;  /* Professional muted gray color */
+  font-size: 1.5rem;  /* Larger size for the '×' */
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 50%;  /* Makes it circular */
+  transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition */
+}
+
+.close-button:hover {
+  background-color: #f0f0f0;  /* Subtle background color change on hover */
+  color: #000;  /* Darker text color on hover */
+}
+
+.close-button:focus {
+  outline: none;  /* Removes focus outline */
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);  /* Add subtle focus ring */
+}
+:host ::ng-deep .p-tabview-panels {
+  flex-grow: 1;
+  width: 100%; /* Ensure panels fit container width */
+  max-width: 100%; /* Prevent overflow */
+  overflow-y: auto; /* Vertical scroll for content if needed */
+  overflow-x: hidden; /* Removes horizontal scroll */
+  padding: 0rem; /* Reduced padding */
+  border-radius: 8px;
+  box-sizing: border-box; /* Includes padding and border in width calculation */
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  :host ::ng-deep .p-tabview {
+    flex-direction: column;
+    height: auto;
+  }
+
+  :host ::ng-deep .p-tabview-nav {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0.5rem;
+  }
+
+  :host ::ng-deep .p-tabview-title {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  :host ::ng-deep .p-tabview-panels {
+    margin: 0;
+    padding: 1.2rem;
+  }
+}
+::ng-deep .p-multiselect-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+
+}
+::ng-deep .p-multiselect {
+  border: 1px solid #060606;
+}
+
+::ng-deep .p-multiselect-item:hover {
+  background-color: #e0f7fa;
+
+}
+
+/* Hide/Show animations for Step 2 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+.fade-out {
+  animation: fadeOut 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

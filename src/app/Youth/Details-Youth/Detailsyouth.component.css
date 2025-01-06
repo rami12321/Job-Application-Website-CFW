@@ -1,0 +1,151 @@
+
+
+
+
+
+.label {
+  @apply text-lg font-bold text-gray-800 dark:text-gray-200 shrink-0 ;
+}
+
+.value {
+  @apply text-lg font-medium text-gray-700 dark:text-gray-400 px-2 py-2 m-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm;
+}
+:host {
+  display: block;
+  width: 100%; 
+  max-width: 100%; 
+  overflow-x: hidden; 
+}
+
+:host ::ng-deep .p-tabview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%; 
+  max-width: 100%; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0; 
+  background: #ffffff; 
+}
+
+:host ::ng-deep .p-tabview-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; 
+  align-items: center;
+  background: #ffffff; 
+  padding: 0.4rem 1rem; 
+  border-bottom: 2px solid #d4edff;
+  gap: 0rem; 
+  margin: 0; 
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow-x: auto; 
+}
+
+:host ::ng-deep .p-tabview-title {
+  padding: 0.1rem 0.2rem; 
+  font-size: 1rem; 
+  font-weight: 500;
+  color: #0d6efd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: center;
+  white-space: nowrap; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
+}
+
+:host ::ng-deep .p-tabview-title:hover {
+  background: linear-gradient(90deg, #1e90ff, #6ab5ff);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+:host ::ng-deep .p-tabview-selected .p-tabview-title {
+  background: #1e90ff;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+:host ::ng-deep .p-tabview-panels {
+  flex-grow: 1;
+  width: 100%; 
+  max-width: 100%; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  padding: 1rem; 
+  border-radius: 8px;
+  box-sizing: border-box; 
+}
+
+:host ::ng-deep .p-tabview-panel {
+  padding: 0.8rem;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+@media screen and (max-width: 768px) {
+  :host ::ng-deep .p-tabview-nav {
+    flex-wrap: wrap; 
+    gap: 0.3rem; 
+  }
+
+  :host ::ng-deep .p-tabview-title {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  :host ::ng-deep .p-tabview-panels {
+    padding: 0.8rem;
+  }
+}
+
+
+:host ::ng-deep .p-tabview-panels::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host ::ng-deep .p-tabview-panels::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 5px;
+}
+
+  
+  div.mb-6 {
+    margin-bottom: 1.5rem;
+  }
+
+  div.border-b {
+    border-bottom-width: 1px;
+  }
+
+  div.rounded-lg {
+    border-radius: 0.75rem; 
+  }
+
+  div.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
+  }
+
+  div.bg-white {
+    background-color: #ffffff; 
+  }
+
+  div.dark\:bg-gray-800 {
+    background-color: #1f2937; 
+  }
+
+  h3.text-lg {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #4b5563; 
+  }

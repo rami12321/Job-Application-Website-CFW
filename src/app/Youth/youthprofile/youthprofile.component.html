@@ -1,0 +1,1223 @@
+
+
+<div class="field-container">
+
+    <p-tabView class="step-form-container">
+
+
+      <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
+        <div class="tab-content rounded-xl p-6">
+          <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+            Personal Information
+          </h3>
+          <div class="content-section bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg shadow-md border border-[#d4edff] p-6">
+  
+                <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+                  <!-- Row 1 -->
+                  <div>
+                    
+                      <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">
+                        First Name (EN):
+                      </strong>
+                      <span 
+                        *ngIf="!isEditing['personal']" 
+                        class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm ">
+                        {{ youth?.firstNameEn }}
+                      </span>
+                    
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].firstNameEn"
+                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+                      type="text"
+                    />
+                  </div>
+
+                  <div>
+                    <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Family Registration Number: </strong>
+                    <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.familyRegistrationNumber }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].familyRegistrationNumber"
+                      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+                      type="text"
+                    />
+                  </div>
+      
+                
+                  <!-- Row 2 -->
+                  <div>
+                    <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Father's Name (EN): </strong>
+                    <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.fatherNameEn }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].fatherNameEn"
+                                            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Mobile Phone: </strong>
+                    <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.mobilePhone }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].mobilePhone"
+                                            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+                      type="text"
+                    />
+                  </div>
+                
+                  <!-- Row 3 -->
+                  <div>
+                    <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Last Name (EN): </strong>
+                    <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.lastNameEn }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].lastNameEn"
+                                            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">WhatsApp: </strong>
+                    <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.whatsapp }}</span>
+                    <input
+                      *ngIf="isEditing['personal']"
+                      [(ngModel)]="editModels['personal'].whatsapp"
+                                            class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+                      type="text"
+                    />
+                  </div>
+                
+<!-- Row 4 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">First Name (AR): </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.firstNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].firstNameAr"
+                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+    type="text"
+  />
+</div>
+
+<!-- Row 5 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Father's Name (AR): </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.fatherNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].fatherNameAr"
+                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+    type="text"
+  />
+</div>
+
+<!-- Row 6 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Last Name (AR): </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.lastNameAr }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].lastNameAr"
+                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+    type="text"
+  />
+</div>
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Email: </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.email }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].email"
+      class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+    type="text"
+  />
+</div>
+
+<!-- Row 7 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Gender: </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.gender }}</span>
+  <select
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].gender"
+    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+    <option value="" disabled>Select Gender</option>
+    <option *ngFor="let option of lookupData.genderOptions" [value]="option">{{ option }}</option>
+  </select>
+</div>
+
+
+<!-- Row 8 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Date of Birth: </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.dob }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].dob"
+    type="date"
+    class="form-input border-gray-400 rounded-md text-sm py-2 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
+
+
+<div>
+  <label for="area" class="text-lg font-bold text-gray-700 dark:text-gray-300">Area :</label>
+  <select
+    id="area"
+    [(ngModel)]="editModels['personal'].area"
+    (ngModelChange)="onAreaChange(editModels['personal'].area)"
+    *ngIf="isEditing['personal']"
+    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+  >
+    <option value="">Select</option>
+    <option *ngFor="let area of lookupData.areas" [value]="area.name">{{ area.name }}</option>
+  </select>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.area }}</span>
+</div>
+
+<!-- Row 10 -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Registration Status: </strong>
+  
+  <span *ngIf="!isEditing['registrationStatus']">{{ youth?.registrationStatus }}</span>
+
+  <span *ngIf="isEditing['registrationStatus']">{{ youth?.registrationStatus }}</span>
+</div>
+
+
+
+<!-- Camp Type -->
+<div *ngIf="campTypeOptions && campTypeOptions.length > 0" class="space-y-6 border-b border-gray-300 pb-6">
+  <label for="campType" class="block text-sm font-medium mb-2">Location *</label>
+  <select
+    id="campType"
+    [(ngModel)]="editModels['personal'].campType"
+    (ngModelChange)="onCampTypeChange(editModels['personal'].campType)"
+    *ngIf="isEditing['personal']"
+    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+  >
+    <option value="">Select</option>
+    <option *ngFor="let type of campTypeOptions" [value]="type">{{ type }}</option>
+  </select>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.campType }}</span>
+</div>
+
+<div *ngIf="campOptions && campOptions.length > 0" class="space-y-6 border-b border-gray-300 pb-6">
+  <label for="camp" class="block text-sm font-medium mb-2">Camp Name *</label>
+  <select
+    id="camp"
+    [(ngModel)]="editModels['personal'].camp"
+    *ngIf="isEditing['personal']"
+    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+  >
+    <option value="">Select</option>
+    <option *ngFor="let camp of campOptions" [value]="camp">{{ camp }}</option>
+  </select>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.camp }}</span>
+</div>
+
+
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Personal Registration Number: </strong>
+  
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm truncate mt-1">
+    {{ youth?.personalRegistrationNumber }}</span>
+
+  <span *ngIf="isEditing['personal']">{{ youth?.personalRegistrationNumber }}</span>
+</div>
+
+
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Full Address: </strong>
+  <span *ngIf="!isEditing['personal']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.fullAddress }}</span>
+  <input
+    *ngIf="isEditing['personal']"
+    [(ngModel)]="editModels['personal'].fullAddress"
+                          class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+
+    type="text"
+  />
+</div>
+                
+                  <!-- Action Buttons -->
+                  <div class="col-span-2 flex gap-4 mt-6">
+                    <button
+                      *ngIf="isEditing['personal']"
+                      (click)="saveChanges('personal')"
+                      class="px-4 py-2 bg-green-500 text-white rounded"
+                    >
+                      Save
+                    </button>
+                    <button
+                      *ngIf="isEditing['personal']"
+                      (click)="cancelEdit('personal')"
+                      class="px-4 py-2 bg-red-500 text-white rounded"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      *ngIf="!isEditing['personal']"
+                      (click)="toggleEdit('personal')"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+                
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="General Section" leftIcon="pi pi-address-book">
+      <div class="tab-content rounded-xl p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">General Section</h3>
+    
+        <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            
+            <!-- Job Opportunity Source -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">How did you hear about this job opportunity?</strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.jobOpportunitySource }}</span>
+              <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].jobOpportunitySource" class="form-select max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+              >
+                <option value="">Select</option>
+                <option *ngFor="let option of lookupData.jobOpportunityOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+    
+            <!-- Education Graduate -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Are you a graduate with a Short Term Course, TVET, or University Degree?</strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.educationGraduate }}</span>
+              <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].educationGraduate" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+    
+            <!-- Education Level -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Education Level: </strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.educationLevel }}</span>
+              <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].educationLevel" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
+                <option value="">Select Education Level</option>
+                <option *ngFor="let level of lookupData.educationLevels" [value]="level">{{ level }}</option>
+              </select>
+            </div>
+    
+            <!-- Major -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Major: </strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.major }}</span>
+              <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].major" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm" (change)="onMajorChange($event)">
+                <option value="">Select Major</option>
+                <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+                <option value="other">Other</option>
+              </select>
+              <input *ngIf="isEditing['general'] && isOtherMajorSelected" [(ngModel)]="editModels['general'].otherMajor" type="text" placeholder="Specify your major" class="border border-gray-300 rounded p-2 mt-2" />
+            </div>
+    
+            <!-- Institution -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">School, University, or Institution: </strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.institution }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].institution" type="text"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+ />
+            </div>
+    
+            <!-- Place/Country -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Place/Country: </strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.gradplace }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].gradplace" type="text"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+ />
+            </div>
+    
+            <!-- Date of Graduation -->
+            <div>
+              <strong class="text-lg font-bold text-gray-700 datext-gray-300">Date of Graduation: </strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.graduationDate }}</span>
+              <input *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].graduationDate" type="date"                       class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm"
+ />
+            </div>
+    
+            <!-- Employment Opportunities -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Are you interested in short-term employment opportunities?</strong>
+              <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.employmentOpportunities }}</span>
+              <select *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].employmentOpportunities" class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
+                <option value="">Select</option>
+                <option *ngFor="let option of lookupData.employmentOpportunitiesOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+          </div>
+    
+          <!-- About Yourself -->
+          <div class="mt-6">
+            <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Tell us about yourself (Background, Experiences, Skills, and Motivation): </strong>
+            <span *ngIf="!isEditing['general']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.aboutYourself }}</span>
+            <textarea *ngIf="isEditing['general']" [(ngModel)]="editModels['general'].aboutYourself"                     class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+ rows="4"></textarea>
+          </div>
+        </div>
+    
+        <!-- Action Buttons -->
+        <div class="col-span-2 flex gap-4 mt-6">
+          <button *ngIf="isEditing['general']" (click)="saveChanges('general')" class="px-4 py-2 bg-green-500 text-white rounded">Save</button>
+          <button *ngIf="isEditing['general']" (click)="cancelEdit('general')" class="px-4 py-2 bg-red-500 text-white rounded">Cancel</button>
+          <button *ngIf="!isEditing['general']" (click)="toggleEdit('general')" class="px-4 py-2 bg-blue-500 text-white rounded">Edit</button>
+        </div>
+      </div>
+    </p-tabPanel>
+    
+    
+    <p-tabPanel header="General Questions" leftIcon="pi pi-question">
+      <div class="tab-content rounded-xl p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+          General Questions
+        </h3>
+    
+        <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            
+            <!-- Placed by KFW CfW -->
+            <div>
+              <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Placed by KFW CfW: </strong>
+              
+              <!-- Display value when not editing -->
+              <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.placedByKfw }}</span>
+              
+              <!-- Show radio buttons when editing -->
+              <div *ngIf="isEditing['generalQuestions']">
+                <div class="flex gap-6">
+                  <label class="flex items-center">
+                    <input 
+                      type="radio" 
+                      [(ngModel)]="editModels['generalQuestions'].placedByKfw" 
+                      [value]="'yes'" 
+                      class="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                    <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input 
+                      type="radio" 
+                      [(ngModel)]="editModels['generalQuestions'].placedByKfw" 
+                      [value]="'no'" 
+                      class="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                    <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+                  </label>
+                </div>
+              </div>
+            
+              <div *ngIf="isEditing['generalQuestions'] && editModels['generalQuestions'].placedByKfw === 'yes'" class="mt-4">
+                <label class="block text-gray-600 dark:text-gray-400">
+                  Please provide the year that you benefited from KFW Cash for Work: 
+                </label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="editModels['generalQuestions'].kfwYear" 
+                  class="block w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600">
+              </div>
+            </div>
+            
+    <!-- Graduate of Siblin Vocational Training Center (STC) -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Graduate of Siblin Vocational Training Center (STC): </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.stcgraduate }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].stcgraduate" 
+        [value]="'yes'" 
+        name="stcgraduate" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].stcgraduate" 
+        [value]="'no'" 
+        name="stcgraduate" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+<!-- Innovation Lab Graduate -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Innovation Lab Graduate: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.innovationLabGraduate }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].innovationLabGraduate" 
+        [value]="'yes'" 
+        name="innovationLabGraduate" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].innovationLabGraduate" 
+        [value]="'no'" 
+        name="innovationLabGraduate" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+
+<!-- Innovation Lab Graduate Type -->
+<div *ngIf="isEditing['generalQuestions'] && editModels['generalQuestions'].innovationLabGraduate === 'yes'" class="mt-4">
+  <label class="block text-gray-600 dark:text-gray-400">
+    Which Type of Innovation Lab Trainings did You Complete?
+  </label>
+  <div class="mt-4 space-y-2">
+    <label class="flex items-center">
+      <input 
+        type="checkbox" 
+        [checked]="isCheckedLabType('Social Entrepreneurship')" 
+        (change)="toggleLabType('Social Entrepreneurship')" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Social Entrepreneurship</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="checkbox" 
+        [checked]="isCheckedLabType('Digital Skills')" 
+        (change)="toggleLabType('Digital Skills')" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Digital Skills</span>
+    </label>
+  </div>
+</div>
+
+    <!-- Disability -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Disability: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.disability }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].disability" 
+        [value]="'yes'" 
+        name="disability" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].disability" 
+        [value]="'no'" 
+        name="disability" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].disability" 
+        [value]="'preferNotToState'" 
+        name="disability" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Prefer not to state</span>
+    </label>
+  </div>
+</div>
+
+<!-- Disability Support -->
+<div *ngIf="isEditing['generalQuestions'] && editModels['generalQuestions'].disability === 'yes'" class="mt-4">
+  <label class="block text-gray-600 dark:text-gray-400">
+    If Yes, do you need support to perform your task?
+  </label>
+  <div class="flex gap-6 mt-2">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].disabilitySupport" 
+        [value]="'yes'" 
+        name="disabilitySupport" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].disabilitySupport" 
+        [value]="'no'" 
+        name="disabilitySupport" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+<!-- Disability Type -->
+<div *ngIf="isEditing['generalQuestions'] && editModels['generalQuestions'].disability === 'yes'" class="mt-4">
+  <label class="block text-gray-600 dark:text-gray-400">Please specify the type of disability: </label>
+  <div class="flex flex-wrap gap-4 mt-2">
+    <label class="flex items-center" *ngFor="let type of disabilityTypes">
+      <input 
+        type="checkbox" 
+        [checked]="isCheckedDisabilityType(type)" 
+        (change)="toggleDisabilityType(type)" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">{{ type }}</span>
+    </label>
+  </div>
+</div>
+<!-- Employed -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Are You Currently Employed: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.employed }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].employed" 
+        [value]="'yes'" 
+        name="employed" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].employed" 
+        [value]="'no'" 
+        name="employed" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+<!-- Employment Duration -->
+<div *ngIf="isEditing['generalQuestions'] && editModels['generalQuestions'].employed === 'no'" class="mt-4">
+  <label class="block text-gray-600 dark:text-gray-400">
+    For how long have you been seeking employment? *
+  </label>
+  <select 
+    [(ngModel)]="editModels['generalQuestions'].seekingEmploymentDuration"
+    class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm: text-sm">
+    <option value="notSeeking">I haven't been seeking employment</option>
+    <option value="lessThanMonth">Less than a month</option>
+    <option value="oneToThreeMonths">1 Month to 3 Months</option>
+    <option value="threeToSixMonths">3 Months to 6 Months</option>
+    <option value="sixMonthsToYear">6 Months to a Year</option>
+    <option value="moreThanYear">More Than a Year</option>
+  </select>
+</div>
+<!-- Volunteer with PRCS -->
+<div>
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with PRCS: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.isPrcsVolunteer }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isPrcsVolunteer" 
+        [value]="'yes'" 
+        name="isPrcsVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isPrcsVolunteer" 
+        [value]="'no'" 
+        name="isPrcsVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+<!-- Volunteer with Fire Brigades -->
+<div class="mt-4">
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with Fire Brigades: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.isFireBrigadesVolunteer }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isFireBrigadesVolunteer" 
+        [value]="'yes'" 
+        name="isFireBrigadesVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isFireBrigadesVolunteer" 
+        [value]="'no'" 
+        name="isFireBrigadesVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+
+<!-- Volunteer with Al-Shifaa -->
+<div class="mt-4">
+  <strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with Al-Shifaa: </strong>
+  
+  <!-- Display value when not editing -->
+  <span *ngIf="!isEditing['generalQuestions']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ youth?.isAlShifaaVolunteer }}</span>
+  
+  <!-- Show radio buttons when editing -->
+  <div *ngIf="isEditing['generalQuestions']" class="flex gap-6">
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isAlShifaaVolunteer" 
+        [value]="'yes'" 
+        name="isAlShifaaVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">Yes</span>
+    </label>
+    <label class="flex items-center">
+      <input 
+        type="radio" 
+        [(ngModel)]="editModels['generalQuestions'].isAlShifaaVolunteer" 
+        [value]="'no'" 
+        name="isAlShifaaVolunteer" 
+        class="w-5 h-5 text-blue-600 border-gray-300 focus:ring focus:ring-blue-500">
+      <span class="ml-2 text-gray-700 dark:text-gray-300">No</span>
+    </label>
+  </div>
+</div>
+</div>
+
+    
+          <!-- Action Buttons -->
+          <div class="col-span-2 flex gap-4 mt-6">
+            <button *ngIf="isEditing['generalQuestions']" (click)="saveChanges('generalQuestions')" class="px-4 py-2 bg-green-500 text-white rounded">
+              Save
+            </button>
+            <button *ngIf="isEditing['generalQuestions']" (click)="cancelEdit('generalQuestions')" class="px-4 py-2 bg-red-500 text-white rounded">
+              Cancel
+            </button>
+            <button *ngIf="!isEditing['generalQuestions']" (click)="toggleEdit('generalQuestions')" class="px-4 py-2 bg-blue-500 text-white rounded">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+    
+  
+    <!-- Experience Details Tab -->
+    <p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
+      <div class="tab-content rounded-xl p-6">
+        <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+          Experience Details
+        </h3>
+    
+        <!-- Check if youth and experiences exist -->
+        <div *ngIf="(youth?.experiences?.length || 0) > 0; else noExperience">
+          <div
+            *ngFor="let experience of youth?.experiences; let i = index"
+            class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]"
+          >
+            <!-- Display Mode -->
+            <div *ngIf="!experience.isEditing">
+              <p><strong>Experience {{ i + 1 }}</strong></p>
+              <p><strong>Type: </strong><span  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"
+> {{ experience?.type }}</span></p>
+              <p><strong>Employer Name: </strong><span  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"
+> {{ experience?.employerName }}</span></p>
+              <p><strong>Employer Phone: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ experience?.employerPhone }}</span></p>
+              <p><strong>Area: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ experience?.area }}</span></p>
+              <p><strong>Employment Type: </strong><span  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"
+> {{ experience?.employmentType }}</span></p>
+              <p><strong>Job Title: </strong> <span>{{ experience?.jobTitle }}</span></p>
+              <p>
+                <strong>Start Date: </strong><span  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"
+> {{ experience?.startDate | date:  'longDate' }}</span>
+              </p>
+              <p>
+                <strong>End Date: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ experience?.endDate | date:  'longDate' }}</span>
+              </p>
+              <p><strong>Salary: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ experience?.salary }}</span></p>
+              <p><strong>Main Tasks: </strong><span  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"
+> {{ experience?.mainTasks }}</span></p>
+              <button
+                (click)="toggleEditExperience(i)"
+                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Edit
+              </button>
+            </div>
+    
+            <!-- Edit Mode -->
+            <div *ngIf="experience.isEditing">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <strong>Type: </strong>
+                  <input
+                    [(ngModel)]="experience.type"
+                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employer Name: </strong>
+                  <input
+                    [(ngModel)]="experience.employerName"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employer Phone: </strong>
+                  <input
+                    [(ngModel)]="experience.employerPhone"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Area: </strong>
+                  <input
+                    [(ngModel)]="experience.area"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Employment Type: </strong>
+                  <input
+                    [(ngModel)]="experience.employmentType"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Job Title: </strong>
+                  <input
+                    [(ngModel)]="experience.jobTitle"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Start Date: </strong>
+                  <input
+                    [(ngModel)]="experience.startDate"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="date"
+                  />
+                </div>
+                <div>
+                  <strong>End Date: </strong>
+                  <input
+                    [(ngModel)]="experience.endDate"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="date"
+                  />
+                </div>
+                <div>
+                  <strong>Salary: </strong>
+                  <input
+                    [(ngModel)]="experience.salary"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <strong>Main Tasks: </strong>
+                  <textarea
+                    [(ngModel)]="experience.mainTasks"
+                                        class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                  ></textarea>
+                </div>
+              </div>
+              <div class="flex gap-4 mt-4">
+                <button
+                (click)="saveChangesexp('experience', i)"
+                class="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                  Save
+                </button>
+                <button
+                  (click)="cancelEditExperience(i)"
+                  class="px-4 py-2 bg-red-500 text-white rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Fallback for no experiences -->
+        <ng-template #noExperience>
+          <p class="text-lg text-gray-500 dark:text-gray-300">
+            No Available Experience Details.
+          </p>
+        </ng-template>
+      </div>
+    </p-tabPanel>
+    
+  
+<!-- Training Details Tab -->
+<p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
+  <div class="tab-content rounded-xl p-6">
+    <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+      Training Details
+    </h3>
+
+    <!-- Check if youth and trainings exist -->
+    <div *ngIf="(youth?.trainings?.length || 0) > 0; else noTraining">
+      <div
+        *ngFor="let training of youth?.trainings; let i = index"
+        class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff] cursor-pointer"
+      >
+        <!-- Display Mode -->
+        <div *ngIf="!training.isEditing">
+          <p><strong>Training {{ i + 1 }}</strong></p>
+          <p><strong>Institution: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ training?.institution }}</span></p>
+          <p><strong>Certificate: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ training?.certificate }}</span></p>
+          <p><strong>Area: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ training?.area }}</span></p>
+          <p><strong>Duration From: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ training?.durationFrom | date:  'longDate' }}</span></p>
+          <p><strong>Duration To: </strong> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">{{ training?.durationTo | date:  'longDate' }}</span></p>
+          <button
+            (click)="toggleEditTraining(i)"
+            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Edit
+          </button>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="training.isEditing">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <strong>Institution: </strong>
+              <input
+                [(ngModel)]="training.institution"
+                                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Certificate: </strong>
+              <input
+                [(ngModel)]="training.certificate"
+                                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Area: </strong>
+              <input
+                [(ngModel)]="training.area"
+                                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                type="text"
+              />
+            </div>
+            <div>
+              <strong>Duration From: </strong>
+              <input
+                [(ngModel)]="training.durationFrom"
+                                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                type="date"
+              />
+            </div>
+            <div>
+              <strong>Duration To: </strong>
+              <input
+                [(ngModel)]="training.durationTo"
+                                    class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+                type="date"
+              />
+            </div>
+          </div>
+          <div class="flex gap-4 mt-4">
+            <button
+              (click)="saveChangesTraining('trainings', i)"
+              class="px-4 py-2 bg-green-500 text-white rounded"
+            >
+              Save
+            </button>
+            <button
+              (click)="cancelEditTraining(i)"
+              class="px-4 py-2 bg-red-500 text-white rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback for no trainings -->
+    <ng-template #noTraining>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Training Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
+
+
+  
+      <!-- Required Documents Tab -->
+      <p-tabPanel header="Required Documents" leftIcon="pi pi-file-import">
+        <div class="tab-content rounded-xl p-6">
+          <h3 class="text-xl font-semibold text-[#1e90ff] dark:text-[#ffffff] mb-4">
+                Required Documents
+              </h3>
+              <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+  
+                <div class="grid grid-cols-2 gap-6 mt-4">
+                  <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <strong>CV / Resume: </strong>
+                    </label>
+                  
+                    <div class="relative">
+                      <!-- Display Static File Link before Edit -->
+                      <span *ngIf="!isEditing['cv'] && !cvFileName">
+                        <a
+                          href="javascript: void(0)"
+                          class="text-blue-600 hover:underline"
+                        >
+                          CV-Example.pdf
+                        </a>
+                      </span>
+                  
+                      <!-- File input for choosing new file -->
+                      <input
+                        id="cv_input"
+                        type="file"
+                        class="sr-only"
+                        accept=".pdf,.doc,.docx"
+                        (change)="onFileChange($event, 'cv')"
+                        *ngIf="isEditing['cv']"
+                      />
+                  
+                      <!-- Button for file input -->
+                      <label
+                        for="cv_input"
+                        class="inline-block text-sm px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm cursor-pointer hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        *ngIf="isEditing['cv']"
+                      >
+                        Choose File
+                      </label>
+                  
+                      <!-- Show the uploaded file name as a link -->
+                      <span *ngIf="cvFileName" class="ml-4 text-sm text-gray-500">
+                        <a
+                          href="javascript: void(0)"
+                          (click)="openPdfModal1('uploaded')"
+                          class="text-blue-600 hover:underline"
+                        >
+                          {{ cvFileName }}
+                        </a>
+                      </span>
+                      <span *ngIf="!cvFileName && isEditing['cv']" class="ml-4 text-sm text-gray-500">No file chosen</span>
+                    </div>
+                  
+                    <!-- Edit/Save Button -->
+                    <button (click)="toggleEditing('cv')" class="mt-4 text-blue-600 hover:underline">
+                      {{ isEditing['cv'] ? 'Save' :  'Edit' }}
+                    </button>
+                    <button
+                    *ngIf="isEditing['cv']"
+                    (click)="cancelEditing('cv')"
+                    class="text-red-600 hover:underline ml-4"
+                  >
+                    Cancel
+                  </button>
+                  
+                    <!-- Modal for file preview -->
+        <!-- Single Modal Controlled by isPdfModalOpen -->
+<div *ngIf="isPdfModalOpen1" id="pdf-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+  <div id="modal-content" class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+    <button
+      (click)="closePdfModal1()"
+      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+    >
+      <span class="text-xl font-bold">&times;</span>
+    </button>
+    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+    <pdf-viewer
+      *ngIf="storedPdfUrl"
+      [src]="storedPdfUrl"
+      [render-text]="true"
+      style="width:  100%; height:  500px;"
+    ></pdf-viewer>
+  </div>
+</div>
+
+                  </div>
+                  
+                  
+                  
+                  <!-- Add a button to toggle the editing state -->
+
+                
+                  <!-- Cover Letter -->
+                  <p>
+                    <strong>Cover Letter: </strong>
+                    <span>
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Cover-Letter-example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Identity Card -->
+                  <p>
+                    <strong>Identity Card: </strong>
+                    <span>
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Identity-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Registration Card -->
+                  <p>
+                    <strong>Registration Card: </strong>
+                    <span>
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Registration-Card-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Degree -->
+                  <p>
+                    <strong>Degree: </strong>
+                    <span >
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Degree-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- PRCS Proof -->
+                  <p>
+                    <strong>PRCS Proof: </strong>
+                    <span >
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        PRCS-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Fire Brigades Proof -->
+                  <p>
+                    <strong>Fire Brigades Proof: </strong>
+                    <span >
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Fire-Brigades-Example.pdf
+                      </a>
+                    </span>
+                  </p>
+                
+                  <!-- Al-Shifaa Proof -->
+                  <p>
+                    <strong>Al-Shifaa Proof: </strong>
+                    <span >
+                      <a href="javascript: void(0)" (click)="openPdfModal()" class="text-blue-600 hover:underline">
+                        Alshifaa-example.pdf
+                      </a>
+                    </span>
+                  </p>
+                </div>
+                
+                <!-- Modal -->
+                <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                  <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+                    <button
+                      class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+                    >
+                      <span class="text-xl font-bold">&times;</span>
+                    </button>
+                    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+                    <pdf-viewer *ngIf="currentPdfUrl" [src]="currentPdfUrl" [render-text]="true" style="width:  100%; height:  500px;"></pdf-viewer>
+                  </div>
+                </div>
+                
+  
+  
+          </div>
+  
+  
+          </div>
+
+        </p-tabPanel>
+  
+    </p-tabView>
+  
+  
+</div>

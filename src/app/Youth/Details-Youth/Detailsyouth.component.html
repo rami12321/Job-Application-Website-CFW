@@ -1,0 +1,320 @@
+
+
+<div class="field-container flex flex-wrap md:flex-nowrap items-center gap-4">
+
+  <p-tabView >
+
+
+    <p-tabPanel header="Personal Information" leftIcon="pi pi-user">
+
+              <div class="tab-content rounded-xl p-4">
+
+              <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+              Personal Information
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+
+          <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4 ">
+            <!-- Row 1 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200" >First Name (EN):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.firstNameEn }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">FR Number:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm truncate"> {{ youth?.familyRegistrationNumber }} </span></p>
+
+            <!-- Row 2 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Father's Name (EN):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.fatherNameEn }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Mobile Phone:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.mobilePhone }} </span></p>
+
+            <!-- Row 3 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Last Name (EN):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.lastNameEn }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">WhatsApp:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.whatsapp }} </span></p>
+
+            <!-- Row 4 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">First Name (AR):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.firstNameAr }} </span></p>
+            <!-- <p class="space-y-2"><strong>Emergency Phone:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.emergencyPhone }} </span></p> -->
+
+            <!-- Row 5 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Father's Name (AR):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.fatherNameAr }} </span></p>
+            <!-- <p class="space-y-2"><strong>Emergency Relation:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.emergencyRelation }} </span></p> -->
+
+            <!-- Row 6 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Last Name (AR):  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.lastNameAr }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Email:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.email }} </span></p>
+
+            <!-- Row 7 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Gender:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.gender }} </span></p>
+            <!-- <p class="space-y-2"><strong>Head of Family:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.headfa }} </span></p> -->
+
+            <!-- Row 8 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Date of Birth:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.dob }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Area:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.area }} </span></p>
+
+            <!-- Row 9 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Nationality:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.nationality }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Camp Type:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.campType }} </span></p>
+
+            <!-- Row 10 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Registration Status:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.registrationStatus }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Camp:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.camp }} </span></p>
+
+            <!-- Row 11 -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">PR Number:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm truncate"> {{ youth?.personalRegistrationNumber }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Full Address:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.fullAddress }} </span></p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+      <p-tabPanel header="General Section" leftIcon="pi pi-address-book">
+              <div class="tab-content rounded-xl p-6">
+
+              <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+                General Section
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">How did you hear about this job opportunity?</strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.jobOpportunitySource }} </span></p>
+            <!-- <p class="space-y-2"><strong>Are you a graduate with a Short Term Course, TVET, or University Degree?</strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.educationGraduate }} </span></p> -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Education Level:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.educationLevel }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Major:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.major }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">School, University, or Institution:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.institution }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Place/Country:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.gradplace }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Date of Graduation:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.graduationDate }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Are you interested in short-term employment opportunities?</strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.employmentOpportunities }} </span></p>
+          </div>
+          <div class="mt-6">
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Tell us about yourself (Background, Experiences, Skills, and Motivation):  </strong></p>
+            <p class="space-y-2"> <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.aboutYourself }} </span></p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+
+
+
+    <!-- General Questions Tab -->
+    <p-tabPanel header="General Questions" leftIcon="pi pi-question">
+              <div class="tab-content rounded-xl p-6">
+
+              <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+              General Questions
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+
+          <div class="grid grid-cols-2 gap-6 mt-4">
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Placed by KFW CfW:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.placedByKfw }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">KFW Year:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.kfwYear }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Innovation Lab Graduate:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.innovationLabGraduate }} </span></p>
+            <div *ngFor="let innovtyp of youth?.innovationLabGradtype">
+              <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Innovation Lab Graduate Type:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ innovtyp }} </span></p>
+            </div>
+            <!-- <p class="space-y-2"><strong>Digital Skills:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.digitalSkills }} </span></p> -->
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Disability:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.disability }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Disability Support:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.disabilitySupport }} </span></p>
+            <div *ngFor="let dis of youth?.disabilityTypes">
+              <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Disability Type:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ dis }} </span></p>
+            </div>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Employed:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.employed }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Employment Duration:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.seekingEmploymentDuration }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with PRCS:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.isPrcsVolunteer }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with Fire Brigades:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.isFireBrigadesVolunteer }} </span></p>
+            <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Volunteer with Al-Shifaa:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ youth?.isAlShifaaVolunteer }} </span></p>
+          </div>
+        </div>
+    </div>
+
+      </p-tabPanel>
+
+
+    <!-- Experience Details Tab -->
+<!-- Experience Details Tab -->
+<p-tabPanel header="Experience Details" leftIcon="pi pi-briefcase">
+        <div class="tab-content rounded-xl p-6">
+
+      <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+      Experience Details
+    </h3>
+
+    <!-- Check if youth and experiences exist -->
+    <div *ngIf="(youth?.experiences?.length || 0) > 0; else noExperience">
+      <div *ngFor="let experience of youth?.experiences; let i = index" 
+           class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff] w-full">
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Experience  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ i + 1 }} </span>:  </strong></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Type:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.type }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Employer Name:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.employerName }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Employer Phone:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.employerPhone }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Area:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.area }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Employment Type:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.employmentType }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Job Title:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.jobTitle }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Start Date:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.startDate }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">End Date:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.endDate }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Salary:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.salary }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Main Tasks:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ experience?.mainTasks }} </span></p>
+      </div>
+    </div>
+
+    <!-- Fallback for no experiences -->
+    <ng-template #noExperience>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Experience Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
+
+<!-- Training Details Tab -->
+<p-tabPanel header="Training Details" leftIcon="pi pi-desktop">
+        <div class="tab-content rounded-xl p-6">
+
+      <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+      Training Details
+    </h3>
+
+    <!-- Check if youth and trainings exist -->
+    <div *ngIf="(youth?.trainings?.length || 0) > 0; else noExperience">
+      <div *ngFor="let training of youth?.trainings; let i = index" 
+           class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Training  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ i + 1 }} </span>:  </strong></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Institution:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ training?.institution }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Certificate:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ training?.certificate }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Area:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ training?.area }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Duration From:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ training?.durationFrom }} </span></p>
+        <p class="space-y-2"><strong class="label text-xl font-bold text-gray-800 dark:text-gray-200">Duration To:  </strong>  <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm"> {{ training?.durationTo }} </span></p>
+      </div>
+    </div>
+
+    <!-- Fallback for no trainings -->
+    <ng-template #noTraining>
+      <p class="text-lg text-gray-500 dark:text-gray-300">
+        No Available Training Details.
+      </p>
+    </ng-template>
+  </div>
+</p-tabPanel>
+
+
+    <!-- Required Documents Tab -->
+    <p-tabPanel header="Required Documents" leftIcon="pi pi-file-import">
+              <div class="tab-content rounded-xl p-6">
+
+              <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+
+              Required Documents
+            </h3>
+            <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+
+              <div class="grid grid-cols-2 gap-6 mt-4">
+                <!-- CV -->
+                <p class="space-y-2">
+                  <strong>CV:  </strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('CV-Example.pdf')" class="text-blue-600 hover:underline">
+                      CV-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Cover Letter -->
+                <p class="space-y-2">
+                  <strong>Cover Letter:  </strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Cover-Letter-example.pdf')" class="text-blue-600 hover:underline">
+                      Cover-Letter-example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Identity Card -->
+                <p class="space-y-2">
+                  <strong>Identity Card:  </strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Identity-Example.pdf')" class="text-blue-600 hover:underline">
+                      Identity-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Registration Card -->
+                <p class="space-y-2">
+                  <strong>Registration Card:  </strong>
+                  <span>
+                    <a href="javascript:void(0)" (click)="openPdfModal('Registration-Card-Example.pdf')" class="text-blue-600 hover:underline">
+                      Registration-Card-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Degree -->
+                <p class="space-y-2">
+                  <strong>Degree:  </strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Degree-Example.pdf')" class="text-blue-600 hover:underline">
+                      Degree-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- PRCS Proof -->
+                <p class="space-y-2">
+                  <strong>PRCS Proof:  </strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('PRCS-Example.pdf')" class="text-blue-600 hover:underline">
+                      PRCS-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Fire Brigades Proof -->
+                <p class="space-y-2">
+                  <strong>Fire Brigades Proof:  </strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Fire-Brigades-Example.pdf')" class="text-blue-600 hover:underline">
+                      Fire-Brigades-Example.pdf
+                    </a>
+                  </span>
+                </p>
+              
+                <!-- Al-Shifaa Proof -->
+                <p class="space-y-2">
+                  <strong>Al-Shifaa Proof:  </strong>
+                  <span >
+                    <a href="javascript:void(0)" (click)="openPdfModal('Alshifaa-example.pdf')" class="text-blue-600 hover:underline">
+                      Alshifaa-example.pdf
+                    </a>
+                  </span>
+                </p>
+              </div>
+              
+              <!-- Modal -->
+              <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                <div class="bg-white p-6 rounded-xl w-full max-w-5xl shadow-lg overflow-hidden relative">
+                  <button
+                    (click)="closePdfModal()"
+                    class="absolute top-4 right-4 text-gray-700 hover:text-white border-2 hover:bg-red-700 p-3 rounded-full transition-all"
+                  >
+                    <span class="text-xl font-bold">&times;</span>
+                  </button>
+                  <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">File Preview</h2>
+                  <pdf-viewer *ngIf="currentPdfUrl" [src]="currentPdfUrl" [render-text]="true" style="width: 100%; height: 500px;"></pdf-viewer>
+                </div>
+              </div>
+              
+
+
+        </div>
+
+
+        </div>
+      </p-tabPanel>
+
+  </p-tabView>
+
+    <!-- Required Documents Tab -->
+</div>
+

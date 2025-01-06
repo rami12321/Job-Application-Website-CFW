@@ -1,0 +1,24 @@
+[
+  {
+    "jobId": "X-24880796",
+    "employerId": "U-43081496",
+    "job": "Web Developer",
+    "title": "frontend web developer",
+    "organizationName": "najdj",
+    "numEmployees": 2,
+    "level": "mid",
+    "area": "North Lebanon",
+    "campType": "Inside Camp",
+    "camp": "Baddawi Palestinian Refugee Camp",
+    "location": "tripoli",
+    "typeOfJob": "hybrid",
+    "supervisorName": "asdas",
+    "supervisorPosition": "asdasd12",
+    "supervisorEmail": "sdasda",
+    "supervisorPhone": "41465465",
+    "status": "in-progress",
+    "category": "Digital",
+    "createdDate": "2025-01-06T09:04:22.156Z",
+    "assignedYouths": []
+  }
+]

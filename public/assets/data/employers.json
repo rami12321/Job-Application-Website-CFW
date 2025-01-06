@@ -1,0 +1,17 @@
+[
+  {
+    "active": true,
+    "id": "U-43081496",
+    "username": "test@gmail.com",
+    "password": "123456",
+    "organization": "najdj",
+    "fullNameEnglish": "rami",
+    "fullNameArabic": "rami",
+    "mobilePhone": "96153435435",
+    "whatsappNumber": "96153435435",
+    "email": "test@gmail.com",
+    "area": "North Lebanon Area",
+    "signature": "/assets/data/signatures.json#U-43081496-signature",
+    "role": "Employer"
+  }
+]

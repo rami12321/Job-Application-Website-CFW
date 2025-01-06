@@ -1,0 +1,161 @@
+<!-- job-request.component.html -->
+<div class="responsive-container">
+  <div class=" rounded-xl  px-4 mx-2 h-full">
+    <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
+        Job Request Details
+      </h3>
+      <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <div class="grid grid-cols-2 gap-6 mt-4">
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Category:</strong>
+            
+            <!-- Display current category if not in editing mode -->
+            <span *ngIf="!isEditing['category']" 
+                  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.category || 'Not available' }}
+            </span>
+            
+            <!-- Show category dropdown in editing mode -->
+            <select *ngIf="isEditing['category']" 
+                    id="category"
+                    [(ngModel)]="selectedCategory"
+                    (change)="onSelectCategory(selectedCategory)" 
+                    class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option *ngFor="let category of mainCategories" [value]="category.value">
+                {{ category.label }}
+              </option>
+            </select>
+            
+          </p>
+          
+          <p *ngIf="subcategories.length > 0">
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job:</strong>
+            
+            <!-- Display current job if not in editing mode -->
+            <span *ngIf="!isEditing['job']" 
+                  class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.job || 'Not available' }}
+            </span>
+            
+            <!-- Show subcategory dropdown in editing mode -->
+            <select *ngIf="isEditing['job']" 
+                    id="subcategory"
+                    [(ngModel)]="selectedjob" 
+                    (change)="onSelectJob(selectedjob)" 
+                    class="w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option *ngFor="let subcategory of subcategories" [value]="subcategory">
+                {{ subcategory }}
+              </option>
+            </select>
+          </p>
+          
+          
+          <!-- Job Title -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Title: </strong>
+            <span *ngIf="!isEditing['jobTitle']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.title }}
+            </span>
+            <input *ngIf="isEditing['jobTitle']" [(ngModel)]="editModels['title']" class="job-detail-input"  type="text" />
+          </p>
+
+          <!-- Number of Employees -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Number of Employees: </strong>
+            <span *ngIf="!isEditing['numEmployees']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.numEmployees }}
+            </span>
+            <input *ngIf="isEditing['numEmployees']" [(ngModel)]="editModels['numEmployees']" class="job-detail-input"  type="number" />
+          </p>
+
+          <!-- Job Level -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Level: </strong>
+            <span *ngIf="!isEditing['level']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.level }}
+            </span>
+            <select *ngIf="isEditing['level']" [(ngModel)]="editModels['level']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="junior">Junior</option>
+              <option value="mid">Mid-Level</option>
+              <option value="senior">Senior</option>
+            </select>
+          </p>
+
+          <!-- Location -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Location: </strong>
+            <span *ngIf="!isEditing['location']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.location }}
+            </span>
+            <input *ngIf="isEditing['location']" [(ngModel)]="editModels['location']" class="job-detail-input"  type="text" />
+          </p>
+
+          <!-- Type of Job -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Type of Job: </strong>
+            <span *ngIf="!isEditing['typeOfJob']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.typeOfJob }}
+            </span>
+            <select *ngIf="isEditing['typeOfJob']" [(ngModel)]="editModels['typeOfJob']" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-30">
+              <option value="Full-Time">Full-Time</option>
+              <option value="Part-Time">Part-Time</option>
+              <option value="Contract">Contract</option>
+              <option value="Temporary">Temporary</option>
+            </select>
+          </p>
+
+          <!-- Supervisor Name -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Name: </strong>
+            <span *ngIf="!isEditing['supervisorName']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.supervisorName }}
+            </span>
+            <input *ngIf="isEditing['supervisorName']" [(ngModel)]="editModels['supervisorName']" class="job-detail-input"  type="text" />
+          </p>
+
+          <!-- Supervisor Position -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Position: </strong>
+            <span *ngIf="!isEditing['supervisorPosition']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.supervisorPosition }}
+            </span>
+            <input *ngIf="isEditing['supervisorPosition']" [(ngModel)]="editModels['supervisorPosition']" class="job-detail-input"  type="text" />
+          </p>
+
+          <!-- Supervisor Email -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Email: </strong>
+            <span *ngIf="!isEditing['supervisorEmail']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.supervisorEmail }}
+            </span>
+            <input *ngIf="isEditing['supervisorEmail']" [(ngModel)]="editModels['supervisorEmail']" class="job-detail-input"  type="email" />
+          </p>
+
+          <!-- Supervisor Phone -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Supervisor Phone Number: </strong>
+            <span *ngIf="!isEditing['supervisorPhone']" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ jobRequest?.supervisorPhone }}
+            </span>
+            <input *ngIf="isEditing['supervisorPhone']" [(ngModel)]="editModels['supervisorPhone']" class="job-detail-input"  type="tel" />
+          </p>
+
+        </div>
+
+        <!-- Edit / Save / Cancel Buttons -->
+        <div class="flex justify-end mt-4">
+          <button *ngIf="!isEditing['details']" (click)="startEditing()" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+            Edit
+          </button>
+          <div *ngIf="isEditing['details']">
+            <button (click)="saveChanges()" class="px-4 py-2 bg-green-500 text-white rounded-md shadow hover:bg-green-600 mr-2">
+              Save
+            </button>
+            <button (click)="cancelEditing()" class="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-red-600">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
