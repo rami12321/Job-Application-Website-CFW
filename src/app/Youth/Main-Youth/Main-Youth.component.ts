@@ -170,8 +170,10 @@ export class MainYouthComponent implements OnInit {
   }
 
   openDetailsModal(job: any): void {
+    console.log(job)
     this.isDetailsModalOpen = true;
     this.selectedJob = job;
+    
   }
 
   closeDetailsModal(): void {
@@ -340,6 +342,7 @@ export class MainYouthComponent implements OnInit {
     }
   }
   viewDetails(jobTitle: string): void {
+
     this.lookupService.getJobDescription(jobTitle).subscribe(
       (description) => {
         if (description.length > 0) {

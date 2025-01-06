@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-youth',
@@ -31,10 +32,10 @@ export class SignUpYouthComponent implements OnInit {
   experienceDetailsForm: FormGroup;
   requiredDocumentsForm: FormGroup;
   formSubmitted: boolean = false;
-  showPatternError = false; 
+  showPatternError = false;
   pdfSrc: Uint8Array | null = null;
   showModal: boolean = false;
-  storedPdfUrl: string | null = null;  
+  storedPdfUrl: string | null = null;
   pdfKey: number = 0;
 
   private areaData: any;
@@ -72,22 +73,22 @@ export class SignUpYouthComponent implements OnInit {
   cvFileUrl: string | null = null;
   coverLetterFileName: string | null = null;
   coverLetterFileUrl: string | null = null;
-  
+
   identityCardFileName: string | null = null;
   identityCardFileUrl: string | null = null;
-  
+
   registrationCardFileName: string | null = null;
   registrationCardFileUrl: string | null = null;
-  
+
   degreeFileName: string | null = null;
   degreeFileUrl: string | null = null;
-  
+
   prcsProofFileName: string | null = null;
   prcsProofFileUrl: string | null = null;
-  
+
   fireProofFileName: string | null = null;
   fireProofFileUrl: string | null = null;
-  
+
   alShifaaProofFileName: string | null = null;
   alShifaaProofFileUrl: string | null = null;
 
@@ -105,7 +106,8 @@ export class SignUpYouthComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
     private lookupService: LookupService,
-    private http: HttpClient
+    private http: HttpClient,
+     private router: Router
   ) {
     this.introForm = this.fb.group({
       confirm: ['', Validators.required],
@@ -166,7 +168,7 @@ export class SignUpYouthComponent implements OnInit {
       educationGraduate: ['', Validators.required],
       educationLevel: ['', Validators.required],
       major: ['', Validators.required],
-      otherMajor: ['', this.isOtherMajorSelected ? Validators.required : null], 
+      otherMajor: ['', this.isOtherMajorSelected ? Validators.required : null],
 
       institution: ['', Validators.required],
       graduationDate: ['', Validators.required],
@@ -1014,8 +1016,8 @@ onFileChange(event: Event, controlName: string): void {
       };
 
       fileReader.readAsArrayBuffer(file);  // Read the file as ArrayBuffer
-      
-  
+
+
       // Update the form control value with the file name (not the blob URL)
     }
 
@@ -1068,7 +1070,7 @@ updatePatternError() {
     }
     onMajorChange(event: any): void {
       const selectedMajor = event.target.value;
-    
+
       if (selectedMajor === 'other') {
         this.isOtherMajorSelected = true;
         this.generalForm.get('major')?.setValue(''); // Clear the major field before user input
@@ -1080,11 +1082,12 @@ updatePatternError() {
         this.generalForm.get('major')?.updateValueAndValidity();
       }
     }
-    
-    
+
+
     createYouthModel(): Youth {
 
       return {
+        isEdited:false,
         id: this.generateUniqueId(),
         username: this.personalInfoForm.value.personalRegistrationNumber,
         password: this.requiredDocumentsForm.value.password,
@@ -1113,6 +1116,7 @@ updatePatternError() {
         french: this.skillsForm.value.french,
         // Required Documents
         ...this.requiredDocumentsForm.value,
+        beneficiary:false
       };
     }
 
@@ -1123,6 +1127,8 @@ updatePatternError() {
         (response) => {
           console.log('Form data submitted successfully:', response);
           alert('Form data saved successfully!');
+          this.router.navigate(['/login']);
+
         },
         (error) => {
           console.error('Error submitting form data:', error);
@@ -1132,18 +1138,18 @@ updatePatternError() {
     }
 
     generateUniqueId(): string {
-      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-      const randomLetter = letters[Math.floor(Math.random() * letters.length)]; 
+      // const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      // const randomLetter = letters[Math.floor(Math.random() * letters.length)];
       const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-      return `${randomLetter}-${randomNumber}`; 
-    }
-    
-    
-
+      return `${randomNumber}`;
     }
 
 
-  
+
+    }
+
+
+
 
 
 

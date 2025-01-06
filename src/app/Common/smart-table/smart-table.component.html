@@ -125,7 +125,7 @@
             </div>
           </ng-template>
         </p-multiSelect>
-        }@else if(col.header=="Area"){
+        }@else if(col.header=="Area" && activeTab==='youth'){
         <p-multiSelect
           [options]="areas"
           [(ngModel)]="selectedAreas"
@@ -141,11 +141,31 @@
           }"
           ><ng-template let-option pTemplate="item">
             <div class="flex items-center absolute z-50">
-              {{ option.name }}
+              {{ option }}
             </div>
           </ng-template>
         </p-multiSelect>
-        }@else if(col.header=="Education Level"){
+        }@else if(col.header=="Area" && activeTab==='employer'){
+          <p-multiSelect
+            [options]="areas"
+            [(ngModel)]="selectedAreas"
+            [showClear]="true"
+            (onChange)="fetchEmployerData()"
+            placeholder="Select Area"
+            appendTo="body"
+            [style]="{
+              background: 'white',
+              border: '1px solid #ddd',
+              'border-radius': '8px',
+              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            }"
+            ><ng-template let-option pTemplate="item">
+              <div class="flex items-center absolute z-50">
+                {{ option }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+          }@else if(col.header=="Education Level"){
         <p-multiSelect
           [options]="educationLevels"
           [(ngModel)]="selectedEducationLevels"
@@ -739,6 +759,23 @@
             </div>
           </ng-template>
         </p-multiSelect>
+        }@else if(col.header=="Beneficiary"){
+          <p-dropdown
+          [options]="[
+            { label: 'All', value: null },
+            { label: 'Benefited', value: true },
+            { label: 'Not Benefited', value: false }
+          ]"
+          [(ngModel)]="selectedIsBeneficiary"
+          (onChange)="fetchYouthData()"
+          placeholder="Filter by Status"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+        ></p-dropdown>
         }@else if(col.header=="Gender"){
         <p-multiSelect
           [options]="genders"
@@ -758,27 +795,47 @@
             </div>
           </ng-template>
         </p-multiSelect>
-        }@else if(col.header=="Area"){
-        <p-multiSelect
-          [options]="areas"
-          [(ngModel)]="selectedAreas"
-          [showClear]="true"
-          (onChange)="fetchYouthData()"
-          placeholder="Select Area"
-          appendTo="body"
-          [style]="{
-            background: 'white',
-            border: '1px solid #ddd',
-            'border-radius': '8px',
-            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-          }"
-          ><ng-template let-option pTemplate="item">
-            <div class="flex items-center absolute z-50">
-              {{ option.name }}
-            </div>
-          </ng-template>
-        </p-multiSelect>
-        }@else if(col.header=="Education Level"){
+        }@else if(col.header=="Area" && activeTab==='youth'){
+          <p-multiSelect
+            [options]="areas"
+            [(ngModel)]="selectedAreas"
+            [showClear]="true"
+            (onChange)="fetchYouthData()"
+            placeholder="Select Area"
+            appendTo="body"
+            [style]="{
+              background: 'white',
+              border: '1px solid #ddd',
+              'border-radius': '8px',
+              'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+            }"
+            ><ng-template let-option pTemplate="item">
+              <div class="flex items-center absolute z-50">
+                {{ option }}
+              </div>
+            </ng-template>
+          </p-multiSelect>
+          }@else if(col.header=="Area" && activeTab==='employer'){
+            <p-multiSelect
+              [options]="areas"
+              [(ngModel)]="selectedAreas"
+              [showClear]="true"
+              (onChange)="fetchEmployerData()"
+              placeholder="Select Area"
+              appendTo="body"
+              [style]="{
+                background: 'white',
+                border: '1px solid #ddd',
+                'border-radius': '8px',
+                'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+              }"
+              ><ng-template let-option pTemplate="item">
+                <div class="flex items-center absolute z-50">
+                  {{ option }}
+                </div>
+              </ng-template>
+            </p-multiSelect>
+            }@else if(col.header=="Education Level"){
         <p-multiSelect
           [options]="educationLevels"
           [(ngModel)]="selectedEducationLevels"

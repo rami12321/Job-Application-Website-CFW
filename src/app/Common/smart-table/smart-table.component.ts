@@ -384,6 +384,14 @@ export class SmartTableComponent implements OnInit {
           ? data.filter((item) => item.active === this.active)
           : data;
 
+          filteredData = filteredData.filter((item) => {
+            const matchesArea =
+              this.selectedAreas.length === 0 ||
+              this.selectedAreas.includes(item.area);
+            return (
+              matchesArea
+            );
+          });
         // Step 2: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
@@ -405,6 +413,8 @@ export class SmartTableComponent implements OnInit {
             this._selectedColumns = this.cols;
             this.cols = [...this._selectedColumns];
           }
+
+
 
           // Initialize _selectedColumns with all columns except "Action"
           if (this.savedColumns) {
