@@ -9,6 +9,7 @@ import SignaturePad from 'signature_pad';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VerificationCodeService } from '../../Services/VerificationCode/verification-code.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-SignUp-Employer',
@@ -31,7 +32,8 @@ export class SignUpEmployerComponent implements AfterViewInit  {
   @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
 
-  constructor(private fb: FormBuilder, private employerService: EmployerService, private http: HttpClient, private verificationCodeService: VerificationCodeService,
+  constructor(private fb: FormBuilder, private employerService: EmployerService, private http: HttpClient, private verificationCodeService: VerificationCodeService,  private router: Router
+
   ) {
     this.signupForm = this.fb.group(
       {
@@ -127,11 +129,6 @@ active:this.active,
     return `${randomLetter}-${randomNumber}`;
   }
   onSubmit(): void {
-    // if (this.signupForm.invalid) {
-    //   alert('Form is invalid. Please check the inputs.');
-    //   return;
-    // }
-
     const verificationCode = this.signupForm.get('verificationCode')?.value.trim();
 
     if (!verificationCode) {
@@ -146,7 +143,6 @@ active:this.active,
 
         if (matchingCode) {
           // Proceed with signup if the code is valid
-          // Create the signup data, which will include the signature image
           const signupData = this.createSignupModel(); // This already includes the signatureImage
 
           this.employerService.saveEmployerData(signupData).subscribe(
@@ -159,6 +155,9 @@ active:this.active,
                 () => console.log('Verification code deleted.'),
                 (err) => console.error('Error deleting verification code:', err)
               );
+
+              // Navigate to the login page
+              this.router.navigate(['/login']);
             },
             (error) => {
               console.error('Error saving data:', error);
@@ -174,8 +173,7 @@ active:this.active,
         alert('Error verifying the verification code.');
       }
     );
-
-    }
+  }
   ngOnInit() {
   }
 
