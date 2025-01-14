@@ -249,6 +249,7 @@ export class SmartTableComponent implements OnInit {
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
 
+
         this.allProducts = data; // Assign the data only if it's an array
 
         // Map appliedJobText for filtering and display
@@ -340,7 +341,9 @@ export class SmartTableComponent implements OnInit {
         // Step 4: Update youth list and paginated products
         this.youthList = filteredData;
         this.filteredData = [...this.youthList];
-        this.paginatedProducts = this.youthList.slice(0, this.rowsPerPage);
+        this.paginatedProducts = this.youthList;
+        console.log(this.paginatedProducts.length);
+
       },
       (error) => {
         console.error('Error fetching youth data:', error);

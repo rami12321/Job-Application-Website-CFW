@@ -10,14 +10,14 @@
       It’s great to see you here. Explore opportunities and make your journey count.
     </p>
   </div>
-  
-  
+
+
   <div class="container mx-auto mt-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-lg p-6 sm:p-8 w-[95%] sm:w-[90%] max-w-6xl mb-6">
     <!-- UNRWA Logo -->
     <div class="flex justify-center mb-6">
       <img src="assets/images/unrwa_logo-removebg-preview.png" alt="UNRWA Logo" class="w-32 h-32 object-contain" />
     </div>
-  
+
     <!-- Header Section -->
     <div class="text-center">
       <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-gray-100">
@@ -27,10 +27,10 @@
         Short-Term Employment Opportunity Application
       </p>
     </div>
-  
+
     <!-- Divider -->
     <div class="w-full h-[1px] bg-blue-400 rounded-full my-6"></div>
-  
+
     <!-- Information Section -->
     <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
       <p>
@@ -44,14 +44,14 @@
       </p>
     </div>
   </div>
-  
-  
-  
-  
+
+
+
+
   <p-accordion [style]="{ 'box-shadow': '0 4px 6px rgba(0, 0, 0, 0.1)', 'border-radius': '8px', 'overflow': 'hidden', 'width': '95%', 'max-width': '80rem', 'margin': '0 auto' }" [activeIndex]="0">
     <!-- Notifications Tab -->
     <p-accordionTab header="Notifications" [style]="{ 'background': '#f7f9fc', 'padding': '0' }" [headerStyle]="{ 'font-size': '1.2rem'}" >
-      
+
       <div class="job-status-section p-6 max-w-4xl  rounded-lg">
         <div class="space-y-6">
           @if(jobStatus === 'waiting') {
@@ -64,8 +64,8 @@
           <div class="alert bg-yellow-50 border-l-8 border-yellow-500 text-yellow-700 p-6 mb-6 rounded-lg shadow-md">
             <p class="font-semibold">This profile is pending. You should edit your profile.</p>
             <p class="font-semibold mb-4">Take a look at the notes referred to you:</p>
-            <button 
-              (click)="viewNotes()" 
+            <button
+              (click)="viewNotes()"
               class="btn-primary">
               View Notes
             </button>
@@ -83,16 +83,16 @@
               <ng-container *ngIf="activeJobs.length > 0; else noActiveJobs">
                 <div>
                 <p class="font-semibold mb-4" *ngIf="appliedJob?.status !== 'approved'">You can edit your applied jobs:</p>
-                <button 
-                  *ngIf="appliedJob?.status !== 'approved'" 
-                  (click)="acceptJob()" 
+                <button
+                  *ngIf="appliedJob?.status !== 'approved'"
+                  (click)="acceptJob()"
                   class="btn-primary">
                   Edit Jobs
                 </button>
                 </div>
                 <div>
-                <button 
-                  *ngIf="appliedJob?.status === 'approved'" 
+                <button
+                  *ngIf="appliedJob?.status === 'approved'"
                   class="btn-secondary-disabled font-semibold mb-4">
                   No Modification Allowed
                 </button>
@@ -101,8 +101,8 @@
               <!-- If no active jobs exist -->
               <ng-template #noActiveJobs>
                 <p class="font-semibold mb-4">Accepted. You can apply to a job.</p>
-                <button 
-                  (click)="acceptJob()" 
+                <button
+                  (click)="acceptJob()"
                   class="btn-primary">
                   Apply to Job
                 </button>
@@ -184,7 +184,7 @@
       >
       Application Details
       </button>
-      
+
         <button
         *ngIf="specificAssignedYouth?.EmployerContract && !specificAssignedYouth?.YouthContract"
 
@@ -200,7 +200,7 @@
     >
       Application Details
     </button>
-    
+
 
     <div
     *ngIf="isDetailsModalOpen"
@@ -233,7 +233,7 @@
           <span class="sr-only">Close modal</span>
         </button>
       </div>
-  
+
       <!-- Modal Body -->
       <div *ngIf="detailsselectedJob" class="p-6 space-y-8 text-gray-800">
         <!-- Job Request Details -->
@@ -275,7 +275,7 @@
             <p class="text-lg font-medium text-gray-800">{{ detailsselectedJob.category }}</p>
           </div>
         </div>
-  
+
         <!-- CoFIntract Details -->
         <div *ngIf="specificAssignedYouth?.YouthContract" class="border-t pt-6 mt-6">
           <h3 class="text-xl font-bold text-gray-800 mb-4">Youth Contract Details</h3>
@@ -297,8 +297,8 @@
       </div>
     </div>
   </div>
-  
-  
+
+
   <div
   *ngIf="isContractModalOpen"
   class="fixed inset-0 z-50 flex justify-center items-center bg-gray-900 bg-opacity-50"
@@ -413,7 +413,7 @@
           required
         />
       </div>
-      
+
 
 
 <!-- Signature Section -->
@@ -616,7 +616,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
   <div class="p-6 bg-white rounded-xl shadow-xl max-w-5xl ">
     <div class="flex justify-between items-center mb-6">
       <p class="text-2xl font-semibold text-gray-800">Account Settings</p>
-      <button 
+      <button
         (click)="editProfile()"
         class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300">
         Edit Profile
@@ -696,19 +696,20 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
   </div>
 </div>
 
-<div *ngIf="showNote" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-  <div class="notes-popup">
-    <h2 class="text-2xl font-bold mb-4">Notes</h2>
-    <p>{{ notes }}</p>
-    <div class="flex justify-end">
-      <button (click)="closeNotes()" class="btn-close">
+<div *ngIf="showNote" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="notes-popup bg-white w-1/2 h-1/2 rounded relative">
+    <h2 class="text-2xl font-bold mb-4 text-center border-b">Notes</h2>
+    <p class="pt-7 px-7">{{ notes }}</p>
+    <div class="absolute bottom-0 left-0 w-full flex justify-end p-4">
+      <button (click)="closeNotes()" class="btn-close bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Close
       </button>
     </div>
   </div>
 </div>
-<div 
-  *ngIf="showdetailsPopup" 
+
+<div
+  *ngIf="showdetailsPopup"
   class="fixed inset-0 z-50 flex justify-center items-center bg-gray-500 bg-opacity-50"
 >
   <div class="relative p-4 w-full max-w-2xl max-h-full bg-white rounded-lg shadow-md dark:bg-gray-700">
@@ -717,8 +718,8 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
       <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
         Job Description: {{ selectedJobTitle }}
       </h3>
-      <button 
-        (click)="closedetailsPopup()" 
+      <button
+        (click)="closedetailsPopup()"
         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -734,8 +735,8 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
     </div>
     <!-- Modal footer -->
     <div class="flex items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-      <button 
-        (click)="closedetailsPopup()" 
+      <button
+        (click)="closedetailsPopup()"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 Close      </button>
 

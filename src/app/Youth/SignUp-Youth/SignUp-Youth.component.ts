@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-youth',
@@ -105,7 +106,7 @@ export class SignUpYouthComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
     private lookupService: LookupService,
-    private http: HttpClient
+    private http: HttpClient,private router: Router
   ) {
     this.introForm = this.fb.group({
       confirm: ['', Validators.required],
@@ -1124,6 +1125,8 @@ export class SignUpYouthComponent implements OnInit {
       (response) => {
         console.log('Form data submitted successfully:', response);
         alert('Form data saved successfully!');
+        // Navigate to the login page
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Error submitting form data:', error);

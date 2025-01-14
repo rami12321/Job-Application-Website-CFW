@@ -193,31 +193,46 @@ currentPageCompleted = 1;
   }
   onAreaChange(area: string): void {
     console.log('Selected Area:', area);
-    this.selectedArea=area
+    this.selectedArea = area;
+
     const Area = this.lookupData.areas.find((a: any) => a.name === area);
     if (Area) {
-      this.campTypeOptions = Area.options;
-      this.campOptions = []; // Clear camps until a camp type is selected
+      this.campTypeOptions = Area.options; // Update camp type options for the new area
+
+      // Update camp options based on the previously selected camp type
+      if (this.selectedCampType === 'Inside Camp') {
+        this.campOptions = Area.camps || [];
+      } else {
+        this.campOptions = []; // No camps for other types
+      }
     } else {
       this.campTypeOptions = [];
       this.campOptions = [];
     }
+
     console.log('Camp Type Options:', this.campTypeOptions);
+    console.log('Updated Camp Options:', this.campOptions);
   }
 
 
   onCampTypeChange(selectedCampType: string): void {
+    this.selectedCampType = selectedCampType; // Track the selected camp type
+    console.log('Selected Camp Type:', selectedCampType);
+
     const area = this.lookupData.areas.find((a: any) => a.name === this.selectedArea);
-    console.log('area',area)
+    console.log('Area Data:', area);
+
     if (area) {
       if (selectedCampType === 'Inside Camp') {
-        this.campOptions = area.camps;
+        this.campOptions = area.camps || [];
       } else {
-        this.campOptions = []; // Outside camp might have no predefined camps
+        this.campOptions = []; // Clear camps for other types
       }
     } else {
-      this.campOptions = [];
+      this.campOptions = []; // Reset camps if no area is selected
     }
+
+    console.log('Updated Camp Options:', this.campOptions);
   }
 
 
@@ -316,7 +331,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
               const dateB = new Date(b.createdDate ?? 0).getTime();
               return dateB - dateA; // Newest to oldest
             });
-      
+
             this.categorizeJobs(); // Categorize jobs after fetching
             this.paginatedData = this.jobsByStatus('waiting-E'); // Default to "waiting-E"
             this.totalPages = Math.ceil(this.paginatedData.length / this.itemsPerPage);
@@ -333,7 +348,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
           },
         });
       }
-      
+
 
   openEditModal(jobId: string): void {
     this.selectedJobId = jobId;
@@ -425,11 +440,11 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       console.error(`Invalid sorting key: ${key}`);
       return;
     }
-    
+
     this.sortDirection =
       this.sortKey === key && this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortKey = key;
-  
+
     const sortedJobs = [...this.jobs].sort((a, b) => {
       if (key === 'createdDate') {
         const dateA = new Date(a.createdDate ?? 0).getTime();
@@ -443,14 +458,14 @@ paginate(jobs: Job[], currentPage: number): Job[] {
           : valueB.localeCompare(valueA);
       }
     });
-  
+
     this.jobs = sortedJobs;
     this.updatePaginatedData('waiting');
     this.updatePaginatedData('assigned');
     this.updatePaginatedData('inProgress');
     this.updatePaginatedData('completed');
   }
-  
+
 
 
   deleteJob(id: string): void {
@@ -560,8 +575,8 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       console.error('Title and number of employees are required.');
       return;
     }
-    
-  
+
+
     const jobRequest: Job = {
       ...this.jobDetails,
       job: this.selectedjob,
@@ -570,7 +585,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       organizationName: this.organizationName,
       createdDate: new Date().toISOString(), // Ensure new job has a timestamp
     };
-  
+
     this.jobRequestService.saveJobData(jobRequest).subscribe({
       next: (response) => {
         console.log('Job Request Submitted Successfully:', response);
@@ -585,7 +600,7 @@ paginate(jobs: Job[], currentPage: number): Job[] {
       },
     });
   }
-  
+
 
 
   resetForm(): void {
