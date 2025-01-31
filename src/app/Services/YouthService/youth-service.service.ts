@@ -22,11 +22,11 @@ export class YouthServiceService {
   }
 
 
-
   getAllYouth(): Observable<any[]> {
-    return this.http.get<any[]>(this.youthDbUrl);
+    const cacheBuster = new Date().getTime();  // Adds a timestamp to avoid cached responses
+    return this.http.get<any[]>(`${this.apiUrl}?_=${cacheBuster}`);
   }
-
+  
 
   getYouthById(id: any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);

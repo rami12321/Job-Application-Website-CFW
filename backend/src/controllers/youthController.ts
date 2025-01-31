@@ -22,7 +22,7 @@ const writeFile = (data: Youth[]): void => {
 // Controller functions, e.g., `getAllYouth`, `createYouth`, etc., use the `Youth` type
 export const getAllYouth = (req: Request, res: Response): void => {
   const youths: Youth[] = readFile();
-  res.status(200).json(youths);
+  res.status(200).json(youths); 
 };
 
 

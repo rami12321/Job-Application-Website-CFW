@@ -39,15 +39,16 @@
         
         <!-- Image with white card background -->
         <div 
-        class="w-20 h-32 bg-white border border-[#d4edff] dark:border-gray-700 rounded-md shadow-md  justify-center items-center cursor-pointer "
-        (click)="openModal(employer?.signature || '')"
-          >
-          <img 
-            [src]="employer?.signature" 
-            alt="Employer Signature" 
-            class="w-29 h-28 object-contain"
-          >
-        </div>
+        class="w-20 h-32 bg-white border border-[#d4edff] dark:border-gray-700 rounded-md shadow-md justify-center items-center cursor-pointer"
+        (click)="openModal(signatureImage || '')"
+      >
+        <img 
+          [src]="signatureImage" 
+          alt="Employer Signature" 
+          class="w-29 h-28 object-contain"
+        >
+      </div>
+      
       </div>
       
       <!-- Modal for Image Preview -->

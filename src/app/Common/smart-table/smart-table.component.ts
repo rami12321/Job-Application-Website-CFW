@@ -429,7 +429,7 @@ export class SmartTableComponent implements OnInit {
 
         // Step 3: Update youth list and paginated products
         this.employerList = filteredData;
-        this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
+        this.paginatedProducts = this.employerList;
       },
       (error) => {
         console.error('Error fetching employer data:', error);
@@ -490,7 +490,7 @@ export class SmartTableComponent implements OnInit {
 
         // Step 4: Update youth list and paginated products
         this.employerList = filteredData;
-        this.paginatedProducts = this.employerList.slice(0, this.rowsPerPage);
+        this.paginatedProducts = this.employerList;
       },
       (error) => {
         console.error('Error fetching youth data:', error);
