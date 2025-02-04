@@ -3,6 +3,8 @@ export interface AssignedYouth {
   firstName: string;
   lastName: string;
   dob: string;
+  mobilePhone: string;
+
   cv: string;
   status: string;
   action?: 'accepted' | 'rejected' | 'approved' | null;

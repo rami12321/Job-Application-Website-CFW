@@ -430,7 +430,8 @@
     "appliedJob": [
       {
         "job": "Auto Mechanic",
-        "status": "rejected"
+        "status": "approved",
+        "jobRequestId": "O-64184269"
       },
       {
         "job": "Auto Electrician",
@@ -440,7 +441,8 @@
         "job": "Diesel Mechanic",
         "status": "rejected"
       }
-    ]
+    ],
+    "workStatus": true
   },
   {
     "id": "62657449",
@@ -2718,7 +2720,7 @@
     "username": "2-00425949",
     "password": "123456",
     "role": "Youth",
-    "status": "waiting",
+    "status": "accepted",
     "firstNameEn": "Adham",
     "fatherNameEn": "Karam",
     "lastNameEn": "Awad",
@@ -2795,14 +2797,26 @@
     "confirmation": "yes",
     "confirmPassword": "123456",
     "createdAt": "2025-01-10T08:33:13.057Z",
-    "isEdited": false
+    "isEdited": false,
+    "appliedJob": [
+      {
+        "job": "Auto Electrician",
+        "status": "rejected"
+      },
+      {
+        "job": "Auto Mechanic",
+        "status": "approved",
+        "jobRequestId": "O-64184269"
+      }
+    ],
+    "workStatus": false
   },
   {
     "id": "29124388",
     "username": "2-00361538",
     "password": "123456",
     "role": "Youth",
-    "status": "waiting",
+    "status": "accepted",
     "firstNameEn": "Nour el huda",
     "fatherNameEn": "Hisham",
     "lastNameEn": "Marzouk",
@@ -2877,7 +2891,16 @@
     "confirmation": "yes",
     "confirmPassword": "123456",
     "createdAt": "2025-01-10T08:43:03.102Z",
-    "isEdited": false
+    "isEdited": false,
+    "appliedJob": [
+      {
+        "job": "Auto Electrician",
+        "status": "completed",
+        "jobRequestId": "Y-99151935"
+      }
+    ],
+    "workStatus": false,
+    "beneficiary": true
   },
   {
     "id": "75963189",
@@ -11084,90 +11107,6 @@
     "confirmation": "yes",
     "confirmPassword": "123456",
     "createdAt": "2025-01-10T08:25:25.583Z",
-    "isEdited": false
-  },
-  {
-    "id": "71023025",
-    "username": "2-00425949",
-    "password": "123456",
-    "role": "Youth",
-    "status": "waiting",
-    "firstNameEn": "Adham",
-    "fatherNameEn": "Karam",
-    "lastNameEn": "Awad",
-    "firstNameAr": "أدهم",
-    "fatherNameAr": "كرم",
-    "lastNameAr": "عوض",
-    "gender": "Male",
-    "dob": "1997-03-27",
-    "nationality": "Palestinian Refugee in Lebanon",
-    "registrationStatus": "Registered",
-    "familyRegistrationNumber": "1-00109006",
-    "personalRegistrationNumber": "2-00425949",
-    "mobilePhone": "96176173005",
-    "whatsapp": "96176173005",
-    "emergencyPhone": "96170372604",
-    "emergencyRelation": "Sibling",
-    "email": "adham.awad383@gmail.com",
-    "area": "North Lebanon",
-    "fullAddress": "مخيم نهر البارد شارع المدارس",
-    "headfa": "Father",
-    "campType": "Inside Camp",
-    "camp": "Nahr El Bared Palestinian Refugee Camp",
-    "jobOpportunitySource": "Friends",
-    "educationGraduate": "yes",
-    "educationLevel": "Short Term Course, Experience Work Certificate, or Diploma from Siblin Training Center",
-    "major": "Accounting",
-    "otherMajor": "",
-    "institution": "مهنيه الشمال/طرابلس",
-    "graduationDate": "2019-06-30",
-    "gradplace": "نهر البارد/شمال لبنان",
-    "employmentOpportunities": "Short-term employment opportunities in UNRWA",
-    "aboutYourself": "",
-    "placedByKfw": "no",
-    "kfwYear": "",
-    "stcgraduate": "no",
-    "innovationLabGraduate": "yes",
-    "innovationLabGradtype": [
-      "Social Entrepreneurship"
-    ],
-    "disability": "no",
-    "disabilitySupport": "",
-    "disabilityTypes": [],
-    "employed": "no",
-    "seekingEmploymentDuration": "moreThanYear",
-    "isPrcsVolunteer": "no",
-    "isFireBrigadesVolunteer": "no",
-    "isAlShifaaVolunteer": "no",
-    "experiences": [
-      {
-        "type": "",
-        "employerName": "",
-        "employerPhone": "",
-        "area": "",
-        "employmentType": "",
-        "jobTitle": "",
-        "startDate": "",
-        "endDate": "",
-        "salary": "",
-        "tasks": ""
-      }
-    ],
-    "trainings": [],
-    "arabic": "good",
-    "english": "average",
-    "french": "null",
-    "cv": "",
-    "coverLetter": "",
-    "identityCard": "",
-    "registrationCard": "",
-    "degree": "",
-    "prcsProof": "",
-    "fireProof": "",
-    "alShifaaProof": "",
-    "confirmation": "yes",
-    "confirmPassword": "123456",
-    "createdAt": "2025-01-10T08:33:13.057Z",
     "isEdited": false
   },
   {

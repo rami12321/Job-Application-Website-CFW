@@ -182,7 +182,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             }));
 
             this.activeJobs = mappedJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
-            this.inactiveJobs = mappedJobs.filter(job => job.status !== 'approved' || job.status !== 'waiting' );
+            this.inactiveJobs = mappedJobs.filter(job => job.status === 'rejected' || job.status === 'completed' );
             this.appliedJob = this.activeJobs.find(job => job.status === 'approved') || null;
 
             console.log('Mapped Jobs:', mappedJobs);

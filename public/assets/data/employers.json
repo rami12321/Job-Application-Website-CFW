@@ -11,7 +11,7 @@
     "whatsappNumber": "96153435435",
     "email": "test@gmail.com",
     "area": "North Lebanon Area",
-    "signature": "signatures.json#U-43081496-signature",
+    "signature": "/assets/data/signatures.json#U-43081496-signature",
     "role": "Employer"
   },
   {
@@ -1542,21 +1542,6 @@
     "email": "cdp.nb@nabaa-lb.org",
     "area": "North Lebanon Area",
     "signature": "/assets/data/signatures.json#S-73894420-signature",
-    "role": "Employer"
-  },
-  {
-    "active": true,
-    "id": "T-72174900",
-    "username": "omarwehbeh@gmail.com",
-    "password": "123123",
-    "organization": "UNRWA",
-    "fullNameEnglish": "Omar Wehbeh",
-    "fullNameArabic": "عمر وهبة",
-    "mobilePhone": "96171135088",
-    "whatsappNumber": "96171135088",
-    "email": "omarwehbeh@gmail.com",
-    "area": "North Lebanon Area",
-    "signature": "/assets/data/signatures.json#T-72174900-signature",
     "role": "Employer"
   }
 ]

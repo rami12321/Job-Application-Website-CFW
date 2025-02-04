@@ -123,9 +123,9 @@
               <div class="flex space-x-4 justify-center">
                 <!-- Employer View -->
                 <ng-container *ngIf="isEmployer() && jobRequest?.status!=='completed'; else nonEmployerView">
-                  <ng-container *ngIf="youth.action === 'approved' && youth.status==='approved' ; else actionButtons">
+                  <ng-container *ngIf="youth.action === 'approved' ; else actionButtons">
                     <button
-                    *ngIf="!youth.EmployerContract"
+                    *ngIf="!youth.EmployerContract && youth.action === 'approved'"
 
                       class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md"
                       aria-label="Approved Status"
@@ -136,7 +136,7 @@
                       <i class="pi pi-verified text-lg"></i>
                     </button>
                   <button
-                  *ngIf="!youth.EmployerContract"
+                  *ngIf="!youth.EmployerContract && jobRequest?.status==='in-progress'"
 
                   class="tooltip w-10 h-10 bg-purple-500 hover:bg-purple-600 text-white rounded-full flex items-center justify-center shadow-md ml-2"
                   aria-label="Read Contract"
