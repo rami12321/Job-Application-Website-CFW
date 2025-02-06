@@ -78,7 +78,7 @@ interface YouthAttributes {
 
   status: 'accepted' | 'rejected' | 'pending' | 'waiting';
   notes?: string;
-  appliedJob?: { job: string; status: string }[]; // Array of objects
+  appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
   beneficiary?: boolean;
   workStatus?: boolean;
   isEdited?: boolean;
@@ -163,7 +163,8 @@ class Youth extends Model<YouthAttributes, YouthCreationAttributes> implements Y
 
   public status!: 'accepted' | 'rejected' | 'pending' | 'waiting';
   public notes?: string;
-  public appliedJob?: { job: string; status: string }[];
+  public   appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
+
   public beneficiary?: boolean;
   public workStatus?: boolean;
   public isEdited?: boolean;
