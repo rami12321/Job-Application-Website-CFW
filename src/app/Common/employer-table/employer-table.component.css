@@ -1,0 +1,63 @@
+
+::ng-deep p-columnfilter input {
+    border: 2px solid #ddd; /* Adjust the border color and size */
+    border-radius: 4px;    /* Optional: Rounded corners */
+    padding: 4px;          /* Add spacing inside the input */
+    box-shadow: none;      /* Remove any shadow if present */
+  }
+  ::ng-deep .p-multiselect-panel {
+    position: absolute !important; /* Ensure proper positioning */
+    z-index: 1050 !important; /* Ensure it appears above other elements */
+    max-height: 300px; /* Prevent the panel from being too tall */
+    overflow-y: auto; /* Add scroll if needed */
+    width: -webkit-fill-available;
+  
+  }
+  
+  ::ng-deep .p-multiselect-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  
+  }
+  
+  ::ng-deep .p-multiselect-item:hover {
+    background-color: #e0f7fa;
+  
+  }
+  ::ng-deep p-table {
+    overflow: visible !important;
+  }
+  
+  ::ng-deep .p-table-wrapper {
+    overflow: visible !important;
+  }
+  
+  ::ng-deep .p-multiselect-panel {
+    overflow: visible !important;
+    z-index: 1050 !important;
+  }
+  
+  .parent-container {
+    position: relative !important;
+  }
+  :host ::ng-deep .p-dialog .p-dialog-header {
+    padding: 0 !important;
+  }
+  :host ::ng-deep .p-dialog .p-dialog-content {
+    padding: 0 !important;
+  }
+  :host ::ng-deep .p-dialog .p-dialog-footer {
+    padding: 0 !important;
+  }
+  
+  :host ::ng-deep .youth .p-dialog .p-dialog-header {
+    padding: 15px !important;
+  }
+  :host ::ng-deep .youth .p-dialog .p-dialog-content {
+    padding: 15px !important;
+  }
+  :host ::ng-deep .youth .p-dialog .p-dialog-footer {
+    padding: 15px !important;
+  }
+  
+  

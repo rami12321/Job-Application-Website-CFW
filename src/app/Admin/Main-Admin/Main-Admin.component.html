@@ -132,16 +132,16 @@
 
       <!-- Youth Tab Content -->
       <div *ngIf="activeYouthTab === 'accepted'">
-        <app-smart-table class="p-10" [status]="'accepted'" />
+        <app-youth-table class="p-10" [status]="'accepted'"></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'rejected'">
-        <app-smart-table class="p-10" [status]="'rejected'" />
+        <app-youth-table class="p-10" [status]="'rejected'"></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'pending'">
-        <app-smart-table class="p-10" [status]="'pending'" />
+        <app-youth-table class="p-10" [status]="'pending'"></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'waiting'">
-        <app-smart-table class="p-10" [status]="'waiting'" />
+        <app-youth-table class="p-10" [status]="'waiting'"></app-youth-table>
       </div>
     </div>
 
@@ -181,18 +181,17 @@
         </button>
       </div>
 
-      <!-- Youth Tab Content -->
       <div *ngIf="activeYouthTab1 === 'waiting-E'">
-        <app-smart-table [fetchedData]="'job-request'" class="p-10" [status]="'waiting-E'" />
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'waiting-E'"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'assigned'">
-        <app-smart-table [fetchedData]="'job-request'" class="p-10" [status]="'assigned'" />
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'assigned'"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'in-progress'">
-        <app-smart-table [fetchedData]="'job-request'" class="p-10" [status]="'in-progress'" />
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'in-progress'"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'completed'">
-        <app-smart-table [fetchedData]="'job-request'" class="p-10" [status]="'completed'" />
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'completed'"></app-job-request-table>
       </div>
     </div>
     <!-- Employer Tab -->
@@ -225,12 +224,11 @@
 
       </div>
 
-      <!-- Youth Tab Content -->
       <div *ngIf="activeEmployerTab === 'active'">
-        <app-smart-table [fetchedData]="'employer'" class="p-10" [active]="true" />
+        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="true"></app-employer-table>
       </div>
       <div *ngIf="activeEmployerTab === 'inactive'">
-        <app-smart-table [fetchedData]="'employer'" class="p-10" [active]="false" />
+        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="false"></app-employer-table>
       </div>
         <!-- <app-smart-table class="p-10" [fetchedData]="'employer'" /> -->
 

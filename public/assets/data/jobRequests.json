@@ -236,5 +236,26 @@
         "action": "approved"
       }
     ]
+  },
+  {
+    "jobId": "S-85314829",
+    "employerId": "O-42256623",
+    "job": "Auto Electrician",
+    "title": "Auto electrician",
+    "organizationName": "",
+    "numEmployees": 1,
+    "level": "junior",
+    "area": "North Lebanon",
+    "campType": "Inside Camp",
+    "camp": "Nahr El Bared Palestinian Refugee Camp",
+    "location": "NBC",
+    "typeOfJob": "hybrid",
+    "supervisorName": "Omar",
+    "supervisorPosition": "Manager",
+    "supervisorEmail": "Omarwehbeh@gmail.com",
+    "supervisorPhone": "96171135088",
+    "status": "waiting-E",
+    "category": "Cars & Motors Electrican",
+    "createdDate": "2025-02-06T11:33:06.120Z"
   }
 ]

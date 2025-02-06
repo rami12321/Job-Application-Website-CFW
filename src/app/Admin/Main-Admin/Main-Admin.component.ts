@@ -6,12 +6,15 @@ import { v4 as uuidv4 } from 'uuid'; // Install UUID library for unique codes
 import { HttpClient } from '@angular/common/http';
 import { VerificationCodeService } from '../../Services/VerificationCode/verification-code.service';
 import { MatDialog } from '@angular/material/dialog';
+import { YouthTableComponent } from "../../Common/youth-table/youth-table.component";
+import { EmployerTableComponent } from "../../Common/employer-table/employer-table.component";
+import { JobRequestTableComponent } from "../../Common/job-request-table/job-request-table.component";
 
 
 @Component({
   selector: 'app-Main-Admin',
   standalone: true,
-  imports: [SmartTableComponent, CommonModule, AdminDashboardComponent],
+  imports: [ CommonModule, AdminDashboardComponent, YouthTableComponent, EmployerTableComponent, JobRequestTableComponent],
   templateUrl: './Main-Admin.component.html',
   styleUrls: ['./Main-Admin.component.css']
 })
