@@ -13,6 +13,7 @@ import { JobRequestComponent } from './Employer/JobRequestEdit/job-request.compo
 import { JobRequestDetailsComponent } from './Employer/JobRequestDetails/job-request-details.component';
 import { candeactivateAdminGuard } from './guards/candeactivate-admin.guard';
 import { HomeComponent } from './Common/home/home.component';
+import { SuperAdminComponent } from './Super-Admin/Main-Super-Admin/super-admin.component';
 
 export const routes: Routes = [
   {
@@ -44,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'job-request-details',
     component: JobRequestDetailsComponent,
+  },
+  {
+    path: 'super-admin',
+    component: SuperAdminComponent,
   },
   {
     path: 'main-employer',
