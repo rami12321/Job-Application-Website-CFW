@@ -37,7 +37,7 @@
           Reset columns
         </button>
       </ng-template>
-  
+
       <!-- Table Header -->
       <ng-template pTemplate="header">
         <tr>
@@ -237,7 +237,7 @@
           </th>
         </tr>
       </ng-template>
-  
+
       <!-- Table Body -->
       <ng-template pTemplate="body" let-product>
         <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
@@ -277,7 +277,7 @@
                   </button>
                 </ng-template>
               </ng-template>
-  
+
               <!-- Youth Assignment Dialog -->
               <p-dialog
                 class="youth"
@@ -318,9 +318,9 @@
                   </div>
                 </ng-template>
               </p-dialog>
-  
+
               <!-- Employer Details Dialog (if needed in youth view) -->
-         
+
               <!-- Youth Signup Details Dialog -->
               <p-dialog
                 [(visible)]="youthSignupDialogVisible"
@@ -332,7 +332,7 @@
                   [youthId]="selectedYouthId"
                 ></app-youthsignup-details>
               </p-dialog>
-  
+
               <!-- Activate / Deactivate / Pend Actions -->
               <button
                 *ngIf="action === 'activate'"
@@ -462,7 +462,7 @@
       </ng-template>
     </p-table>
   </div>
-  
+
   <!-- Youth Signup Details Dialog -->
   <p-dialog
     [(visible)]="youthSignupDialogVisible"
@@ -474,7 +474,7 @@
       [youthId]="selectedYouthId"
     ></app-youthsignup-details>
   </p-dialog>
-  
+
   <!-- Assigned Youth Dialog -->
   <p-dialog
     [(visible)]="assignedYouthDialogVisible"
@@ -538,7 +538,7 @@
       </div>
     </div>
   </p-dialog>
-  
+
   <!-- Note Dialog -->
   <p-dialog
     [(visible)]="noteDialogVisible"
@@ -577,17 +577,17 @@
           class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg px-6 py-2 transition duration-300 transform hover:scale-105"
           type="button"
           (click)="updateNotes(selectedYouth.id, note); noteDialogVisible = false"
-        ></button>
+        >Save</button>
         <button
           pButton
           class="bg-gray-500 hover:bg-gray-600 text-white rounded-lg px-6 py-2 transition-all duration-300"
           type="button"
           (click)="noteDialogVisible = false"
-        ></button>
+        >Cancel</button>
       </div>
     </ng-template>
   </p-dialog>
-  
+
   <ng-template #noData>
 
     <div

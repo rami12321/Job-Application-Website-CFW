@@ -348,15 +348,15 @@ Youth.init(
     },
     isPrcsVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     isFireBrigadesVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     isAlShifaaVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
 
     // Experience Details

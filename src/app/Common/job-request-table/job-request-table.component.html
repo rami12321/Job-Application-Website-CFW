@@ -37,7 +37,7 @@
           Reset columns
         </button>
       </ng-template>
-  
+
       <!-- Table Header -->
       <ng-template pTemplate="header">
         <tr>
@@ -79,7 +79,7 @@
           </th>
         </tr>
       </ng-template>
-  
+
       <!-- Table Body -->
       <ng-template pTemplate="body" let-product>
         <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
@@ -133,7 +133,7 @@
       </ng-template>
     </p-table>
   </div>
-  
+
   <!-- Job Request Details Dialog -->
   <p-dialog
     [(visible)]="jobRequestDialogVisible"
@@ -145,7 +145,7 @@
       [jobId]="selectedYouthId.toString()"
     ></app-job-request-details>
   </p-dialog>
-  
+
   <!-- Assigned Youth Dialog -->
   <p-dialog
     [(visible)]="assignedYouthDialogVisible"
@@ -209,7 +209,7 @@
       </div>
     </div>
   </p-dialog>
-  
+
   <!-- Note Dialog -->
   <p-dialog
     [(visible)]="noteDialogVisible"
@@ -258,8 +258,8 @@
       </div>
     </ng-template>
   </p-dialog>
-  
-  
+
+
   <ng-template #noData>
 
     <div

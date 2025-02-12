@@ -292,7 +292,7 @@ export const getYouthByJob = async (req: Request, res: Response): Promise<void> 
     const youths = await Youth.findAll();
 
     const filteredYouths = youths.filter((y) =>
-      Array.isArray(y.appliedJob) && y.appliedJob.some((jobObj) => jobObj.title === appliedJob)
+      Array.isArray(y.appliedJob) && y.appliedJob.some((jobObj) => jobObj.req === appliedJob)
     );
 
     if (filteredYouths.length === 0) {

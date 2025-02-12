@@ -13,7 +13,7 @@ import Signature from './models/signature';
 import Youth from './models/youth';
 import adminRoutes from './routes/adminRoutes';
 
-sequelize.sync({ force: true }) // `force: true` will drop existing tables and recreate them
+sequelize.sync({ alter: true }) // `force: true` will drop existing tables and recreate them
   .then(() => {
     console.log('✅ Database synced successfully!');
   })
