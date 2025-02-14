@@ -18,6 +18,13 @@ export class AdminService {
   getAllAdmins(): Observable<Admin[]> {
     return this.http.get<Admin[]>(`${this.baseUrl}`);
   }
+  getAdminById(adminId: string): Observable<Admin> {
+    return this.http.get<Admin>(`${this.baseUrl}/${adminId}`);
+  }
+// Update admin details
+updateAdmin(adminId: string, adminData: Partial<Admin>): Observable<Admin> {
+  return this.http.put<Admin>(`${this.baseUrl}/${adminId}`, adminData);
+}
 
   updateAdminStatus(adminId: string, status: boolean): Observable<any> {
     return this.http.put(`${this.baseUrl}/${adminId}/status`, { active: status });

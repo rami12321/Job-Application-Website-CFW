@@ -12,6 +12,7 @@ export const getAllAdmins = async (req: Request, res: Response): Promise<void> =
 };
 
 // Create a new admin
+// Create a new admin
 export const createAdmin = async (req: Request, res: Response): Promise<void> => {
   try {
     const newAdmin = req.body;
@@ -20,6 +21,7 @@ export const createAdmin = async (req: Request, res: Response): Promise<void> =>
     const admin = await Admin.create(newAdmin);
     res.status(201).json(admin);
   } catch (error) {
+    console.error('Error creating admin:', error); // Log error for debugging
     res.status(500).json({ message: 'Error creating admin', error });
   }
 };
@@ -78,5 +80,25 @@ export const updateAdminStatus = async (req: Request, res: Response): Promise<vo
     res.status(200).json({ message: `Admin status updated successfully.` });
   } catch (error) {
     res.status(500).json({ message: 'Error updating admin status', error });
+  }
+};
+// Update admin details (other than status)
+export const updateAdmin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const admin = await Admin.findByPk(id);
+
+    if (!admin) {
+      res.status(404).json({ message: `Admin with ID ${id} not found.` });
+      return;
+    }
+
+    // Update admin with new data
+    await admin.update(updatedData);
+
+    res.status(200).json(admin);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating admin details', error });
   }
 };

@@ -1,60 +1,219 @@
-<p-table 
-  [value]="admins" 
-  [paginator]="true" 
-  [rows]="10" 
-  *ngIf="admins && admins.length > 0"
-  [tableStyle]="{
-    'min-width': '50rem',
-    background: 'white',
-    border: '1px solid #ddd',
-    'border-radius': '8px',
-    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-  }">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Actions</th>
-      <th>Name (English)</th>
-      <th>Name (Arabic)</th>
-      <th>Email</th>
-      <th>Position</th>
-      <th>Area</th>
-      <th>Created At</th>
-    </tr>
+<div class="table-container overflow-y-hidden">
+  <div *ngIf="admins && admins.length > 0; else noData">
+    <p-table
+      class="p-10 responsive-table"
+      [value]="admins"
+      [tableStyle]="{
+        'min-width': '50rem',
+        background: 'white',
+        border: '1px solid #ddd',
+        'border-radius': '8px',
+        'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+      }"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20]"
+    >
+      <!-- Caption with Column Selector -->
+      <ng-template pTemplate="caption">
+        <p-multiSelect
+          display="chip"
+          [options]="savedColumns"
+          [(ngModel)]="cols"
+          optionLabel="header"
+          selectedItemsLabel="{0} columns selected"
+          [style]="{
+            background: 'white',
+            border: '1px solid #ddd',
+            'border-radius': '8px',
+            'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }"
+          placeholder="Choose Columns"
+          (onChange)="saveSelectedColumnsToLocalStorage()"
+        ></p-multiSelect>
+        <button
+          (click)="resetSelectedColumns()"
+          class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
+        >
+          Reset columns
+        </button>
+      </ng-template>
+  
+      <!-- Table Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="border-r">Actions</th>
+          <th
+            *ngFor="let col of cols"
+            class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
+            pSortableColumn="{{ col.field }}"
+          >
+            <div class="flex flex-col">
+              <div class="flex justify-between items-center mb-2">
+                <span>{{ col.header }}</span>
+                <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">Actions</th>
+          <th *ngFor="let col of cols" class="border-b border-r px-2 py-1 text-sm text-gray-600">
+            <ng-container [ngSwitch]="col.field">
+              <ng-container *ngSwitchCase="'createdAt'">
+                <p-columnFilter
+                  [type]="'date'"
+                  [field]="col.field"
+                  [showClearButton]="true"
+                ></p-columnFilter>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <p-columnFilter
+                  [type]="'text'"
+                  [field]="col.field"
+                  [showClearButton]="true"
+                ></p-columnFilter>
+              </ng-container>
+            </ng-container>
+          </th>
+        </tr>
+      </ng-template>
+  
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-admin>
+        <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
+          <!-- Actions Column -->
+          <td class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4">
+            <button
+              *ngIf="admin.active"
+              type="button"
+              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              (click)="updateActiveStatus(admin.id, false)"
+            >
+              <i class="pi pi-times"></i>
+            </button>
+            <button
+              *ngIf="!admin.active"
+              type="button"
+              class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+              (click)="updateActiveStatus(admin.id, true)"
+            >
+              <i class="pi pi-check"></i>
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              (click)="onViewAdmin(admin.id)"
+            >
+              <i class="pi pi-eye"></i>
+            </button>
+            <button
+            type="button"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="openDeleteModal(admin.id)"
+          >
+            <i class="pi pi-trash"></i>
+          </button>
+          
+          </td>
+          <!-- Data Columns -->
+          <td *ngFor="let col of cols" class="px-4 py-2 text-sm border-b border-r border-gray-300">
+            <ng-container [ngSwitch]="col.field">
+              <ng-container *ngSwitchCase="'createdAt'">
+                <div>{{ admin[col.field] | date:'short' }}</div>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                {{ admin[col.field] || 'N/A' }}
+              </ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <!-- No Data Message -->
+  <ng-template #noData>
+    <div
+      class="no-data-message flex flex-col justify-center items-center text-gray-500 py-10 bg-gradient-to-b from-gray-100 to-gray-50 rounded-lg shadow-md"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-16 w-16 text-gray-300 mb-4"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M3 4a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5l-4 4V4z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <p class="text-lg font-semibold">No Admins Found</p>
+    </div>
   </ng-template>
-  <ng-template pTemplate="body" let-admin>
-    <tr>
-      <td>
-        <!-- Activate/Deactivate -->
-        <button *ngIf="admin.active" 
-                (click)="updateActiveStatus(admin.id, false)" 
-                class="btn btn-danger btn-sm mr-1">
-          Deactivate
-        </button>
-        <button *ngIf="!admin.active" 
-                (click)="updateActiveStatus(admin.id, true)" 
-                class="btn btn-success btn-sm mr-1">
-          Activate
-        </button>
-        <!-- View/Edit -->
-        <button (click)="onViewAdmin(admin.id)" 
-                class="btn btn-info btn-sm mr-1">
-          View/Edit
-        </button>
-        <!-- Delete -->
-        <button (click)="deleteAdmin(admin.id)" 
-                class="btn btn-warning btn-sm">
-          Delete
-        </button>
-      </td>
-      <td>{{ admin.fullNameEnglish }}</td>
-      <td>{{ admin.fullNameArabic }}</td>
-      <td>{{ admin.personalEmail }}</td>
-      <td>{{ admin.position }}</td>
-      <td>{{ admin.area }}</td>
-      <td>{{ admin.createdAt | date:'short' }}</td>
-    </tr>
-  </ng-template>
-</p-table>
-<div *ngIf="admins && admins.length === 0" class="text-center py-4">
-  <p>No admins found.</p>
+</div>
+<div
+  id="delete-confirm-modal"
+  tabindex="-1"
+  class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen bg-black bg-opacity-50"
+  *ngIf="isDeleteModalOpen"
+>
+  <div class="relative p-4 w-full max-w-md bg-white border border-gray-400 rounded-lg shadow-lg">
+    <button
+      type="button"
+      class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8"
+      (click)="closeDeleteModal()"
+    >
+      <svg
+        class="w-3 h-3"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+        />
+      </svg>
+    </button>
+    <div class="p-4 text-center">
+      <svg
+        class="mx-auto mb-4 text-gray-400 w-12 h-12"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>
+      <h3 class="mb-5 text-lg font-normal text-gray-500">
+        Are you sure you want to delete this admin?
+      </h3>
+      <button
+        type="button"
+        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+        (click)="confirmDelete()"
+      >
+        Yes, I'm sure
+      </button>
+      <button
+        type="button"
+        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700"
+        (click)="closeDeleteModal()"
+      >
+        No, cancel
+      </button>
+    </div>
+  </div>
 </div>

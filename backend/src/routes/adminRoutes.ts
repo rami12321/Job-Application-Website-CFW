@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllAdmins, createAdmin, getAdminById, deleteAdmin, updateAdminStatus } from '../controllers/adminController';
+import { getAllAdmins, createAdmin, getAdminById, deleteAdmin, updateAdminStatus, updateAdmin } from '../controllers/adminController';
 
 const router: Router = Router();
 
@@ -10,5 +10,6 @@ router.post('/', createAdmin);
 router.get('/:id', getAdminById);
 router.put('/:id/status', updateAdminStatus);
 router.delete('/:id', deleteAdmin);
+router.put('/:id', updateAdmin);
 
 export default router;

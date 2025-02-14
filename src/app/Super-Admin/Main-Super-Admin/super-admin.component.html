@@ -1,31 +1,28 @@
 <div class="super-admin-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2 class="sidebar-title">Super Admin</h2>
-      <ul class="sidebar-menu">
-        <li (click)="changeTab('admin-management')" [class.active]="activeTab === 'admin-management'">
-          <i class="fas fa-users-cog"></i> Admin Management
-        </li>
-        <li (click)="changeTab('payments')" [class.active]="activeTab === 'payments'">
-          <i class="fas fa-money-bill-wave"></i> Payments
-        </li>
-      </ul>
-    </aside>
-  
-    <!-- Main Content -->
-    <main class="content">
-      <h1>{{ activeTab === 'admin-management' ? 'Admin Management' : 'Payments' }}</h1>
-      <hr>
-      
-      @if (activeTab === 'admin-management') {
-        <app-admin-management></app-admin-management>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Super Admin</h2>
+    <ul class="sidebar-menu">
+      <li (click)="changeTab('admin-management')" [class.active]="activeTab === 'admin-management'">
+        <i class="fas fa-users-cog"></i> Admin Management
+      </li>
+      <li (click)="changeTab('payments')" [class.active]="activeTab === 'payments'">
+        <i class="fas fa-money-bill-wave"></i> Payments
+      </li>
+    </ul>
+  </aside>
 
-      }
+  <!-- Main Content -->
+  <main class="content">
+    <h1>{{ activeTab === 'admin-management' ? 'Admin Management' : 'Payments' }}</h1>
+    <hr>
+    
+    @if (activeTab === 'admin-management') {
+      <app-admin-management></app-admin-management>
+    }
   
-      @if (activeTab === 'payments') {
-        <app-payments></app-payments>
-
-      }
-    </main>
-  </div>
-  
+    @if (activeTab === 'payments') {
+      <app-payments></app-payments>
+    }
+  </main>
+</div>
