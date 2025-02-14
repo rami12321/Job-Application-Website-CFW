@@ -163,7 +163,7 @@ class Youth extends Model<YouthAttributes, YouthCreationAttributes> implements Y
 
   public status!: 'accepted' | 'rejected' | 'pending' | 'waiting';
   public notes?: string;
-  public   appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
+  public  appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
 
   public beneficiary?: boolean;
   public workStatus?: boolean;
@@ -348,15 +348,15 @@ Youth.init(
     },
     isPrcsVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     isFireBrigadesVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     isAlShifaaVolunteer: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
 
     // Experience Details

@@ -2,8 +2,8 @@ import { Router } from 'express';
 import {
   generateVerificationCode,
   getAllCodes,
-  deleteCode,
-  readFile
+  deleteCode
+
 } from '../controllers/VerificationCodeController';
 
 const router: Router = Router();
