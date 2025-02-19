@@ -143,11 +143,11 @@
     <label for="area">Area*</label>
     <select id="area" formControlName="area" class="form-select border-gray-400 rounded-md text-sm py-2 h-9 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       <option value="" disabled>Select an Area</option>
-      <option value="North Lebanon Area">North Lebanon Area</option>
-      <option value="Central Lebanon Area">Central Lebanon Area</option>
-      <option value="Beqaa Area">Beqaa Area</option>
-      <option value="Saida Area">Saida Area</option>
-      <option value="Tyre Area">Tyre Area</option>
+      <option value="North Lebanon">North Lebanon</option>
+      <option value="Beirut and Mount Lebanon">Beirut and Mount Lebanon</option>
+      <option value="Beqaa">Beqaa Area</option>
+      <option value="Saida">Saida Area</option>
+      <option value="Tyre">Tyre Area</option>
     </select>
     <p *ngIf="signupForm.get('area')?.invalid && signupForm.get('area')?.touched" class="text-red-600 text-sm mt-2">
       Area selection is required.

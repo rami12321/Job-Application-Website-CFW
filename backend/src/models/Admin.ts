@@ -1,3 +1,4 @@
+// src/models/Admin.ts
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../config/database';
 
@@ -12,9 +13,10 @@ interface AdminAttributes {
   area: string;
   phoneNumber: string;
   role: 'admin';
+  password?: string; // Optional password field
 }
 
-interface AdminCreationAttributes extends Optional<AdminAttributes, 'id'> {}
+interface AdminCreationAttributes extends Optional<AdminAttributes, 'id' | 'password'> {}
 
 class Admin extends Model<AdminAttributes, AdminCreationAttributes> implements AdminAttributes {
   public id!: string;
@@ -27,6 +29,7 @@ class Admin extends Model<AdminAttributes, AdminCreationAttributes> implements A
   public area!: string;
   public phoneNumber!: string;
   public role!: 'admin';
+  public password?: string;
 
   // timestamps
   public readonly createdAt!: Date;
@@ -77,8 +80,12 @@ Admin.init(
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'admin'
-    }
+      defaultValue: 'admin',
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: true, // Initially no password
+    },
   },
   {
     sequelize,

@@ -1,3 +1,7 @@
+<header class="w-full bg-gray-700 text-white p-4">
+  Welcome, {{ adminName }}!
+</header>
+
 <div class="w-full h-full flex flex-col lg:flex-row">
   <!-- Sidebar -->
   <aside class="w-full lg:w-1/6 bg-gray-800 text-white p-4 lg:min-h-screen">
@@ -132,16 +136,17 @@
 
       <!-- Youth Tab Content -->
       <div *ngIf="activeYouthTab === 'accepted'">
-        <app-youth-table class="p-10" [status]="'accepted'"></app-youth-table>
+        <app-youth-table class="p-10" [status]="'accepted'" [region]="adminArea">
+          ></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'rejected'">
-        <app-youth-table class="p-10" [status]="'rejected'"></app-youth-table>
+        <app-youth-table class="p-10" [status]="'rejected'" [region]="adminArea"></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'pending'">
-        <app-youth-table class="p-10" [status]="'pending'"></app-youth-table>
+        <app-youth-table class="p-10" [status]="'pending'" [region]="adminArea"></app-youth-table>
       </div>
       <div *ngIf="activeYouthTab === 'waiting'">
-        <app-youth-table class="p-10" [status]="'waiting'"></app-youth-table>
+        <app-youth-table class="p-10" [status]="'waiting'" [region]="adminArea"></app-youth-table>
       </div>
     </div>
 
@@ -182,16 +187,16 @@
       </div>
 
       <div *ngIf="activeYouthTab1 === 'waiting-E'">
-        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'waiting-E'"></app-job-request-table>
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'waiting-E'" [region]="adminArea"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'assigned'">
-        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'assigned'"></app-job-request-table>
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'assigned'" [region]="adminArea"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'in-progress'">
-        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'in-progress'"></app-job-request-table>
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'in-progress'" [region]="adminArea"></app-job-request-table>
       </div>
       <div *ngIf="activeYouthTab1 === 'completed'">
-        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'completed'"></app-job-request-table>
+        <app-job-request-table [fetchedData]="'job-request'" class="p-10" [status]="'completed'" [region]="adminArea"></app-job-request-table>
       </div>
     </div>
     <!-- Employer Tab -->
@@ -225,10 +230,10 @@
       </div>
 
       <div *ngIf="activeEmployerTab === 'active'">
-        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="true"></app-employer-table>
+        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="true" [region]="adminArea"></app-employer-table>
       </div>
       <div *ngIf="activeEmployerTab === 'inactive'">
-        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="false"></app-employer-table>
+        <app-employer-table class="p-10" [fetchedData]="'employer'" [active]="false" [region]="adminArea"></app-employer-table>
       </div>
         <!-- <app-smart-table class="p-10" [fetchedData]="'employer'" /> -->
 

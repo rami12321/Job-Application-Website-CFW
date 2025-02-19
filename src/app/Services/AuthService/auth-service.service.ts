@@ -7,53 +7,50 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private youthUrl = 'http://localhost:3000/youth'; // Path to Youth JSON data
-  private employerUrl = 'http://localhost:3000/employer/employer'; // Path to Employer JSON data
+  private youthUrl = 'http://localhost:3000/youth'; // Youth endpoint
+  private employerUrl = 'http://localhost:3000/employer/employer'; // Employer endpoint
+  private adminUrl = 'http://localhost:3000/admin'; // Admin endpoint
 
   constructor(private http: HttpClient) {}
-
   login(username: string, password: string, role: string): Observable<any> {
     let loginUrl = '';
-
+  
     if (role.toLowerCase() === 'employer') {
       loginUrl = this.employerUrl;
     } else if (role.toLowerCase() === 'youth') {
       loginUrl = this.youthUrl;
+    } else if (role.toLowerCase() === 'admin') {
+      loginUrl = this.adminUrl;
     } else {
-      // Invalid role
-      role = 'admin';    }
-
+      loginUrl = this.youthUrl;
+    }
+  
     return this.http.get<any[]>(loginUrl).pipe(
       map((users) => {
-        console.log(`Fetched users from ${loginUrl}:`, users); // Debugging
-
-        // Find the user matching both username and password
-        const user = users.find(
-          (u) =>
-            u.username.toLowerCase() === username.toLowerCase() &&
+        const user = users.find((u) => {
+          const userIdentifier = u.personalEmail || u.username;
+          return (
+            userIdentifier?.toLowerCase() === username.toLowerCase() &&
             u.password === password
-        );
-
+          );
+        });
+  
         if (user) {
-          // Save authentication details in localStorage
-          if(user.role=='Employer'){
-          localStorage.setItem('firstName', user.fullNameEnglish);
-          localStorage.setItem('role', user.role);
-          }else{
-
-            localStorage.setItem('firstName', user.firstNameEn); // Store first name
-            localStorage.setItem('lastName', user.lastNameEn); // Store last name
+          const userRole = user.role || role; // Ensure role is not undefined
+          localStorage.setItem('authenticated', 'true');
+          localStorage.setItem('role', userRole);
+          localStorage.setItem('userId', user.id.toString());
+  
+          if (userRole === 'Employer') {
+            localStorage.setItem('firstName', user.fullNameEnglish);
+          } else if (userRole === 'Youth') {
+            localStorage.setItem('firstName', user.firstNameEn || '');
+            localStorage.setItem('lastName', user.lastNameEn || '');
           }
-          localStorage.setItem('authenticated', 'true'); // Store authentication status
-          localStorage.setItem('role', user.role); // Store role
-          localStorage.setItem('status', user.status); // Store role
-          localStorage.setItem('notes', user.notes); // Store role
-          localStorage.setItem('userId', user.id.toString()); // Store user ID
-
-          // Return success response
-          return { success: true, role: user.role, id: user.id };
+  
+          return { success: true, role: userRole, admin: user };
         } else {
-          return { success: false, message: `Invalid credentials for this ${role}` };
+          return { success: false, message: `Invalid credentials for ${role}` };
         }
       }),
       catchError((error) => {
@@ -62,8 +59,45 @@ export class AuthService {
       })
     );
   }
-
   
+  // Check if an admin exists by email and that they have no password yet.
+  checkAdminEmail(email: string): Observable<any> {
+    return this.http.get<any[]>(this.adminUrl).pipe(
+      map((admins) => {
+        const admin = admins.find(
+          (a) => a.personalEmail.toLowerCase() === email.toLowerCase()
+        );
+        if (admin) {
+          if (!admin.password || admin.password === '') {
+            return { exists: true, admin };
+          } else {
+            return { exists: true, admin, alreadyHasPassword: true };
+          }
+        }
+        return { exists: false };
+      }),
+      catchError((error) => {
+        console.error('Error checking admin email:', error);
+        return of({ exists: false, message: 'Error checking admin email' });
+      })
+    );
+  }
+
+  // Update the admin record with a new password.
+  setAdminPassword(adminId: string, password: string): Observable<any> {
+    const url = `${this.adminUrl}/${adminId}`;
+    const updateData = { password };
+    return this.http.put(url, updateData).pipe(
+      map((response) => {
+        return { success: true, response };
+      }),
+      catchError((error) => {
+        console.error('Error setting admin password:', error);
+        return of({ success: false, message: 'Error setting admin password' });
+      })
+    );
+  }
+
   logout(): void {
     // Clear all authentication-related data from localStorage
     localStorage.removeItem('authenticated');
@@ -73,7 +107,6 @@ export class AuthService {
     localStorage.removeItem('status');
     localStorage.removeItem('notes');
     localStorage.removeItem('userId');
-
   }
 
   isAuthenticated(): boolean {

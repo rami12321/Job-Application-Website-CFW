@@ -22,7 +22,8 @@ export class MainAdminComponent implements OnInit, OnDestroy {
   @Input() status: string | undefined;
   showModal: boolean = false;  // Controls the visibility of the modal
 
-
+  adminName: string = '';
+  adminArea: string = '';
   activeTab: string = 'dashboard';
   activeYouthTab: string = 'waiting';
   activeYouthTab1: string = 'waiting-E';
@@ -84,7 +85,9 @@ export class MainAdminComponent implements OnInit, OnDestroy {
     return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
   }
   ngOnInit() {
-    // Load saved tab states from localStorage on initialization
+    this.adminName = localStorage.getItem('adminName') || 'Admin';
+    this.adminArea = localStorage.getItem('adminArea') || '';
+    console.log('Admin area from localStorage:', this.adminArea); 
     const savedTab = localStorage.getItem('activeTab');
     const savedYouthTab = localStorage.getItem('activeYouthTab');
     const savedYouthTab1 = localStorage.getItem('activeYouthTab1');

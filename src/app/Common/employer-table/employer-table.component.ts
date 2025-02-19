@@ -51,6 +51,8 @@ interface Column {
 
 export class EmployerTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() region: string = '';
+
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
@@ -161,7 +163,8 @@ export class EmployerTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
     this.setActiveTabFromLocalStorage();
-
+    this.region = localStorage.getItem('adminArea') || ''; 
+    console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
@@ -382,7 +385,14 @@ export class EmployerTableComponent implements OnInit {
         let filteredData = this.active !== undefined
           ? data.filter((item) => item.active === this.active)
           : data;
-
+          if (this.region && this.region.trim() !== '') {
+            filteredData = filteredData.filter((item) => {
+              return item.area && item.area.toLowerCase() === this.region.toLowerCase();
+            });
+          } else {
+            console.log("No region filtering applied; region is empty or undefined.");
+          }
+  
           filteredData = filteredData.filter((item) => {
             const matchesArea =
               this.selectedAreas.length === 0 ||
