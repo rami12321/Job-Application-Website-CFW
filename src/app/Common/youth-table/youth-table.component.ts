@@ -53,6 +53,8 @@ interface Column {
 
 export class YouthTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() region: string = '';
+
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
@@ -163,15 +165,17 @@ export class YouthTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
     this.setActiveTabFromLocalStorage();
-
+    this.region = localStorage.getItem('adminArea') || ''; 
+    console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
+
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
     } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
     } else {
       this.fetchYouthData();
-    }
+    }    
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -205,13 +209,14 @@ export class YouthTableComponent implements OnInit {
   }
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
+
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
     } else if (this.fetchedData == 'job-request') {
       this.fetchJobRequests();
     } else {
       this.fetchYouthData();
-    }
+    }    
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -246,25 +251,32 @@ export class YouthTableComponent implements OnInit {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
-
-
-        this.allProducts = data; // Assign the data only if it's an array
-
-        // Map appliedJobText for filtering and display
+  
+        // Save all data for use in filters
+        this.allProducts = data;
+  
         this.youthList = data.map((item) => ({
           ...item,
           appliedJobText: Array.isArray(item.appliedJob)
             ? item.appliedJob.map((job: any) => job.job || '').join(', ')
-            : '', // Combine all job.job values into a single string or default to an empty string
+            : '',
         }));
         console.log('Processed Youth List:', this.youthList);
-
+  
         // Step 1: Filter by `status` if provided
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
-
-        // Step 2: Apply filters for gender, major, area, and appliedJobText
+  
+          if (this.region && this.region.trim() !== '') {
+            filteredData = filteredData.filter((item) => {
+              return item.area && item.area.toLowerCase() === this.region.toLowerCase();
+            });
+          } else {
+            console.log("No region filtering applied; region is empty or undefined.");
+          }
+  
+        // Step 2: Apply other filters for gender, major, area, education levels, etc.
         filteredData = filteredData.filter((item) => {
           const matchesGender =
             this.selectedGender.length === 0 ||
@@ -282,21 +294,19 @@ export class YouthTableComponent implements OnInit {
             this.selectedNationalities.length === 0 ||
             this.selectedNationalities.includes(item.nationality);
           const matchesIsEdited =
-            this.selectedIsEdited === null || // Check if null for all
+            this.selectedIsEdited === null ||
             this.selectedIsEdited.length === 0 ||
             item.isEdited === this.selectedIsEdited;
           const matchesIsBeneficiary =
-            this.selectedIsBeneficiary === null || // Check if null for all
+            this.selectedIsBeneficiary === null ||
             this.selectedIsBeneficiary.length === 0 ||
             item.beneficiary === this.selectedIsBeneficiary;
-
-          // Updated logic for matchesAppliedJob
           const matchesAppliedJob =
-            !this.appliedJobFilter || // Check if the applied job filter is empty
+            !this.appliedJobFilter ||
             (item.appliedJob || []).some((job: any) =>
               (job.job || '').toLowerCase().includes(this.appliedJobFilter.toLowerCase())
             );
-
+  
           return (
             matchesGender &&
             matchesMajor &&
@@ -308,18 +318,17 @@ export class YouthTableComponent implements OnInit {
             matchesAppliedJob
           );
         });
-
-        // Step 3: Configure columns dynamically if filtered data is available
+  
+        // Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           const filteredColumns = Object.keys(filteredData[0]).filter(
             (key) => !this.excludedColumns.includes(key)
           );
-
           this.cols = filteredColumns.map((key) => ({
             field: key,
             header: this.capitalize(key),
           }));
-
+  
           const savedColumns = localStorage.getItem('selectedColumns');
           if (savedColumns) {
             this._selectedColumns = JSON.parse(savedColumns);
@@ -328,26 +337,20 @@ export class YouthTableComponent implements OnInit {
             this._selectedColumns = this.cols;
             this.cols = [...this._selectedColumns];
           }
-
-          if (this.savedColumns) {
-            this.savedColumns = this.cols;
-          } else {
-            this._selectedColumns = this.cols;
-          }
         }
-
-        // Step 4: Update youth list and paginated products
+  
+        // Update the youth list and pagination
         this.youthList = filteredData;
         this.filteredData = [...this.youthList];
         this.paginatedProducts = this.youthList;
         console.log(this.paginatedProducts.length);
-
       },
       (error) => {
         console.error('Error fetching youth data:', error);
       }
     );
   }
+  
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input
     this.fetchYouthData(); // Reload the data without the filter

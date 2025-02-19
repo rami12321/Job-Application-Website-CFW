@@ -9,5 +9,7 @@ export interface Admin {
     area: string;
     phoneNumber: string;
     role: string; 
+    password?: string; // Optional password field
+
   }
   

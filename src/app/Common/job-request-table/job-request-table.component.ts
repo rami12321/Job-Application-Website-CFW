@@ -55,6 +55,8 @@ interface Column {
 })
 export class JobRequestTableComponent implements OnInit {
   @Input() status: string | undefined;
+  @Input() region: string = '';
+
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
@@ -165,7 +167,8 @@ export class JobRequestTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
     this.setActiveTabFromLocalStorage();
-
+    this.region = localStorage.getItem('adminArea') || ''; 
+    console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
     if (this.fetchedData == 'employer') {
       this.fetchEmployerData();
@@ -458,6 +461,13 @@ export class JobRequestTableComponent implements OnInit {
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
+          if (this.region && this.region.trim() !== '') {
+            filteredData = filteredData.filter((item) => {
+              return item.area && item.area.toLowerCase() === this.region.toLowerCase();
+            });
+          } else {
+            console.log("No region filtering applied; region is empty or undefined.");
+          }
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           // Exclude unwanted columns
