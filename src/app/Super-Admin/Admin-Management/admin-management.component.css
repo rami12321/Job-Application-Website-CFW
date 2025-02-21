@@ -1,0 +1,35 @@
+/* Override any fixed height or vertical overflow on the table container */
+app-admin-table,
+app-admin-table .table-container {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+.custom-admin-dialog .p-dialog-content {
+  padding: 0 !important; 
+  margin: 0 !important;
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.custom-admin-dialog .p-dialog {
+  display: flex;
+  padding: 0 !important; /* Remove padding inside the dialog */
+  margin: 0 !important;
+  flex-direction: column;
+  height: 80vh !important; /* Ensure it matches dialog height */
+  width: 80vw !important;
+}
+
+.custom-admin-dialog .p-dialog-header {
+  display: none !important; /* Completely remove the header */
+}
+
+
+.input-field {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+           focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+           dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white;
+  }
+  

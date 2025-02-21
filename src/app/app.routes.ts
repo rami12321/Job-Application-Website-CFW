@@ -13,6 +13,9 @@ import { JobRequestComponent } from './Employer/JobRequestEdit/job-request.compo
 import { JobRequestDetailsComponent } from './Employer/JobRequestDetails/job-request-details.component';
 import { candeactivateAdminGuard } from './guards/candeactivate-admin.guard';
 import { HomeComponent } from './Common/home/home.component';
+import { SuperAdminComponent } from './Super-Admin/Main-Super-Admin/super-admin.component';
+import { AdminLoginComponent } from './Common/admin-login/admin-login.component';
+import { AdminFirstTimeComponent } from './Common/admin-first-time/admin-first-time.component';
 
 export const routes: Routes = [
   {
@@ -44,6 +47,14 @@ export const routes: Routes = [
   {
     path: 'job-request-details',
     component: JobRequestDetailsComponent,
+  },
+  { path: 'admin-first-time', component: AdminFirstTimeComponent },
+
+  { path: 'admin-login', component: AdminLoginComponent },
+
+  {
+    path: 'super-admin',
+    component: SuperAdminComponent,
   },
   {
     path: 'main-employer',

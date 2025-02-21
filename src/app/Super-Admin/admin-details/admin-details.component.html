@@ -1,0 +1,132 @@
+<div class="responsive-container">
+        <h3 class="text-xl font-semibold text-[#1e90ff] mb-4">
+            
+            Admin Profile
+        </h3>
+      <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
+        <div class="grid grid-cols-2 gap-6 mt-4">
+          <!-- ID (Read-only) -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              ID:
+            </strong>
+            <span class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.id }}
+            </span>
+          </p>
+  
+          <!-- Full Name (English) -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Full Name (English):
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.fullNameEnglish }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.fullNameEnglish"
+              type="text"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+  
+          <!-- Full Name (Arabic) -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Full Name (Arabic):
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.fullNameArabic }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.fullNameArabic"
+              type="text"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+  
+          <!-- Personal Email -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Personal Email:
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.personalEmail }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.personalEmail"
+              type="email"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+  
+          <!-- Organization Email -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Organization Email:
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.organizationEmail }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.organizationEmail"
+              type="email"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+  
+          <!-- Role -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Role:
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.role }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.role"
+              type="text"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+  
+          <!-- Phone Number -->
+          <p>
+            <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">
+              Phone Number:
+            </strong>
+            <span *ngIf="!isEditing" class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
+              {{ admin?.phoneNumber }}
+            </span>
+            <input
+              *ngIf="isEditing"
+              [(ngModel)]="editModel.phoneNumber"
+              type="text"
+              class="form-input max-w-xs block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700"
+            />
+          </p>
+          <!-- Add more fields here if needed -->
+        </div>
+  
+        <!-- Action Buttons -->
+        <div class="flex justify-end mt-4">
+          <button *ngIf="!isEditing" (click)="startEditing()" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+            Edit
+          </button>
+          <div *ngIf="isEditing">
+            <button (click)="saveChanges()" class="px-4 py-2 bg-green-500 text-white rounded-md shadow hover:bg-green-600 mr-2">
+              Save
+            </button>
+            <button (click)="cancelEditing()" class="px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-red-600">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  

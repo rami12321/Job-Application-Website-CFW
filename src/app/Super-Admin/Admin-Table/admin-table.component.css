@@ -1,0 +1,97 @@
+/* Column Filter Input */
+::ng-deep p-columnfilter input {
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: none;
+  }
+  
+  /* MultiSelect Panel */
+  ::ng-deep .p-multiselect-panel {
+    position: absolute !important;
+    z-index: 1050 !important;
+    max-height: 300px;
+    overflow-y: hidden;
+    width: 100%;
+  }
+  
+  ::ng-deep .p-multiselect-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  ::ng-deep .p-multiselect-item:hover {
+    background-color: #e0f7fa;
+  }
+  
+  /* PrimeNG Table & Wrapper */
+  ::ng-deep p-table {
+    overflow: hidden; /* Prevent table overflow outside its container */
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  ::ng-deep .p-table-wrapper {
+    overflow: hidden !important;
+  }
+  
+  /* Override the internal scrollable body to remove vertical scrollbar */
+  ::ng-deep .p-datatable-scrollable-body {
+    overflow-y: hidden !important;
+  }
+  
+  /* Parent Container */
+  .parent-container {
+    position: relative !important;
+  }
+  
+  /* Dialog Header/Content/Footer */
+  :host ::ng-deep .p-dialog .p-dialog-header,
+  :host ::ng-deep .p-dialog .p-dialog-content,
+  :host ::ng-deep .p-dialog .p-dialog-footer {
+    padding: 0 !important;
+  }
+  
+  /* Youth Dialog (if applicable) */
+  :host ::ng-deep .youth .p-dialog .p-dialog-header,
+  :host ::ng-deep .youth .p-dialog .p-dialog-content,
+  :host ::ng-deep .youth .p-dialog .p-dialog-footer {
+    padding: 15px !important;
+  }
+  
+  /* Responsive Table Container */
+  .table-container {
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding: 0 10px;
+  }
+  
+  /* Optional: No Data Message Styling */
+  .no-data-message {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Media Query for Mobile Responsiveness */
+  @media (max-width: 768px) {
+    ::ng-deep p-table {
+      width: 100% !important;
+    }
+    
+    .p-table-wrapper {
+      overflow-x: auto;
+    }
+    
+    ::ng-deep p-columnfilter input {
+      padding: 6px;
+      font-size: 14px;
+    }
+    
+    ::ng-deep .p-multiselect-panel {
+      width: 100%;
+      max-width: 100% !important;
+    }
+  }
+  
