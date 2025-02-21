@@ -74,6 +74,7 @@ interface YouthAttributes {
   prcsProof?: string;
   fireProof?: string;
   alShifaaProof?: string;
+  
   confirmation: string;
 
   status: 'accepted' | 'rejected' | 'pending' | 'waiting';
@@ -158,6 +159,7 @@ class Youth extends Model<YouthAttributes, YouthCreationAttributes> implements Y
   public degree!: string;
   public prcsProof?: string;
   public fireProof?: string;
+
   public alShifaaProof?: string;
   public confirmation!: string;
 

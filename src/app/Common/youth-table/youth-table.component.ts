@@ -75,9 +75,9 @@ export class YouthTableComponent implements OnInit {
   employerDialogVisible = false;
   jobRequestDialogVisible = false;
   youthSignupDialogVisible = false;
-  cols: Column[] = [];
   _selectedColumns: Column[] = [];
-  savedColumns: Column[] = [];
+  cols: any[] = [];
+  savedColumns: any[] = [];
   paginatedProducts: any[] = [];
   rowsPerPage = 10;
   jobs: Job[] = [];
@@ -96,7 +96,12 @@ export class YouthTableComponent implements OnInit {
   selectedIsBeneficiary: string[] = [];
   allProducts: any[] = []; // Array to hold all data
   appliedJobFilter: string = '';
-
+  dataScopeOptions = [
+    { label: 'My Area Data', value: 'myArea' },
+    { label: 'All Data', value: 'all' }
+  ];
+  
+  selectedDataScope = 'myArea';
   excludedColumns: string[] = [
     'workStatus',
     'active',
@@ -268,12 +273,15 @@ export class YouthTableComponent implements OnInit {
           ? data.filter((item) => item.status === this.status)
           : data;
   
-          if (this.region && this.region.trim() !== '') {
+          if (this.selectedDataScope === 'myArea' && this.region && this.region.trim() !== '') {
             filteredData = filteredData.filter((item) => {
-              return item.area && item.area.toLowerCase() === this.region.toLowerCase();
+              return (
+                item.area &&
+                item.area.toLowerCase() === this.region.toLowerCase()
+              );
             });
-          } else {
-            console.log("No region filtering applied; region is empty or undefined.");
+          } else if (this.selectedDataScope === 'all') {
+            console.log('Admin selected to view all data. No region filtering applied.');
           }
   
         // Step 2: Apply other filters for gender, major, area, education levels, etc.
@@ -329,27 +337,39 @@ export class YouthTableComponent implements OnInit {
             header: this.capitalize(key),
           }));
   
+          // 1) Also set savedColumns so your <p-multiSelect [options]="savedColumns"> has something to show
+          this.savedColumns = [...this.cols];
+          console.log('Populated savedColumns:', this.savedColumns);
+  
+          // 2) Check local storage for previously selected columns
           const savedColumns = localStorage.getItem('selectedColumns');
           if (savedColumns) {
             this._selectedColumns = JSON.parse(savedColumns);
+            // Overwrite cols with whatever was stored
             this.cols = [...this._selectedColumns];
+            console.log('Using columns from local storage:', this.cols);
           } else {
             this._selectedColumns = this.cols;
             this.cols = [...this._selectedColumns];
           }
+        } else {
+          // If there's no data, you might clear out the columns
+          this.cols = [];
+          this.savedColumns = [];
         }
   
         // Update the youth list and pagination
         this.youthList = filteredData;
         this.filteredData = [...this.youthList];
         this.paginatedProducts = this.youthList;
-        console.log(this.paginatedProducts.length);
+        console.log('Final paginatedProducts length:', this.paginatedProducts.length);
       },
       (error) => {
         console.error('Error fetching youth data:', error);
       }
     );
   }
+  
   
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input

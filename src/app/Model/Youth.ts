@@ -77,6 +77,7 @@ export interface Youth {
   prcsProof?: string;
   fireProof?: string;
   alShifaaProof?: string;
+  
   confirmation: string;
   status: 'accepted' | 'rejected' | 'pending';
   notes?:string;

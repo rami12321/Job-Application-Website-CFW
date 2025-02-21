@@ -30,6 +30,37 @@
         placeholder="Choose Columns"
         (onChange)="saveSelectedColumnsToLocalStorage()"
       ></p-multiSelect>
+      <p-dropdown
+      [options]="[
+        { label: 'My Area', value: 'myArea' },
+        { label: 'All Areas', value: 'all' }
+      ]"
+      [(ngModel)]="selectedDataScope"
+      (onChange)="fetchYouthData()"
+      placeholder="Filter by Area"
+      class="w-40 text-gray-800 text-sm ml-2 px-5 py-2 rounded"
+      [style]="{
+        background: 'white',
+        border: '1px solid #ccc',
+        'border-radius': '6px',
+        'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.08)',
+        
+      }"
+    >
+      <ng-template pTemplate="selectedItem" let-item>
+        <div class="flex items-center space-x-2">
+          <i class="pi pi-map-marker text-blue-500"></i>
+          <span class="font-medium">{{ item.label }}</span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="item" let-item>
+        <div class="flex items-center space-x-2 hover:bg-gray-100 p-2 rounded transition">
+          <i class="pi pi-map-marker text-gray-500"></i>
+          <span>{{ item.label }}</span>
+        </div>
+      </ng-template>
+    </p-dropdown>
+    
       <button
         (click)="resetSelectedColumns()"
         class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
@@ -303,7 +334,6 @@
   </p-table>
 </div>
 
-<!-- Youth Signup Details Dialog (declared only once) -->
 <p-dialog
   [(visible)]="youthSignupDialogVisible"
   [style]="{ width: '85vw', height: '90vh', padding: '0' }"
@@ -315,69 +345,6 @@
   ></app-youthsignup-details>
 </p-dialog>
 
-<!-- Assigned Youth Dialog -->
-<p-dialog
-  [(visible)]="assignedYouthDialogVisible"
-  [modal]="true"
-  [style]="{ width: '500px', height: '600px' }"
-  class="p-0 rounded-lg shadow-xl overflow-hidden"
->
-  <div class="p-6 bg-white rounded-lg flex flex-col h-full">
-    <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">
-      Assigned Youths
-    </h2>
-    <div *ngIf="assignedYouths.length > 0" class="space-y-4">
-      <ul>
-        <li
-          *ngFor="let youth of assignedYouths"
-          class="flex justify-between mb-3 items-center p-3 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 transition"
-        >
-          <span class="text-gray-700 font-medium">- {{ youth.label }}</span>
-          <button
-            pButton
-            class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md shadow-sm"
-            (click)="unassignYouth(selectedJob, youth.id)"
-          >
-            Unassign
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="unassignedYouths.length > 0" class="mt-6">
-      <h2 class="text-xl font-semibold text-gray-800 border-b pb-3 mb-4">
-        Assign More Youths
-      </h2>
-      <p-multiSelect
-        [options]="unassignedYouths"
-        [(ngModel)]="selectedYouths"
-        optionLabel="label"
-        dataKey="id"
-        placeholder="Select Youths"
-        styleClass="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-cyan-500"
-      ></p-multiSelect>
-    </div>
-    <p *ngIf="unassignedYouths.length === 0" class="text-center mt-6 text-gray-500 font-medium">
-      No more youth available to assign.
-    </p>
-    <div class="mt-auto pt-6 flex justify-end gap-4 border-t border-gray-300">
-      <button
-        pButton
-        class="bg-cyan-600 hover:bg-cyan-500 text-white py-2 px-4 rounded-md shadow-md"
-        [disabled]="unassignedYouths.length === 0"
-        (click)="assignYouthsToJob()"
-      >
-        Assign
-      </button>
-      <button
-        pButton
-        class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md shadow-md"
-        (click)="assignedYouthDialogVisible = false"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-</p-dialog>
 
 <!-- Note Dialog -->
 <p-dialog
