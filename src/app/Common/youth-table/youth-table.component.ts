@@ -622,17 +622,14 @@ export class YouthTableComponent implements OnInit {
   dialogVisible: boolean = false; // To show/hide the dialog
   noteDialogVisible: boolean = false; // To show/hide the dialog
   noYouthMessage: string = '';
-
   selectedYouthId: number | null = null;
-  showDialog(youthId: number, activeTab: string): void {
-    this.selectedYouthId = youthId;
-
-    // Reset all dialog visibility states
+  showDialog(id: number, activeTab: string): void {
+    this.selectedYouthId = id;
+    // Reset all dialog visibility flags
     this.employerDialogVisible = false;
     this.jobRequestDialogVisible = false;
     this.youthSignupDialogVisible = false;
-
-    // Show the appropriate dialog based on the active tab
+    
     switch (activeTab) {
       case 'employer':
         this.employerDialogVisible = true;
@@ -645,10 +642,11 @@ export class YouthTableComponent implements OnInit {
         break;
     }
   }
-
+  
   clearSelectedYouthId(): void {
-    this.selectedYouthId = null; // Reset when dialog is closed
+    this.selectedYouthId = null;
   }
+  
 
   updateNotes(youthId: any, newNotes: string): void {
     // Check if new notes are not empty
