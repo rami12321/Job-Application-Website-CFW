@@ -65,7 +65,7 @@ getAllJobRequests(): Observable<Job[]> {
   }
 getAssignedYouthsByJobId(id: any): Observable<AssignedYouth[]> {
   const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
-  return this.http.get<AssignedYouth[]>(url); 
+  return this.http.get<AssignedYouth[]>(url);
 }
 
 

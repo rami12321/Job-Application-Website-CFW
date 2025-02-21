@@ -5,11 +5,30 @@ import Youth from '../models/youth'; // Import the Youth model
 export const getAllYouth = async (req: Request, res: Response): Promise<void> => {
   try {
     const youths = await Youth.findAll();
-    res.status(200).json(youths);
+
+    // Ensure appliedJob is correctly parsed
+    const formattedYouthData = youths.map((youth) => {
+      // Check if appliedJob is a string and parse it, otherwise leave it as an array
+      let appliedJob = [];
+      if (typeof youth.appliedJob === 'string') {
+        appliedJob = JSON.parse(youth.appliedJob); // Parse the stringified array
+      } else if (Array.isArray(youth.appliedJob)) {
+        appliedJob = youth.appliedJob; // If it's already an array, use it directly
+      }
+
+      return {
+        ...youth.toJSON(),
+        appliedJob, // Add the correctly parsed appliedJob
+      };
+    });
+
+    res.status(200).json(formattedYouthData);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching youths', error });
   }
 };
+
+
 
 // Create a new youth
 export const createYouth = async (req: Request, res: Response): Promise<void> => {
@@ -60,11 +79,24 @@ export const getYouthById = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    res.status(200).json(youth);
+    // Ensure appliedJob is correctly parsed if it's a stringified array
+    let appliedJob = [];
+    if (typeof youth.appliedJob === 'string') {
+      appliedJob = JSON.parse(youth.appliedJob);  // Parse the stringified array
+    } else if (Array.isArray(youth.appliedJob)) {
+      appliedJob = youth.appliedJob;  // If it's already an array, use it directly
+    }
+
+    // Return the youth data with correctly formatted appliedJob
+    res.status(200).json({
+      ...youth.toJSON(),
+      appliedJob,  // Add the correctly parsed appliedJob
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching youth', error });
   }
 };
+
 
 // Delete youth by ID
 export const deleteYouth = async (req: Request, res: Response): Promise<void> => {
@@ -189,6 +221,7 @@ export const updateAppliedJob = async (req: Request, res: Response): Promise<voi
       return;
     }
 
+    // Save the appliedJob array directly
     youth.appliedJob = appliedJob;
     await youth.save();
 
@@ -220,22 +253,40 @@ export const checkRegistrationNumber = async (req: Request, res: Response): Prom
 // Get applied jobs by youth ID
 export const getAppliedJobById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const youth = await Youth.findByPk(id);
+    const { job } = req.params; // Extract the job from the URL parameter
 
-    if (!youth) {
-      res.status(404).json({ message: `Youth with ID ${id} not found.` });
+    // Fetch all youths from the database
+    const youths = await Youth.findAll();
+
+    // Filter youths who applied for the specified job
+    const filteredYouths = youths.filter((youth) => {
+      // Initialize appliedJobs to an empty array in case it's null or undefined
+      let appliedJobs = youth.appliedJob || [];
+
+      // If appliedJob is a string, try to parse it into an array
+      if (typeof appliedJobs === 'string') {
+        try {
+          appliedJobs = JSON.parse(appliedJobs); // Parse the string into an array
+        } catch (error) {
+          console.error(`Invalid appliedJob format for youth ${youth.id}:`, appliedJobs);
+          return false; // Skip this youth if parsing fails
+        }
+      }
+
+      // Check if appliedJobs is an array and contains the specified job
+      return Array.isArray(appliedJobs) && appliedJobs.some((appliedJob) => appliedJob.job === job);
+    });
+
+    // If no youths are found, return a 404 response
+    if (filteredYouths.length === 0) {
+      res.status(404).json({ message: `No youths found who applied for job: ${job}.` });
       return;
     }
 
-    if (!youth.appliedJob || youth.appliedJob.length === 0) {
-      res.status(404).json({ message: `No applied jobs found for youth with ID ${id}.` });
-      return;
-    }
-
-    res.status(200).json({ appliedJobs: youth.appliedJob });
+    // Return the filtered youths
+    res.status(200).json({ youths: filteredYouths });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching applied jobs', error });
+    res.status(500).json({ message: 'Error fetching youths by applied job', error });
   }
 };
 
@@ -285,21 +336,49 @@ export const getYouthNotesById = async (req: Request, res: Response): Promise<vo
   }
 };
 
-// Get youths by applied job
+// Get youths by applied job 
 export const getYouthByJob = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { appliedJob } = req.params;
+    const { appliedJob } = req.params; // Extract the job from the URL parameter
+
+    // Ensure appliedJob is provided
+    if (!appliedJob) {
+      res.status(400).json({ message: 'Job parameter is missing' });
+      return;
+    }
+
+    // Fetch all youths from the database
     const youths = await Youth.findAll();
 
-    const filteredYouths = youths.filter((y) =>
-      Array.isArray(y.appliedJob) && y.appliedJob.some((jobObj) => jobObj.req === appliedJob)
-    );
+    // Filter youths directly using appliedJob as an array
+    const filteredYouths = youths.filter((y) => {
+      // If appliedJob is not an array or not valid, skip this youth
+      let appliedJobs = y.appliedJob;
+
+      if (typeof appliedJobs === 'string') {
+        try {
+          appliedJobs = JSON.parse(appliedJobs); // Parse string into an array if necessary
+        } catch (error) {
+          console.error(`Invalid appliedJob format for youth ${y.id}:`, appliedJobs);
+          return false; // Skip this youth if parsing fails
+        }
+      }
+
+      if (!Array.isArray(appliedJobs)) {
+        console.error(`Invalid appliedJob format for youth ${y.id}`);
+        return false; // Skip if appliedJob is not an array
+      }
+
+      // Check if any job in appliedJobs matches the requested appliedJob
+      return appliedJobs.some((jobObj) => jobObj.job === appliedJob);
+    });
 
     if (filteredYouths.length === 0) {
       res.status(200).json({ message: `No youths found who applied for job: ${appliedJob}.` });
       return;
     }
 
+    // Format the result to include relevant details for each youth
     const result = filteredYouths.map((y) => ({
       id: y.id,
       name: `${y.firstNameEn} ${y.lastNameEn}` || 'Unknown',
@@ -308,6 +387,7 @@ export const getYouthByJob = async (req: Request, res: Response): Promise<void> 
       workStatus: y.workStatus || false,
     }));
 
+    // Return the filtered and formatted youths in the response
     res.status(200).json({ youths: result });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching youths by job', error });

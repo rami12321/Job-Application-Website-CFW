@@ -167,14 +167,27 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     const youthId = youthIdString ? parseInt(youthIdString, 10) : null;
 
     if (youthId !== null) {
-
       this.youthService.getAppliedJobById(youthId).subscribe(
         (response) => {
-          console.log('Response from API:', response);
+          console.log('Raw API Response (Applied Jobs):', response);
 
-          if (response.appliedJobs && Array.isArray(response.appliedJobs)) {
-            const mappedJobs = response.appliedJobs.map((jobEntry: any, index: number) => ({
-              id: jobEntry.jobRequestId || null,
+          let appliedJobs = response.appliedJobs;
+
+          // Check if response.appliedJobs is a string and parse it
+          if (typeof appliedJobs === 'string') {
+            try {
+              appliedJobs = JSON.parse(appliedJobs);
+            } catch (error) {
+              console.error('Error parsing appliedJobs JSON:', error);
+              appliedJobs = []; // Default to empty array if parsing fails
+            }
+          }
+
+          console.log('Parsed Applied Jobs:', appliedJobs);
+
+          if (Array.isArray(appliedJobs)) {
+            const mappedJobs = appliedJobs.map((jobEntry: any, index: number) => ({
+              id: jobEntry.jobRequestId ?? `temp-${index + 1}`, // Assign a fallback ID
               title: jobEntry.job || `Unknown Job ${index + 1}`,
               req: `REQ-${index + 1}`,
               status: jobEntry.status || 'waiting',
@@ -182,56 +195,14 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             }));
 
             this.activeJobs = mappedJobs.filter(job => job.status === 'waiting' || job.status === 'approved');
-            this.inactiveJobs = mappedJobs.filter(job => job.status === 'rejected' || job.status === 'completed' );
+            this.inactiveJobs = mappedJobs.filter(job => job.status === 'rejected' || job.status === 'completed');
             this.appliedJob = this.activeJobs.find(job => job.status === 'approved') || null;
 
             console.log('Mapped Jobs:', mappedJobs);
             console.log('Active Jobs:', this.activeJobs);
             console.log('Inactive Jobs:', this.inactiveJobs);
-
-
-            if (this.appliedJob && this.appliedJob.id) {
-              
-              this.jobRequestService.getJobById(this.appliedJob.id).subscribe(
-                (jobDetails: Job) => {
-                  console.log('Job Request Details:', jobDetails);
-                  this.selectedJob = jobDetails;
-                  this.detailsselectedJob = jobDetails
-
-                  this.jobRequestService.getAssignedYouthsByJobId(this.appliedJob!.id).subscribe(
-                    (assignedYouths: AssignedYouth[]) => {
-                      console.log('Assigned Youths:', assignedYouths);
-
-
-
-                      const specificAssignedYouth = assignedYouths.find(youth => Number(youth.id) === youthId);
-
-                      console.log('Youth ID from localStorage:', youthId);
-                      console.log('Youth ID from API:', assignedYouths.map(youth => youth.id));
-
-                      if (specificAssignedYouth) {
-                        console.log('Specific Assigned Youth:', specificAssignedYouth);
-                        this.specificAssignedYouth = specificAssignedYouth;
-                        this.startDate = this.specificAssignedYouth?.EmployerContract?.startDate || 'N/A';
-                      } else {
-                        console.warn('No assigned youth found matching the user ID.');
-                        this.specificAssignedYouth = null;
-                      }
-                    },
-                    (error: any) => {
-                      console.error('Error fetching assigned youths:', error);
-                    }
-                  );
-                },
-                (error: any) => {
-                  console.error('Error fetching job request details:', error);
-                }
-              );
-            } else {
-              console.warn('No approved job with a valid jobRequestId found.');
-            }
           } else {
-            console.error('Unexpected appliedJobs format:', response.appliedJobs);
+            console.error('Unexpected appliedJobs format:', appliedJobs);
             this.activeJobs = [];
             this.inactiveJobs = [];
           }
@@ -242,6 +213,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           this.inactiveJobs = [];
         }
       );
+
 
 
       this.youthService.getYouthById(youthId).subscribe(
@@ -282,7 +254,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.isDetailsModalOpen = true;
     this.selectedJob = job;
   }
-  
+
   closeDetailsModal(): void {
     this.isDetailsModalOpen = false;
     this.selectedJob = null;
@@ -321,19 +293,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   deleteSignature(): void {
     this.signatureImage = null;
   }
-  
+
   submitContract() {
     // Ensure all required fields are present before proceeding
     if (
-      !this.specificAssignedYouth || 
-      !this.mobilePhone || 
-      !this.signatureImage || 
+      !this.specificAssignedYouth ||
+      !this.mobilePhone ||
+      !this.signatureImage ||
       !this.isTermsAccepted
     ) {
       console.error('All fields are required to submit the youth contract.');
       return;
     }
-  
+
     // Create the YouthContract object
     const youthContract = {
       mobilePhone: this.mobilePhone,
@@ -341,13 +313,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       signature: this.signatureImage,
       agreementAccepted: this.isTermsAccepted,
     };
-  
+
     // Update the specific assigned youth's YouthContract
     this.specificAssignedYouth = {
       ...this.specificAssignedYouth,
       YouthContract: youthContract,
     };
-  
+
     // Update the assignedYouths in the job request
     if (this.appliedJob && this.appliedJob.id) {
       this.jobRequestService.getAssignedYouthsByJobId(this.appliedJob.id).subscribe(
@@ -356,14 +328,14 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           const validAssignedYouths: AssignedYouth[] = assignedYouths.filter(
             (youth): youth is AssignedYouth => youth !== null
           );
-      
+
           // Check for required values
           if (!this.mobilePhone  || !this.signatureImage || !this.isTermsAccepted) {
             console.error('All fields are required to submit the Youth Contract.');
             alert('Please fill in all required fields.');
             return;
           }
-      
+
           // Map over the valid assigned youths and update the specific one
           const updatedAssignedYouths = validAssignedYouths.map((youth) => {
             if (youth.id === this.specificAssignedYouth!.id) {
@@ -379,7 +351,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             }
             return youth;
           });
-      
+
           // Submit the updated assigned youths array to the job request service
           this.jobRequestService
             .updateJob(this.appliedJob!.id, { assignedYouths: updatedAssignedYouths })
@@ -399,12 +371,12 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           console.error('Error fetching assigned youths:', error);
         }
       );
-      
+
     } else {
       console.error('No valid applied job found to update.');
     }
   }
-  
+
   onAgreementStartDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const date = input.value;
@@ -500,27 +472,24 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   }
   applyForJob() {
     if (this.selectedCategory && this.selectedSubcategory) {
-      console.log(
-        `Applied for ${this.selectedSubcategory} under ${this.selectedCategory}`
-      );
+      console.log(`Applied for ${this.selectedSubcategory} under ${this.selectedCategory}`);
 
       const youthIdString = localStorage.getItem('userId');
       const youthId = youthIdString ? parseInt(youthIdString, 10) : null;
 
       if (youthId) {
-
         const selectedJobs = Array.isArray(this.selectedSubcategory)
           ? this.selectedSubcategory
           : [this.selectedSubcategory];
 
-        const appliedJobs = selectedJobs.map((job: string) => ({
+        // Ensure jobRequestId is included
+        const appliedJobs = selectedJobs.map((job: string, index: number) => ({
           job,
           status: 'waiting',
+          // jobRequestId: `REQ-${Date.now()}-${index + 1}` // Temporary unique ID
         }));
 
-
         console.log('Applied Jobs:', appliedJobs);
-
 
         this.youthService.updateYouthAppliedJobs(youthId, appliedJobs).subscribe({
           next: () => {
@@ -528,23 +497,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             this.updateCategoryJob(youthId, selectedJobs);
             this.showPopup = false;
             window.location.reload();
-
           },
           error: (err) => {
             console.error(`Error updating applied jobs for Youth ID: ${youthId}`, err);
           },
         });
       } else {
-        console.error('Invalid youth ID. ');
+        console.error('Invalid youth ID.');
         alert('Could not retrieve user ID. Please try again.');
       }
     } else {
       alert('Please select a category and a subcategory.');
     }
   }
-
-
-
 
   closePopup() {
     this.showPopup = false;

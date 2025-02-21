@@ -130,9 +130,9 @@ Job.init(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM('pending', 'active', 'completed', 'archived'),
+      type: DataTypes.ENUM('waiting-E', 'assigned', 'in-progress', 'completed'),
       allowNull: false,
-      defaultValue: 'pending',
+      defaultValue: 'waiting-E',
     },
     assignedYouths: {
       type: DataTypes.JSON,
