@@ -148,6 +148,8 @@ export class JobRequestTableComponent implements OnInit {
     'fireProof',
     'prcsProof',
   ];
+  selectedDataScope = 'myArea';
+
   filteredCols: Column[] = []; // New array to hold filtered columns
   private appliedJobFilterSubject = new Subject<string>();
 
@@ -461,12 +463,15 @@ export class JobRequestTableComponent implements OnInit {
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
-          if (this.region && this.region.trim() !== '') {
+          if (this.selectedDataScope === 'myArea' && this.region && this.region.trim() !== '') {
             filteredData = filteredData.filter((item) => {
-              return item.area && item.area.toLowerCase() === this.region.toLowerCase();
+              return (
+                item.area &&
+                item.area.toLowerCase() === this.region.toLowerCase()
+              );
             });
-          } else {
-            console.log("No region filtering applied; region is empty or undefined.");
+          } else if (this.selectedDataScope === 'all') {
+            console.log('Admin selected to view all data. No region filtering applied.');
           }
         // Step 3: Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {

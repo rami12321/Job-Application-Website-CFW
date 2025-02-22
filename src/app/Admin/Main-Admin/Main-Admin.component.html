@@ -1,11 +1,10 @@
-<header class="w-full bg-gray-700 text-white p-4">
-  Welcome, {{ adminName }}!
-</header>
 
 <div class="w-full h-full flex flex-col lg:flex-row">
   <!-- Sidebar -->
   <aside class="w-full lg:w-1/6 bg-gray-800 text-white p-4 lg:min-h-screen">
-    <div class="text-xl font-bold mb-6 lg:mb-12">Admin Panel</div>
+    <div class="text-xl font-bold mb-6 lg:mb-12">{{ adminName }}'s Panel
+    </div>
+
     <nav class="space-y-3">
       <a
         (click)="changeTab('dashboard')"

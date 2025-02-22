@@ -30,6 +30,36 @@
           placeholder="Choose Columns"
           (onChange)="saveSelectedColumnsToLocalStorage()"
         ></p-multiSelect>
+        <p-dropdown
+        [options]="[
+          { label: 'My Area', value: 'myArea' },
+          { label: 'All Areas', value: 'all' }
+        ]"
+        [(ngModel)]="selectedDataScope"
+        (onChange)="fetchYouthData()"
+        placeholder="Filter by Area"
+        class="w-40 text-gray-800 text-sm ml-2 px-5 py-2 rounded"
+        [style]="{
+          background: 'white',
+          border: '1px solid #ccc',
+          'border-radius': '6px',
+          'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.08)',
+          
+        }"
+      >
+        <ng-template pTemplate="selectedItem" let-item>
+          <div class="flex items-center space-x-2">
+            <i class="pi pi-map-marker text-blue-500"></i>
+            <span class="font-medium">{{ item.label }}</span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="item" let-item>
+          <div class="flex items-center space-x-2 hover:bg-gray-100 p-2 rounded transition">
+            <i class="pi pi-map-marker text-gray-500"></i>
+            <span>{{ item.label }}</span>
+          </div>
+        </ng-template>
+      </p-dropdown>
         <button
           (click)="resetSelectedColumns()"
           class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
