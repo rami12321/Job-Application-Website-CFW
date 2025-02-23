@@ -85,13 +85,13 @@ export class YouthServiceService {
   getYouthNotesById(id: number): Observable<{ notes: string }> {
     return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
   }
-  getAppliedJobById(
-    id: number
-  ): Observable<{ appliedJobs: { job: string; status: string }[] }> {
+
+  getAppliedJobById(id: number): Observable<{ appliedJobs: { job: string; status: string }[] }> {
     return this.http.get<{ appliedJobs: { job: string; status: string }[] }>(
-      `${this.apiUrl}/${id}/appliedJob`
+      `${this.apiUrl}/${id}/appliedJob`  // Ensure it matches your backend route
     );
   }
+  
 
   getYouthByJob(job: string): Observable<any> {
     const url = `${this.apiUrl}/appliedJob/${encodeURIComponent(job)}`; // Encode the job name for safe URL usage

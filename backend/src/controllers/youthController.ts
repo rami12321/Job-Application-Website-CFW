@@ -253,42 +253,44 @@ export const checkRegistrationNumber = async (req: Request, res: Response): Prom
 // Get applied jobs by youth ID
 export const getAppliedJobById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { job } = req.params; // Extract the job from the URL parameter
+    const { id } = req.params; // Extract the youth ID from the URL parameter
 
-    // Fetch all youths from the database
-    const youths = await Youth.findAll();
+    // Fetch the youth from the database by ID
+    const youth = await Youth.findByPk(id);
 
-    // Filter youths who applied for the specified job
-    const filteredYouths = youths.filter((youth) => {
-      // Initialize appliedJobs to an empty array in case it's null or undefined
-      let appliedJobs = youth.appliedJob || [];
-
-      // If appliedJob is a string, try to parse it into an array
-      if (typeof appliedJobs === 'string') {
-        try {
-          appliedJobs = JSON.parse(appliedJobs); // Parse the string into an array
-        } catch (error) {
-          console.error(`Invalid appliedJob format for youth ${youth.id}:`, appliedJobs);
-          return false; // Skip this youth if parsing fails
-        }
-      }
-
-      // Check if appliedJobs is an array and contains the specified job
-      return Array.isArray(appliedJobs) && appliedJobs.some((appliedJob) => appliedJob.job === job);
-    });
-
-    // If no youths are found, return a 404 response
-    if (filteredYouths.length === 0) {
-      res.status(404).json({ message: `No youths found who applied for job: ${job}.` });
+    // If no youth is found, return a 404 response
+    if (!youth) {
+      res.status(404).json({ message: `Youth with ID ${id} not found.` });
       return;
     }
 
-    // Return the filtered youths
-    res.status(200).json({ youths: filteredYouths });
+    // Initialize appliedJobs to an empty array in case it's null or undefined
+    let appliedJobs = youth.appliedJob || [];
+
+    // If appliedJob is a string, try to parse it into an array
+    if (typeof appliedJobs === 'string') {
+      try {
+        appliedJobs = JSON.parse(appliedJobs); // Parse the string into an array
+      } catch (error) {
+        console.error(`Invalid appliedJob format for youth ${id}:`, appliedJobs);
+        res.status(500).json({ message: 'Invalid applied jobs data format.' });
+        return;
+      }
+    }
+
+    // Ensure appliedJobs is an array
+    if (!Array.isArray(appliedJobs)) {
+      res.status(500).json({ message: 'Applied jobs data is not in the correct format.' });
+      return;
+    }
+
+    // Return the applied jobs for the specified youth
+    res.status(200).json({ appliedJobs });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching youths by applied job', error });
+    res.status(500).json({ message: 'Error fetching applied jobs for youth', error });
   }
 };
+
 
 // Update youth notes
 export const updateYouthNotes = async (req: Request, res: Response): Promise<void> => {

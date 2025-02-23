@@ -61,8 +61,18 @@ export const getJobRequestById = async (req: Request, res: Response): Promise<vo
       res.status(404).json({ message: `Job request with ID ${id} not found.` });
       return;
     }
+    let assignedYouths = [];
+    if (typeof jobRequest.assignedYouths === 'string') {
+      assignedYouths = JSON.parse(jobRequest.assignedYouths);  // Parse the stringified array
+    } else if (Array.isArray(jobRequest.assignedYouths)) {
+      assignedYouths = jobRequest.assignedYouths;  // If it's already an array, use it directly
+    }
 
-    res.status(200).json(jobRequest);
+    // Return the youth data with correctly formatted appliedJob
+    res.status(200).json({
+      ...jobRequest.toJSON(),
+      assignedYouths,  // Add the correctly parsed appliedJob
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching job request', error });
   }
@@ -103,7 +113,7 @@ export const deleteJobRequest = async (req: Request, res: Response): Promise<voi
       res.status(404).json({ message: `Job request with ID ${id} not found.` });
       return;
     }
-
+ 
     await jobRequest.destroy();
 
     res.status(200).json({ message: `Job request with ID ${id} deleted successfully.` });
@@ -130,7 +140,20 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
       return;
     }
 
-    const assignedYouths = jobRequest.assignedYouths || [];
+    let assignedYouths = jobRequest.assignedYouths || [];
+
+    // Log the assigned youths before processing
+    console.log('Assigned Youths before assignment:', assignedYouths);
+
+    if (typeof assignedYouths === 'string') {
+      try {
+        assignedYouths = JSON.parse(assignedYouths);
+      } catch (error) {
+        // If parsing fails, return a 400 error with a message.
+        res.status(400).json({ message: 'Invalid JSON format in assignedYouths field' });
+        return;
+      }
+    }
 
     const existingYouthIndex = assignedYouths.findIndex((y) => y.id === youthId);
 
@@ -156,16 +179,22 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
       });
     }
 
-    await jobRequest.update({ assignedYouths });
+    // Log the assigned youths after the update
+    console.log('Assigned Youths after assignment:', assignedYouths);
+
+    // Update job request with the new assigned youths
+    const updatedJobRequest = await jobRequest.update({ assignedYouths });
 
     res.status(200).json({
       message: `Youth with ID ${youthId} has been assigned to Job Request with ID ${id}.`,
-      updatedJobRequest: jobRequest,
+      updatedJobRequest: updatedJobRequest,
     });
   } catch (error) {
+    console.error('Error assigning youth to job request:', error);
     res.status(500).json({ message: 'Error assigning youth to job request', error });
   }
 };
+
 
 // Unassign a youth from a job request
 export const unassignYouthFromJobRequest = async (req: Request, res: Response): Promise<void> => {
@@ -179,8 +208,17 @@ export const unassignYouthFromJobRequest = async (req: Request, res: Response): 
       return;
     }
 
-    const assignedYouths = jobRequest.assignedYouths || [];
+    let assignedYouths = jobRequest.assignedYouths || [];
 
+    if (typeof assignedYouths === 'string') {
+      try {
+        assignedYouths = JSON.parse(assignedYouths);
+      } catch (error) {
+        // If parsing fails, return a 400 error with a message.
+        res.status(400).json({ message: 'Invalid JSON format in assignedYouths field' });
+        return;
+      }
+    }
     const youthIndex = assignedYouths.findIndex((y) => y.id === youthId);
 
     if (youthIndex === -1) {
@@ -213,8 +251,18 @@ export const getAssignedYouthsByJobId = async (req: Request, res: Response): Pro
       return;
     }
 
-    const assignedYouths = jobRequest.assignedYouths || [];
+    let assignedYouths = jobRequest.assignedYouths || [];
 
+    if (typeof assignedYouths === 'string') {
+      try {
+        assignedYouths = JSON.parse(assignedYouths);
+      } catch (error) {
+        // If parsing fails, return a 400 error with a message.
+        res.status(400).json({ message: 'Invalid JSON format in assignedYouths field' });
+        return;
+      }
+    }
+    
     res.status(200).json(assignedYouths);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching assigned youths', error });

@@ -39,15 +39,11 @@ interface Column {
     MultiSelectModule,
     DialogModule,
     ButtonModule,
-
     JobRequestDetailsComponent,
     TableModule,
     CommonModule,
     TableModule,
     MultiSelectModule,
-
-
-
   ],
   providers: [YouthServiceService],
   templateUrl: './job-request-table.component.html',
@@ -56,7 +52,6 @@ interface Column {
 export class JobRequestTableComponent implements OnInit {
   @Input() status: string | undefined;
   @Input() region: string = '';
-
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
@@ -170,13 +165,9 @@ export class JobRequestTableComponent implements OnInit {
     this.region = localStorage.getItem('adminArea') || ''; 
     console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
+  
       this.fetchJobRequests();
-    } else {
-      this.fetchYouthData();
-    }
+
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -210,13 +201,9 @@ export class JobRequestTableComponent implements OnInit {
   }
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
+   
       this.fetchJobRequests();
-    } else {
-      this.fetchYouthData();
-    }
+    
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -230,6 +217,7 @@ export class JobRequestTableComponent implements OnInit {
   saveSelectedColumnsToLocalStorage() {
     localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
   }
+
   formatDate(dateString: string): string {
     if (!dateString) {
       return 'N/A'; // Handle missing dates gracefully
@@ -353,10 +341,12 @@ export class JobRequestTableComponent implements OnInit {
       }
     );
   }
+
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input
     this.fetchYouthData(); // Reload the data without the filter
   }
+
   filterAppliedJob(event: Event): void {
     console.log('event'+event)
     const inputElement = event.target as HTMLInputElement;
@@ -377,9 +367,11 @@ export class JobRequestTableComponent implements OnInit {
 
     console.log('Filtered paginatedProducts:', this.paginatedProducts);
   }
+
   onAppliedJobFilterChange(value: string): void {
     this.appliedJobFilterSubject.next(value);
   }
+
   fetchEmployerData(): void {
     this.employerService.getAllEmployers().subscribe(
       (data: any[]) => {
@@ -440,11 +432,6 @@ export class JobRequestTableComponent implements OnInit {
     );
   }
 
-  isEditedOptions = [
-    { label: 'All', value: null },
-    { label: 'Edited', value: true },
-    { label: 'Not Edited', value: false },
-  ];
   dropdownStyle = {
     background: 'white',
     border: '1px solid #ddd',
@@ -555,18 +542,18 @@ export class JobRequestTableComponent implements OnInit {
 
   }
 
-  performAction(action: string, item: any): void {
-    if (action === 'view') {
-      console.log('View action for:', item);
+  // performAction(action: string, item: any): void {
+  //   if (action === 'view') {
+  //     console.log('View action for:', item);
 
-    } else if (action === 'pend') {
-      this.updateStatus(item.id, 'pending');
-    } else if (action === 'accept') {
-      this.updateStatus(item.id, 'accepted');
-    } else if (action === 'reject') {
-      this.updateStatus(item.id, 'rejected');
-    }
-  }
+  //   } else if (action === 'pend') {
+  //     this.updateStatus(item.id, 'pending');
+  //   } else if (action === 'accept') {
+  //     this.updateStatus(item.id, 'accepted');
+  //   } else if (action === 'reject') {
+  //     this.updateStatus(item.id, 'rejected');
+  //   }
+  // }
 
 
   note: string = '';
@@ -576,52 +563,53 @@ export class JobRequestTableComponent implements OnInit {
     this.note = youth.note || ''; // If there's an existing note, pre-fill the input
     this.noteDialogVisible = true;
   }
-  updateIsEdited(id: any): void {
-    // Call the service to update the `isEdited` field to `false`
-    this.youthService.updateYouthIsEdited(id, false).subscribe(
-      (response) => {
-        console.log(`Youth with ID ${id} marked as not edited`);
+  // updateIsEdited(id: any): void {
+  //   // Call the service to update the `isEdited` field to `false`
+  //   this.youthService.updateYouthIsEdited(id, false).subscribe(
+  //     (response) => {
+  //       console.log(`Youth with ID ${id} marked as not edited`);
 
-        // Optionally, you can fetch the updated data after the status change
-        this.fetchYouthData();
-      },
-      (error) => {
-        console.error('Error updating isEdited status:', error);
-      }
-    );
-  }
+  //       // Optionally, you can fetch the updated data after the status change
+  //       this.fetchYouthData();
+  //     },
+  //     (error) => {
+  //       console.error('Error updating isEdited status:', error);
+  //     }
+  //   );
+  // }
 
 
-  //youth dialog
-  youthDialog: boolean = false;
+ 
+  youthDialog: boolean = false; //youth dialog
 
-  updateStatus(id: number, newStatus: string): void {
-    this.youthService.updateYouthStatus(id, newStatus).subscribe(
-      (response) => {
-        console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
+  // updateStatus(id: number, newStatus: string): void {
+  //   this.youthService.updateYouthStatus(id, newStatus).subscribe(
+  //     (response) => {
+  //       console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
 
-        // Re-fetch the data to reflect changes
-        this.fetchYouthData();
-      },
-      (error) => {
-        console.error('Error updating status:', error);
-      }
-    );
-  }
+  //       // Re-fetch the data to reflect changes
+  //       this.fetchYouthData();
+  //     },
+  //     (error) => {
+  //       console.error('Error updating status:', error);
+  //     }
+  //   );
+  // }
 
-  updateActiveStatus(id: string, isActive: boolean): void {
-    this.employerService.updateActiveStatus(id, isActive).subscribe(
-      (response) => {
-        console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
+  // updateActiveStatus(id: string, isActive: boolean): void {
+  //   this.employerService.updateActiveStatus(id, isActive).subscribe(
+  //     (response) => {
+  //       console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
 
-        // Re-fetch the data to reflect changes
-        this.fetchEmployerData();
-      },
-      (error) => {
-        console.error('Error updating active status:', error);
-      }
-    );
-  }
+  //       // Re-fetch the data to reflect changes
+  //       this.fetchEmployerData();
+  //     },
+  //     (error) => {
+  //       console.error('Error updating active status:', error);
+  //     }
+  //   );
+  // }
+
   paginate(event: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);
@@ -633,6 +621,7 @@ export class JobRequestTableComponent implements OnInit {
   noYouthMessage: string = '';
 
   selectedYouthId: number | null = null;
+
   showDialog(youthId: number, activeTab: string): void {
     this.selectedYouthId = youthId;
 
@@ -659,39 +648,41 @@ export class JobRequestTableComponent implements OnInit {
     this.selectedYouthId = null; // Reset when dialog is closed
   }
 
-  updateNotes(youthId: any, newNotes: string): void {
-    // Check if new notes are not empty
-    if (newNotes.trim()) {
-      // Call the service to update notes for the specific youth
-      this.youthService.updateYouthNotes(youthId, newNotes).subscribe(
-        (response) => {
-          console.log(`Notes updated for youth with ID: ${youthId}`);
-          // Re-fetch the data to reflect the updated notes
-          this.fetchYouthData();
-          this.updateStatus(youthId, 'pending');
-        },
-        (error) => {
-          console.error('Error updating notes:', error);
-        }
-      );
-    } else {
-      console.warn('Notes cannot be empty');
-    }
-  }
-  fetchNotesById(youthId: number): void {
-    this.youthService.getYouthNotesById(youthId).subscribe(
-      (response) => {
-        console.log(`Notes for youth with ID ${youthId}:`, response.notes);
+  // updateNotes(youthId: any, newNotes: string): void {
+  //   // Check if new notes are not empty
+  //   if (newNotes.trim()) {
+  //     // Call the service to update notes for the specific youth
+  //     this.youthService.updateYouthNotes(youthId, newNotes).subscribe(
+  //       (response) => {
+  //         console.log(`Notes updated for youth with ID: ${youthId}`);
+  //         // Re-fetch the data to reflect the updated notes
+  //         this.fetchYouthData();
+  //         this.updateStatus(youthId, 'pending');
+  //       },
+  //       (error) => {
+  //         console.error('Error updating notes:', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.warn('Notes cannot be empty');
+  //   }
+  // }
 
-        // You can perform additional operations here, such as displaying the notes in a dialog
-        this.note = response.notes || ''; // If a note exists, store it for display
-        this.noteDialogVisible = true; // Open the dialog to show the note
-      },
-      (error) => {
-        console.error('Error fetching notes:', error);
-      }
-    );
-  }
+  // fetchNotesById(youthId: number): void {
+  //   this.youthService.getYouthNotesById(youthId).subscribe(
+  //     (response) => {
+  //       console.log(`Notes for youth with ID ${youthId}:`, response.notes);
+
+  //       // You can perform additional operations here, such as displaying the notes in a dialog
+  //       this.note = response.notes || ''; // If a note exists, store it for display
+  //       this.noteDialogVisible = true; // Open the dialog to show the note
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching notes:', error);
+  //     }
+  //   );
+  // }
+
   fetchYouthByJob(jobs: string[]): void {
     // Join jobs into a comma-separated string to pass in the URL
     const jobsQuery = jobs.join(',');
@@ -699,7 +690,7 @@ export class JobRequestTableComponent implements OnInit {
     // Call the service to fetch youth based on jobs array
     this.youthService.getYouthByJob(jobsQuery).subscribe(
       (response) => {
-        console.log(`Jobs: ${jobs}`, response);
+        console.log(`11Jobs: ${jobs}`, response);
 
         // Check if response has youths and handle accordingly
         if (response.youths && response.youths.length > 0) {
@@ -728,40 +719,37 @@ export class JobRequestTableComponent implements OnInit {
     );
   }
 
-  displayNoteDialog(youth: any): void {
-    this.selectedYouth = youth;
-    this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
-  }
+  // displayNoteDialog(youth: any): void {
+  //   this.selectedYouth = youth;
+  //   this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
+  // }
 
   showYouthDialog(job: string, selectedJob: string): void {
     this.selectedJob = selectedJob;
-    this.currentJob = job; // Store the current job being assigned
-    this.selectedYouths = []; // Reset selectedYouths for this dialog
+    this.currentJob = job;
+    this.selectedYouths = [];
+    this.youthDialogVisible = true;  // This should trigger the dialog visibility
+  
+    console.log('Opening dialog for job:', job, 'Selected job:', selectedJob);
+  
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
-        console.log('Response from getYouthByJob:', response); // Log the response for debugging
-
-        // Filter youths with workStatus === false
-        const filteredYouths = (response.youths || []).filter((youth: any) => !youth.workStatus);
-
-        // Transform youths to include a label for display
+        console.log('Response from getYouthByJob:', response);
+        const filteredYouths = (response.youths || []).filter((youth: any) => youth.workStatus==false);
         this.youths = filteredYouths.map((youth: any) => ({
           id: youth.id,
           name: youth.name,
           beneficiary: youth.beneficiary,
-          label: `${youth.name} (${youth.id})${
-            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-          }`, // Add icon and text if beneficiary
+          label: `${youth.name} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
         }));
-
-        console.log('Filtered and transformed youths array:', this.youths); // Log the transformed array
-        this.youthDialogVisible = true; // Open the dialog
+        console.log('Filtered and transformed youths:', this.youths);
       },
       error: (error) => {
         console.error('Error fetching youths:', error);
       },
     });
   }
+  
 
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
@@ -846,11 +834,12 @@ export class JobRequestTableComponent implements OnInit {
     this.assignedYouthDialogVisible = false;
 
   }
-  showAssignedYouthDialog(jobName: string, job: string): void {
-    this.currentJob = jobName; // Store the current job for context
-    this.selectedJob = job;
-    this.selectedYouths = []; // Reset selectedYouths for this dialog
 
+
+  showAssignedYouthDialog(jobName: string, jobId: string): void {
+    this.currentJob = jobName; // Store the current job for context
+    this.selectedJob = jobId;
+    this.selectedYouths = []; // Reset selectedYouths for this dialog
     this.youthService.getYouthByJob(jobName).subscribe({
       next: (allYouthsResponse: any) => {
         console.log('Response from getYouthByJob:', allYouthsResponse);
@@ -869,7 +858,7 @@ export class JobRequestTableComponent implements OnInit {
 
         console.log('Filtered and Formatted All Youths:', allYouths);
 
-        this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
+        this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
           next: (assignedResponse: any) => {
             console.log('Response from getAssignedYouthsByJobId:', assignedResponse);
 
