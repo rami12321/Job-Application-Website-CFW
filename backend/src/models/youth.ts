@@ -79,7 +79,7 @@ interface YouthAttributes {
 
   status: 'accepted' | 'rejected' | 'pending' | 'waiting';
   notes?: string;
-  appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
+  appliedJob?: { job: string;status: string; jobRequestId?: string}[]; // Updated to hold job and status
   beneficiary?: boolean;
   workStatus?: boolean;
   isEdited?: boolean;
@@ -165,7 +165,7 @@ class Youth extends Model<YouthAttributes, YouthCreationAttributes> implements Y
 
   public status!: 'accepted' | 'rejected' | 'pending' | 'waiting';
   public notes?: string;
-  public  appliedJob?: { title: string; req: string; status: string; date: string , jobRequestId?: string}[]; // Updated to hold job and status
+  public   appliedJob?: { job: string; status: string; jobRequestId?: string}[]; // Updated to hold job and status
 
   public beneficiary?: boolean;
   public workStatus?: boolean;
@@ -448,7 +448,13 @@ Youth.init(
   {
     sequelize,
     tableName: 'youths',
-    timestamps: true, // Adds createdAt and updatedAt fields
+    timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['firstNameEn', 'lastNameEn', 'dob'], // Example composite unique index
+      },
+    ],
   }
 );
 

@@ -25,7 +25,7 @@ interface JobAttributes {
   supervisorPosition: string;
   supervisorEmail: string;
   supervisorPhone: string;
-  status: 'pending' | 'active' | 'completed' | 'archived';
+  status: 'waiting-E' | 'assigned' | 'in-progress' | 'completed';
   assignedYouths?: AssignedYouth[];
 }
 
@@ -47,7 +47,7 @@ class Job extends Model<JobAttributes, JobCreationAttributes> implements JobAttr
   public supervisorPosition!: string;
   public supervisorEmail!: string;
   public supervisorPhone!: string;
-  public status!: 'pending' | 'active' | 'completed' | 'archived';
+  public status!: 'waiting-E' | 'assigned' | 'in-progress' | 'completed';
   public assignedYouths?: AssignedYouth[];
 
   // Timestamps
@@ -130,9 +130,9 @@ Job.init(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM('pending', 'active', 'completed', 'archived'),
+      type: DataTypes.ENUM('waiting-E', 'assigned', 'in-progress', 'completed'),
       allowNull: false,
-      defaultValue: 'pending',
+      defaultValue: 'waiting-E',
     },
     assignedYouths: {
       type: DataTypes.JSON,

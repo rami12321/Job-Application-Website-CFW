@@ -39,15 +39,11 @@ interface Column {
     MultiSelectModule,
     DialogModule,
     ButtonModule,
-
     JobRequestDetailsComponent,
     TableModule,
     CommonModule,
     TableModule,
     MultiSelectModule,
-
-
-
   ],
   providers: [YouthServiceService],
   templateUrl: './job-request-table.component.html',
@@ -56,7 +52,6 @@ interface Column {
 export class JobRequestTableComponent implements OnInit {
   @Input() status: string | undefined;
   @Input() region: string = '';
-
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
@@ -104,49 +99,10 @@ export class JobRequestTableComponent implements OnInit {
     'active',
     'assignedYouths',
     'signature',
-    'registrationStatus',
-    'emergencyPhone',
-    'emergencyRelation',
-    'jobOpportunitySource',
-    'employmentOpportunities',
-    'aboutYourself',
-    'placedByKfw',
-    'kfwYear',
-    'innovationLabGraduate',
-    'innovationLabGradtype',
-    'employed',
-    'isPrcsVolunteer',
-    'isFireBrigadesVolunteer',
-    'isAlShifaaVolunteer',
-    'disability',
-    'disabilityTypes',
-    'disabilitySupport',
-    'notes',
-    'role',
-    'id',
-    'headfa',
-    'question2',
     'status',
     'confirmation',
-    'arabic',
-    'english',
-    'french',
-    'trainings',
-    'coverLetter',
-    'identityCard',
-    'registrationCard',
-    'degree',
-    'experienceDetails',
-    'experiences',
-    'requiredDocuments',
     'seekingEmploymentDuration',
-    'trainingsAndSkills',
-    'password',
-    'confirmPassword',
-    'cv',
-    'alShifaaProof',
-    'fireProof',
-    'prcsProof',
+
   ];
   selectedDataScope = 'myArea';
 
@@ -155,14 +111,12 @@ export class JobRequestTableComponent implements OnInit {
 
   constructor(
     private youthService: YouthServiceService,
-    private employerService: EmployerService,
     private JobRequestService: JobRequestService,
     private lookupService: LookupService
 
   ) {
     this.appliedJobFilterSubject.pipe(debounceTime(300)).subscribe((filterValue) => {
       this.appliedJobFilter = filterValue;
-      this.fetchYouthData();
     });
   }
 
@@ -172,13 +126,9 @@ export class JobRequestTableComponent implements OnInit {
     this.region = localStorage.getItem('adminArea') || ''; 
     console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
+  
       this.fetchJobRequests();
-    } else {
-      this.fetchYouthData();
-    }
+
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -212,13 +162,9 @@ export class JobRequestTableComponent implements OnInit {
   }
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
+   
       this.fetchJobRequests();
-    } else {
-      this.fetchYouthData();
-    }
+    
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -232,6 +178,7 @@ export class JobRequestTableComponent implements OnInit {
   saveSelectedColumnsToLocalStorage() {
     localStorage.setItem('selectedColumns', JSON.stringify(this.cols));
   }
+
   formatDate(dateString: string): string {
     if (!dateString) {
       return 'N/A'; // Handle missing dates gracefully
@@ -249,116 +196,11 @@ export class JobRequestTableComponent implements OnInit {
   }
 
   filteredData: any[] = []; // Holds the filtered data
-  fetchYouthData(): void {
-    this.youthService.getAllYouth().subscribe(
-      (data: any[]) => {
-        console.log('Fetched Youth Data:', data);
 
-
-        this.allProducts = data; // Assign the data only if it's an array
-
-        // Map appliedJobText for filtering and display
-        this.youthList = data.map((item) => ({
-          ...item,
-          appliedJobText: Array.isArray(item.appliedJob)
-            ? item.appliedJob.map((job: any) => job.job || '').join(', ')
-            : '', // Combine all job.job values into a single string or default to an empty string
-        }));
-        console.log('Processed Youth List:', this.youthList);
-
-        // Step 1: Filter by `status` if provided
-        let filteredData = this.status
-          ? data.filter((item) => item.status === this.status)
-          : data;
-
-        // Step 2: Apply filters for gender, major, area, and appliedJobText
-        filteredData = filteredData.filter((item) => {
-          const matchesGender =
-            this.selectedGender.length === 0 ||
-            this.selectedGender.includes(item.gender);
-          const matchesMajor =
-            this.selectedMajors.length === 0 ||
-            this.selectedMajors.includes(item.major);
-          const matchesArea =
-            this.selectedAreas.length === 0 ||
-            this.selectedAreas.includes(item.area);
-          const matchesEducationLevels =
-            this.selectedEducationLevels.length === 0 ||
-            this.selectedEducationLevels.includes(item.educationLevel);
-          const matchesNationalityOptions =
-            this.selectedNationalities.length === 0 ||
-            this.selectedNationalities.includes(item.nationality);
-          const matchesIsEdited =
-            this.selectedIsEdited === null || // Check if null for all
-            this.selectedIsEdited.length === 0 ||
-            item.isEdited === this.selectedIsEdited;
-          const matchesIsBeneficiary =
-            this.selectedIsBeneficiary === null || // Check if null for all
-            this.selectedIsBeneficiary.length === 0 ||
-            item.beneficiary === this.selectedIsBeneficiary;
-
-          // Updated logic for matchesAppliedJob
-          const matchesAppliedJob =
-            !this.appliedJobFilter || // Check if the applied job filter is empty
-            (item.appliedJob || []).some((job: any) =>
-              (job.job || '').toLowerCase().includes(this.appliedJobFilter.toLowerCase())
-            );
-
-          return (
-            matchesGender &&
-            matchesMajor &&
-            matchesArea &&
-            matchesEducationLevels &&
-            matchesNationalityOptions &&
-            matchesIsEdited &&
-            matchesIsBeneficiary &&
-            matchesAppliedJob
-          );
-        });
-
-        // Step 3: Configure columns dynamically if filtered data is available
-        if (filteredData.length > 0) {
-          const filteredColumns = Object.keys(filteredData[0]).filter(
-            (key) => !this.excludedColumns.includes(key)
-          );
-
-          this.cols = filteredColumns.map((key) => ({
-            field: key,
-            header: this.capitalize(key),
-          }));
-
-          const savedColumns = localStorage.getItem('selectedColumns');
-          if (savedColumns) {
-            this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns];
-          } else {
-            this._selectedColumns = this.cols;
-            this.cols = [...this._selectedColumns];
-          }
-
-          if (this.savedColumns) {
-            this.savedColumns = this.cols;
-          } else {
-            this._selectedColumns = this.cols;
-          }
-        }
-
-        // Step 4: Update youth list and paginated products
-        this.youthList = filteredData;
-        this.filteredData = [...this.youthList];
-        this.paginatedProducts = this.youthList;
-        console.log(this.paginatedProducts.length);
-
-      },
-      (error) => {
-        console.error('Error fetching youth data:', error);
-      }
-    );
-  }
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input
-    this.fetchYouthData(); // Reload the data without the filter
   }
+
   filterAppliedJob(event: Event): void {
     console.log('event'+event)
     const inputElement = event.target as HTMLInputElement;
@@ -379,74 +221,12 @@ export class JobRequestTableComponent implements OnInit {
 
     console.log('Filtered paginatedProducts:', this.paginatedProducts);
   }
+
   onAppliedJobFilterChange(value: string): void {
     this.appliedJobFilterSubject.next(value);
   }
-  fetchEmployerData(): void {
-    this.employerService.getAllEmployers().subscribe(
-      (data: any[]) => {
-        console.log('Fetched Employer Data:', data);
-
-        // Step 1: Filter by `status` if `active` is provided
-        let filteredData = this.active !== undefined
-          ? data.filter((item) => item.active === this.active)
-          : data;
-
-          filteredData = filteredData.filter((item) => {
-            const matchesArea =
-              this.selectedAreas.length === 0 ||
-              this.selectedAreas.includes(item.area);
-            return (
-              matchesArea
-            );
-          });
-        // Step 2: Configure columns dynamically if filtered data is available
-        if (filteredData.length > 0) {
-          // Exclude unwanted columns
-          const filteredColumns = Object.keys(filteredData[0]).filter(
-            (key) => !this.excludedColumns.includes(key)
-          );
-
-          // Map filtered columns to the format expected by PrimeNG
-          this.cols = filteredColumns.map((key) => ({
-            field: key,
-            header: this.capitalize(key),
-          }));
-          const savedColumns = localStorage.getItem('selectedColumns');
-          if (savedColumns) {
-            this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns]; // Synchronize `cols`
-          } else {
-            // Default to all columns if no saved state
-            this._selectedColumns = this.cols;
-            this.cols = [...this._selectedColumns];
-          }
 
 
-
-          // Initialize _selectedColumns with all columns except "Action"
-          if (this.savedColumns) {
-            this.savedColumns = this.cols;
-          } else {
-            this._selectedColumns = this.cols;
-          }
-        }
-
-        // Step 3: Update youth list and paginated products
-        this.employerList = filteredData;
-        this.paginatedProducts = this.employerList;
-      },
-      (error) => {
-        console.error('Error fetching employer data:', error);
-      }
-    );
-  }
-
-  isEditedOptions = [
-    { label: 'All', value: null },
-    { label: 'Edited', value: true },
-    { label: 'Not Edited', value: false },
-  ];
   dropdownStyle = {
     background: 'white',
     border: '1px solid #ddd',
@@ -560,73 +340,13 @@ export class JobRequestTableComponent implements OnInit {
 
   }
 
-  performAction(action: string, item: any): void {
-    if (action === 'view') {
-      console.log('View action for:', item);
-
-    } else if (action === 'pend') {
-      this.updateStatus(item.id, 'pending');
-    } else if (action === 'accept') {
-      this.updateStatus(item.id, 'accepted');
-    } else if (action === 'reject') {
-      this.updateStatus(item.id, 'rejected');
-    }
-  }
-
 
   note: string = '';
   selectedYouth: any;
-  showNoteDialog(youth: any): void {
-    this.selectedYouth = youth;
-    this.note = youth.note || ''; // If there's an existing note, pre-fill the input
-    this.noteDialogVisible = true;
-  }
-  updateIsEdited(id: any): void {
-    // Call the service to update the `isEdited` field to `false`
-    this.youthService.updateYouthIsEdited(id, false).subscribe(
-      (response) => {
-        console.log(`Youth with ID ${id} marked as not edited`);
 
-        // Optionally, you can fetch the updated data after the status change
-        this.fetchYouthData();
-      },
-      (error) => {
-        console.error('Error updating isEdited status:', error);
-      }
-    );
-  }
+  youthDialog: boolean = false; //youth dialog
 
 
-  //youth dialog
-  youthDialog: boolean = false;
-
-  updateStatus(id: number, newStatus: string): void {
-    this.youthService.updateYouthStatus(id, newStatus).subscribe(
-      (response) => {
-        console.log(`Status updated to ${newStatus} for youth with ID: ${id}`);
-
-        // Re-fetch the data to reflect changes
-        this.fetchYouthData();
-      },
-      (error) => {
-        console.error('Error updating status:', error);
-      }
-    );
-  }
-
-  updateActiveStatus(id: string, isActive: boolean): void {
-    this.employerService.updateActiveStatus(id, isActive).subscribe(
-      (response) => {
-        console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
-
-        // Re-fetch the data to reflect changes
-        this.fetchEmployerData();
-      },
-      (error) => {
-        console.error('Error updating active status:', error);
-      }
-    );
-  }
   paginate(event: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);
@@ -638,6 +358,7 @@ export class JobRequestTableComponent implements OnInit {
   noYouthMessage: string = '';
 
   selectedYouthId: number | null = null;
+
   showDialog(youthId: number, activeTab: string): void {
     this.selectedYouthId = youthId;
 
@@ -664,39 +385,7 @@ export class JobRequestTableComponent implements OnInit {
     this.selectedYouthId = null; // Reset when dialog is closed
   }
 
-  updateNotes(youthId: any, newNotes: string): void {
-    // Check if new notes are not empty
-    if (newNotes.trim()) {
-      // Call the service to update notes for the specific youth
-      this.youthService.updateYouthNotes(youthId, newNotes).subscribe(
-        (response) => {
-          console.log(`Notes updated for youth with ID: ${youthId}`);
-          // Re-fetch the data to reflect the updated notes
-          this.fetchYouthData();
-          this.updateStatus(youthId, 'pending');
-        },
-        (error) => {
-          console.error('Error updating notes:', error);
-        }
-      );
-    } else {
-      console.warn('Notes cannot be empty');
-    }
-  }
-  fetchNotesById(youthId: number): void {
-    this.youthService.getYouthNotesById(youthId).subscribe(
-      (response) => {
-        console.log(`Notes for youth with ID ${youthId}:`, response.notes);
 
-        // You can perform additional operations here, such as displaying the notes in a dialog
-        this.note = response.notes || ''; // If a note exists, store it for display
-        this.noteDialogVisible = true; // Open the dialog to show the note
-      },
-      (error) => {
-        console.error('Error fetching notes:', error);
-      }
-    );
-  }
   fetchYouthByJob(jobs: string[]): void {
     // Join jobs into a comma-separated string to pass in the URL
     const jobsQuery = jobs.join(',');
@@ -704,7 +393,7 @@ export class JobRequestTableComponent implements OnInit {
     // Call the service to fetch youth based on jobs array
     this.youthService.getYouthByJob(jobsQuery).subscribe(
       (response) => {
-        console.log(`Jobs: ${jobs}`, response);
+        console.log(`11Jobs: ${jobs}`, response);
 
         // Check if response has youths and handle accordingly
         if (response.youths && response.youths.length > 0) {
@@ -732,42 +421,31 @@ export class JobRequestTableComponent implements OnInit {
       }
     );
   }
-
-  displayNoteDialog(youth: any): void {
-    this.selectedYouth = youth;
-    this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
-  }
-
   showYouthDialog(job: string, selectedJob: string): void {
     this.selectedJob = selectedJob;
-    this.currentJob = job; // Store the current job being assigned
-    this.selectedYouths = []; // Reset selectedYouths for this dialog
+    this.currentJob = job;
+    this.selectedYouths = [];
+    this.youthDialogVisible = true;  // This should trigger the dialog visibility
+  
+    console.log('Opening dialog for job:', job, 'Selected job:', selectedJob);
+  
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
-        console.log('Response from getYouthByJob:', response); // Log the response for debugging
-
-        // Filter youths with workStatus === false
-        const filteredYouths = (response.youths || []).filter((youth: any) => !youth.workStatus);
-
-        // Transform youths to include a label for display
+        console.log('Response from getYouthByJob:', response);
+        const filteredYouths = (response.youths || []).filter((youth: any) => youth.workStatus==false);
         this.youths = filteredYouths.map((youth: any) => ({
           id: youth.id,
           name: youth.name,
           beneficiary: youth.beneficiary,
-          label: `${youth.name} (${youth.id})${
-            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-          }`, // Add icon and text if beneficiary
+          label: `${youth.name} (${youth.id})${youth.beneficiary ? ' ✅ (Beneficiary)' : ''}`,
         }));
-
-        console.log('Filtered and transformed youths array:', this.youths); // Log the transformed array
-        this.youthDialogVisible = true; // Open the dialog
+        console.log('Filtered and transformed youths:', this.youths);
       },
       error: (error) => {
         console.error('Error fetching youths:', error);
       },
     });
   }
-
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
     console.log(
@@ -823,7 +501,6 @@ export class JobRequestTableComponent implements OnInit {
 
     this.youthDialogVisible = false;
   }
-
   getAssignedYouths(jobId: string): void {
     this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
       next: (response: any) => {
@@ -851,11 +528,10 @@ export class JobRequestTableComponent implements OnInit {
     this.assignedYouthDialogVisible = false;
 
   }
-  showAssignedYouthDialog(jobName: string, job: string): void {
+  showAssignedYouthDialog(jobName: string, jobId: string): void {
     this.currentJob = jobName; // Store the current job for context
-    this.selectedJob = job;
+    this.selectedJob = jobId;
     this.selectedYouths = []; // Reset selectedYouths for this dialog
-
     this.youthService.getYouthByJob(jobName).subscribe({
       next: (allYouthsResponse: any) => {
         console.log('Response from getYouthByJob:', allYouthsResponse);
@@ -874,7 +550,7 @@ export class JobRequestTableComponent implements OnInit {
 
         console.log('Filtered and Formatted All Youths:', allYouths);
 
-        this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
+        this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
           next: (assignedResponse: any) => {
             console.log('Response from getAssignedYouthsByJobId:', assignedResponse);
 
@@ -913,8 +589,6 @@ export class JobRequestTableComponent implements OnInit {
       },
     });
   }
-
-
   unassignYouth(jobId: string, youthId: string): void {
     console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
 

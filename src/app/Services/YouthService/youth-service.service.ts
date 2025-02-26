@@ -12,21 +12,18 @@ export class YouthServiceService {
 
   constructor(private http: HttpClient) {}
 
-
   submitFormData(formData: any): Observable<any> {
     return this.http.post(this.apiUrl, formData);
   }
   updateYouthAppliedJobs(youthId: number, appliedJobs: any): Observable<any> {
     const url = `http://localhost:3000/youth/${youthId}/appliedJob`;
-    return this.http.put(url, { appliedJob: appliedJobs });  // Sending the array of applied jobs
+    return this.http.put(url, { appliedJob: appliedJobs }); // Sending the array of applied jobs
   }
-
 
   getAllYouth(): Observable<any[]> {
-    const cacheBuster = new Date().getTime();  // Adds a timestamp to avoid cached responses
+    const cacheBuster = new Date().getTime(); // Adds a timestamp to avoid cached responses
     return this.http.get<any[]>(`${this.apiUrl}?_=${cacheBuster}`);
   }
-  
 
   getYouthById(id: any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
@@ -38,15 +35,14 @@ export class YouthServiceService {
     return this.http.put(url, payload); // Make the PUT request
   }
 
-    updateYouthTraining(userId: string, trainings: any[]): Observable<any> {
+  updateYouthTraining(userId: string, trainings: any[]): Observable<any> {
     const url = `${this.apiUrl}/${userId}/trainings`; // Endpoint for updating training
-    const payload = { trainings };  // Payload only includes the 'trainings' field
-    return this.http.put(url, payload);  // Make the PUT request
+    const payload = { trainings }; // Payload only includes the 'trainings' field
+    return this.http.put(url, payload); // Make the PUT request
   }
   updateYouth(id: any, updatedData: Partial<Youth>): Observable<Youth> {
     return this.http.put<Youth>(`${this.apiUrl}/${id}`, updatedData);
   }
-
 
   deleteCamp(userId: string): Observable<any> {
     const url = `${this.apiUrl}/${userId}`;
@@ -61,15 +57,23 @@ export class YouthServiceService {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
   }
   updateYouthCategoryJob(id: number, payload: any): Observable<any> {
-    return this.http.patch(`http://localhost:3000/youth/${id}/jobCategory`, payload);
+    return this.http.patch(
+      `http://localhost:3000/youth/${id}/jobCategory`,
+      payload
+    );
   }
-  checkPersonalRegistrationNumber(personalRegistrationNumber: string): Observable<{ inUse: boolean; message: string }> {
+  checkPersonalRegistrationNumber(
+    personalRegistrationNumber: string
+  ): Observable<{ inUse: boolean; message: string }> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map((data) => {
-        const isInUse = data.some(entry => entry.personalRegistrationNumber === personalRegistrationNumber);
+        const isInUse = data.some(
+          (entry) =>
+            entry.personalRegistrationNumber === personalRegistrationNumber
+        );
         return {
           inUse: isInUse,
-          message: isInUse ? 'This registration number is already taken.' : ''
+          message: isInUse ? 'This registration number is already taken.' : '',
         };
       })
     );
@@ -81,11 +85,13 @@ export class YouthServiceService {
   getYouthNotesById(id: number): Observable<{ notes: string }> {
     return this.http.get<{ notes: string }>(`${this.apiUrl}/${id}/notes`);
   }
+
   getAppliedJobById(id: number): Observable<{ appliedJobs: { job: string; status: string }[] }> {
-    return this.http.get<{ appliedJobs: { job: string; status: string }[] }>(`${this.apiUrl}/${id}/appliedJob`);
+    return this.http.get<{ appliedJobs: { job: string; status: string }[] }>(
+      `${this.apiUrl}/${id}/appliedJob`  // Ensure it matches your backend route
+    );
   }
-
-
+  
 
   getYouthByJob(job: string): Observable<any> {
     const url = `${this.apiUrl}/appliedJob/${encodeURIComponent(job)}`; // Encode the job name for safe URL usage

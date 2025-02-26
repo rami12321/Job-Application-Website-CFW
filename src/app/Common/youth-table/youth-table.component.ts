@@ -174,13 +174,9 @@ export class YouthTableComponent implements OnInit {
     console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
 
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
-      this.fetchJobRequests();
-    } else {
+
       this.fetchYouthData();
-    }    
+   
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -215,13 +211,10 @@ export class YouthTableComponent implements OnInit {
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
 
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } else if (this.fetchedData == 'job-request') {
-      this.fetchJobRequests();
-    } else {
+   
+   
       this.fetchYouthData();
-    }    
+   
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -398,65 +391,6 @@ export class YouthTableComponent implements OnInit {
   onAppliedJobFilterChange(value: string): void {
     this.appliedJobFilterSubject.next(value);
   }
-  fetchEmployerData(): void {
-    this.employerService.getAllEmployers().subscribe(
-      (data: any[]) => {
-        console.log('Fetched Employer Data:', data);
-
-        // Step 1: Filter by `status` if `active` is provided
-        let filteredData = this.active !== undefined
-          ? data.filter((item) => item.active === this.active)
-          : data;
-
-          filteredData = filteredData.filter((item) => {
-            const matchesArea =
-              this.selectedAreas.length === 0 ||
-              this.selectedAreas.includes(item.area);
-            return (
-              matchesArea
-            );
-          });
-        // Step 2: Configure columns dynamically if filtered data is available
-        if (filteredData.length > 0) {
-          // Exclude unwanted columns
-          const filteredColumns = Object.keys(filteredData[0]).filter(
-            (key) => !this.excludedColumns.includes(key)
-          );
-
-          // Map filtered columns to the format expected by PrimeNG
-          this.cols = filteredColumns.map((key) => ({
-            field: key,
-            header: this.capitalize(key),
-          }));
-          const savedColumns = localStorage.getItem('selectedColumns');
-          if (savedColumns) {
-            this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns]; // Synchronize `cols`
-          } else {
-            // Default to all columns if no saved state
-            this._selectedColumns = this.cols;
-            this.cols = [...this._selectedColumns];
-          }
-
-
-
-          // Initialize _selectedColumns with all columns except "Action"
-          if (this.savedColumns) {
-            this.savedColumns = this.cols;
-          } else {
-            this._selectedColumns = this.cols;
-          }
-        }
-
-        // Step 3: Update youth list and paginated products
-        this.employerList = filteredData;
-        this.paginatedProducts = this.employerList;
-      },
-      (error) => {
-        console.error('Error fetching employer data:', error);
-      }
-    );
-  }
 
   isEditedOptions = [
     { label: 'All', value: null },
@@ -469,55 +403,6 @@ export class YouthTableComponent implements OnInit {
     'border-radius': '8px',
     'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)',
   };
-
-  fetchJobRequests(): void {
-    this.JobRequestService.getAllJobs().subscribe(
-      (data: any[]) => {
-        console.log('Fetched Employer Data:', data);
-
-        // Step 1: Filter by `status` if provided
-        let filteredData = this.status
-          ? data.filter((item) => item.status === this.status)
-          : data;
-        // Step 3: Configure columns dynamically if filtered data is available
-        if (filteredData.length > 0) {
-          // Exclude unwanted columns
-          const filteredColumns = Object.keys(filteredData[0]).filter(
-            (key) => !this.excludedColumns.includes(key)
-          );
-
-          // Map filtered columns to the format expected by PrimeNG
-          this.cols = filteredColumns.map((key) => ({
-            field: key,
-            header: this.capitalize(key),
-          }));
-          const savedColumns = localStorage.getItem('selectedColumns');
-          if (savedColumns) {
-            this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns]; // Synchronize `cols`
-          } else {
-            // Default to all columns if no saved state
-            this._selectedColumns = this.cols;
-            this.cols = [...this._selectedColumns];
-          }
-
-          // Initialize _selectedColumns with all columns except "Action"
-          if (this.savedColumns) {
-            this.savedColumns = this.cols;
-          } else {
-            this._selectedColumns = this.cols;
-          }
-        }
-
-        // Step 4: Update youth list and paginated products
-        this.employerList = filteredData;
-        this.paginatedProducts = this.employerList;
-      },
-      (error) => {
-        console.error('Error fetching youth data:', error);
-      }
-    );
-  }
   onColumnChange(selectedColumns: Column[]): void {
     this.selectedColumns = selectedColumns;
   }
@@ -620,19 +505,6 @@ export class YouthTableComponent implements OnInit {
     );
   }
 
-  updateActiveStatus(id: string, isActive: boolean): void {
-    this.employerService.updateActiveStatus(id, isActive).subscribe(
-      (response) => {
-        console.log(`Active status updated to ${isActive} for youth with ID: ${id}`);
-
-        // Re-fetch the data to reflect changes
-        this.fetchEmployerData();
-      },
-      (error) => {
-        console.error('Error updating active status:', error);
-      }
-    );
-  }
   paginate(event: any): void {
     const { first, rows } = event;
     this.paginatedProducts = this.youthList.slice(first, first + rows);
@@ -643,11 +515,10 @@ export class YouthTableComponent implements OnInit {
   noteDialogVisible: boolean = false; // To show/hide the dialog
   noYouthMessage: string = '';
   selectedYouthId: number | null = null;
-  showDialog(id: number, activeTab: string): void {
-    this.selectedYouthId = id;
-    // Reset all dialog visibility flags
-    this.employerDialogVisible = false;
-    this.jobRequestDialogVisible = false;
+  showDialog(youthId: number, activeTab: string): void {
+    this.selectedYouthId = youthId;
+
+    // Reset all dialog visibility states
     this.youthSignupDialogVisible = false;
     
     switch (activeTab) {
@@ -701,41 +572,7 @@ export class YouthTableComponent implements OnInit {
       }
     );
   }
-  fetchYouthByJob(jobs: string[]): void {
-    // Join jobs into a comma-separated string to pass in the URL
-    const jobsQuery = jobs.join(',');
 
-    // Call the service to fetch youth based on jobs array
-    this.youthService.getYouthByJob(jobsQuery).subscribe(
-      (response) => {
-        console.log(`Jobs: ${jobs}`, response);
-
-        // Check if response has youths and handle accordingly
-        if (response.youths && response.youths.length > 0) {
-          // If youths are found, process them and display notes
-          this.youthsNotes = response.youths.map((youth: any) => {
-            return {
-              name: youth.name,
-              notes: youth.notes || '', // Default to empty if no notes available
-            };
-          });
-          this.noYouthMessage = ''; // Reset the message if youths are found
-        } else {
-          // If no youths are found, set an error message
-          this.noYouthMessage = 'No youth for this job yet.';
-        }
-
-        // Always open the dialog
-        this.noteDialogVisible = true;
-      },
-      (error) => {
-        console.error('Error fetching youths:', error);
-        // If there was an error, set the error message
-        this.noYouthMessage = 'Error fetching youths.';
-        this.noteDialogVisible = true; // Show error message in the dialog
-      }
-    );
-  }
 
   displayNoteDialog(youth: any): void {
     this.selectedYouth = youth;
@@ -772,200 +609,4 @@ export class YouthTableComponent implements OnInit {
     });
   }
 
-  assignYouthsToJob(): void {
-    console.log('Employer:', this.selectedJob);
-    console.log(
-      'Selected Youths before assignment:',
-      JSON.stringify(this.selectedYouths, null, 2)
-    );
-
-    const youthsAssigned = []; // Array to track successful assignments
-
-    this.selectedYouths.forEach((youth: any) => {
-      console.log(
-        `Assigning Youth: ID=${youth.id}, Name=${youth.name}`
-      );
-
-      // Send only the youth ID to the backend; the backend will fetch the details
-      this.JobRequestService.assignYouthToJobRequest(
-        this.selectedJob,
-        youth.id
-      ).subscribe({
-        next: () => {
-          console.log(
-            `Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`
-          );
-
-          // Update local state for assigned youths
-          this.assignedYouths.push({
-            id: youth.id,
-            name: youth.name,
-            beneficiary: youth.beneficiary,
-            label: youth.label,
-          });
-
-          // Remove the youth from unassigned youths
-          this.unassignedYouths = this.unassignedYouths.filter(
-            (unassigned: any) => unassigned.id !== youth.id
-          );
-
-          youthsAssigned.push(youth); // Track successfully assigned youth
-
-          // If all selected youths are assigned, optionally update the job status
-          if (youthsAssigned.length === this.selectedYouths.length) {
-            this.updateJobStatusToAssigned();
-          }
-        },
-        error: (error) => {
-          console.error(
-            `Error assigning youth ${youth.name} (ID: ${youth.id}):`,
-            error
-          );
-        },
-      });
-    });
-
-    this.youthDialogVisible = false;
-  }
-
-  getAssignedYouths(jobId: string): void {
-    this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
-      next: (response: any) => {
-        console.log('Assigned Youths Response:', response);
-
-        // Transform the response into a format suitable for your UI
-        this.assignedYouths = response.map((youth: any) => ({
-          id: youth.id,
-          name: youth.name,
-          beneficiary: youth.beneficiary,
-          label: `${youth.name} (${youth.id})${
-            youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-          }`, // Add beneficiary indication
-        }));
-
-        console.log('Transformed Assigned Youths:', this.assignedYouths);
-      },
-      error: (error) => {
-        console.error(
-          `Error fetching assigned youths for job ${jobId}:`,
-          error
-        );
-      },
-    });
-    this.assignedYouthDialogVisible = false;
-
-  }
-  showAssignedYouthDialog(jobName: string, job: string): void {
-    this.currentJob = jobName; // Store the current job for context
-    this.selectedJob = job;
-    this.selectedYouths = []; // Reset selectedYouths for this dialog
-
-    this.youthService.getYouthByJob(jobName).subscribe({
-      next: (allYouthsResponse: any) => {
-        console.log('Response from getYouthByJob:', allYouthsResponse);
-
-        // Filter and format all youths
-        const allYouths = (allYouthsResponse.youths || [])
-          .filter((youth: any) => !youth.workStatus) // Include only youths with workStatus === false
-          .map((youth: any) => ({
-            id: youth.id,
-            name: youth.name || 'Unknown', // Fallback if name is missing
-            beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-            label: `${youth.name || 'Unknown'} (${youth.id})${
-              youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-            }`,
-          }));
-
-        console.log('Filtered and Formatted All Youths:', allYouths);
-
-        this.JobRequestService.getAssignedYouthsByJobId(job).subscribe({
-          next: (assignedResponse: any) => {
-            console.log('Response from getAssignedYouthsByJobId:', assignedResponse);
-
-            // Format assigned youths
-            const assignedYouths = (assignedResponse || []).map((youth: any) => ({
-              id: youth.id,
-              name: youth.firstName || 'Unknown', // Fallback if name is missing
-              beneficiary: youth.beneficiary || false, // Fallback for beneficiary
-              label: `${youth.firstName || 'Unknown'} (${youth.id})${
-                youth.beneficiary ? ' ✅ (Beneficiary)' : ''
-              }`,
-            }));
-
-            console.log('Formatted Assigned Youths:', assignedYouths);
-
-            // Filter out assigned youths from all youths to get unassigned youths
-            this.unassignedYouths = allYouths.filter(
-              (youth: any) =>
-                !assignedYouths.some((assigned: any) => assigned.id === youth.id)
-            );
-
-            this.assignedYouths = assignedYouths;
-
-            console.log('Unassigned Youths:', this.unassignedYouths);
-            console.log('Assigned Youths:', this.assignedYouths);
-
-            this.assignedYouthDialogVisible = true;
-          },
-          error: (error) => {
-            console.error('Error fetching assigned youths:', error);
-          },
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching all youths:', error);
-      },
-    });
-  }
-
-
-  unassignYouth(jobId: string, youthId: string): void {
-    console.log(`Unassigning youth ID: ${youthId} from job ID: ${jobId}`);
-
-    this.JobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
-      next: () => {
-        console.log(`Successfully unassigned youth ID: ${youthId} from job ID: ${jobId}`);
-
-        // Remove the youth from the assigned youths list
-        this.assignedYouths = this.assignedYouths.filter(
-          (youth: any) => youth.id !== youthId
-        );
-
-        // Add the youth back to the unassigned youths list
-        const youth = this.assignedYouths.find((y: any) => y.id === youthId);
-        if (youth) {
-          this.unassignedYouths.push(youth);
-        }
-
-        console.log('Updated Assigned Youths:', this.assignedYouths);
-        console.log('Updated Unassigned Youths:', this.unassignedYouths);
-      },
-      error: (error) => {
-        console.error(
-          `Error unassigning youth ID: ${youthId} from job ID: ${jobId}:`,
-          error
-        );
-      },
-    });
-  }
-
-  private updateJobStatusToAssigned(): void {
-    this.JobRequestService.updateJobRequestStatus(
-      this.selectedJob,
-      'assigned'
-    ).subscribe({
-      next: () => {
-        console.log(
-          `Job request ${this.selectedJob} status updated to 'assigned'.`
-        );
-        this.fetchJobRequests();
-      },
-      error: (error) => {
-        console.error(
-          `Error updating job request ${this.selectedJob} status to 'assigned':`,
-          error
-        );
-      },
-    });
-  }
 }
