@@ -10,6 +10,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VerificationCodeService } from '../../Services/VerificationCode/verification-code.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-SignUp-Employer',
@@ -28,8 +29,15 @@ export class SignUpEmployerComponent implements AfterViewInit  {
   isSignatureModalOpen = false;
   verificationCode: string = '';
   active=true
-
-  @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
+  isLoading: boolean = false;
+  locationFetched = false;
+  showManualMap = false;
+  userLat: number | null = null;
+  userLng: number | null = null;
+  map: L.Map | undefined;
+  manualMap: L.Map | undefined;
+  manualMarker: L.Marker | undefined;
+@ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
 
   constructor(private fb: FormBuilder, private employerService: EmployerService, private http: HttpClient, private verificationCodeService: VerificationCodeService,  private router: Router
@@ -49,12 +57,17 @@ export class SignUpEmployerComponent implements AfterViewInit  {
         whatsappNumber: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         area: ['', Validators.required],
+        latitude: ['', Validators.required],
+        longitude: ['', Validators.required],
       },
       { validators: this.passwordsMatch }
     );
   }
   ngAfterViewInit(): void {
     this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
+    if (this.locationFetched) {
+      this.loadMap();
+    }
 
   }
   debugVerificationCode(): void {
@@ -118,7 +131,9 @@ active:this.active,
       email: this.signupForm.value.email,
       area: this.signupForm.value.area,
       signature: this.signatureImage || null,
-      role: 'Employer'
+      role: 'Employer',
+      latitude: this.signupForm.value.latitude,   // Include latitude
+      longitude: this.signupForm.value.longitude 
 
     };
   }
@@ -174,6 +189,91 @@ active:this.active,
       }
     );
   }
+
+  getUserLocation() {
+    this.isLoading = true;
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.isLoading = false;
+          this.locationFetched = true;
+          this.userLat = position.coords.latitude;
+          this.userLng = position.coords.longitude;
+          setTimeout(() => this.loadMap(), 100); // Ensure map loads after HTML renders
+        },
+        (error) => {
+          this.isLoading = false;
+          alert('Error fetching location: ' + error.message);
+        }
+      );
+    } else {
+      this.isLoading = false;
+      alert('Geolocation is not supported by your browser.');
+    }
+  }
+
+  loadMap() {
+    if (!this.userLat || !this.userLng) return;
+
+    if (this.map) {
+      this.map.remove();
+    }
+
+    this.map = L.map('map').setView([this.userLat, this.userLng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
+
+    L.marker([this.userLat, this.userLng]).addTo(this.map)
+      .bindPopup('Your location')
+      .openPopup();
+  }
+
+  openLocationPopup() {
+    this.showManualMap = true;
+    this.locationFetched = false; // Hide the automatic map
+  
+    setTimeout(() => {
+      // Remove any existing map instance before creating a new one
+      if (this.manualMap) {
+        this.manualMap.remove();
+      }
+  
+      this.loadManualMap();
+    }, 100);
+  }
+  
+  loadManualMap() {
+    if (this.manualMap) {
+      this.manualMap.remove();
+    }
+
+    this.manualMap = L.map('manual-map').setView([34.5126668, 35.964311], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.manualMap);
+
+    this.manualMap.on('click', (e: L.LeafletMouseEvent) => {
+      if (this.manualMarker) {
+        this.manualMarker.setLatLng(e.latlng);
+      } else {
+        this.manualMarker = L.marker(e.latlng).addTo(this.manualMap!);
+      }
+    });
+  }
+
+  confirmManualLocation() {
+    if (this.manualMarker) {
+      const latlng = this.manualMarker.getLatLng();
+      this.userLat = latlng.lat;
+      this.userLng = latlng.lng;
+      this.locationFetched = true; // Show the automatic map after manual selection
+      this.showManualMap = false; // Close the manual selection popup
+      setTimeout(() => this.loadMap(), 100);
+    } else {
+      alert('Please select a location on the map.');
+    }}
+
+  closeLocationPopup() {
+    this.showManualMap = false;
+  }
+  
   ngOnInit() {
   }
 

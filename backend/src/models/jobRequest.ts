@@ -6,9 +6,27 @@ export interface AssignedYouth {
   firstName: string;
   lastName: string;
   dob: string;
+  mobilePhone: string;
+
   cv: string;
   status: string;
+  action?: 'accepted' | 'rejected' | 'approved' | null;
+  isDisabled?: boolean;
+  EmployerContract?: {
+    startDate: string;
+    signature: string;
+    agreementAccepted: boolean;
+  };
+  YouthContract?: {
+    mobilePhone: string;
+
+    startDate: string | null;
+
+    signature: string;
+    agreementAccepted: boolean;
+  };
 }
+
 interface JobAttributes {
   jobId: string;
   employerId: string;

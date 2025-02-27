@@ -168,7 +168,6 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
         status: 'waiting',
       };
     } else {
-      // Add new youth assignment
       assignedYouths.push({
         id: youthId,
         firstName: youth.firstNameEn,
@@ -176,6 +175,7 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
         dob: youth.dob,
         cv: youth.cv,
         status: 'waiting',
+        mobilePhone: ''
       });
     }
 

@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
@@ -110,7 +110,8 @@ export class EmployerTableComponent implements OnInit {
 
   constructor(
     private employerService: EmployerService,
-    private lookupService: LookupService
+    private lookupService: LookupService,
+    private cdr: ChangeDetectorRef
 
   ) {
     this.appliedJobFilterSubject.pipe(debounceTime(300)).subscribe((filterValue) => {
@@ -124,9 +125,8 @@ export class EmployerTableComponent implements OnInit {
     this.region = localStorage.getItem('adminArea') || ''; 
     console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
-    if (this.fetchedData == 'employer') {
-      this.fetchEmployerData();
-    } 
+    this.fetchEmployerData();
+
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -224,66 +224,54 @@ export class EmployerTableComponent implements OnInit {
     this.employerService.getAllEmployers().subscribe(
       (data: any[]) => {
         console.log('Fetched Employer Data:', data);
-
-        // Step 1: Filter by `status` if `active` is provided
+  
         let filteredData = this.active !== undefined
           ? data.filter((item) => item.active === this.active)
           : data;
   
-          if (this.selectedDataScope === 'myArea' && this.region && this.region.trim() !== '') {
-            filteredData = filteredData.filter((item) => {
-              return (
-                item.area &&
-                item.area.toLowerCase() === this.region.toLowerCase()
-              );
-            });
-          } else if (this.selectedDataScope === 'all') {
-            console.log('Admin selected to view all data. No region filtering applied.');
-          }
+        if (this.selectedDataScope === 'myArea' && this.region && this.region.trim() !== '') {
+          filteredData = filteredData.filter((item) => 
+            item.area && item.area.toLowerCase() === this.region.toLowerCase()
+          );
+        } else if (this.selectedDataScope === 'all') {
+          console.log('Admin selected to view all data. No region filtering applied.');
+        }
   
-          filteredData = filteredData.filter((item) => {
-            const matchesArea =
-              this.selectedAreas.length === 0 ||
-              this.selectedAreas.includes(item.area);
-            return (
-              matchesArea
-            );
-          });
-        // Step 2: Configure columns dynamically if filtered data is available
+        filteredData = filteredData.filter((item) => {
+          const matchesArea = this.selectedAreas.length === 0 || this.selectedAreas.includes(item.area);
+          return matchesArea;
+        });
+  
         if (filteredData.length > 0) {
-          // Exclude unwanted columns
           const filteredColumns = Object.keys(filteredData[0]).filter(
             (key) => !this.excludedColumns.includes(key)
           );
-
-          // Map filtered columns to the format expected by PrimeNG
+  
           this.cols = filteredColumns.map((key) => ({
             field: key,
             header: this.capitalize(key),
           }));
+  
           const savedColumns = localStorage.getItem('selectedColumns');
           if (savedColumns) {
             this._selectedColumns = JSON.parse(savedColumns);
-            this.cols = [...this._selectedColumns]; // Synchronize `cols`
+            this.cols = [...this._selectedColumns];
           } else {
-            // Default to all columns if no saved state
             this._selectedColumns = this.cols;
             this.cols = [...this._selectedColumns];
           }
-
-
-
-          // Initialize _selectedColumns with all columns except "Action"
+  
           if (this.savedColumns) {
             this.savedColumns = this.cols;
           } else {
             this._selectedColumns = this.cols;
           }
         }
+        console.log('Filtered Employer Data:', filteredData);
 
-        // Step 3: Update youth list and paginated products
         this.employerList = filteredData;
-        this.paginatedProducts = this.employerList;
+        this.paginatedProducts = [...this.employerList]; // Spread operator forces detection
+        this.cdr.detectChanges(); // Manually trigger change detection
       },
       (error) => {
         console.error('Error fetching employer data:', error);

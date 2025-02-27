@@ -15,7 +15,9 @@ interface EmployerAttributes {
   area: string;
   signature?: string;
   profileImage?: string;
-  role?:'employer'
+  role?:'employer';
+  latitude?: number;    // New field for latitude
+  longitude?: number;
 }
 
 interface EmployerCreationAttributes extends Optional<EmployerAttributes, 'id'> {}
@@ -34,7 +36,9 @@ class Employer extends Model<EmployerAttributes, EmployerCreationAttributes> imp
   public area!: string;
   public signature?: string;
   public profileImage?: string;
-public role?:'employer';
+  public role?:'employer';
+  public latitude?: number;    // New field for latitude
+  public longitude?: number;
   // Timestamps
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -101,7 +105,15 @@ Employer.init(
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    latitude: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+    },
+    longitude: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+    },
   },
   {
     sequelize,

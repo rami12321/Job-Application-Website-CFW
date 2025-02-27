@@ -395,12 +395,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.agreementEndDate = `${year}-${month}-${day}`;
   }
 
-  openContractModal(job: any): void {
-    console.log('Opening Contract Modal', job);
+openContractModal(job: any): void {
+  console.log('Opening Contract Modal', job);
+  this.selectedJob = job; // Assign the passed job to selectedJob
+  this.isContractModalOpen = true;
+  this.cdr.detectChanges();
+}
 
-    this.isContractModalOpen = true;
-    this.cdr.detectChanges();
-  }
   closeContractModal() {
     this.isContractModalOpen = false;
   }

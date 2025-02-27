@@ -11,7 +11,10 @@ export interface Employer {
   area: string;
   signature: string | null;
   profileImage?: string;
-    role: string;
-    active:boolean,
+  role: string;
+  active:boolean,
+
+  latitude?: number;    // New field for latitude
+  longitude?: number;
 
 }

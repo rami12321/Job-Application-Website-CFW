@@ -161,7 +161,47 @@
     </p>
   </div>
 
+  <div class="location-section">
+    <label for="location" class="block text-sm font-medium">Location</label>
+  
+    <!-- Automatic Location Button -->
+    <button type="button" class="bg-green-600 text-white px-4 py-2 rounded" (click)="getUserLocation()">
+      Get My Location
+    </button>
+  
+    <!-- New: Manual Selection Button -->
+    <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded ml-2" (click)="openLocationPopup()">
+      Choose Location on Map
+    </button>
+  
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="mt-2 flex justify-center">
+      <div class="loader"></div>
+    </div>
+  
+    <!-- Automatic Map Display -->
+<!-- Automatic Map Display (Only shows when manual selection is not active) -->
+<div *ngIf="locationFetched && !showManualMap" class="mt-4">
+  <div id="map" style="height: 300px; width: 100%; border: 1px solid #ccc;"></div>
+</div>
 
+  </div>
+  
+  <!-- Manual Selection Popup -->
+  <div class="popup-overlay" *ngIf="showManualMap">
+    <div class="popup-content">
+      <h3>Select Your Location</h3>
+      <div id="manual-map" style="height: 300px; width: 100%;"></div>
+      <button class="bg-green-600 text-white px-4 py-2 rounded mt-2" (click)="confirmManualLocation()">
+        Confirm Location
+      </button>
+      <button class="bg-red-600 text-white px-4 py-2 rounded mt-2 ml-2" (click)="closeLocationPopup()">
+        Cancel
+      </button>
+    </div>
+  </div>
+  
+  
   
   <div class="space-y-6 border-b border-gray-300 pb-6">
     <label for="password" class="block text-sm font-medium mb-2">Password *</label>
