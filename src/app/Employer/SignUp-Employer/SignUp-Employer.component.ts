@@ -199,6 +199,13 @@ active:this.active,
           this.locationFetched = true;
           this.userLat = position.coords.latitude;
           this.userLng = position.coords.longitude;
+  
+          // Patch the form values for latitude and longitude
+          this.signupForm.patchValue({
+            latitude: this.userLat,
+            longitude: this.userLng,
+          });
+  
           setTimeout(() => this.loadMap(), 100); // Ensure map loads after HTML renders
         },
         (error) => {
@@ -211,6 +218,27 @@ active:this.active,
       alert('Geolocation is not supported by your browser.');
     }
   }
+  
+  confirmManualLocation() {
+    if (this.manualMarker) {
+      const latlng = this.manualMarker.getLatLng();
+      this.userLat = latlng.lat;
+      this.userLng = latlng.lng;
+      this.locationFetched = true; // Show the automatic map after manual selection
+      this.showManualMap = false; // Close the manual selection popup
+  
+      // Patch the form values for latitude and longitude
+      this.signupForm.patchValue({
+        latitude: this.userLat,
+        longitude: this.userLng,
+      });
+  
+      setTimeout(() => this.loadMap(), 100);
+    } else {
+      alert('Please select a location on the map.');
+    }
+  }
+  
 
   loadMap() {
     if (!this.userLat || !this.userLng) return;
@@ -258,17 +286,6 @@ active:this.active,
     });
   }
 
-  confirmManualLocation() {
-    if (this.manualMarker) {
-      const latlng = this.manualMarker.getLatLng();
-      this.userLat = latlng.lat;
-      this.userLng = latlng.lng;
-      this.locationFetched = true; // Show the automatic map after manual selection
-      this.showManualMap = false; // Close the manual selection popup
-      setTimeout(() => this.loadMap(), 100);
-    } else {
-      alert('Please select a location on the map.');
-    }}
 
   closeLocationPopup() {
     this.showManualMap = false;
