@@ -8,7 +8,6 @@ import { Youth } from '../../Model/Youth';
 })
 export class YouthServiceService {
   private apiUrl = 'http://localhost:3000/youth';
-  private youthDbUrl = 'assets/data/youthdb.json';
 
   constructor(private http: HttpClient) {}
 
@@ -91,7 +90,7 @@ export class YouthServiceService {
       `${this.apiUrl}/${id}/appliedJob`  // Ensure it matches your backend route
     );
   }
-  
+
 
   getYouthByJob(job: string): Observable<any> {
     const url = `${this.apiUrl}/appliedJob/${encodeURIComponent(job)}`; // Encode the job name for safe URL usage
