@@ -163,6 +163,10 @@
 
   <div class="location-section">
     <label for="location" class="block text-sm font-medium">Location</label>
+    <!-- New instruction line -->
+    <p class="text-xs text-gray-600 mb-2">
+      Please ensure you are at your organization or workplace location.
+    </p>
   
     <!-- Automatic Location Button -->
     <button type="button" class="bg-green-600 text-white px-4 py-2 rounded" (click)="getUserLocation()">
@@ -179,12 +183,18 @@
       <div class="loader"></div>
     </div>
   
-    <!-- Automatic Map Display -->
-<!-- Automatic Map Display (Only shows when manual selection is not active) -->
-<div *ngIf="locationFetched && !showManualMap" class="mt-4">
-  <div id="map" style="height: 300px; width: 100%; border: 1px solid #ccc;"></div>
-</div>
-
+    <!-- Display fetched location details -->
+    <div *ngIf="locationFetched" class="mt-2">
+      <p>
+        Your location: <strong>Latitude:</strong> {{ userLat }},
+        <strong>Longitude:</strong> {{ userLng }}
+      </p>
+    </div>
+  
+    <!-- Automatic Map Display (Only shows when manual selection is not active) -->
+    <div *ngIf="locationFetched && !showManualMap" class="mt-4">
+      <div id="map" style="height: 300px; width: 100%; border: 1px solid #ccc;"></div>
+    </div>
   </div>
   
   <!-- Manual Selection Popup -->
@@ -200,6 +210,7 @@
       </button>
     </div>
   </div>
+  
   
   
   

@@ -11,7 +11,10 @@ import SignaturePad from 'signature_pad';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Employer } from '../../Model/Employer';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
-
+interface DailySchedule {
+  workType: string;
+  shift: string;
+}
 @Component({
   selector: 'app-job-request-details',
   standalone: true,
@@ -19,10 +22,12 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
+
 export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterViewChecked, OnChanges{
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
   private userId: string | null = null;
+  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   isContractModalOpen = false;
   agreementStartDate: string | null = null;
@@ -34,6 +39,24 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   isEmployerContractModalOpen = false;
 isYouthContractModalOpen = false;
 public employer: Employer | undefined;
+// Define an interface if needed:
+
+
+// Initialize working schedule for each day
+workingSchedule: { [day: string]: { workType: string; shift: string } } = {
+  Monday: { workType: 'Office', shift: 'Morning' },
+  Tuesday: { workType: 'Office', shift: 'Morning' },
+  Wednesday: { workType: 'Office', shift: 'Morning' },
+  Thursday: { workType: 'Office', shift: 'Morning' },
+  Friday: { workType: 'Office', shift: 'Morning' },
+  Saturday: { workType: 'Office', shift: 'Morning' },
+  Sunday: { workType: 'Office', shift: 'Morning' },
+};
+
+
+averageWorkingHours: number = 8; // default value
+workingNotes: string = '';
+
 selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
@@ -201,20 +224,30 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
     }
   }
-
   submitContract() {
-    if (!this.selectedYouth || !this.signatureImage || !this.agreementStartDate || !this.isTermsAccepted || !this.jobRequest) {
+    // Check required fields
+    if (
+      !this.selectedYouth ||
+      !this.signatureImage ||
+      !this.agreementStartDate ||
+      !this.isTermsAccepted ||
+      !this.jobRequest
+    ) {
       console.error('All fields are required to submit the contract.');
       return;
     }
-
+  
+    // Prepare the contract details including the new schedule data
     const contractDetails = {
       startDate: this.agreementStartDate,
       signature: this.signatureImage,
       agreementAccepted: this.isTermsAccepted,
+      workingSchedule: this.workingSchedule,          // New: Daily work type & shift data
+      averageWorkingHours: this.averageWorkingHours,    // New: Average working hours per day
+      workingNotes: this.workingNotes                   // New: Notes for many shifts
     };
-
-    // Update the selected youth in the assignedYouths array
+  
+    // Update the selected youth in the assignedYouths array with the new contract details
     this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map((youth) => {
       if (youth.id === this.selectedYouth.id) {
         return {
@@ -224,10 +257,11 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
       return youth;
     });
-
+  
     // Log to verify the updated job request structure
     console.log('Updated jobRequest:', this.jobRequest);
-
+  
+    // Submit the updated job request to the service
     this.jobRequestService
       .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
       .subscribe({
@@ -235,13 +269,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           console.log('Contract saved successfully:', response);
           this.closeContractModal();
           this.fetchJobRequestDetails();
-
         },
         error: (err) => {
           console.error('Failed to save the contract:', err);
         },
       });
   }
+  
 
 
 
