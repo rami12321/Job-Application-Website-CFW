@@ -4,6 +4,8 @@ export interface Job {
 
   jobId?: string;
   employerId:string;
+  employerLatitude?: number;   // New field for employer latitude
+  employerLongitude?: number; 
   job: string;
   category?: string;  // Main category (e.g., "Design")
   title?: string;

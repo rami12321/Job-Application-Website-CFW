@@ -53,6 +53,8 @@ export class MainEmployerComponent {
   areaOptions: string[] = [];
   campTypeOptions: string[] = [];
   campOptions: string[] = [];
+  employerLatitude: number | undefined;
+  employerLongitude: number | undefined;
   completedSearchQuery: string = '';
   userId = localStorage.getItem('userId') || '';
 
@@ -124,13 +126,12 @@ export class MainEmployerComponent {
     private jobRequestService: JobRequestService,
     private employerservice: EmployerService
   ) {}
-
   ngOnInit(): void {
     this.lookupService.getLookupData().subscribe(
       (data) => {
         this.lookupData = data;
         this.areaOptions = this.lookupData.areas.map((area: any) => area.name);
-
+  
         console.log('Lookup data loaded:', this.lookupData);
         console.log('Area option:', this.areaOptions);
       },
@@ -138,7 +139,7 @@ export class MainEmployerComponent {
         console.error('Error loading lookup data:', error);
       }
     );
-
+  
     this.lookupService.getJobCategories().subscribe({
       next: (data: any) => {
         if (data && data.length > 0 && data[0].categories) {
@@ -156,20 +157,27 @@ export class MainEmployerComponent {
         console.error('Failed to fetch categories:', err);
       },
     });
+  
     this.sortKey = 'id';
     this.sortDirection = 'desc';
     const employerId = localStorage.getItem('userId');
     console.log('Employer ID from localStorage:', employerId);
+  
     if (employerId !== null) {
       this.employerservice.getEmployerById(employerId).subscribe((response) => {
         this.userName = response.fullNameEnglish || 'Unknown'; // Youth's name
+  
+        // Retrieve and store the employer's location values
+        this.employerLatitude = response.latitude;
+        this.employerLongitude = response.longitude;
+        console.log('Employer location:', this.employerLatitude, this.employerLongitude);
       });
-    }
-    if (!employerId) {
+    } else {
       console.error('Employer ID not found in localStorage');
       this.errorMessage = 'You must be logged in to view this data';
       return;
     }
+  
     // Fetch organization name by employerId
     this.employerservice.getOrganizationNameById(employerId).subscribe({
       next: (response) => {
@@ -181,12 +189,13 @@ export class MainEmployerComponent {
         console.error('Error fetching organization name:', err);
       },
     });
-
+  
     this.fetchJobTableData(employerId);
     this.totalPages = Math.ceil(
       this.filteredAssignedJobs.length / this.itemsPerPage
     );
   }
+  
   onAreaChange(area: string): void {
     console.log('Selected Area:', area);
     this.selectedArea = area;
@@ -598,22 +607,23 @@ export class MainEmployerComponent {
       console.error('Title and number of employees are required.');
       return;
     }
-
+  
+    // Build the job request object including the employer's saved location
     const jobRequest: Job = {
       ...this.jobDetails,
       job: this.selectedjob,
       category: this.selectedCategory,
       area: this.selectedArea,
       organizationName: this.organizationName,
-      createdDate: new Date().toISOString(), // Ensure new job has a timestamp
-    };
-
+      createdDate: new Date().toISOString(),
+      employerLatitude: this.employerLatitude,
+      employerLongitude: this.employerLongitude,    };
+  
     this.jobRequestService.saveJobData(jobRequest).subscribe({
       next: (response) => {
         console.log('Job Request Submitted Successfully:', response);
         this.jobRequested = true;
         this.closeDialog();
-
         window.location.reload();
       },
       error: (err) => {
@@ -621,7 +631,6 @@ export class MainEmployerComponent {
       },
     });
   }
-
   resetForm(): void {
     this.selectedCategory = '';
     this.selectedArea = '';

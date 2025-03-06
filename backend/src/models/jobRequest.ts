@@ -30,6 +30,8 @@ export interface AssignedYouth {
 interface JobAttributes {
   jobId: string;
   employerId: string;
+  employerLatitude?: number;    // New field for latitude
+  employerLongitude?: number;
   job: string;
   category?: string;
   organizationName?: string;
@@ -52,6 +54,8 @@ interface JobCreationAttributes extends Optional<JobAttributes, 'jobId'> {}
 class Job extends Model<JobAttributes, JobCreationAttributes> implements JobAttributes {
   public jobId!: string;
   public employerId!: string;
+  public employerLatitude?: number;    // New field for latitude
+  public employerLongitude?: number;
   public job!: string;
   public category?: string;
   public organizationName?: string;
@@ -92,6 +96,15 @@ Job.init(
         key: 'id'
       }
     },
+    employerLatitude: {
+      type: DataTypes.DECIMAL(9, 6), // 9 digits total, 6 after the decimal point
+      allowNull: true,
+    },
+    employerLongitude: {
+      type: DataTypes.DECIMAL(9, 6),
+      allowNull: true,
+    },
+    
     job: {
       type: DataTypes.STRING,
       allowNull: false,
