@@ -212,82 +212,106 @@
               <div class="grid grid-cols-2 gap-6 mt-4">
                 <!-- CV -->
                 <p class="space-y-2">
-                  <strong>CV:  </strong>
-                  <span>
-                    <a href="javascript:void(0)" (click)="openPdfModal('CV-Example.pdf')" class="text-blue-600 hover:underline">
-                      CV-Example.pdf
+                  <strong>CV: </strong>
+                  <span *ngIf="youth?.cv; else nocv">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.cv)" class="text-blue-600 hover:underline">
+                      View CV
                     </a>
                   </span>
+                  <ng-template #nocv>
+                    <span class="text-gray-500">No CV uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Cover Letter -->
                 <p class="space-y-2">
                   <strong>Cover Letter:  </strong>
-                  <span>
-                    <a href="javascript:void(0)" (click)="openPdfModal('Cover-Letter-example.pdf')" class="text-blue-600 hover:underline">
-                      Cover-Letter-example.pdf
+                  <span *ngIf="youth?.coverLetter; else nocoverLetter">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.coverLetter)" class="text-blue-600 hover:underline">
+                      View Cover Letter
                     </a>
                   </span>
+                  <ng-template #nocoverLetter>
+                    <span class="text-gray-500">No Cover Letter uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Identity Card -->
                 <p class="space-y-2">
                   <strong>Identity Card:  </strong>
-                  <span>
-                    <a href="javascript:void(0)" (click)="openPdfModal('Identity-Example.pdf')" class="text-blue-600 hover:underline">
-                      Identity-Example.pdf
+                  <span *ngIf="youth?.identityCard; else noidentityCard">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.identityCard)" class="text-blue-600 hover:underline">
+                      View identity Card
                     </a>
                   </span>
+                  <ng-template #noidentityCard>
+                    <span class="text-gray-500">No identity Card uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Registration Card -->
                 <p class="space-y-2">
                   <strong>Registration Card:  </strong>
-                  <span>
-                    <a href="javascript:void(0)" (click)="openPdfModal('Registration-Card-Example.pdf')" class="text-blue-600 hover:underline">
-                      Registration-Card-Example.pdf
+                  <span *ngIf="youth?.registrationCard; else noregistrationCard">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.registrationCard)" class="text-blue-600 hover:underline">
+                     View registration Card
                     </a>
                   </span>
+                  <ng-template #noregistrationCard>
+                    <span class="text-gray-500">No registration Card uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Degree -->
                 <p class="space-y-2">
                   <strong>Degree:  </strong>
-                  <span >
-                    <a href="javascript:void(0)" (click)="openPdfModal('Degree-Example.pdf')" class="text-blue-600 hover:underline">
-                      Degree-Example.pdf
+                  <span *ngIf="youth?.degree; else nodegree">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.degree)" class="text-blue-600 hover:underline">
+                     View Degree
                     </a>
                   </span>
+                  <ng-template #nodegree>
+                    <span class="text-gray-500">No Degree uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- PRCS Proof -->
                 <p class="space-y-2">
                   <strong>PRCS Proof:  </strong>
-                  <span >
-                    <a href="javascript:void(0)" (click)="openPdfModal('PRCS-Example.pdf')" class="text-blue-600 hover:underline">
-                      PRCS-Example.pdf
+                  <span *ngIf="youth?.prcsProof; else noprcsProof">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?. prcsProof)" class="text-blue-600 hover:underline">
+                    View PRCS proof
                     </a>
                   </span>
+                  <ng-template #noprcsProof>
+                    <span class="text-gray-500">No PRCS proof uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Fire Brigades Proof -->
                 <p class="space-y-2">
                   <strong>Fire Brigades Proof:  </strong>
-                  <span >
-                    <a href="javascript:void(0)" (click)="openPdfModal('Fire-Brigades-Example.pdf')" class="text-blue-600 hover:underline">
-                      Fire-Brigades-Example.pdf
+                  <span *ngIf="youth?.fireProof; else nofireProof">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?.fireProof)" class="text-blue-600 hover:underline">
+                      View Fire Brigades proof
                     </a>
                   </span>
+                  <ng-template #nofireProof>
+                    <span class="text-gray-500">No Fire Brigades proof uploaded</span>
+                  </ng-template>
                 </p>
               
                 <!-- Al-Shifaa Proof -->
                 <p class="space-y-2">
                   <strong>Al-Shifaa Proof:  </strong>
-                  <span >
-                    <a href="javascript:void(0)" (click)="openPdfModal('Alshifaa-example.pdf')" class="text-blue-600 hover:underline">
-                      Alshifaa-example.pdf
+                  <span *ngIf="youth?.alShifaaProof; else noalShifaaProof">
+                    <a href="javascript:void(0)" (click)="openPdfModal(youth?. alShifaaProof)" class="text-blue-600 hover:underline">
+                    View Al Shifaa proof
                     </a>
                   </span>
+                  <ng-template #noalShifaaProof>
+                    <span class="text-gray-500">No Al Shifaa proof uploaded</span>
+                  </ng-template>
                 </p>
               </div>
               

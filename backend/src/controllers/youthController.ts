@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Youth from '../models/youth'; // Import the Youth model
-
+import path from 'path';
+import fs from 'fs';
 // Get all youths
 export const getAllYouth = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -33,16 +34,67 @@ export const getAllYouth = async (req: Request, res: Response): Promise<void> =>
 // Create a new youth
 export const createYouth = async (req: Request, res: Response): Promise<void> => {
   try {
+    // Retrieve the youth data from the body.
     const newYouth = req.body;
     newYouth.createdAt = new Date().toISOString(); // Add createdAt timestamp
     newYouth.isEdited = false; // Set isEdited to false by default
 
+    // If a file was uploaded (via Multer), store its file path.
+    // For example, assuming the file is for the CV field:
+    if (req.files) {
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      
+      const documentFields = [
+        'cv', 'coverLetter', 'identityCard', 'registrationCard',
+        'degree', 'prcsProof', 'fireProof', 'alShifaaProof'
+      ];
+
+      documentFields.forEach(field => {
+        if (files[field]?.[0]) {
+          newYouth[field] = `http://localhost:3000/uploads/${files[field][0].filename}`;
+        }
+      });
+    }
+
+    // Create the new youth record in the database.
     const createdYouth = await Youth.create(newYouth);
     res.status(201).json(createdYouth);
   } catch (error) {
     res.status(500).json({ message: 'Error creating youth', error });
   }
 };
+
+export const getYouthDocument = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id, docType } = req.params;
+    const validDocuments = [
+      'cv', 'coverLetter', 'identityCard', 'registrationCard',
+      'degree', 'prcsProof', 'fireProof', 'alShifaaProof'
+    ];
+
+    if (!validDocuments.includes(docType)) {
+      res.status(400).json({ message: "Invalid document type" });
+      return;
+    }
+
+    const youth = await Youth.findByPk(id);
+    if (!youth || !youth[docType]) {
+      res.status(404).json({ message: "Document not found" });
+      return;
+    }
+
+    const filePath = path.join(__dirname, '..', youth[docType]);
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ message: "File not found on server" });
+      return;
+    }
+
+    res.sendFile(filePath);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving document", error });
+  }
+};
+
 
 // Update youth camp
 export const updateYouthCamp = async (req: Request, res: Response): Promise<void> => {

@@ -103,6 +103,16 @@ export class SignUpYouthComponent implements OnInit {
   isPdfModalAlShifaaProofOpen: boolean = false;
 
   currentPdfUrl: string | null = null;
+
+  selectedFile: File | null = null;
+  coverLetterFile: File | null = null;
+  identityCardFile: File | null = null;
+ registrationCardFile : File | null = null;
+ degreeFile : File | null = null;
+ prcsProofFile: File | null = null;
+ fireProofFile: File | null = null;
+ alShifaaProofFile : File | null = null;
+
   constructor(private fb: FormBuilder,
     private youthService: YouthServiceService,
     private lookupService: LookupService,
@@ -671,6 +681,7 @@ export class SignUpYouthComponent implements OnInit {
       const file = input.files[0];
       this.prcsProofFileName = file.name;
 
+      this.prcsProofFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -713,6 +724,7 @@ export class SignUpYouthComponent implements OnInit {
       const file = input.files[0];
       this.alShifaaProofFileName = file.name;
 
+      this.alShifaaProofFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -753,7 +765,7 @@ export class SignUpYouthComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       this.fireProofFileName = file.name;
-
+      this.fireProofFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -782,10 +794,12 @@ export class SignUpYouthComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       this.degreeFileName = file.name;
+      this.degreeFile = input.files[0];
 
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
+        this.selectedFile = input.files[0];
         fileReader.onload = () => {
           if (fileReader.result instanceof ArrayBuffer) {
             const blob = new Blob([fileReader.result], { type: 'application/pdf' });
@@ -824,6 +838,7 @@ export class SignUpYouthComponent implements OnInit {
       const file = input.files[0];
       this.registrationCardFileName = file.name;
 
+      this.registrationCardFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -865,6 +880,7 @@ export class SignUpYouthComponent implements OnInit {
       const file = input.files[0];
       this.identityCardFileName = file.name;
 
+      this.identityCardFile= input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -967,6 +983,7 @@ export class SignUpYouthComponent implements OnInit {
       const file = input.files[0];
       this.coverLetterFileName = file.name;
 
+      this.coverLetterFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -995,7 +1012,7 @@ export class SignUpYouthComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       this.cvFileName = file.name;
-
+      this.selectedFile = input.files[0];
       if (file.type === 'application/pdf') {
         const fileReader = new FileReader();
 
@@ -1118,20 +1135,41 @@ export class SignUpYouthComponent implements OnInit {
     };
   }
 
+  // When submitting, use FormData to bundle the form fields and the file.
   onSubmit(): void {
-    const youth = this.createYouthModel();
+    const formData = new FormData();
 
-    this.youthService.submitFormData(youth).subscribe(
-      (response) => {
-        console.log('Form data submitted successfully:', response);
-        alert('Form data saved successfully!');
-        // Navigate to the login page
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        console.error('Error submitting form data:', error);
-        alert('Failed to save form data.');
+    // Create your youth model object from the form data.
+    const youthModel = this.createYouthModel();
+
+    // Append each property of the youth model to the FormData
+    for (const key in youthModel) {
+      if (youthModel.hasOwnProperty(key)) {
+        formData.append(key, youthModel[key]);
       }
+    }
+
+    const fileControls = [
+      { control: 'cv', file: this.selectedFile },
+      { control: 'coverLetter', file: this.coverLetterFile },
+      { control: 'identityCard', file: this.identityCardFile },
+      { control: 'registrationCard', file: this.registrationCardFile },
+      { control: 'degree', file: this.degreeFile },
+      { control: 'prcsProof', file: this.prcsProofFile },
+      { control: 'fireProof', file: this.fireProofFile },
+      { control: 'alShifaaProof', file: this.alShifaaProofFile }
+    ];
+  
+    fileControls.forEach(({ control, file }) => {
+      if (file) {
+        formData.append(control, file, file.name);
+      }
+    });
+
+    // Submit the FormData using the YouthService
+    this.youthService.submitFormData(formData).subscribe(
+      (response) => console.log("Form data submitted successfully:", response),
+      (error) => console.error("Error during form submission:", error)
     );
   }
 

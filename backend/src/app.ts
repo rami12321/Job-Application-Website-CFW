@@ -12,7 +12,7 @@ import Employer from './models/employer';
 import Signature from './models/signature';
 import Youth from './models/youth';
 import adminRoutes from './routes/adminRoutes';
-
+import path from 'path';
 sequelize.sync({ alter: true }) // `force: true` will drop existing tables and recreate them
   .then(() => {
     console.log('✅ Database synced successfully!');
@@ -40,6 +40,8 @@ app.use('/api', verificationcodeRoutes);
 app.delete('/api/verificationCode/:code', deleteCode);
 app.put('/youth/:id/appliedJob', updateAppliedJob);
 app.use('/admin', adminRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 
 // Start the server
 sequelize.authenticate().then(() => {

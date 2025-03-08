@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SecurityContext } from '@angular/core';
+import { DomSanitizer,  } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-youthsignup-details',
@@ -21,7 +23,7 @@ export class YouthSignupDetailsComponent implements OnInit {
   @Input() youthId!: number; // Accept ID from parent
   public youth: Youth | undefined;
 
-  constructor(private youthService: YouthServiceService) {
+  constructor(private youthService: YouthServiceService,     private sanitizer: DomSanitizer) {
 
   }
 
@@ -48,13 +50,24 @@ export class YouthSignupDetailsComponent implements OnInit {
       },
     });
   }
-  openPdfModal(fileName: string) {
-    this.currentPdfUrl = `assets/PDF-Static/${fileName}`;
-    this.isPdfModalOpen = true;
+  openPdfModal(fileUrl: string | null | undefined): void {
+    if (!fileUrl) {
+      console.warn("No file available for preview.");
+      return;
+    }
+    // First, bypass security to get a SafeResourceUrl
+    const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileUrl);
+    // Then, sanitize it to get a string
+    const sanitizedUrl = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, safeUrl);
+    if (sanitizedUrl) {
+      this.currentPdfUrl = sanitizedUrl;
+      this.isPdfModalOpen = true;
+    } else {
+      console.error("Sanitization returned null for URL:", fileUrl);
+    }
   }
 
-  // Function to close the modal
-  closePdfModal() {
+  closePdfModal(): void {
     this.isPdfModalOpen = false;
     this.currentPdfUrl = null;
   }
