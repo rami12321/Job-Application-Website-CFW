@@ -12,6 +12,7 @@ import Employer from './models/employer';
 import Signature from './models/signature';
 import Youth from './models/youth';
 import adminRoutes from './routes/adminRoutes';
+import attendanceRoutes from './routes/attendanceRoutes';
 
 sequelize.sync({ alter: true }) // `force: true` will drop existing tables and recreate them
   .then(() => {
@@ -40,6 +41,7 @@ app.use('/api', verificationcodeRoutes);
 app.delete('/api/verificationCode/:code', deleteCode);
 app.put('/youth/:id/appliedJob', updateAppliedJob);
 app.use('/admin', adminRoutes);
+app.use('/attendance', attendanceRoutes); // Attendance endpoints
 
 // Start the server
 sequelize.authenticate().then(() => {
