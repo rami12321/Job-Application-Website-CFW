@@ -724,7 +724,6 @@
 </div>
 
 
-
 <!-- Attendance Modal -->
 <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="attendanceModalOpen">
   <!-- Modal Overlay -->
@@ -748,10 +747,10 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr *ngFor="let day of attendanceList; let i = index"
-          [ngClass]="{'active-row': i === activeAttendanceIndex && !day?.accepted, 'blurred-row': i !== activeAttendanceIndex || day?.accepted}">
+              [ngClass]="{'active-row': i === activeAttendanceIndex && !day?.accepted, 'blurred-row': i !== activeAttendanceIndex || day?.accepted}">
             <!-- Youth Name -->
             <td class="px-4 py-2 text-sm text-gray-800">{{ fullName }}</td>
-            <!-- Date (if assigned, otherwise shows "Pending") -->
+            <!-- Date -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.date; else pending">
                 {{ day.date | date:'shortDate' }}
@@ -760,7 +759,7 @@
                 <span class="text-gray-500 text-xs">Pending</span>
               </ng-template>
             </td>
-            <!-- Day (if assigned, otherwise shows "Pending") -->
+            <!-- Day -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.date; else pendingDay">
                 {{ day.date | date:'EEEE' }}
@@ -769,14 +768,12 @@
                 <span class="text-gray-500 text-xs">Pending</span>
               </ng-template>
             </td>
-            <!-- Location Check: Only the active row is interactive -->
+            <!-- Location Check -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="i === activeAttendanceIndex; else notActiveLocation">
-                <button
-                  class="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 text-xs"
-                  (click)="checkLocation(i)"
-                  [disabled]="day.locationChecked"
-                >
+                <button class="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 text-xs"
+                        (click)="checkLocation(i)"
+                        [disabled]="day.locationChecked">
                   {{ day.locationChecked ? 'Verified' : 'Check Location' }}
                 </button>
               </ng-container>
@@ -784,7 +781,7 @@
                 <span class="text-gray-500 text-xs">Not Available</span>
               </ng-template>
             </td>
-            <!-- Signature (from youth contract) -->
+            <!-- Signature -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="specificAssignedYouth?.YouthContract?.signature; else noSignature">
                 <img [src]="specificAssignedYouth?.YouthContract?.signature" alt="Signature" class="h-8" />
@@ -793,14 +790,12 @@
                 <span class="text-red-500 text-xs">No Signature</span>
               </ng-template>
             </td>
-            <!-- Confirm Data: Active row shows "Okay" until confirmed -->
+            <!-- Confirm Data -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="i === activeAttendanceIndex; else notActiveConfirm">
                 <ng-container *ngIf="!day.confirmed">
-                  <button
-                    class="bg-yellow-600 text-white py-1 px-3 rounded hover:bg-yellow-700 text-xs"
-                    (click)="confirmAttendanceRow(i)"
-                  >
+                  <button class="bg-yellow-600 text-white py-1 px-3 rounded hover:bg-yellow-700 text-xs"
+                          (click)="confirmAttendanceRow(i)">
                     Okay
                   </button>
                 </ng-container>
@@ -812,15 +807,13 @@
                 <span class="text-gray-500 text-xs">Not Available</span>
               </ng-template>
             </td>
-            <!-- Accept Attendance: Active row, enabled only if confirmed, location verified, and signature exists -->
+            <!-- Accept Attendance -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="i === activeAttendanceIndex; else notActiveCheckbox">
-                <input
-                  type="checkbox"
-                  class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                  [(ngModel)]="day.accepted"
-                  [disabled]="!day.confirmed || !day.locationChecked || !specificAssignedYouth?.YouthContract?.signature"
-                />
+                <input type="checkbox"
+                       class="h-4 w-4 text-blue-600 border-gray-300 rounded"
+                       [(ngModel)]="day.accepted"
+                       [disabled]="!day.confirmed || !day.locationChecked || !specificAssignedYouth?.YouthContract?.signature" />
               </ng-container>
               <ng-template #notActiveCheckbox>
                 <span class="text-gray-500 text-xs">Not Available</span>
@@ -833,16 +826,14 @@
     <!-- Modal Actions -->
     <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
       <button
-        class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-medium"
-        (click)="submitAttendance()"
-        [disabled]="!attendanceList[activeAttendanceIndex].accepted"
-      >
-        Submit Attendance
-      </button>
-      <button
-        class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
-        (click)="closeAttendanceModal()"
-      >
+      class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-medium"
+      (click)="submitAttendance()"
+      [disabled]="activeAttendanceIndex === -1 || !attendanceList[activeAttendanceIndex].accepted">
+      Submit Attendance
+    </button>
+    
+      <button class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
+              (click)="closeAttendanceModal()">
         Close
       </button>
     </div>
