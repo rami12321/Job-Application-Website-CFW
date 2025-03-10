@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Job from '../models/jobRequest';
 import Youth from '../models/youth';
-
+import { AssignedYouth } from '../models/jobRequest';
 // Get all job requests
 export const getAllJobRequests = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -113,7 +113,7 @@ export const deleteJobRequest = async (req: Request, res: Response): Promise<voi
       res.status(404).json({ message: `Job request with ID ${id} not found.` });
       return;
     }
- 
+
     await jobRequest.destroy();
 
     res.status(200).json({ message: `Job request with ID ${id} deleted successfully.` });
@@ -140,61 +140,77 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
       return;
     }
 
-    let assignedYouths = jobRequest.assignedYouths || [];
+    // Fetch the current assignedYouths field
+    let assignedYouths: AssignedYouth[] = jobRequest.assignedYouths || [];
 
-    // Log the assigned youths before processing
-    console.log('Assigned Youths before assignment:', assignedYouths);
-
+    // If assignedYouths is a string, parse it into an array
     if (typeof assignedYouths === 'string') {
       try {
         assignedYouths = JSON.parse(assignedYouths);
       } catch (error) {
-        // If parsing fails, return a 400 error with a message.
-        res.status(400).json({ message: 'Invalid JSON format in assignedYouths field' });
+        console.error(`Invalid assignedYouths format for job ${id}:`, assignedYouths);
+        res.status(500).json({ message: 'Invalid assignedYouths data format.' });
         return;
       }
     }
 
+    // Ensure assignedYouths is an array
+    if (!Array.isArray(assignedYouths)) {
+      assignedYouths = [];
+    }
+
+    // Check if youth is already assigned
     const existingYouthIndex = assignedYouths.findIndex((y) => y.id === youthId);
 
-    if (existingYouthIndex !== -1) {
+    if (existingYouthIndex === -1) {
+      // Add new youth to the assigned list
+      assignedYouths.push({
+        id: youthId,
+        firstName: youth.firstNameEn,
+        lastName: youth.lastNameEn,
+        dob: youth.dob,
+        mobilePhone: youth.mobilePhone,
+        cv: youth.cv,
+        status: 'waiting',
+        action: null,
+        isDisabled: false,
+        EmployerContract: {
+          startDate: '',
+          signature: '',
+          agreementAccepted: false,
+        },
+        YouthContract: {
+          mobilePhone: youth.mobilePhone,
+          startDate: null,
+          signature: '',
+          agreementAccepted: false,
+        },
+      });
+    } else {
       // Update existing youth assignment
       assignedYouths[existingYouthIndex] = {
         ...assignedYouths[existingYouthIndex],
         firstName: youth.firstNameEn,
         lastName: youth.lastNameEn,
         dob: youth.dob,
+        mobilePhone: youth.mobilePhone,
         cv: youth.cv,
         status: 'waiting',
       };
-    } else {
-      assignedYouths.push({
-        id: youthId,
-        firstName: youth.firstNameEn,
-        lastName: youth.lastNameEn,
-        dob: youth.dob,
-        cv: youth.cv,
-        status: 'waiting',
-        mobilePhone: ''
-      });
     }
 
-    // Log the assigned youths after the update
-    console.log('Assigned Youths after assignment:', assignedYouths);
-
-    // Update job request with the new assigned youths
-    const updatedJobRequest = await jobRequest.update({ assignedYouths });
+    // 🚨 **Ensure the array is stored correctly**
+    await jobRequest.update({ assignedYouths });
 
     res.status(200).json({
       message: `Youth with ID ${youthId} has been assigned to Job Request with ID ${id}.`,
-      updatedJobRequest: updatedJobRequest,
+      assignedYouths, // Return updated list
     });
   } catch (error) {
     console.error('Error assigning youth to job request:', error);
     res.status(500).json({ message: 'Error assigning youth to job request', error });
   }
 };
-
 
 // Unassign a youth from a job request
 export const unassignYouthFromJobRequest = async (req: Request, res: Response): Promise<void> => {
@@ -262,7 +278,7 @@ export const getAssignedYouthsByJobId = async (req: Request, res: Response): Pro
         return;
       }
     }
-    
+
     res.status(200).json(assignedYouths);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching assigned youths', error });
