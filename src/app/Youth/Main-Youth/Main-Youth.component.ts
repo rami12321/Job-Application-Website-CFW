@@ -295,7 +295,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   }
   
   openAttendanceModal(): void {
-    // Ensure youthId is available; if not, try to fallback from specificAssignedYouth
+    // Ensure youthId is available
     if (!this.youthId && this.specificAssignedYouth) {
       this.youthId = this.specificAssignedYouth.id;
     }
@@ -306,53 +306,105 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     }
 
     this.attendanceModalOpen = true;
-    
-    // Load existing attendance if available, otherwise create one.
-    if (this.currentAttendanceId) {
-      this.attendanceService.getAttendanceById(this.currentAttendanceId)
-        .subscribe((record: AttendanceRecord) => {
-          this.attendanceList = record.days;
+
+    this.attendanceService.getAttendanceByYouthAndJob(this.youthId, this.appliedJob!.id)
+      .subscribe((record: AttendanceRecord) => {
+        if (record && record.id) {
+          this.currentAttendanceId = record.id;
+          let days = record.days;
+          // Ensure days is an array (it might be a JSON string)
+          if (!Array.isArray(days)) {
+            try {
+              days = JSON.parse(days);
+            } catch (e) {
+              days = [];
+            }
+          }
+          this.attendanceList = this.sanitizeAttendanceList(days);
           this.initializeTodayAttendance();
-        }, error => {
-          console.error('Error loading attendance record:', error);
-        });
-    } else {
-      // Create a new attendance record with 40 rows.
-      const newRecord: AttendanceRecord = {
-        id: '',
-        jobRequestId: this.appliedJob ? this.appliedJob.id : '',
-        employerId: this.selectedJob ? this.selectedJob.employerId : '',
-        youthId: this.youthId, // already a string
-        days: Array.from({ length: 40 }, () => ({
-          day: '',
-          date: null,
-          youthName: this.fullName,
-          signature: this.specificAssignedYouth?.YouthContract?.signature || '',
-          locationChecked: false,
-          confirmed: false,
-          accepted: false,
-        }))
-      };
-      this.attendanceService.createAttendance(newRecord)
-        .subscribe((createdRecord: AttendanceRecord) => {
-          this.currentAttendanceId = createdRecord.id;
-          this.attendanceList = createdRecord.days;
-          this.initializeTodayAttendance();
-        }, error => {
-          console.error('Error creating attendance record:', error);
-        });
-    }
+        } else {
+          // No record exists; create a new one.
+          this.createNewAttendanceRecord();
+        }
+      }, error => {
+        console.error('Error fetching attendance record:', error);
+        // In case of error or not found, create a new record.
+        this.createNewAttendanceRecord();
+      });
   }
 
   /**
-   * This method checks if today's attendance is already submitted.
-   * If not, it sets the first non-accepted row to today's date and day.
+   * Creates a new attendance record with a 40-day archive.
+   */
+  createNewAttendanceRecord(): void {
+    const newRecord: AttendanceRecord = {
+      jobRequestId: this.appliedJob ? this.appliedJob.id : '',
+      employerId: this.selectedJob ? this.selectedJob.employerId : '',
+      youthId: this.youthId,
+      days: Array.from({ length: 40 }, () => this.getDefaultDayRecord())
+    };
+
+    this.attendanceService.createAttendance(newRecord)
+      .subscribe((createdRecord: AttendanceRecord) => {
+        this.currentAttendanceId = createdRecord.id!;
+        // Ensure the returned days is an array (it should be, but sanitize just in case)
+        let days = createdRecord.days;
+        if (!Array.isArray(days)) {
+          try {
+            days = JSON.parse(days);
+          } catch (e) {
+            days = [];
+          }
+        }
+        this.attendanceList = this.sanitizeAttendanceList(days);
+        this.initializeTodayAttendance();
+      }, error => {
+        console.error('Error creating attendance record:', error);
+      });
+  }
+
+  /**
+   * Makes sure that the attendanceList array has exactly 40 entries.
+   */
+  sanitizeAttendanceList(days: DayRecord[]): DayRecord[] {
+    const sanitized = days && Array.isArray(days) ? [...days] : [];
+    const defaultDay = this.getDefaultDayRecord();
+    while (sanitized.length < 40) {
+      sanitized.push({ ...defaultDay });
+    }
+    return sanitized;
+  }
+
+  /**
+   * Returns a default day record.
+   */
+  getDefaultDayRecord(): DayRecord {
+    return {
+      day: "",
+      date: null,
+      youthName: this.fullName,
+      signature: this.specificAssignedYouth?.YouthContract?.signature || "",
+      locationChecked: false,
+      confirmed: false,
+      accepted: false,
+    };
+  }
+
+  /**
+   * Initializes today’s attendance.
+   * If a row for today is not already accepted, it sets the first non-accepted row’s date and day.
    */
   initializeTodayAttendance(): void {
     const today = new Date();
     const todayStr = today.toLocaleDateString();
 
-    // Check if an attendance row for today is already accepted.
+    // Guard: Check that attendanceList is an array.
+    if (!Array.isArray(this.attendanceList)) {
+      console.error('attendanceList is not an array');
+      return;
+    }
+
+    // Check if an attendance row for today has already been accepted.
     const submittedToday = this.attendanceList.some(row => {
       return row.date && new Date(row.date).toLocaleDateString() === todayStr && row.accepted;
     });
@@ -363,34 +415,28 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       return;
     }
 
-    // Find the first non-accepted row.
+    // Find the first row that is not accepted.
     const nonAcceptedIndex = this.attendanceList.findIndex(row => !row.accepted);
     if (nonAcceptedIndex === -1) {
       alert("All attendance days are complete.");
       this.closeAttendanceModal();
       return;
     }
-    
-    // Update the found row with today's date and day name.
+
     const activeRow = this.attendanceList[nonAcceptedIndex];
-    activeRow.date = today;
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    activeRow.day = dayNames[today.getDay()];
-    
+    // Update the active row only if it's not already set for today.
+    if (!activeRow.date || new Date(activeRow.date).toLocaleDateString() !== todayStr) {
+      activeRow.date = today;
+      const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      activeRow.day = dayNames[today.getDay()];
+      this.updateAttendanceBackend();
+    }
+
     this.activeAttendanceIndex = nonAcceptedIndex;
   }
 
   closeAttendanceModal(): void {
     this.attendanceModalOpen = false;
-  }
-
-  isToday(date: Date | null): boolean {
-    if (!date) return false;
-    const today = new Date();
-    const d = new Date(date);
-    return d.getFullYear() === today.getFullYear() &&
-           d.getMonth() === today.getMonth() &&
-           d.getDate() === today.getDate();
   }
 
   checkLocation(index: number): void {
@@ -443,6 +489,14 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.updateAttendanceBackend();
   }
 
+  /**
+   * Instead of deleting a row, reset it to default values.
+   */
+  deleteAttendanceRow(index: number): void {
+    this.attendanceList[index] = this.getDefaultDayRecord();
+    this.updateAttendanceBackend();
+  }
+
   updateAttendanceBackend(): void {
     if (this.currentAttendanceId) {
       this.attendanceService.updateAttendance(this.currentAttendanceId, { days: this.attendanceList })
@@ -454,31 +508,26 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     }
   }
 
-  /**
-   * On submit, verify that the current row is properly confirmed,
-   * location verified, and accepted. Then update the record in the backend.
-   * Do not open a new row if today's attendance is done.
-   */
   submitAttendance(): void {
+    // Guard to ensure activeAttendanceIndex is valid.
+    if (this.activeAttendanceIndex < 0 || this.activeAttendanceIndex >= this.attendanceList.length) {
+      alert('No active attendance row available.');
+      return;
+    }
     const activeRow = this.attendanceList[this.activeAttendanceIndex];
     if (!activeRow) {
-      alert('No active attendance row available.');
+      alert('Active attendance row is undefined.');
       return;
     }
     if (!activeRow.confirmed || !activeRow.locationChecked || !activeRow.accepted) {
       alert('Please verify your location, confirm your data, and accept attendance before submitting.');
       return;
     }
-    // Mark the active row as complete and update the backend.
     activeRow.accepted = true;
     this.updateAttendanceBackend();
     alert(`Attendance for ${activeRow.date ? new Date(activeRow.date).toLocaleDateString() : ''} submitted!`);
-    
-    // Do NOT auto-open the next row because attendance is one submission per day.
     this.closeAttendanceModal();
   }
-
-
   closeDetailsModal(): void {
     this.isDetailsModalOpen = false;
     this.selectedJob = null;

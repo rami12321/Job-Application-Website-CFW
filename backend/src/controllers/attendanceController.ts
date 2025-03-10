@@ -1,4 +1,3 @@
-// src/controllers/attendanceController.ts
 import { Request, Response } from 'express';
 import Attendance from '../models/Attendance';
 
@@ -93,3 +92,33 @@ export const deleteAttendance = async (req: Request, res: Response): Promise<voi
     res.status(500).json({ message: 'Error deleting attendance record', error });
   }
 };
+// NEW: Get an attendance record by youthId and jobRequestId (via query parameters)
+export const getAttendanceByYouthAndJob = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { youthId, jobRequestId } = req.query;
+      if (!youthId || !jobRequestId) {
+        res.status(400).json({ message: 'Missing required query parameters: youthId and jobRequestId' });
+        return;
+      }
+      
+      // Ensure we extract a string in case the query parameters are arrays
+      const youthIdStr = Array.isArray(youthId) ? youthId[0] : youthId;
+      const jobRequestIdStr = Array.isArray(jobRequestId) ? jobRequestId[0] : jobRequestId;
+      
+      const attendance = await Attendance.findOne({
+        where: {
+          youthId: youthIdStr,
+          jobRequestId: jobRequestIdStr,
+        },
+      });
+      
+      if (!attendance) {
+        res.status(404).json({ message: `Attendance record not found for youthId ${youthIdStr} and jobRequestId ${jobRequestIdStr}.` });
+        return;
+      }
+      res.status(200).json(attendance);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching attendance record by youth and job', error });
+    }
+  };
+  
