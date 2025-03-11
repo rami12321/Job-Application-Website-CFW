@@ -11,6 +11,8 @@ import SignaturePad from 'signature_pad';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Employer } from '../../Model/Employer';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
+import { AttendanceRecord } from '../../Model/Attendance';
+import { AttendanceService } from '../../Services/AttendanceService/attendance.service';
 interface DailySchedule {
   workType: string;
   shift: string;
@@ -74,6 +76,8 @@ selectedContract: any = null;
   uploadedFileName: string | null = null;
   isDeleteModalOpen = false;
 uploadedFileUrl: string | null = null;
+isAttendanceModalOpen: boolean = false;
+attendanceRecord: AttendanceRecord | null = null;
   modalAction: string = '';
   selectedYouthName: string | null = null;
   isSubmitModalOpen = false;
@@ -160,7 +164,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     private router: Router,
     private youthService: YouthServiceService,
     private cdr: ChangeDetectorRef,
-    private employerService: EmployerService
+    private employerService: EmployerService,
+    private attendanceService: AttendanceService
 
   ) { }
 
@@ -190,7 +195,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     }
 
   }
-
+  confirmEmployerAttendance(index: number): void {
+    if (this.attendanceRecord) {
+      // Mark the day as confirmed by the employer.
+      this.attendanceRecord.days[index].employerConfirmed = true;
+      
+      // Optionally, update the backend with the modified attendance record.
+      // this.attendanceService.updateAttendance(this.attendanceRecord.id, { days: this.attendanceRecord.days })
+      //   .subscribe({
+      //     next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
+      //     error: (err) => console.error('Error updating attendance:', err)
+      //   });
+    }
+  }
   private fetchEmployerDetails(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
       next: (data: Employer) => {
@@ -202,7 +219,48 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       },
     });
   }
+  openAttendanceModal(youth: any): void {
+    if (!this.jobRequest || !youth) {
+      console.error('Missing jobRequest or youth data');
+      return;
+    }
+  
+    const jobId = this.jobRequest.jobId; // Use jobId from your interface
+    if (!jobId) {
+      console.error('Job ID is undefined');
+      return;
+    }
+  
+    this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
+      .subscribe({
+        next: (attendance: AttendanceRecord) => {
+          // If days is a string, parse it into an array
+          if (typeof attendance.days === 'string') {
+            try {
+              attendance.days = JSON.parse(attendance.days);
+            } catch (error) {
+              console.error('Error parsing days:', error);
+              attendance.days = []; // Fallback to empty array
+            }
+          }
+  
+          this.attendanceRecord = attendance;
+  
+          // **Make sure to open the modal after successfully fetching data**
+          this.isAttendanceModalOpen = true;
+        },
+        error: (err) => {
+          console.error('Error fetching attendance record:', err);
+        }
+      });
+  }
+  
+  
+  closeAttendanceModal(): void {
+    this.isAttendanceModalOpen = false;
+  }
 
+  
   confirmApproval(): void {
     if (this.selectedYouth) {
       if (this.modalAction === 'approve') {

@@ -387,6 +387,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       locationChecked: false,
       confirmed: false,
       accepted: false,
+      employerConfirmed: false,
     };
   }
 
