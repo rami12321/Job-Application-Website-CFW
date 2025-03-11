@@ -6,6 +6,8 @@ export interface DayRecord {
     locationChecked: boolean;
     confirmed: boolean;
     accepted: boolean;
+    employerConfirmed: boolean; // New field for employer confirmation
+
   }
   
   export interface AttendanceRecord {

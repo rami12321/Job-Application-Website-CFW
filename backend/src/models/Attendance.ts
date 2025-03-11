@@ -1,28 +1,28 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../config/database';
 
-// Define the structure of each day's record
+
 interface DayRecord {
-  day: string;            // Day name (e.g., "Monday")
-  date: Date | null;      // The date when the attendance was marked
-  youthName: string;      // Youth name (could be used for display/verification)
-  signature: string;      // Either the signature itself or a path/URL to it
-  locationChecked: boolean; // Whether the location check passed for that day
-  confirmed: boolean;     // Whether the youth confirmed the day's data
-  accepted: boolean;      // Whether the attendance for that day was accepted
+  day: string;
+  date: Date | null;
+  youthName: string;
+  signature: string;
+  locationChecked: boolean;
+  confirmed: boolean;
+  accepted: boolean;
 }
 
-// Define Attendance attributes
+
 interface AttendanceAttributes {
   id: string;
   jobRequestId: string;
   employerId: string;
   youthId: string;
-  days: DayRecord[]; // Array of 40 day records
+  days: DayRecord[];
 }
 
-// When creating a new attendance record, the id field is optional.
-interface AttendanceCreationAttributes extends Optional<AttendanceAttributes, 'id'> {}
+
+interface AttendanceCreationAttributes extends Optional<AttendanceAttributes, 'id'> { }
 
 class Attendance extends Model<AttendanceAttributes, AttendanceCreationAttributes> implements AttendanceAttributes {
   public id!: string;
@@ -31,7 +31,7 @@ class Attendance extends Model<AttendanceAttributes, AttendanceCreationAttribute
   public youthId!: string;
   public days!: DayRecord[];
 
-  // timestamps
+
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -56,7 +56,7 @@ Attendance.init(
       allowNull: false,
     },
     days: {
-      type: DataTypes.JSON, // Stores the 40-day array as JSON
+      type: DataTypes.JSON,
       allowNull: false,
       defaultValue: Array.from({ length: 40 }, () => ({
         day: "",
@@ -66,6 +66,8 @@ Attendance.init(
         locationChecked: false,
         confirmed: false,
         accepted: false,
+        employerConfirmed: false,
+
       })),
     },
   },
