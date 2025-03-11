@@ -449,29 +449,19 @@ export class JobRequestTableComponent implements OnInit {
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
     console.log('Youth:', this.selectedYouths);
-    console.log(
-      'Selected Youths before assignment:',
-      JSON.stringify(this.selectedYouths, null, 2)
-    );
-
+    console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
 
     if (!this.selectedYouths.length) return;
 
-    // Create an array of observables for all assignment requests
-    const assignmentRequests = this.selectedYouths.map((youth: any) => {
-      console.log(`Assigning Youth: ID=${youth.id}, Name=${youth.name}`);
-      return this.JobRequestService.assignYouthToJobRequest(
-        this.selectedJob,
-        youth.id
-      );
-    });
+    // Create an array of youth IDs
+    const youthIds = this.selectedYouths.map((youth: any) => youth.id);
 
-    // Execute all assignment requests in parallel and wait for completion
-    forkJoin(assignmentRequests).subscribe({
-      next: () => {
+    // Now this sends the youthIds array to the backend
+    this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youthIds).subscribe({
+      next: (response) => {
         console.log('All selected youths assigned successfully.');
 
-        // Update local state only after all assignments succeed
+        // Handle the updated assigned youths and other actions
         this.selectedYouths.forEach((youth: any) => {
           this.assignedYouths.push({
             id: youth.id,
@@ -483,8 +473,7 @@ export class JobRequestTableComponent implements OnInit {
 
         // Remove assigned youths from the unassigned list
         this.unassignedYouths = this.unassignedYouths.filter(
-          (unassigned: any) =>
-            !this.selectedYouths.some((youth: any) => youth.id === unassigned.id)
+          (unassigned: any) => !this.selectedYouths.some((youth: any) => youth.id === unassigned.id)
         );
 
         // Optionally update job status
@@ -498,6 +487,8 @@ export class JobRequestTableComponent implements OnInit {
       },
     });
   }
+
+
   getAssignedYouths(jobId: string): void {
     this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
       next: (response: any) => {

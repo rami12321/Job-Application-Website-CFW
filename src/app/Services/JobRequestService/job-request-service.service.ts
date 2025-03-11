@@ -49,12 +49,14 @@ getAllJobRequests(): Observable<Job[]> {
   deleteJob(id: string): Observable<any> {
     return this.http.delete(`${this.JobRequestsUrl}/${id}`);
   }
-  assignYouthToJobRequest(jobId: string, youthId: string): Observable<any> {
-    const url = `${this.JobRequestsUrl}/${jobId}/youths/${youthId}`;
-    return this.http.put(url, {}, { headers: { 'Content-Type': 'application/json' } });
-  }
+ // In JobRequestService (or similar service)
+assignYouthToJobRequest(jobId: string, youthIds: string[]): Observable<any> {
+  return this.http.put(`${this.JobRequestsUrl}/${jobId}/youths`, { youthIds });
+}
+
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
+
     return this.http.put(
       url,
       { status },
