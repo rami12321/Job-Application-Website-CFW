@@ -7,6 +7,7 @@ export interface DayRecord {
     confirmed: boolean;
     accepted: boolean;
     employerConfirmed: boolean; // New field for employer confirmation
+    employerSignature?: string;
 
   }
   

@@ -70,6 +70,7 @@ selectedContract: any = null;
   isModalOpen = false;
   modalImage: string = '';
   showSignatureWarning = false;
+  isAdminAttendanceModalOpen: boolean = false;
   isTermsModalOpen = false;
   isTermsAccepted = false;
   isEditingSignature = false;
@@ -195,46 +196,51 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     }
 
   }
+
+  
   confirmEmployerAttendance(index: number): void {
-    if (this.attendanceRecord) {
+    if (this.attendanceRecord && this.selectedYouth && this.selectedYouth.EmployerContract?.signature) {
+      console.log('Using employer contract signature:', this.selectedYouth.EmployerContract.signature);
+      
       // Mark the day as confirmed by the employer.
       this.attendanceRecord.days[index].employerConfirmed = true;
       
-      // Optionally, update the backend with the modified attendance record.
-      // this.attendanceService.updateAttendance(this.attendanceRecord.id, { days: this.attendanceRecord.days })
-      //   .subscribe({
-      //     next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
-      //     error: (err) => console.error('Error updating attendance:', err)
-      //   });
+      // Use the signature from the EmployerContract of the selected youth.
+      this.attendanceRecord.days[index].employerSignature = this.selectedYouth.EmployerContract.signature;
+      
+      // Update the backend with the modified attendance record.
+      this.attendanceService.updateAttendance(this.attendanceRecord.id!, { days: this.attendanceRecord.days })
+        .subscribe({
+          next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
+          error: (err) => console.error('Error updating attendance:', err)
+        });
+    } else {
+      console.error('Employer contract signature not available on the selected youth');
     }
   }
-  private fetchEmployerDetails(): void {
-    this.employerService.getEmployerById(this.userId!).subscribe({
-      next: (data: Employer) => {
-        this.employer = data;
- // After employer data is fetched, load the profile image
-      },
-      error: (err) => {
-        console.error('Error fetching employer data:', err);
-      },
-    });
-  }
+  
+  
+  
+  
   openAttendanceModal(youth: any): void {
     if (!this.jobRequest || !youth) {
       console.error('Missing jobRequest or youth data');
       return;
     }
+    
+    // Save the selected youth for later use.
+    this.selectedYouth = youth;
   
-    const jobId = this.jobRequest.jobId; // Use jobId from your interface
+    const jobId = this.jobRequest.jobId;
     if (!jobId) {
       console.error('Job ID is undefined');
       return;
     }
-  
+    
     this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
       .subscribe({
         next: (attendance: AttendanceRecord) => {
-          // If days is a string, parse it into an array
+          // If days is a string, parse it into an array.
           if (typeof attendance.days === 'string') {
             try {
               attendance.days = JSON.parse(attendance.days);
@@ -243,10 +249,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
               attendance.days = []; // Fallback to empty array
             }
           }
-  
           this.attendanceRecord = attendance;
-  
-          // **Make sure to open the modal after successfully fetching data**
           this.isAttendanceModalOpen = true;
         },
         error: (err) => {
@@ -255,12 +258,66 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       });
   }
   
+
   
   closeAttendanceModal(): void {
     this.isAttendanceModalOpen = false;
   }
 
+  // Opens the modal for admin viewing of attendance records
+openAdminAttendanceModal(youth: any): void {
+  if (!this.jobRequest || !youth) {
+    console.error('Missing jobRequest or youth data');
+    return;
+  }
   
+  // Save the selected youth for later use.
+  this.selectedYouth = youth;
+
+  const jobId = this.jobRequest.jobId;
+  if (!jobId) {
+    console.error('Job ID is undefined');
+    return;
+  }
+  
+  this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
+    .subscribe({
+      next: (attendance: AttendanceRecord) => {
+        // If days is a string, parse it into an array.
+        if (typeof attendance.days === 'string') {
+          try {
+            attendance.days = JSON.parse(attendance.days);
+          } catch (error) {
+            console.error('Error parsing days:', error);
+            attendance.days = []; // Fallback to empty array
+          }
+        }
+        this.attendanceRecord = attendance;
+        this.isAdminAttendanceModalOpen = true;
+      },
+      error: (err) => {
+        console.error('Error fetching attendance record:', err);
+      }
+    });
+}
+
+// Closes the attendance modal
+closeAdminAttendanceModal(): void {
+  this.isAdminAttendanceModalOpen = false;
+}
+
+
+  private fetchEmployerDetails(): void {
+    this.employerService.getEmployerById(this.userId!).subscribe({
+      next: (data: Employer) => {
+        this.employer = data;
+        console.log('Fetched employer:', this.employer);
+      },
+      error: (err) => {
+        console.error('Error fetching employer data:', err);
+      },
+    });
+  }
   confirmApproval(): void {
     if (this.selectedYouth) {
       if (this.modalAction === 'approve') {
