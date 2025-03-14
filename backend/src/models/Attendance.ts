@@ -67,6 +67,8 @@ Attendance.init(
         confirmed: false,
         accepted: false,
         employerConfirmed: false,
+        employerSignature: '',
+
 
       })),
     },

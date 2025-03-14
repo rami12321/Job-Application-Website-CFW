@@ -22,6 +22,14 @@ export class AttendanceService {
   getAttendanceById(id: string): Observable<AttendanceRecord> {
     return this.http.get<AttendanceRecord>(`${this.baseUrl}/${id}`);
   }
+// signature.service.ts
+uploadSignature(signatureData: string): Observable<{ filePath: string }> {
+  // Here, signatureData should be a data URL (e.g., "data:image/png;base64,...")
+  return this.http.post<{ filePath: string }>(
+    'http://localhost:3000/uploadSignature', 
+    { signatureData }
+  );
+}
 
   // New method to fetch an attendance record by youth and jobRequestId
   getAttendanceByYouthAndJob(youthId: string, jobRequestId: string): Observable<AttendanceRecord> {

@@ -151,15 +151,16 @@ data-tooltip="Read Contract"
   <div class="flex items-center space-x-2">
     <!-- Attendance Button (appears after submitting the contract) -->
     <button
-      *ngIf="youth.EmployerContract && jobRequest?.status==='in-progress'"
-      class="tooltip w-10 h-10 bg-info hover:bg-info-dark text-white rounded-full flex items-center justify-center shadow-md ml-2"
-      aria-label="Attendance"
-      data-tooltip="Attendance Archive"
-      (click)="openAttendanceModal(youth)"
-    >
-      <i class="pi pi-calendar text-lg"></i>
-    </button>
-
+    *ngIf="youth.EmployerContract && youth.YouthContract && jobRequest?.status==='in-progress'"
+    class="tooltip w-10 h-10 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center shadow-md ml-2"
+    aria-label="Attendance"
+    data-tooltip="Attendance Archive"
+    (click)="openAttendanceModal(youth)"
+  >
+    <i class="pi pi-calendar text-lg"></i>
+  </button>
+  
+  
     <!-- Upload Button -->
     <label
       *ngIf="youth.EmployerContract"
@@ -251,43 +252,178 @@ data-tooltip="Read Contract"
                 </ng-container>
             
 <!-- Non-Employer View -->
+
+
+
 <ng-template #nonEmployerView>
   <!-- Check Approved Status -->
   <ng-container 
     class="relative min-h-screen flex flex-col justify-between" 
     *ngIf="youth.action === 'approved'; else actionStatus"
   >
-  <div class="flex items-center space-x-2">
-    <!-- Employer Contract Flag -->
+  <div class="flex flex-wrap gap-2 max-w-[4.5rem]">
     <button
-    *ngIf="youth.EmployerContract"
-    class="tooltip w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-green-600 transition-colors"
-    aria-label="Employer Contract"
-    data-tooltip="Employer Contract"
-    (click)="openEmployerContractModal(youth.EmployerContract)"
-  >
-    <i class="pi pi-briefcase text-lg"></i>
-  </button>
+      *ngIf="youth.EmployerContract"
+      class="tooltip w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-green-600 transition-colors"
+      aria-label="Employer Contract"
+      data-tooltip="Employer Contract"
+      (click)="openEmployerContractModal(youth.EmployerContract)"
+    >
+      <i class="pi pi-briefcase text-sm"></i>
+    </button>
   
-  <button
-    *ngIf="youth.YouthContract"
-    class="tooltip w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-600 transition-colors"
-    aria-label="Youth Contract"
-    data-tooltip="Youth Contract"
-    (click)="openYouthContractModal(youth.YouthContract)"
-  >
-    <i class="pi pi-user text-lg"></i>
-  </button>
+    <button
+      *ngIf="youth.YouthContract"
+      class="tooltip w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-600 transition-colors"
+      aria-label="Youth Contract"
+      data-tooltip="Youth Contract"
+      (click)="openYouthContractModal(youth.YouthContract)"
+    >
+      <i class="pi pi-user text-sm"></i>
+    </button>
   
+    <button
+      *ngIf="youth.EmployerContract && youth.YouthContract"
+      class="tooltip w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-yellow-600 transition-colors"
+      aria-label="Attendance"
+      data-tooltip="Attendance"
+      (click)="openAdminAttendanceModal(youth)"
 
-<button
-  *ngIf="youth.action === 'approved' && jobRequest?.status === 'in-progress'"
-  class="tooltip w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors"
-  aria-label="Delete"
-  (click)="openDeleteModal(youth)"
->
-  <i class="pi pi-trash text-lg"></i>
-</button>
+    >
+      <i class="pi pi-calendar text-sm"></i>
+    </button>
+  
+    <button
+      *ngIf="youth.action === 'approved' && jobRequest?.status === 'in-progress'"
+      class="tooltip w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors"
+      aria-label="Delete"
+      (click)="openDeleteModal(youth)"
+    >
+      <i class="pi pi-trash text-sm"></i>
+    </button>
+
+
+    <div
+    class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+    *ngIf="isAdminAttendanceModalOpen"
+  >
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+  
+    <!-- Modal Content -->
+    <div
+      class="bg-white rounded-lg p-6 z-50 w-11/12 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-center">
+        Admin Attendance Overview
+      </h2>
+        
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Youth Name</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Day</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Location Verified</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Confirmed</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                  Youth Signature
+                </th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Signature</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Confirm</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr *ngFor="let day of attendanceRecord?.days; let i = index">
+                <!-- Youth Name -->
+                <td class="px-4 py-2 text-sm text-gray-800">{{ day.youthName }}</td>
+                
+                <!-- Date -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.date; else pendingDate">
+                    {{ day.date | date:'shortDate' }}
+                  </ng-container>
+                  <ng-template #pendingDate>
+                    <span class="text-gray-500 text-xs">Pending</span>
+                  </ng-template>
+                </td>
+                
+                <!-- Day of Week -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.date; else pendingDay">
+                    {{ day.date | date:'EEEE' }}
+                  </ng-container>
+                  <ng-template #pendingDay>
+                    <span class="text-gray-500 text-xs">Pending</span>
+                  </ng-template>
+                </td>
+                
+                <!-- Location Verified -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.locationChecked; else notChecked">
+                    <span class="text-green-600 text-xs">Verified</span>
+                  </ng-container>
+                  <ng-template #notChecked>
+                    <span class="text-red-500 text-xs">Not Verified</span>
+                  </ng-template>
+                </td>
+                
+                <!-- Data Confirmed -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.confirmed; else notConfirmed">
+                    <span class="text-green-600 text-xs">Confirmed</span>
+                  </ng-container>
+                  <ng-template #notConfirmed>
+                    <span class="text-gray-500 text-xs">Not Confirmed</span>
+                  </ng-template>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.signature && day.confirmed; else noYouthSignature">
+                    <img [src]="day.signature" alt="Youth Signature" class="h-16" />
+                  </ng-container>
+                  <ng-template #noYouthSignature>
+                    <span class="text-gray-500 text-xs">Not Provided</span>
+                  </ng-template>
+                </td>
+                <!-- Employer Signature -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.employerSignature; else noSignature">
+                    <img [src]="day.employerSignature" 
+                         alt="Employer Signature" class="h-16" />
+                  </ng-container>
+                  <ng-template #noSignature>
+                    <span class="text-gray-500 text-xs">Not Provided</span>
+                  </ng-template>
+                </td>
+                
+                
+                <!-- Employer Confirm (View Only) -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.employerConfirmed; else notConfirmedText">
+                    <i class="fas fa-check-circle text-green-600"></i>
+                  </ng-container>
+                  <ng-template #notConfirmedText>
+                    <span class="text-gray-500 text-xs">Not Confirmed</span>
+                  </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Modal Actions -->
+        <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
+          <button type="button"
+                  class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
+                  (click)="closeAdminAttendanceModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    
+
 <div 
   *ngIf="isEmployerContractModalOpen" 
   id="employer-contract-modal" 
@@ -746,7 +882,7 @@ data-tooltip="Read Contract"
 <div>
   <!-- Submit Button -->
   <button
-    *ngIf="!isEmployer() && jobRequest?.status === 'in-progress' && !isEmployerContractModalOpen &&  !isYouthContractModalOpen"
+    *ngIf="!isEmployer() && jobRequest?.status === 'in-progress' && !isEmployerContractModalOpen &&  !isYouthContractModalOpen  &&  !isAdminAttendanceModalOpen"
     (click)="completeConfirmationModal = true"
     class="submit-button"
   >
@@ -1218,7 +1354,11 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
 
     </div>
   </div>
+
+
 </div>
+
+
 <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="isAttendanceModalOpen">
   <!-- Modal Overlay -->
   <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
@@ -1226,16 +1366,6 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
   <!-- Modal Content -->
   <div class="bg-white rounded-lg p-6 z-10 w-11/12 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto">
     <h2 class="text-2xl font-semibold mb-4 text-center">Attendance Overview</h2>
-    
-    <!-- Employer Signature Display -->
-    <div class="mb-4 flex items-center justify-center">
-      <ng-container *ngIf="selectedYouth?.EmployerContract?.signature; else noEmployerSignature">
-        <img [src]="selectedYouth.EmployerContract.signature" alt="Employer Signature" class="h-16" />
-      </ng-container>
-      <ng-template #noEmployerSignature>
-        <span class="text-red-500 text-sm">No Employer Signature</span>
-      </ng-template>
-    </div>
     
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
@@ -1246,6 +1376,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Day</th>
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Location Verified</th>
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Confirmed</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Signature</th>
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Confirm</th>
           </tr>
         </thead>
@@ -1294,17 +1425,33 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
               </ng-template>
             </td>
             
+            <!-- Employer Signature Column -->
+            <td class="px-4 py-2 text-sm text-gray-800">
+              <ng-container *ngIf="day.employerSignature || (selectedYouth && selectedYouth.EmployerContract?.signature); else noSignature">
+                <img [src]="day.employerSignature ? day.employerSignature : selectedYouth.EmployerContract.signature" 
+                     alt="Employer Signature" class="h-16" />
+              </ng-container>
+              <ng-template #noSignature>
+                <span class="text-gray-500 text-xs">Not Provided</span>
+              </ng-template>
+            </td>
+            
+            
             <!-- Employer Confirm -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.employerConfirmed; else confirmButton">
                 <i class="fas fa-check-circle text-green-600"></i>
               </ng-container>
               <ng-template #confirmButton>
-                <!-- Since the modal is primarily for viewing, allow only a one-time confirmation -->
-                <button class="bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 text-xs"
-                        (click)="confirmEmployerAttendance(i)">
-                  Confirm
-                </button>
+                <!-- Only show the confirm button if the day is opened (data confirmed) and verified -->
+                <ng-container *ngIf="day.confirmed && day.locationChecked">
+                  <!-- Each confirm button is a submit button in its own form -->
+                  <form (ngSubmit)="confirmEmployerAttendance(i)">
+                    <button type="submit" class="bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 text-xs">
+                      Confirm
+                    </button>
+                  </form>
+                </ng-container>
               </ng-template>
             </td>
           </tr>
@@ -1314,7 +1461,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
     
     <!-- Modal Actions -->
     <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
-      <button class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
+      <button type="button" class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
               (click)="closeAttendanceModal()">
         Close
       </button>
