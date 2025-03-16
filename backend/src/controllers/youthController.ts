@@ -28,6 +28,31 @@ export const getAllYouth = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
+// Update Youth Work Status
+export const updateYouthWorkStatus = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // Youth ID from request parameters
+    const { workStatus } = req.body; // Work status from request body
+
+    // Find the youth by ID
+    const youth = await Youth.findByPk(id);
+    if (!youth) {
+      res.status(404).json({ message: `Youth with ID ${id} not found.` });
+      return;
+    }
+
+    // Update the workStatus field
+    youth.workStatus = workStatus;
+    await youth.save();
+
+    res.status(200).json({
+      message: `Youth with ID ${id} work status updated successfully.`,
+      updatedYouth: youth,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating youth work status', error });
+  }
+};
 
 
 // Create a new youth
@@ -291,7 +316,6 @@ export const getAppliedJobById = async (req: Request, res: Response): Promise<vo
   }
 };
 
-
 // Update youth notes
 export const updateYouthNotes = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -338,7 +362,7 @@ export const getYouthNotesById = async (req: Request, res: Response): Promise<vo
   }
 };
 
-// Get youths by applied job 
+// Get youths by applied job
 export const getYouthByJob = async (req: Request, res: Response): Promise<void> => {
   try {
     const { appliedJob } = req.params; // Extract the job from the URL parameter

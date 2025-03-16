@@ -248,7 +248,7 @@ export const assignYouthToJobRequest = async (req: Request, res: Response): Prom
           firstName: youth.firstNameEn,
           lastName: youth.lastNameEn,
           dob: youth.dob,
-          mobilePhone: '',
+          mobilePhone: youth.mobilePhone,
           cv: youth.cv,
           status: 'waiting',
 

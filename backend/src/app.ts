@@ -13,6 +13,7 @@ import Signature from './models/signature';
 import Youth from './models/youth';
 import adminRoutes from './routes/adminRoutes';
 import attendanceRoutes from './routes/attendanceRoutes';
+import paymentsRoutes from './routes/paymentsRoutes';
 
 sequelize.sync({ alter: true }) // `force: true` will drop existing tables and recreate them
   .then(() => {
@@ -42,7 +43,7 @@ app.delete('/api/verificationCode/:code', deleteCode);
 app.put('/youth/:id/appliedJob', updateAppliedJob);
 app.use('/admin', adminRoutes);
 app.use('/attendance', attendanceRoutes); // Attendance endpoints
-
+app.use('/payments', paymentsRoutes); // Attendance endpoints
 // Start the server
 sequelize.authenticate().then(() => {
   console.log('✅ MySQL connected');
