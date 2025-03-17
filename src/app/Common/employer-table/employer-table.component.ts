@@ -20,33 +20,36 @@ import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { debounceTime, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Column {
   field: string;
   header: string;
 }
 @Component({
-  selector: 'app-employer-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    TableModule,
-    CheckboxModule,
-    InputTextModule,
-    PaginatorModule,
-    MultiSelectModule,
-    DialogModule,
-    ButtonModule,
-    TableModule,
-    CommonModule,
-    TableModule,
-    MultiSelectModule,
-    DetailsEmployerComponent
-],
-  providers: [YouthServiceService],
+    selector: 'app-employer-table',
+    imports: [
+        CommonModule,
+        MatTableModule,
+        TableModule,
+        CheckboxModule,
+        InputTextModule,
+        PaginatorModule,
+        MultiSelectModule,
+        DialogModule,
+        ButtonModule,
+        TableModule,
+        CommonModule,
+        TableModule,
+        MultiSelectModule,
+        FormsModule,
+        DropdownModule,
+        DetailsEmployerComponent
+    ],
+    providers: [YouthServiceService],
     templateUrl: './employer-table.component.html',
-  styleUrl: './employer-table.component.css'
+    styleUrl: './employer-table.component.css'
 })
 
 export class EmployerTableComponent implements OnInit {

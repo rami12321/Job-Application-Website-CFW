@@ -10,11 +10,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 
 @Component({
-  selector: 'app-youthprofile',
-  standalone: true,
-  imports: [CommonModule, TabViewModule, ReactiveFormsModule, MatTabsModule, PdfViewerModule, FormsModule],
-  templateUrl: './youthprofile.component.html',
-  styleUrls: ['./youthprofile.component.css']
+    selector: 'app-youthprofile',
+    imports: [CommonModule, TabViewModule, ReactiveFormsModule, MatTabsModule, PdfViewerModule, FormsModule],
+    templateUrl: './youthprofile.component.html',
+    styleUrls: ['./youthprofile.component.css']
 })
 export class YouthprofileComponent implements OnInit {
   isPdfModalOpen = false;

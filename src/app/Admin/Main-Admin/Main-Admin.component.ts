@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, OnDestroy  } from '@angular/core';
-import { SmartTableComponent } from '../../Common/smart-table/smart-table.component';
 import { CommonModule } from '@angular/common';
 import { AdminDashboardComponent } from '../Dashboard-Admin/Dashboard-Admin.component';
 import { v4 as uuidv4 } from 'uuid'; // Install UUID library for unique codes
@@ -12,11 +11,10 @@ import { JobRequestTableComponent } from "../../Common/job-request-table/job-req
 
 
 @Component({
-  selector: 'app-Main-Admin',
-  standalone: true,
-  imports: [ CommonModule, AdminDashboardComponent, YouthTableComponent, EmployerTableComponent, JobRequestTableComponent],
-  templateUrl: './Main-Admin.component.html',
-  styleUrls: ['./Main-Admin.component.css']
+    selector: 'app-Main-Admin',
+    imports: [CommonModule, AdminDashboardComponent, YouthTableComponent, EmployerTableComponent, JobRequestTableComponent],
+    templateUrl: './Main-Admin.component.html',
+    styleUrls: ['./Main-Admin.component.css']
 })
 export class MainAdminComponent implements OnInit, OnDestroy {
   @Input() status: string | undefined;

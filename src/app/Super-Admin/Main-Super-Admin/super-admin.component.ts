@@ -4,11 +4,10 @@ import { AdminManagementComponent } from "../Admin-Management/admin-management.c
 import { PaymentsComponent } from "../Payments/payments.component";
 
 @Component({
-  selector: 'app-super-admin',
-  standalone: true,
-  imports: [CommonModule, AdminManagementComponent, PaymentsComponent],
-  templateUrl: './super-admin.component.html',
-  styleUrl: './super-admin.component.css'
+    selector: 'app-super-admin',
+    imports: [CommonModule, AdminManagementComponent, PaymentsComponent],
+    templateUrl: './super-admin.component.html',
+    styleUrl: './super-admin.component.css'
 })
 export class SuperAdminComponent {
   activeTab: 'admin-management' | 'payments' = 'admin-management';

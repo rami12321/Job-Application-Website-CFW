@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/AuthService/auth-service.service';
 import { Router, RouterModule } from '@angular/router';
 @Component({
-  selector: 'app-admin-first-time',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './admin-first-time.component.html',
-  styleUrl: './admin-first-time.component.css'
+    selector: 'app-admin-first-time',
+    imports: [CommonModule, FormsModule, RouterModule],
+    templateUrl: './admin-first-time.component.html',
+    styleUrl: './admin-first-time.component.css'
 })
 export class AdminFirstTimeComponent implements OnInit {
   email: string = '';

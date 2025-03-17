@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../Services/AuthService/auth-service.service';
 
 @Component({
-  selector: 'app-Header',
-  templateUrl: './Header.component.html',
-  styleUrls: ['./Header.component.css'],
-  standalone: true,
-  imports: [CommonModule] // Import CommonModule here
+    selector: 'app-Header',
+    templateUrl: './Header.component.html',
+    styleUrls: ['./Header.component.css'],
+    imports: [CommonModule] // Import CommonModule here
 })
 export class HeaderComponent implements OnInit {
   isMenuOpen = false; 

@@ -15,22 +15,21 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-main-employer',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DialogModule,
-    MultiSelectModule,
-    DropdownModule,
-    PaginatorModule,
-    ButtonModule,
-    JobRequestDetailsComponent,
-    JobRequestComponent,
-    TabViewModule,
-  ],
-  templateUrl: './main-employer.component.html',
-  styleUrls: ['./main-employer.component.css'],
+    selector: 'app-main-employer',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DialogModule,
+        MultiSelectModule,
+        DropdownModule,
+        PaginatorModule,
+        ButtonModule,
+        JobRequestDetailsComponent,
+        JobRequestComponent,
+        TabViewModule,
+    ],
+    templateUrl: './main-employer.component.html',
+    styleUrls: ['./main-employer.component.css']
 })
 export class MainEmployerComponent {
   organizationName: string = ''; // To store organization name

@@ -12,7 +12,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Employer } from '../../Model/Employer';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { AttendanceRecord } from '../../Model/Attendance';
-import { AttendanceService } from '../../Services/AttendanceService/attendance.service';
+
+
+import { AttendanceService } from '../../Services/AttendanceService/attendance.service'
 interface DailySchedule {
   workType: string;
   shift: string;

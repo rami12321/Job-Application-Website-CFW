@@ -5,11 +5,10 @@ import { YouthChartComponent } from '../../Common/Charts/charts/charts.component
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 @Component({
-  selector: 'app-admin-dashboard',
-  standalone: true,
-  imports: [AccordionModule,YouthChartComponent],
-  templateUrl: './Dashboard-Admin.component.html',
-  styleUrl: './Dashboard-Admin.component.css'
+    selector: 'app-admin-dashboard',
+    imports: [AccordionModule, YouthChartComponent],
+    templateUrl: './Dashboard-Admin.component.html',
+    styleUrl: './Dashboard-Admin.component.css'
 })
 export class AdminDashboardComponent {
   youthData = { accepted: 0, rejected: 0, pending: 0, waiting:0};

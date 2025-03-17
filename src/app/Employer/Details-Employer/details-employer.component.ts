@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-details-employer',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './details-employer.component.html',
-  styleUrl: './details-employer.component.css'
+    selector: 'app-details-employer',
+    imports: [CommonModule, ReactiveFormsModule],
+    templateUrl: './details-employer.component.html',
+    styleUrl: './details-employer.component.css'
 })
 export class DetailsEmployerComponent implements OnInit, OnChanges {
   @Input() employerId!: string;

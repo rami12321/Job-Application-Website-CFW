@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin-details',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './admin-details.component.html',
-  styleUrls: ['./admin-details.component.css']
+    selector: 'app-admin-details',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './admin-details.component.html',
+    styleUrls: ['./admin-details.component.css']
 })
 export class AdminDetailsComponent implements OnChanges {
   @Input() adminId!: string; // Pass the admin ID from the parent (e.g., when clicking the view button)

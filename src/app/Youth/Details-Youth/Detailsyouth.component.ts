@@ -8,11 +8,10 @@ import { YouthServiceService } from '../../Services/YouthService/youth-service.s
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
-  selector: 'app-youthsignup-details',
-  standalone: true,
-  imports: [CommonModule, TabViewModule, ReactiveFormsModule, MatTabsModule,PdfViewerModule],
-  templateUrl: './Detailsyouth.component.html',
-  styleUrls: ['./Detailsyouth.component.css'],
+    selector: 'app-youthsignup-details',
+    imports: [CommonModule, TabViewModule, ReactiveFormsModule, MatTabsModule, PdfViewerModule],
+    templateUrl: './Detailsyouth.component.html',
+    styleUrls: ['./Detailsyouth.component.css']
 })
 export class YouthSignupDetailsComponent implements OnInit {
   isPdfModalOpen = false;

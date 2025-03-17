@@ -20,6 +20,8 @@ import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { debounceTime, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Column {
   field: string;
@@ -27,27 +29,28 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-job-request-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    TableModule,
-    CheckboxModule,
-    InputTextModule,
-    PaginatorModule,
-    MultiSelectModule,
-    DialogModule,
-    ButtonModule,
-    JobRequestDetailsComponent,
-    TableModule,
-    CommonModule,
-    TableModule,
-    MultiSelectModule,
-  ],
-  providers: [YouthServiceService],
-  templateUrl: './job-request-table.component.html',
-  styleUrl: './job-request-table.component.css'
+    selector: 'app-job-request-table',
+    imports: [
+        CommonModule,
+        MatTableModule,
+        TableModule,
+        CheckboxModule,
+        InputTextModule,
+        PaginatorModule,
+        MultiSelectModule,
+        DialogModule,
+        ButtonModule,
+        JobRequestDetailsComponent,
+        TableModule,
+        CommonModule,
+        TableModule,
+        FormsModule,
+        DropdownModule,
+        MultiSelectModule,
+    ],
+    providers: [YouthServiceService],
+    templateUrl: './job-request-table.component.html',
+    styleUrl: './job-request-table.component.css'
 })
 export class JobRequestTableComponent implements OnInit {
   @Input() status: string | undefined;

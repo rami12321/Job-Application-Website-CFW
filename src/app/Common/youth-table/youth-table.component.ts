@@ -19,36 +19,35 @@ import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { debounceTime, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Column {
   field: string;
   header: string;
 }
 @Component({
-  selector: 'app-youth-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    TableModule,
-    CheckboxModule,
-    InputTextModule,
-    PaginatorModule,
-    MultiSelectModule,
-    DialogModule,
-    ButtonModule,
-    YouthSignupDetailsComponent,
- 
-    TableModule,
-    CommonModule,
-    TableModule,
-    MultiSelectModule,
-
-
-
-  ],
-  providers: [YouthServiceService],  templateUrl: './youth-table.component.html',
-  styleUrl: './youth-table.component.css'
+    selector: 'app-youth-table',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DropdownModule,
+        MatTableModule,
+        TableModule,
+        CheckboxModule,
+        InputTextModule,
+        PaginatorModule,
+        MultiSelectModule,
+        DialogModule,
+        ButtonModule,
+        YouthSignupDetailsComponent,
+        TableModule,
+        CommonModule,
+        TableModule,
+        MultiSelectModule,
+    ],
+    providers: [YouthServiceService], templateUrl: './youth-table.component.html',
+    styleUrl: './youth-table.component.css'
 })
 
 export class YouthTableComponent implements OnInit {

@@ -17,12 +17,11 @@ import { AttendanceService } from '../../Services/AttendanceService/attendance.s
 
 
 @Component({
-  selector: 'app-Main-Youth',
-  templateUrl: './Main-Youth.component.html',
-  standalone: true,
-  styleUrls: ['./Main-Youth.component.css'],
-  imports: [FormsModule, CommonModule, MultiSelectModule, ReactiveFormsModule, AccordionModule],
-  changeDetection: ChangeDetectionStrategy.Default
+    selector: 'app-Main-Youth',
+    templateUrl: './Main-Youth.component.html',
+    styleUrls: ['./Main-Youth.component.css'],
+    imports: [FormsModule, CommonModule, MultiSelectModule, ReactiveFormsModule, AccordionModule],
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class MainYouthComponent implements OnInit {
   jobStatus: string = '';

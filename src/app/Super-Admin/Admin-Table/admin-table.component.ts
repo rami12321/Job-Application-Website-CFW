@@ -8,11 +8,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin-table',
-  standalone: true,
-  imports: [MultiSelectModule, DialogModule, TableModule, CommonModule, FormsModule],
-  templateUrl: './admin-table.component.html',
-  styleUrl: './admin-table.component.css'
+    selector: 'app-admin-table',
+    imports: [MultiSelectModule, DialogModule, TableModule, CommonModule, FormsModule],
+    templateUrl: './admin-table.component.html',
+    styleUrl: './admin-table.component.css'
 })
 export class AdminTableComponent implements OnInit, OnChanges {
   @Input() active: boolean | undefined;

@@ -7,11 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import SignaturePad from 'signature_pad';
 
 @Component({
-  selector: 'app-employerprofile',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './employerprofile.component.html',
-  styleUrls: ['./employerprofile.component.css']
+    selector: 'app-employerprofile',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    templateUrl: './employerprofile.component.html',
+    styleUrls: ['./employerprofile.component.css']
 })
 export class EmployerprofileComponent implements OnChanges {
   private userId: string | null = null;

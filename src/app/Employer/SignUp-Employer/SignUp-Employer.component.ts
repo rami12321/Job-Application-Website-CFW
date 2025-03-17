@@ -13,13 +13,11 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'app-SignUp-Employer',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PasswordModule, HttpClientModule,FormsModule,
-  ],
-
-  templateUrl: './SignUp-Employer.component.html',
-  styleUrls: ['./SignUp-Employer.component.css']
+    selector: 'app-SignUp-Employer',
+    imports: [CommonModule, ReactiveFormsModule, PasswordModule, HttpClientModule, FormsModule,
+    ],
+    templateUrl: './SignUp-Employer.component.html',
+    styleUrls: ['./SignUp-Employer.component.css']
 })
 export class SignUpEmployerComponent implements AfterViewInit  {
   signupForm: FormGroup;
