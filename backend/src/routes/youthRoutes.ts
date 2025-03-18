@@ -21,6 +21,7 @@ import {
   // updateJob,
   updateYouthIsEdited,
   getYouthIsEditedStatusById,
+  updateYouthWorkStatus,
 
 } from '../controllers/youthController';
 // import { assignYouthToJob } from '../controllers/jobRequestController';
@@ -63,5 +64,7 @@ router.patch('/:id/status', updateYouthStatus);
 router.post('/check-registration', checkRegistrationNumber);
 router.patch('/:id/isEdited', updateYouthIsEdited);
 router.get('/:id/isEdited', getYouthIsEditedStatusById);
+router.put('/:id/work-status', updateYouthWorkStatus);
+
 
 export default router;

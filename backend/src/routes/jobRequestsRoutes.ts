@@ -22,7 +22,7 @@ router.get('/:id', getJobRequestById);      // Get employer by ID
 router.put('/:id', updateJobRequest);       // Update employer by ID
 router.delete('/:id', deleteJobRequest);    // Delete employer by ID
 router.get('/by-employer/:employerId', getJobsByEmployerId);
-router.put('/:id/youths/:youthId', assignYouthToJobRequest); //assign youth to job request
+router.put('/:id/youths', assignYouthToJobRequest); //assign youth to job request
 router.put('/:id/status', updateJobRequestStatus);
 router.get('/assigned-youths/:id', getAssignedYouthsByJobId);
 router.delete('/:id/unassignYouth/:youthId', unassignYouthFromJobRequest); //unassign youth from job request

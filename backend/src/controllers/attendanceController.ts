@@ -19,7 +19,7 @@ export const createAttendance = async (req: Request, res: Response): Promise<voi
       res.status(400).json({ message: 'Missing required fields: jobRequestId, employerId, youthId' });
       return;
     }
-    
+
     // Use provided days if available; otherwise, create an array of 40 empty day objects.
     const attendanceDays = days || Array.from({ length: 40 }, () => ({
       day: "",
@@ -30,14 +30,14 @@ export const createAttendance = async (req: Request, res: Response): Promise<voi
       confirmed: false,
       accepted: false,
     }));
-    
+
     const newAttendance = await Attendance.create({
       jobRequestId,
       employerId,
       youthId,
       days: attendanceDays,
     });
-    
+
     res.status(201).json(newAttendance);
   } catch (error) {
     console.error('Error creating attendance record:', error);

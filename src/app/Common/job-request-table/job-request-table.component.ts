@@ -19,7 +19,7 @@ import { JobRequestService } from '../../Services/JobRequestService/job-request-
 import { Job } from '../../Model/JobDetails';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { CheckboxModule } from 'primeng/checkbox';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime, Subject, forkJoin} from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -126,10 +126,10 @@ export class JobRequestTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
     this.setActiveTabFromLocalStorage();
-    this.region = localStorage.getItem('adminArea') || ''; 
+    this.region = localStorage.getItem('adminArea') || '';
     console.log("Admin region set from localStorage:", this.region);
     console.log(this.savedColumns);
-  
+
       this.fetchJobRequests();
 
     this.lookupService.getLookupData().subscribe(
@@ -165,9 +165,9 @@ export class JobRequestTableComponent implements OnInit {
   }
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
-   
+
       this.fetchJobRequests();
-    
+
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -429,9 +429,9 @@ export class JobRequestTableComponent implements OnInit {
     this.currentJob = job;
     this.selectedYouths = [];
     this.youthDialogVisible = true;  // This should trigger the dialog visibility
-  
+
     console.log('Opening dialog for job:', job, 'Selected job:', selectedJob);
-  
+
     this.youthService.getYouthByJob(job).subscribe({
       next: (response: any) => {
         console.log('Response from getYouthByJob:', response);
@@ -451,59 +451,47 @@ export class JobRequestTableComponent implements OnInit {
   }
   assignYouthsToJob(): void {
     console.log('Employer:', this.selectedJob);
-    console.log(
-      'Selected Youths before assignment:',
-      JSON.stringify(this.selectedYouths, null, 2)
-    );
+    console.log('Youth:', this.selectedYouths);
+    console.log('Selected Youths before assignment:', JSON.stringify(this.selectedYouths, null, 2));
 
-    const youthsAssigned = []; // Array to track successful assignments
+    if (!this.selectedYouths.length) return;
 
-    this.selectedYouths.forEach((youth: any) => {
-      console.log(
-        `Assigning Youth: ID=${youth.id}, Name=${youth.name}`
-      );
+    // Create an array of youth IDs
+    const youthIds = this.selectedYouths.map((youth: any) => youth.id);
 
-      // Send only the youth ID to the backend; the backend will fetch the details
-      this.JobRequestService.assignYouthToJobRequest(
-        this.selectedJob,
-        youth.id
-      ).subscribe({
-        next: () => {
-          console.log(
-            `Youth ${youth.name} (ID: ${youth.id}) assigned to job ${this.selectedJob}.`
-          );
+    // Now this sends the youthIds array to the backend
+    this.JobRequestService.assignYouthToJobRequest(this.selectedJob, youthIds).subscribe({
+      next: (response) => {
+        console.log('All selected youths assigned successfully.');
 
-          // Update local state for assigned youths
+        // Handle the updated assigned youths and other actions
+        this.selectedYouths.forEach((youth: any) => {
           this.assignedYouths.push({
             id: youth.id,
             name: youth.name,
             beneficiary: youth.beneficiary,
             label: youth.label,
           });
+        });
 
-          // Remove the youth from unassigned youths
-          this.unassignedYouths = this.unassignedYouths.filter(
-            (unassigned: any) => unassigned.id !== youth.id
-          );
+        // Remove assigned youths from the unassigned list
+        this.unassignedYouths = this.unassignedYouths.filter(
+          (unassigned: any) => !this.selectedYouths.some((youth: any) => youth.id === unassigned.id)
+        );
 
-          youthsAssigned.push(youth); // Track successfully assigned youth
+        // Optionally update job status
+        this.updateJobStatusToAssigned();
 
-          // If all selected youths are assigned, optionally update the job status
-          if (youthsAssigned.length === this.selectedYouths.length) {
-            this.updateJobStatusToAssigned();
-          }
-        },
-        error: (error) => {
-          console.error(
-            `Error assigning youth ${youth.name} (ID: ${youth.id}):`,
-            error
-          );
-        },
-      });
+        // Close the dialog
+        this.youthDialogVisible = false;
+      },
+      error: (error) => {
+        console.error('Error assigning youths:', error);
+      },
     });
-
-    this.youthDialogVisible = false;
   }
+
+
   getAssignedYouths(jobId: string): void {
     this.JobRequestService.getAssignedYouthsByJobId(jobId).subscribe({
       next: (response: any) => {

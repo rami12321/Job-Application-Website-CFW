@@ -174,7 +174,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   ngOnInit() {
     const youthIdString = localStorage.getItem('userId');
     const youthId = youthIdString ? parseInt(youthIdString, 10) : null;
-    
+
     if (youthId !== null) {
 
       this.youthService.getAppliedJobById(youthId).subscribe(
@@ -292,7 +292,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.isDetailsModalOpen = true;
     this.selectedJob = job;
   }
-  
+
   openAttendanceModal(): void {
     // Ensure youthId is available
     if (!this.youthId && this.specificAssignedYouth) {
@@ -603,7 +603,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           );
 
           // Check for required values
-          if (!this.mobilePhone  || !this.signatureImage || !this.isTermsAccepted) {
+          if (!this.mobilePhone || !this.signatureImage || !this.isTermsAccepted) {
             console.error('All fields are required to submit the Youth Contract.');
             alert('Please fill in all required fields.');
             return;
@@ -631,8 +631,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
             .subscribe({
               next: (response) => {
                 console.log('Youth contract saved successfully:', response);
-                alert('Youth contract submitted successfully!');
-                this.closeContractModal();
+
+                // ✅ Update the youth's work status to true
+                this.youthService.updateYouthWorkStatus(this.specificAssignedYouth!.id, true).subscribe({
+                  next: () => {
+                    console.log('Work status updated successfully.');
+                    alert('Youth contract submitted successfully!');
+                    this.closeContractModal();
+                  },
+                  error: (err) => {
+                    console.error('Failed to update work status:', err);
+                    alert('Failed to update work status. Please try again.');
+                  },
+                });
               },
               error: (err) => {
                 console.error('Failed to save the youth contract:', err);
@@ -644,11 +655,11 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           console.error('Error fetching assigned youths:', error);
         }
       );
-
     } else {
       console.error('No valid applied job found to update.');
     }
   }
+
 
   onAgreementStartDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;

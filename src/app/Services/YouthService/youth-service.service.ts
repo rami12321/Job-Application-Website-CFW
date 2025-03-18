@@ -105,4 +105,8 @@ export class YouthServiceService {
     const url = `${this.apiUrl}/${id}/isEdited`;
     return this.http.patch(url, { isEdited });
   }
+  updateYouthWorkStatus(id: number, workStatus: boolean): Observable<any> {
+    const url = `${this.apiUrl}/${id}/work-status`;
+    return this.http.put(url, { workStatus });
+  }
 }
