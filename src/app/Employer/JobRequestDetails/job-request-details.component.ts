@@ -197,17 +197,17 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
   }
 
-  
+
   confirmEmployerAttendance(index: number): void {
     if (this.attendanceRecord && this.selectedYouth && this.selectedYouth.EmployerContract?.signature) {
       console.log('Using employer contract signature:', this.selectedYouth.EmployerContract.signature);
-      
+
       // Mark the day as confirmed by the employer.
       this.attendanceRecord.days[index].employerConfirmed = true;
-      
+
       // Use the signature from the EmployerContract of the selected youth.
       this.attendanceRecord.days[index].employerSignature = this.selectedYouth.EmployerContract.signature;
-      
+
       // Update the backend with the modified attendance record.
       this.attendanceService.updateAttendance(this.attendanceRecord.id!, { days: this.attendanceRecord.days })
         .subscribe({
@@ -218,25 +218,25 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       console.error('Employer contract signature not available on the selected youth');
     }
   }
-  
-  
-  
-  
+
+
+
+
   openAttendanceModal(youth: any): void {
     if (!this.jobRequest || !youth) {
       console.error('Missing jobRequest or youth data');
       return;
     }
-    
+
     // Save the selected youth for later use.
     this.selectedYouth = youth;
-  
+
     const jobId = this.jobRequest.jobId;
     if (!jobId) {
       console.error('Job ID is undefined');
       return;
     }
-    
+
     this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
       .subscribe({
         next: (attendance: AttendanceRecord) => {
@@ -257,9 +257,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         }
       });
   }
-  
-
-  
   closeAttendanceModal(): void {
     this.isAttendanceModalOpen = false;
   }
@@ -270,7 +267,7 @@ openAdminAttendanceModal(youth: any): void {
     console.error('Missing jobRequest or youth data');
     return;
   }
-  
+
   // Save the selected youth for later use.
   this.selectedYouth = youth;
 
@@ -279,7 +276,7 @@ openAdminAttendanceModal(youth: any): void {
     console.error('Job ID is undefined');
     return;
   }
-  
+
   this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
     .subscribe({
       next: (attendance: AttendanceRecord) => {
@@ -351,7 +348,7 @@ closeAdminAttendanceModal(): void {
       console.error('All fields are required to submit the contract.');
       return;
     }
-  
+
     // Prepare the contract details including the new schedule data
     const contractDetails = {
       startDate: this.agreementStartDate,
@@ -361,7 +358,7 @@ closeAdminAttendanceModal(): void {
       averageWorkingHours: this.averageWorkingHours,    // New: Average working hours per day
       workingNotes: this.workingNotes                   // New: Notes for many shifts
     };
-  
+
     // Update the selected youth in the assignedYouths array with the new contract details
     this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map((youth) => {
       if (youth.id === this.selectedYouth.id) {
@@ -372,10 +369,10 @@ closeAdminAttendanceModal(): void {
       }
       return youth;
     });
-  
+
     // Log to verify the updated job request structure
     console.log('Updated jobRequest:', this.jobRequest);
-  
+
     // Submit the updated job request to the service
     this.jobRequestService
       .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
@@ -390,7 +387,7 @@ closeAdminAttendanceModal(): void {
         },
       });
   }
-  
+
 
 
 
@@ -865,7 +862,6 @@ closeAdminAttendanceModal(): void {
       queryParams: { role },
     });
   }
-
   updateRowStates(): void {
     if (this.jobRequest) {
 
@@ -886,7 +882,6 @@ closeAdminAttendanceModal(): void {
       console.log('Is Submit Enabled (updateRowStates):', this.isSubmitEnabled);
     }
   }
-
   checkSubmitCondition(): void {
     if (this.approvedCount >= this.jobRequest!.numEmployees) {
       this.submitJobRequests();
@@ -894,16 +889,13 @@ closeAdminAttendanceModal(): void {
       this.showConfirmationModal = true;
     }
   }
-
   confirmSubmit(): void {
     this.showConfirmationModal = false;
     this.submitJobRequests();
   }
-
   cancelSubmit(): void {
     this.showConfirmationModal = false;
   }
-
   submitJobRequests(): void {
     if (!this.jobRequest || !this.jobId) {
       console.error('Job request or job ID is undefined.');
@@ -927,24 +919,24 @@ closeAdminAttendanceModal(): void {
       assignedYouths: approvedYouths,
       status: 'in-progress',
     };
-  
+
     this.jobRequestService.getAllJobRequests().subscribe({
       next: () => {
         // Ensure jobId is a string
         const safeJobIdForUpdate = this.jobId ?? '';
-  
+
         // Now update the current job request with the new youths
         this.jobRequestService.updateJob(safeJobIdForUpdate, updatedJobRequest).subscribe({
           next: () => {
             console.log('Job request submitted successfully.');
             updatedYouths.forEach((youth) => {
               const isApproved = youth.status === 'approved';
-  
+
               // Update the workStatus directly in the youth record in the youthdb.json file
               if (isApproved) {
                 this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
               }
-  
+
               this.updateYouthAppliedJobs(
                 youth.id,
                 this.jobRequest?.job || '',
@@ -952,7 +944,7 @@ closeAdminAttendanceModal(): void {
                 isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
               );
             });
-  
+
             setTimeout(() => {
               window.location.reload();
             }, 500);
@@ -963,8 +955,6 @@ closeAdminAttendanceModal(): void {
       error: (err) => console.error('Error fetching all job requests:', err),
     });
   }
-  
-
   initializeRowStates(): void {
     if (this.jobRequest) {
       this.approvedCount = this.jobRequest.assignedYouths?.filter(
@@ -979,8 +969,6 @@ closeAdminAttendanceModal(): void {
       console.log('Is Submit Enabled (initializeRowStates):', this.isSubmitEnabled);
     }
   }
-
-
   toggleYouthStatus(youth: any, action: string | null): void {
     if (action) {
       this.updateYouthStatus(youth, action as 'accepted' | 'rejected');
@@ -999,9 +987,6 @@ closeAdminAttendanceModal(): void {
       }
     }
   }
-
-
-
   submitJobRequest(): void {
     if (!this.jobRequest || !this.jobId) return;
 
@@ -1030,17 +1015,12 @@ closeAdminAttendanceModal(): void {
       error: (err) => console.error('Error submitting job request:', err),
     });
   }
-
-
   isEmployer(): boolean {
     return this.userRole === 'Employer';
   }
-
   isAdmin(): boolean {
     return this.userRole === 'Admin' || !this.userRole;
   }
-
-
   saveChanges(): void {
     if (!this.editModels) return;
 
@@ -1058,6 +1038,5 @@ closeAdminAttendanceModal(): void {
       },
     });
   }
-
 
 }

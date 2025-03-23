@@ -17,9 +17,9 @@ export class JobRequestService {
     return this.http.get<Job[]>(this.JobRequestsUrl);
   }
   // Get all Job Requests
-getAllJobRequests(): Observable<Job[]> {
-  return this.http.get<Job[]>(this.JobRequestsUrl);
-}
+  getAllJobRequests(): Observable<Job[]> {
+    return this.http.get<Job[]>(this.JobRequestsUrl);
+  }
 
   // Get Jobs by Employer ID
   getJobsByEmployerId(employerId: string): Observable<Job[]> {
@@ -49,10 +49,12 @@ getAllJobRequests(): Observable<Job[]> {
   deleteJob(id: string): Observable<any> {
     return this.http.delete(`${this.JobRequestsUrl}/${id}`);
   }
- // In JobRequestService (or similar service)
-assignYouthToJobRequest(jobId: string, youthIds: string[]): Observable<any> {
-  return this.http.put(`${this.JobRequestsUrl}/${jobId}/youths`, { youthIds });
-}
+  // In JobRequestService (or similar service)
+  assignYouthToJobRequest(jobId: string, youthIds: string[]): Observable<any> {
+    return this.http.put(`${this.JobRequestsUrl}/${jobId}/youths`, {
+      youthIds,
+    });
+  }
 
   updateJobRequestStatus(id: string, status: string): Observable<any> {
     const url = `${this.JobRequestsUrl}/${id}/status`;
@@ -65,17 +67,20 @@ assignYouthToJobRequest(jobId: string, youthIds: string[]): Observable<any> {
       }
     );
   }
-getAssignedYouthsByJobId(id: any): Observable<AssignedYouth[]> {
-  const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
-  return this.http.get<AssignedYouth[]>(url);
+  getAssignedYouthsByJobId(id: any): Observable<AssignedYouth[]> {
+    const url = `${this.JobRequestsUrl}/assigned-youths/${id}`;
+    return this.http.get<AssignedYouth[]>(url);
+  }
+  getJobRequestByYouthId(youthId: string): Observable<any> {
+    const url = `${this.JobRequestsUrl}/youth/${youthId}`;
+    return this.http.get(url);
+  }
+
+  // Unassign Youth from Job Request
+  unassignYouthFromJobRequest(jobId: string, youthId: any): Observable<any> {
+    const url = `${this.JobRequestsUrl}/${jobId}/unassignYouth/${youthId}`;
+    return this.http.delete(url, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
-
-
-
- // Unassign Youth from Job Request
- unassignYouthFromJobRequest(jobId: string, youthId: any): Observable<any> {
-  const url = `${this.JobRequestsUrl}/${jobId}/unassignYouth/${youthId}`;
-  return this.http.delete(url, { headers: { 'Content-Type': 'application/json' } });
-}
-}
-

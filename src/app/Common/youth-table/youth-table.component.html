@@ -31,36 +31,38 @@
         (onChange)="saveSelectedColumnsToLocalStorage()"
       ></p-multiSelect>
       <p-dropdown
-      [options]="[
-        { label: 'My Area', value: 'myArea' },
-        { label: 'All Areas', value: 'all' }
-      ]"
-      [(ngModel)]="selectedDataScope"
-      (onChange)="fetchYouthData()"
-      placeholder="Filter by Area"
-      class="w-40 text-gray-800 text-sm ml-2 px-5 py-2 rounded"
-      [style]="{
+        [options]="[
+          { label: 'My Area', value: 'myArea' },
+          { label: 'All Areas', value: 'all' }
+        ]"
+        [(ngModel)]="selectedDataScope"
+        (onChange)="fetchYouthData()"
+        placeholder="Filter by Area"
+        class="w-40 text-gray-800 text-sm ml-2 px-5 py-2 rounded"
+        [style]="{
         background: 'white',
         border: '1px solid #ccc',
         'border-radius': '6px',
         'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.08)',
-        
+
       }"
-    >
-      <ng-template pTemplate="selectedItem" let-item>
-        <div class="flex items-center space-x-2">
-          <i class="pi pi-map-marker text-blue-500"></i>
-          <span class="font-medium">{{ item.label }}</span>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="item" let-item>
-        <div class="flex items-center space-x-2 hover:bg-gray-100 p-2 rounded transition">
-          <i class="pi pi-map-marker text-gray-500"></i>
-          <span>{{ item.label }}</span>
-        </div>
-      </ng-template>
-    </p-dropdown>
-    
+      >
+        <ng-template pTemplate="selectedItem" let-item>
+          <div class="flex items-center space-x-2">
+            <i class="pi pi-map-marker text-blue-500"></i>
+            <span class="font-medium">{{ item.label }}</span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="item" let-item>
+          <div
+            class="flex items-center space-x-2 hover:bg-gray-100 p-2 rounded transition"
+          >
+            <i class="pi pi-map-marker text-gray-500"></i>
+            <span>{{ item.label }}</span>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
       <button
         (click)="resetSelectedColumns()"
         class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
@@ -91,10 +93,15 @@
       </tr>
       <!-- Second header row: Filters -->
       <tr>
-        <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
+        <th
+          class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center"
+        >
           Actions
         </th>
-        <th *ngFor="let col of cols" class="border-b border-r px-2 py-1 text-sm text-gray-600">
+        <th
+          *ngFor="let col of cols"
+          class="border-b border-r px-2 py-1 text-sm text-gray-600"
+        >
           <ng-container [ngSwitch]="col.field">
             <!-- isEdited Filter -->
             <ng-container *ngSwitchCase="'isEdited'">
@@ -269,16 +276,38 @@
     <ng-template pTemplate="body" let-product>
       <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
         <!-- Actions Column (Youth Only) -->
-        <td class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4">
-          <div *ngFor="let action of getActionsForRow(product.status, product.active)">
+        <td
+          class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4"
+        >
+          <div
+            *ngFor="
+              let action of getActionsForRow(
+                product.status,
+                product.active,
+                product.workStatus
+              )
+            "
+          >
             <!-- Youth 'View' Button -->
             <button
               *ngIf="action === 'view'"
               type="button"
               class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              (click)="showDialog(product.id, 'youthsignup'); updateIsEdited(product.id)"
+              (click)="
+                showDialog(product.id, 'youthsignup');
+                updateIsEdited(product.id)
+              "
             >
               <i class="pi pi-eye"></i>
+            </button>
+            <button
+              *ngIf="action === 'payments'"
+              type="button"
+              class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+              (click)="showPaymentDialog(product)"
+            >
+              <i class="pi pi-money-bill"></i>
+              <!-- Payment icon -->
             </button>
             <!-- Youth 'Pend' Button -->
             <button
@@ -319,13 +348,16 @@
           </div>
         </td>
         <!-- Data Columns -->
-        <td *ngFor="let col of cols" class="px-4 py-2 text-sm border-b border-r border-gray-300">
+        <td
+          *ngFor="let col of cols"
+          class="px-4 py-2 text-sm border-b border-r border-gray-300"
+        >
           <ng-container [ngSwitch]="col.field">
             <ng-container *ngSwitchCase="'createdAt'">
               <div>{{ formatDate(product[col.field]) }}</div>
             </ng-container>
             <ng-container *ngSwitchDefault>
-              {{ product[col.field] || 'N/A' }}
+              {{ product[col.field] || "N/A" }}
             </ng-container>
           </ng-container>
         </td>
@@ -344,7 +376,6 @@
     [youthId]="selectedYouthId"
   ></app-youthsignup-details>
 </p-dialog>
-
 
 <!-- Note Dialog -->
 <p-dialog
@@ -376,23 +407,63 @@
     ></textarea>
   </div>
   <ng-template pTemplate="footer">
-    <div class="flex justify-end gap-4 p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+    <div
+      class="flex justify-end gap-4 p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg"
+    >
       <button
         pButton
         class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg px-6 py-2 transition duration-300 transform hover:scale-105"
         type="button"
         (click)="updateNotes(selectedYouth.id, note); noteDialogVisible = false"
-      >Save</button>
+      >
+        Save
+      </button>
       <button
         pButton
         class="bg-gray-500 hover:bg-gray-600 text-white rounded-lg px-6 py-2 transition-all duration-300"
         type="button"
         (click)="noteDialogVisible = false"
-      >Cancel</button>
+      >
+        Cancel
+      </button>
     </div>
   </ng-template>
 </p-dialog>
 
+<p-dialog
+  [(visible)]="paymentDialogVisible"
+  [modal]="true"
+  [style]="{ width: '800px' }"
+  (onHide)="selectedYouthForPayment = null; paymentHistory = []; jobRequestDetails = null; attendanceRecord = null"
+>
+  <!-- Use the new component inside the dialog -->
+  <app-payment-job-request-details
+    *ngIf="selectedYouthForPayment"
+    [jobRequestDetails]="jobRequestDetails"
+    [selectedYouth]="selectedYouthForPayment"
+    [paymentHistory]="paymentHistory"
+    [attendanceRecord]="attendanceRecord"
+    (refreshPaymentHistory)="fetchPaymentsByYouth($event)"
+  ></app-payment-job-request-details>
+
+  <!-- Dialog Footer -->
+  <div class="flex justify-end gap-2 mt-4">
+    <button
+      type="button"
+      class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+      (click)="paymentDialogVisible = false"
+    >
+      Close
+    </button>
+    <button
+      type="button"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      (click)="generatePayment(selectedYouthForPayment.id, jobRequestDetails.jobId)"
+    >
+      Generate Payment
+    </button>
+  </div>
+</p-dialog>
 <!-- No Data Template -->
 <ng-template #noData>
   <div

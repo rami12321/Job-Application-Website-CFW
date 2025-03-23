@@ -26,13 +26,15 @@ export class AttendanceService {
 uploadSignature(signatureData: string): Observable<{ filePath: string }> {
   // Here, signatureData should be a data URL (e.g., "data:image/png;base64,...")
   return this.http.post<{ filePath: string }>(
-    'http://localhost:3000/uploadSignature', 
+    'http://localhost:3000/uploadSignature',
     { signatureData }
   );
 }
 
   // New method to fetch an attendance record by youth and jobRequestId
   getAttendanceByYouthAndJob(youthId: string, jobRequestId: string): Observable<AttendanceRecord> {
-    return this.http.get<AttendanceRecord>(`${this.baseUrl}/byYouthAndJob?youthId=${youthId}&jobRequestId=${jobRequestId}`);
+    return this.http.get<AttendanceRecord>(`${this.baseUrl}/byYouthAndJob`, {
+      params: { youthId, jobRequestId }, // Pass query parameters
+    });
   }
 }

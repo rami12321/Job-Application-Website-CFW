@@ -298,54 +298,6 @@
   </div>
 </p-dialog>
 
-<!-- Note Dialog -->
-<!-- <p-dialog
-    [(visible)]="noteDialogVisible"
-    [closable]="false"
-    [style]="{ width: '500px', borderRadius: '12px', padding: '0' }"
-  >
-    <ng-template pTemplate="header">
-      <div
-        class="flex justify-between w-full items-center bg-gradient-to-r from-blue-400 to-blue-600 text-white px-6 py-3 rounded-t-lg shadow-lg"
-      >
-        <span class="text-xl font-semibold">Update Notes</span>
-        <button
-          pButton
-          icon="pi pi-times"
-          class="p-button-rounded p-button-text text-white hover:text-gray-200 transition-all"
-          type="button"
-          (click)="noteDialogVisible = false"
-        ></button>
-      </div>
-    </ng-template>
-    <div class="p-6">
-      <textarea
-        rows="6"
-        pInputTextarea
-        [(ngModel)]="note"
-        placeholder="Enter your notes here..."
-        class="w-full p-4 border border-gray-300 rounded-lg shadow-md focus:ring-4 focus:ring-blue-400 focus:outline-none transition-all duration-200"
-      ></textarea>
-    </div>
-    <ng-template pTemplate="footer">
-      <div
-        class="flex justify-end gap-4 p-4 border-t border-gray-200 bg-gray-50 rounded-b-lg"
-      >
-        <button
-          pButton
-          class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-lg px-6 py-2 transition duration-300 transform hover:scale-105"
-          type="button"
-          (click)="updateNotes(selectedYouthId, note); noteDialogVisible = false"
-        ></button>
-        <button
-          pButton
-          class="bg-gray-500 hover:bg-gray-600 text-white rounded-lg px-6 py-2 transition-all duration-300"
-          type="button"
-          (click)="noteDialogVisible = false"
-        ></button>
-      </div>
-    </ng-template>
-  </p-dialog> -->
 
 <ng-template #noData>
   <div
