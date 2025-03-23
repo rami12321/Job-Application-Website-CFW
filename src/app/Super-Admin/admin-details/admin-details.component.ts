@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-admin-details',
+    standalone: true,selector: 'app-admin-details',
+  
     imports: [CommonModule, FormsModule],
     templateUrl: './admin-details.component.html',
     styleUrls: ['./admin-details.component.css']
@@ -63,3 +64,5 @@ export class AdminDetailsComponent implements OnChanges {
     this.editModel = {};
   }
 }
+
+

@@ -18,8 +18,8 @@ import { EmployerService } from '../../../Services/employer-service/employer-ser
 import { JobRequestService } from '../../../Services/JobRequestService/job-request-service.service';
 
 @Component({
-  standalone: true,
-  selector: 'app-youth-chart',
+    standalone: true,selector: 'app-youth-chart',
+  
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css'],
 })
@@ -362,3 +362,5 @@ export class YouthChartComponent implements OnInit {
     });
   }
 }
+
+

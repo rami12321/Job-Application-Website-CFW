@@ -5,7 +5,8 @@ import { YouthChartComponent } from '../../Common/Charts/charts/charts.component
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 @Component({
-    selector: 'app-admin-dashboard',
+    standalone: true,selector: 'app-admin-dashboard',
+  
     imports: [AccordionModule, YouthChartComponent],
     templateUrl: './Dashboard-Admin.component.html',
     styleUrl: './Dashboard-Admin.component.css'
@@ -43,3 +44,5 @@ export class AdminDashboardComponent {
   }
 
 }
+
+

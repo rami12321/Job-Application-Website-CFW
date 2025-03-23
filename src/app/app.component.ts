@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-root',
+    standalone: true,selector: 'app-root',
+  
     imports: [RouterOutlet, HeaderComponent,],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
@@ -22,3 +23,5 @@ export class AppComponent {
 bootstrapApplication(AppComponent, {
   providers: [importProvidersFrom(HttpClientModule)],
 }).catch((err) => console.error(err));
+
+

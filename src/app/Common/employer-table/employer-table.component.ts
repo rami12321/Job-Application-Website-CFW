@@ -28,7 +28,8 @@ interface Column {
   header: string;
 }
 @Component({
-    selector: 'app-employer-table',
+    standalone: true,selector: 'app-employer-table',
+  
     imports: [
         CommonModule,
         MatTableModule,
@@ -402,3 +403,5 @@ export class EmployerTableComponent implements OnInit {
   }
 
 }
+
+

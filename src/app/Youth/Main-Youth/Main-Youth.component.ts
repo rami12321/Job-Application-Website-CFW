@@ -17,7 +17,8 @@ import { AttendanceService } from '../../Services/AttendanceService/attendance.s
 
 
 @Component({
-    selector: 'app-Main-Youth',
+    standalone: true,selector: 'app-Main-Youth',
+  
     templateUrl: './Main-Youth.component.html',
     styleUrls: ['./Main-Youth.component.css'],
     imports: [FormsModule, CommonModule, MultiSelectModule, ReactiveFormsModule, AccordionModule],
@@ -292,7 +293,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.isDetailsModalOpen = true;
     this.selectedJob = job;
   }
-
   openAttendanceModal(): void {
     // Ensure youthId is available
     if (!this.youthId && this.specificAssignedYouth) {
@@ -303,9 +303,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       alert('Your session has expired or you are not logged in. Please log in to continue.');
       return;
     }
-
+  
     this.attendanceModalOpen = true;
-
+  
     this.attendanceService.getAttendanceByYouthAndJob(this.youthId, this.appliedJob!.id)
       .subscribe((record: AttendanceRecord) => {
         if (record && record.id) {
@@ -331,7 +331,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         this.createNewAttendanceRecord();
       });
   }
-
+  
   /**
    * Creates a new attendance record with a 40-day archive.
    */
@@ -342,11 +342,10 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       youthId: this.youthId,
       days: Array.from({ length: 40 }, () => this.getDefaultDayRecord())
     };
-
+  
     this.attendanceService.createAttendance(newRecord)
       .subscribe((createdRecord: AttendanceRecord) => {
         this.currentAttendanceId = createdRecord.id!;
-        // Ensure the returned days is an array (it should be, but sanitize just in case)
         let days = createdRecord.days;
         if (!Array.isArray(days)) {
           try {
@@ -361,7 +360,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         console.error('Error creating attendance record:', error);
       });
   }
-
+  
   /**
    * Makes sure that the attendanceList array has exactly 40 entries.
    */
@@ -373,7 +372,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     }
     return sanitized;
   }
-
+  
   /**
    * Returns a default day record.
    */
@@ -389,7 +388,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       employerConfirmed: false,
     };
   }
-
+  
   /**
    * Initializes today’s attendance.
    * If a row for today is not already accepted, it sets the first non-accepted row’s date and day.
@@ -397,48 +396,44 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   initializeTodayAttendance(): void {
     const today = new Date();
     const todayStr = today.toLocaleDateString();
-
-    // Guard: Check that attendanceList is an array.
+  
     if (!Array.isArray(this.attendanceList)) {
       console.error('attendanceList is not an array');
       return;
     }
-
-    // Check if an attendance row for today has already been accepted.
+  
     const submittedToday = this.attendanceList.some(row => {
       return row.date && new Date(row.date).toLocaleDateString() === todayStr && row.accepted;
     });
-
+  
     if (submittedToday) {
       alert("Attendance for today has already been submitted.");
       this.closeAttendanceModal();
       return;
     }
-
-    // Find the first row that is not accepted.
+  
     const nonAcceptedIndex = this.attendanceList.findIndex(row => !row.accepted);
     if (nonAcceptedIndex === -1) {
       alert("All attendance days are complete.");
       this.closeAttendanceModal();
       return;
     }
-
+  
     const activeRow = this.attendanceList[nonAcceptedIndex];
-    // Update the active row only if it's not already set for today.
     if (!activeRow.date || new Date(activeRow.date).toLocaleDateString() !== todayStr) {
       activeRow.date = today;
       const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       activeRow.day = dayNames[today.getDay()];
       this.updateAttendanceBackend();
     }
-
+  
     this.activeAttendanceIndex = nonAcceptedIndex;
   }
-
+  
   closeAttendanceModal(): void {
     this.attendanceModalOpen = false;
   }
-
+  
   checkLocation(index: number): void {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser.');
@@ -468,7 +463,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
     );
   }
-
+  
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371000; // Earth's radius in meters
     const dLat = this.deg2rad(lat2 - lat1);
@@ -479,16 +474,16 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   }
-
+  
   deg2rad(deg: number): number {
     return deg * (Math.PI / 180);
   }
-
+  
   confirmAttendanceRow(index: number): void {
     this.attendanceList[index].confirmed = true;
     this.updateAttendanceBackend();
   }
-
+  
   /**
    * Instead of deleting a row, reset it to default values.
    */
@@ -496,7 +491,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.attendanceList[index] = this.getDefaultDayRecord();
     this.updateAttendanceBackend();
   }
-
+  
   updateAttendanceBackend(): void {
     if (this.currentAttendanceId) {
       this.attendanceService.updateAttendance(this.currentAttendanceId, { days: this.attendanceList })
@@ -507,9 +502,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         });
     }
   }
-
+  
   submitAttendance(): void {
-    // Guard to ensure activeAttendanceIndex is valid.
     if (this.activeAttendanceIndex < 0 || this.activeAttendanceIndex >= this.attendanceList.length) {
       alert('No active attendance row available.');
       return;
@@ -528,6 +522,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     alert(`Attendance for ${activeRow.date ? new Date(activeRow.date).toLocaleDateString() : ''} submitted!`);
     this.closeAttendanceModal();
   }
+  
   closeDetailsModal(): void {
     this.isDetailsModalOpen = false;
     this.selectedJob = null;
@@ -815,3 +810,5 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.showNote = true;
   }
 }
+
+

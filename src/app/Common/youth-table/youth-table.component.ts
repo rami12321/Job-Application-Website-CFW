@@ -27,8 +27,7 @@ interface Column {
   header: string;
 }
 @Component({
-    selector: 'app-youth-table',
-    imports: [
+    standalone: true,selector: 'app-youth-table',imports: [
         CommonModule,
         FormsModule,
         DropdownModule,
@@ -609,3 +608,5 @@ export class YouthTableComponent implements OnInit {
   }
 
 }
+
+

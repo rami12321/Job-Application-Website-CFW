@@ -15,7 +15,8 @@ import { EmployerService } from '../../Services/employer-service/employer-servic
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-main-employer',
+    standalone: true,selector: 'app-main-employer',
+  
     imports: [
         CommonModule,
         FormsModule,
@@ -655,3 +656,5 @@ export class MainEmployerComponent {
     };
   }
 }
+
+

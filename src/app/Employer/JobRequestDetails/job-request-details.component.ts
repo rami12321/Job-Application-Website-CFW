@@ -12,7 +12,11 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Employer } from '../../Model/Employer';
 import { EmployerService } from '../../Services/employer-service/employer-services.service';
 import { AttendanceRecord } from '../../Model/Attendance';
+import ImageModule from 'docxtemplater-image-module-free';
 
+import PizZip from 'pizzip';
+import Docxtemplater from 'docxtemplater';
+import { saveAs } from 'file-saver';
 
 import { AttendanceService } from '../../Services/AttendanceService/attendance.service'
 interface DailySchedule {
@@ -20,14 +24,12 @@ interface DailySchedule {
   shift: string;
 }
 @Component({
-  selector: 'app-job-request-details',
-  standalone: true,
-  imports: [CommonModule, MatTooltipModule, FormsModule, PdfViewerModule],
+  standalone: true, selector: 'app-job-request-details', imports: [CommonModule, MatTooltipModule, FormsModule, PdfViewerModule],
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
 
-export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterViewChecked, OnChanges{
+export class JobRequestDetailsComponent implements AfterViewInit, OnInit, AfterViewChecked, OnChanges {
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
   private userId: string | null = null;
@@ -41,27 +43,27 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   isApprovalModalOpen: boolean = false;
   selectedYouth: any | null = null;
   isEmployerContractModalOpen = false;
-isYouthContractModalOpen = false;
-public employer: Employer | undefined;
-// Define an interface if needed:
+  isYouthContractModalOpen = false;
+  public employer: Employer | undefined;
 
 
-// Initialize working schedule for each day
-workingSchedule: { [day: string]: { workType: string; shift: string } } = {
-  Monday: { workType: 'Office', shift: 'Morning' },
-  Tuesday: { workType: 'Office', shift: 'Morning' },
-  Wednesday: { workType: 'Office', shift: 'Morning' },
-  Thursday: { workType: 'Office', shift: 'Morning' },
-  Friday: { workType: 'Office', shift: 'Morning' },
-  Saturday: { workType: 'Office', shift: 'Morning' },
-  Sunday: { workType: 'Office', shift: 'Morning' },
-};
 
 
-averageWorkingHours: number = 8; // default value
-workingNotes: string = '';
+  workingSchedule: { [day: string]: { workType: string; shift: string } } = {
+    Monday: { workType: 'Office', shift: 'Morning' },
+    Tuesday: { workType: 'Office', shift: 'Morning' },
+    Wednesday: { workType: 'Office', shift: 'Morning' },
+    Thursday: { workType: 'Office', shift: 'Morning' },
+    Friday: { workType: 'Office', shift: 'Morning' },
+    Saturday: { workType: 'Office', shift: 'Morning' },
+    Sunday: { workType: 'Office', shift: 'Morning' },
+  };
 
-selectedContract: any = null;
+
+  averageWorkingHours: number = 8;
+  workingNotes: string = '';
+
+  selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
   isSignatureModalOpen = false;
@@ -78,9 +80,9 @@ selectedContract: any = null;
   isEditingSignature = false;
   uploadedFileName: string | null = null;
   isDeleteModalOpen = false;
-uploadedFileUrl: string | null = null;
-isAttendanceModalOpen: boolean = false;
-attendanceRecord: AttendanceRecord | null = null;
+  uploadedFileUrl: string | null = null;
+  isAttendanceModalOpen: boolean = false;
+  attendanceRecord: AttendanceRecord | null = null;
   modalAction: string = '';
   selectedYouthName: string | null = null;
   isSubmitModalOpen = false;
@@ -93,7 +95,7 @@ attendanceRecord: AttendanceRecord | null = null;
   paginatedAssignedYouths: any[] = [];
   isrevertModalOpen = false;
   isSignaturePadInitialized = false;
-  completeConfirmationModal = false; // Track modal visibility
+  completeConfirmationModal = false;
 
   agreementText: string = `
 UNITED NATIONS RELIEF AND WORKS AGENCY FOR PALESTINE REFUGEES IN THE NEAR EAST
@@ -188,8 +190,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
 
 
-        if (this.userId) {
-          this.fetchEmployerDetails();}
+      if (this.userId) {
+        this.fetchEmployerDetails();
+      }
     });
     this.updatePagination();
     if (!this.signatureImage) {
@@ -199,18 +202,18 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
   }
 
-  
+
   confirmEmployerAttendance(index: number): void {
     if (this.attendanceRecord && this.selectedYouth && this.selectedYouth.EmployerContract?.signature) {
       console.log('Using employer contract signature:', this.selectedYouth.EmployerContract.signature);
-      
-      // Mark the day as confirmed by the employer.
+
+
       this.attendanceRecord.days[index].employerConfirmed = true;
-      
-      // Use the signature from the EmployerContract of the selected youth.
+
+
       this.attendanceRecord.days[index].employerSignature = this.selectedYouth.EmployerContract.signature;
-      
-      // Update the backend with the modified attendance record.
+
+
       this.attendanceService.updateAttendance(this.attendanceRecord.id!, { days: this.attendanceRecord.days })
         .subscribe({
           next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
@@ -220,35 +223,35 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       console.error('Employer contract signature not available on the selected youth');
     }
   }
-  
-  
-  
-  
+
+
+
+
   openAttendanceModal(youth: any): void {
     if (!this.jobRequest || !youth) {
       console.error('Missing jobRequest or youth data');
       return;
     }
-    
-    // Save the selected youth for later use.
+
+
     this.selectedYouth = youth;
-  
+
     const jobId = this.jobRequest.jobId;
     if (!jobId) {
       console.error('Job ID is undefined');
       return;
     }
-    
+
     this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
       .subscribe({
         next: (attendance: AttendanceRecord) => {
-          // If days is a string, parse it into an array.
+
           if (typeof attendance.days === 'string') {
             try {
               attendance.days = JSON.parse(attendance.days);
             } catch (error) {
               console.error('Error parsing days:', error);
-              attendance.days = []; // Fallback to empty array
+              attendance.days = [];
             }
           }
           this.attendanceRecord = attendance;
@@ -259,55 +262,199 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         }
       });
   }
-  
 
-  
+
+
   closeAttendanceModal(): void {
     this.isAttendanceModalOpen = false;
   }
 
-  // Opens the modal for admin viewing of attendance records
-openAdminAttendanceModal(youth: any): void {
-  if (!this.jobRequest || !youth) {
-    console.error('Missing jobRequest or youth data');
-    return;
-  }
-  
-  // Save the selected youth for later use.
-  this.selectedYouth = youth;
 
-  const jobId = this.jobRequest.jobId;
-  if (!jobId) {
-    console.error('Job ID is undefined');
-    return;
-  }
-  
-  this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
-    .subscribe({
-      next: (attendance: AttendanceRecord) => {
-        // If days is a string, parse it into an array.
-        if (typeof attendance.days === 'string') {
-          try {
-            attendance.days = JSON.parse(attendance.days);
-          } catch (error) {
-            console.error('Error parsing days:', error);
-            attendance.days = []; // Fallback to empty array
+  openAdminAttendanceModal(youth: any): void {
+    if (!this.jobRequest || !youth) {
+      console.error('Missing jobRequest or youth data');
+      return;
+    }
+
+
+    this.selectedYouth = youth;
+
+    const jobId = this.jobRequest.jobId;
+    if (!jobId) {
+      console.error('Job ID is undefined');
+      return;
+    }
+
+    this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
+      .subscribe({
+        next: (attendance: AttendanceRecord) => {
+
+          if (typeof attendance.days === 'string') {
+            try {
+              attendance.days = JSON.parse(attendance.days);
+            } catch (error) {
+              console.error('Error parsing days:', error);
+              attendance.days = [];
+            }
           }
+          this.attendanceRecord = attendance;
+          this.isAdminAttendanceModalOpen = true;
+        },
+        error: (err) => {
+          console.error('Error fetching attendance record:', err);
         }
-        this.attendanceRecord = attendance;
-        this.isAdminAttendanceModalOpen = true;
-      },
-      error: (err) => {
-        console.error('Error fetching attendance record:', err);
+      });
+  }
+  exportAttendance(): void {
+    if (!this.attendanceRecord || !this.attendanceRecord.days) {
+      console.error('No attendance data available for export');
+      return;
+    }
+  
+    const confirmedAttendance = this.attendanceRecord.days.filter(day => day.confirmed);
+    if (confirmedAttendance.length === 0) {
+      console.warn('No confirmed attendance records to export');
+      return;
+    }
+  
+    // Map attendance days for the attendance table.
+    const attendanceData = confirmedAttendance.map((day, index) => ({
+      no: index + 1,
+      fullName: day.youthName || '',
+      day: day.date ? new Date(day.date).toLocaleString('default', { weekday: 'long' }) : '',
+      date: day.date ? new Date(day.date).toLocaleDateString() : '',
+      youthSignature: day.signature ? this.extractBase64(day.signature) : '',
+      supervisorSignature: day.employerSignature ? this.extractBase64(day.employerSignature) : ''
+    }));
+  
+    // Use selectedYouth as beneficiary if available; otherwise fallback.
+    let beneficiary = this.selectedYouth ||
+                      (this.jobRequest?.assignedYouths && this.jobRequest.assignedYouths.length > 0
+                        ? this.jobRequest.assignedYouths[0]
+                        : null);
+  
+    // Helper function to continue with export once beneficiary details are complete.
+    const continueExport = (finalBeneficiary: any) => {
+      fetch('assets/attandance sheet -.docx')
+        .then(response => {
+          console.log('Response status:', response.status);
+          console.log('Response Content-Type:', response.headers.get('Content-Type'));
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.arrayBuffer();
+        })
+        .then(content => {
+          const zip = new PizZip(content);
+  
+          const imageModuleOptions = {
+            centered: false,
+            getImage: (tagValue: string): ArrayBuffer | null => {
+              return tagValue ? this.base64ToArrayBuffer(tagValue) : null;
+            },
+            getSize: (_img: ArrayBuffer | null): [number, number] => [50, 25] // smaller dimensions
+          };
+          
+  
+          const imageModule = new ImageModule(imageModuleOptions);
+  
+          const doc = new Docxtemplater(zip, {
+            paragraphLoop: true,
+            linebreaks: true,
+            modules: [imageModule]
+          });
+  
+          // Prepare contract fields.
+          const contractCode = "**"; // Placeholder for contract code
+          const endDate = finalBeneficiary?.YouthContract?.endDate || "N/ A";
+  
+          // Build flattened render data.
+          const renderData = {
+            issuedBy: "ESC - NLA",
+            // Supervisor information
+            employer: this.jobRequest?.organizationName || '',
+            supervisorName: this.jobRequest?.supervisorName || '',
+            supervisorJobTitle: this.jobRequest?.supervisorPosition || '',
+            supervisorMobile: this.jobRequest?.supervisorPhone || '',
+            supervisorEmail: this.jobRequest?.supervisorEmail || '',
+            // Beneficiary information
+            beneficiaryFullName: finalBeneficiary ? `${finalBeneficiary.firstName} ${finalBeneficiary.lastName}` : '',
+            beneficiaryJobTitle: this.jobRequest?.title || '',
+            beneficiaryMobile: finalBeneficiary ? finalBeneficiary.mobilePhone : '',
+            beneficiaryEmail: finalBeneficiary?.email || '',
+            beneficiaryRCNumber: finalBeneficiary?.personalRegistrationNumber || '',
+            // Contract information
+            contractCode: contractCode,
+            dutyStation: this.jobRequest?.location || '',
+            contractStartDate: finalBeneficiary?.EmployerContract?.startDate || '',
+            contractEndDate: endDate,
+            // FOR ESC USE ONLY
+            jobSeekerSerialNumber: "N/A",
+            contractType: "External - PRCS",
+            categoryType: this.jobRequest?.category || '',
+            numberOfWorkingDays: "40 Days",
+            employerSerialNumber: this.employer ? this.employer.id : '',
+            dateOfCollection: new Date().toLocaleDateString(),
+            // Attendance table section
+            attendance: attendanceData
+          };
+  
+          console.log('Render Data:', JSON.stringify(renderData, null, 2));
+          doc.render(renderData);
+          const out = doc.getZip().generate({ type: 'blob' });
+          saveAs(out, 'exported_attendance.docx');
+        })
+        .catch(error => {
+          console.error('Error exporting attendance:', error);
+        });
+    };
+  
+    // If beneficiary is found but might be missing key data, fetch full details.
+    if (beneficiary) {
+      const isDataMissing = !((beneficiary as any).email) ||
+                            !((beneficiary as any).personalRegistrationNumber) ||
+                            !(beneficiary as any).YouthContract?.startDate;
+      if (isDataMissing) {
+        this.youthService.getYouthById(beneficiary.id).subscribe((fullYouthData) => {
+          beneficiary = { ...beneficiary, ...fullYouthData };
+          continueExport(beneficiary);
+        }, (error) => {
+          console.error('Error fetching full youth details:', error);
+          continueExport(beneficiary);
+        });
+      } else {
+        continueExport(beneficiary);
       }
-    });
-}
+    } else {
+      console.error('No assigned youth found for beneficiary information.');
+    }
+  }
+  
+  
 
-// Closes the attendance modal
-closeAdminAttendanceModal(): void {
-  this.isAdminAttendanceModalOpen = false;
-}
 
+
+  extractBase64(dataUrl: string): string {
+    if (!dataUrl || !dataUrl.startsWith('data:image/')) {
+      return '';
+    }
+    return dataUrl.split(',')[1] || '';
+  }
+
+
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
+
+  closeAdminAttendanceModal(): void {
+    this.isAdminAttendanceModalOpen = false;
+  }
 
   private fetchEmployerDetails(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
@@ -342,7 +489,7 @@ closeAdminAttendanceModal(): void {
     }
   }
   submitContract() {
-    // Check required fields
+
     if (
       !this.selectedYouth ||
       !this.signatureImage ||
@@ -353,18 +500,18 @@ closeAdminAttendanceModal(): void {
       console.error('All fields are required to submit the contract.');
       return;
     }
-  
-    // Prepare the contract details including the new schedule data
+
+
     const contractDetails = {
       startDate: this.agreementStartDate,
       signature: this.signatureImage,
       agreementAccepted: this.isTermsAccepted,
-      workingSchedule: this.workingSchedule,          // New: Daily work type & shift data
-      averageWorkingHours: this.averageWorkingHours,    // New: Average working hours per day
-      workingNotes: this.workingNotes                   // New: Notes for many shifts
+      workingSchedule: this.workingSchedule,
+      averageWorkingHours: this.averageWorkingHours,
+      workingNotes: this.workingNotes
     };
-  
-    // Update the selected youth in the assignedYouths array with the new contract details
+
+
     this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map((youth) => {
       if (youth.id === this.selectedYouth.id) {
         return {
@@ -374,11 +521,11 @@ closeAdminAttendanceModal(): void {
       }
       return youth;
     });
-  
-    // Log to verify the updated job request structure
+
+
     console.log('Updated jobRequest:', this.jobRequest);
-  
-    // Submit the updated job request to the service
+
+
     this.jobRequestService
       .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
       .subscribe({
@@ -392,7 +539,7 @@ closeAdminAttendanceModal(): void {
         },
       });
   }
-  
+
 
 
 
@@ -402,7 +549,7 @@ closeAdminAttendanceModal(): void {
       this.fetchJobRequestDetails();
     }
     if (changes['userId'] && this.userId) {
-      this.fetchEmployerDetails(); // Fetch data when userId changes
+      this.fetchEmployerDetails();
     }
   }
 
@@ -455,10 +602,10 @@ closeAdminAttendanceModal(): void {
     this.youthService.getYouthById(youthId).subscribe({
       next: (youth) => {
         if (youth) {
-          // Create the updated youth object with the new workStatus
+
           const updatedYouth = { ...youth, workStatus };
 
-          // Update the youth record in the database (in youthdb.json)
+
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () => console.log(`Successfully updated workStatus for youth ID: ${youthId}`),
             error: (err) => console.error(`Error updating youth workStatus for ID: ${youthId}`, err),
@@ -477,14 +624,14 @@ closeAdminAttendanceModal(): void {
     youthId: any,
     currentJobTitle: string,
     newStatus: string,
-    approvedJobRequestId?: string // Optional parameter for approved job request ID
+    approvedJobRequestId?: string
   ): void {
     this.youthService.getYouthById(youthId).subscribe({
       next: (youth) => {
         if (youth && youth.appliedJob) {
           console.log('Fetched youth record:', youth);
 
-          // Update the applied jobs array
+
           const updatedAppliedJobs = youth.appliedJob.map(
             (job: { job: string; status: string; jobRequestId?: string }) => {
               if (job.job === currentJobTitle) {
@@ -492,21 +639,21 @@ closeAdminAttendanceModal(): void {
                 return {
                   ...job,
                   status: newStatus,
-                  jobRequestId: newStatus === 'approved' ? approvedJobRequestId : undefined, // Add jobRequestId only for approved jobs
+                  jobRequestId: newStatus === 'approved' ? approvedJobRequestId : undefined,
                 };
               } else if (job.status === 'waiting') {
                 console.log(`Marking job: ${job.job} as rejected`);
-                return { ...job, status: 'rejected' }; // Reject all other jobs with 'waiting' status
+                return { ...job, status: 'rejected' };
               }
-              return job; // Return unchanged jobs
+              return job;
             }
           );
 
-          // Create the updated youth object
+
           const updatedYouth = { ...youth, appliedJob: updatedAppliedJobs };
           console.log('Updated youth object:', updatedYouth);
 
-          // Update the youth record in the database
+
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () =>
               console.log(`Successfully updated applied jobs for youth ID: ${youthId}`),
@@ -534,12 +681,12 @@ closeAdminAttendanceModal(): void {
 
     const safeJobId = this.jobId ?? '';
 
-    // Update job request status
+
     this.jobRequestService.updateJob(safeJobId, updatedJobRequest).subscribe({
       next: () => {
         console.log('Job request marked as completed successfully.');
 
-        // Process assigned youths
+
         if (this.jobRequest!.assignedYouths) {
           this.jobRequest!.assignedYouths.forEach((youth) => {
             this.youthService.getYouthById(youth.id).subscribe({
@@ -550,15 +697,15 @@ closeAdminAttendanceModal(): void {
                   );
 
                   if (approvedJob) {
-                    // Update the approved job's status to "completed"
+
                     approvedJob.status = 'completed';
 
-                    // Remove other jobs from the appliedJob array
+
                     fetchedYouth.appliedJob = fetchedYouth.appliedJob.filter(
                       (job: any) => job.status === 'completed'
                     );
 
-                    // Update the youth data
+
                     const updatedYouth = {
                       ...fetchedYouth,
                       workStatus: false,
@@ -611,30 +758,30 @@ closeAdminAttendanceModal(): void {
     this.isYouthContractModalOpen = false;
     this.selectedContract = null;
   }
-  // Close the Terms Modal
+
   closeTermsModal() {
     this.isTermsModalOpen = false;
   }
   openPdfModal(fileUrl: string): void {
-    this.storedPdfUrl = fileUrl; // Set the URL of the uploaded file
-    this.isPdfModalOpen = true;  // Open the modal
+    this.storedPdfUrl = fileUrl;
+    this.isPdfModalOpen = true;
   }
 
-  // Method to close the modal
+
   closePdfModal(): void {
-    this.isPdfModalOpen = false; // Close the modal
-    this.storedPdfUrl = null;    // Clear the file URL
+    this.isPdfModalOpen = false;
+    this.storedPdfUrl = null;
   }
 
-  // Handle file selection and upload logic here
+
   onFileSelected(event: Event, youth: any): void {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files?.[0];
     if (file) {
-      // Handle file upload logic (set URL, file name, etc.)
-      youth.uploadedFileName = file.name; // Set the file name
-      // Assuming you'll upload the file and get a URL back
-      youth.uploadedFileUrl = URL.createObjectURL(file); // Temporary URL for local display
+
+      youth.uploadedFileName = file.name;
+
+      youth.uploadedFileUrl = URL.createObjectURL(file);
     }
   }
 
@@ -644,7 +791,7 @@ closeAdminAttendanceModal(): void {
     this.isDeleteModalOpen = true;
     this.selectedYouth = youth;
 
-    this.cdr.detectChanges();  // Manually trigger change detection
+    this.cdr.detectChanges();
 
   }
   closeDeleteModal(): void {
@@ -655,19 +802,19 @@ closeAdminAttendanceModal(): void {
     this.showConfirmationModal = true;
   }
 
-  // Cancel and close the modal
+
   cancelcompleteModal(): void {
     this.completeConfirmationModal = false;
   }
 
-  // Confirm completion
+
   confirmCompletion(): void {
     this.markAsCompleted();
-    this.showConfirmationModal = false; // Close the modal
+    this.showConfirmationModal = false;
   }
 
 
-  // Accept the Terms
+
   acceptTerms() {
     this.isTermsAccepted = true;
     this.closeTermsModal();
@@ -712,28 +859,28 @@ closeAdminAttendanceModal(): void {
     }
   }
   ngAfterViewInit(): void {
-    // Initialize SignaturePad only when modal is shown
+
     this.isSignaturePadInitialized = false;
   }
 
   ngAfterViewChecked(): void {
-    // Ensure the SignaturePad is initialized when the modal is opened and the view is fully loaded
+
     if (this.isSignatureModalOpen && !this.isSignaturePadInitialized) {
       this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
-      this.isSignaturePadInitialized = true; // Mark as initialized
-      this.cdr.detectChanges(); // Trigger change detection
+      this.isSignaturePadInitialized = true;
+      this.cdr.detectChanges();
     }
   }
 
   openSignaturePad(): void {
     this.isSignatureModalOpen = true;
-    this.isSignaturePadInitialized = false; // Reset initialization flag
+    this.isSignaturePadInitialized = false;
   }
 
   saveSignature(): void {
     if (this.signaturePad && !this.signaturePad.isEmpty()) {
-      this.signatureImage = this.signaturePad.toDataURL(); // Save as Base64
-      console.log('Signature saved:', this.signatureImage); // Check signature data
+      this.signatureImage = this.signaturePad.toDataURL();
+      console.log('Signature saved:', this.signatureImage);
       this.closeSignaturePad();
     } else {
       alert('Please provide a signature.');
@@ -753,7 +900,7 @@ closeAdminAttendanceModal(): void {
   }
 
   deleteYouth(youth: any): void {
-    const jobId = this.jobId; // Use the component's jobId
+    const jobId = this.jobId;
     if (!jobId) {
       console.error('Job ID is undefined. Cannot delete youth.');
       alert('An error occurred: Job ID is missing.');
@@ -762,18 +909,18 @@ closeAdminAttendanceModal(): void {
 
     const youthId = youth.id;
 
-      this.jobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
-        next: () => {
-          this.jobRequest!.assignedYouths = this.jobRequest!.assignedYouths!.filter(
-            (y) => y.id !== youthId
-          ); // Update the list locally
-          this.updatePagination();
-        },
-        error: (err) => {
-          console.error('Failed to delete youth:', err);
-          alert('An error occurred while trying to delete the youth.');
-        },
-      });
+    this.jobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
+      next: () => {
+        this.jobRequest!.assignedYouths = this.jobRequest!.assignedYouths!.filter(
+          (y) => y.id !== youthId
+        );
+        this.updatePagination();
+      },
+      error: (err) => {
+        console.error('Failed to delete youth:', err);
+        alert('An error occurred while trying to delete the youth.');
+      },
+    });
 
   }
 
@@ -783,12 +930,12 @@ closeAdminAttendanceModal(): void {
 
     this.agreementStartDate = date;
 
-    // Calculate the end date (100 days after the start date)
+
     const startDate = new Date(date);
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 100);
 
-    // Format the date as YYYY-MM-DD
+
     const year = endDate.getFullYear();
     const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
     const day = endDate.getDate().toString().padStart(2, '0');
@@ -912,7 +1059,7 @@ closeAdminAttendanceModal(): void {
       return;
     }
 
-    // Get all the youths that are approved for this job request
+
     const updatedYouths =
       this.jobRequest.assignedYouths
         ?.filter((youth) => !(youth.isDisabled && youth.action !== 'approved'))
@@ -923,38 +1070,38 @@ closeAdminAttendanceModal(): void {
 
     const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
 
-    // Update the current job request with the approved youths
+
     const updatedJobRequest = {
       ...this.jobRequest,
       assignedYouths: approvedYouths,
       status: 'in-progress',
     };
-  
+
     this.jobRequestService.getAllJobRequests().subscribe({
       next: () => {
-        // Ensure jobId is a string
+
         const safeJobIdForUpdate = this.jobId ?? '';
-  
-        // Now update the current job request with the new youths
+
+
         this.jobRequestService.updateJob(safeJobIdForUpdate, updatedJobRequest).subscribe({
           next: () => {
             console.log('Job request submitted successfully.');
             updatedYouths.forEach((youth) => {
               const isApproved = youth.status === 'approved';
-  
-              // Update the workStatus directly in the youth record in the youthdb.json file
+
+
               if (isApproved) {
-                this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
+                this.updateYouthWithWorkStatus(youth.id, true);
               }
-  
+
               this.updateYouthAppliedJobs(
                 youth.id,
                 this.jobRequest?.job || '',
                 isApproved ? 'approved' : 'rejected',
-                isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
+                isApproved && this.jobId ? this.jobId : undefined
               );
             });
-  
+
             setTimeout(() => {
               window.location.reload();
             }, 500);
@@ -965,7 +1112,7 @@ closeAdminAttendanceModal(): void {
       error: (err) => console.error('Error fetching all job requests:', err),
     });
   }
-  
+
 
   initializeRowStates(): void {
     if (this.jobRequest) {
@@ -1063,3 +1210,5 @@ closeAdminAttendanceModal(): void {
 
 
 }
+
+

@@ -11,7 +11,8 @@ import { JobRequestTableComponent } from "../../Common/job-request-table/job-req
 
 
 @Component({
-    selector: 'app-Main-Admin',
+    standalone: true,selector: 'app-Main-Admin',
+  
     imports: [CommonModule, AdminDashboardComponent, YouthTableComponent, EmployerTableComponent, JobRequestTableComponent],
     templateUrl: './Main-Admin.component.html',
     styleUrls: ['./Main-Admin.component.css']
@@ -126,3 +127,5 @@ export class MainAdminComponent implements OnInit, OnDestroy {
     localStorage.setItem('activeTab', tab); // Save main tab state to localStorage
   }
 }
+
+

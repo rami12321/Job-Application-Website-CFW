@@ -9,7 +9,8 @@ import { AdminDetailsComponent } from "../admin-details/admin-details.component"
 
 
 @Component({
-    selector: 'app-admin-management',
+    standalone: true,selector: 'app-admin-management',
+  
     imports: [FormsModule, CommonModule, AdminDetailsComponent, DialogModule, AdminTableComponent],
     templateUrl: './admin-management.component.html',
     styleUrl: './admin-management.component.css'
@@ -81,3 +82,5 @@ export class AdminManagementComponent {
   }
   
 }
+
+

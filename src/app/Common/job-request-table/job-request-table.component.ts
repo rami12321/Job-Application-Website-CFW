@@ -29,8 +29,7 @@ interface Column {
 }
 
 @Component({
-    selector: 'app-job-request-table',
-    imports: [
+    standalone: true,selector: 'app-job-request-table',imports: [
         CommonModule,
         MatTableModule,
         TableModule,
@@ -630,3 +629,5 @@ export class JobRequestTableComponent implements OnInit {
     });
   }
 }
+
+

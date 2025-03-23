@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 @Component({
-    selector: 'app-SignUp-Employer',
+    standalone: true,selector: 'app-SignUp-Employer',
+  
     imports: [CommonModule, ReactiveFormsModule, PasswordModule, HttpClientModule, FormsModule,
     ],
     templateUrl: './SignUp-Employer.component.html',
@@ -297,3 +298,5 @@ active:this.active,
 
 
 }
+
+

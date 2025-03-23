@@ -8,7 +8,8 @@ import SignaturePad from 'signature_pad';
 import { LookupService } from '../../Services/LookUpService/lookup.service';
 
 @Component({
-    selector: 'app-job-request',
+    standalone: true,selector: 'app-job-request',
+  
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
     templateUrl: './job-request.component.html',
     styleUrls: ['./job-request.component.css']
@@ -227,3 +228,5 @@ export class JobRequestComponent implements OnInit {
   }
 
 }
+
+

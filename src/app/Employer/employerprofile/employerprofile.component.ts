@@ -7,7 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import SignaturePad from 'signature_pad';
 
 @Component({
-    selector: 'app-employerprofile',
+    standalone: true,selector: 'app-employerprofile',
+  
     imports: [CommonModule, ReactiveFormsModule, FormsModule],
     templateUrl: './employerprofile.component.html',
     styleUrls: ['./employerprofile.component.css']
@@ -259,3 +260,5 @@ deleteSignature(): void {
 
 
 }
+
+

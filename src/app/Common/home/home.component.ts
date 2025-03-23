@@ -10,7 +10,8 @@ import { AnimatedStatComponent } from '../animated-stat/animated-stat.component'
 import { AboutUsComponent } from '../about-us/about-us.component';
 
 @Component({
-    selector: 'app-home',
+    standalone: true,selector: 'app-home',
+  
     imports: [FeaturesComponent, FooterComponent, StatisticsComponent, RouterModule, MainNavbarComponent, ContactFormComponent, AnimatedStatComponent, AboutUsComponent],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
@@ -18,3 +19,5 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 export class HomeComponent {
 
 }
+
+

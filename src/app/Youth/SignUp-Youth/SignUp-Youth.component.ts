@@ -16,8 +16,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-sign-up-youth',
-    imports: [ReactiveFormsModule, CommonModule, PasswordModule, StepperModule, ButtonModule, HttpClientModule, PdfViewerModule],
+    standalone: true,selector: 'app-sign-up-youth',imports: [ReactiveFormsModule, CommonModule, PasswordModule, StepperModule, ButtonModule, HttpClientModule, PdfViewerModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './SignUp-Youth.component.html',
     styleUrls: ['./SignUp-Youth.component.css']
@@ -1141,6 +1140,8 @@ export class SignUpYouthComponent implements OnInit {
 
 
 }
+
+
 
 
 

@@ -4,7 +4,8 @@ import { AdminManagementComponent } from "../Admin-Management/admin-management.c
 import { PaymentsComponent } from "../Payments/payments.component";
 
 @Component({
-    selector: 'app-super-admin',
+    standalone: true,selector: 'app-super-admin',
+  
     imports: [CommonModule, AdminManagementComponent, PaymentsComponent],
     templateUrl: './super-admin.component.html',
     styleUrl: './super-admin.component.css'
@@ -17,3 +18,5 @@ export class SuperAdminComponent {
   }
 
 }
+
+

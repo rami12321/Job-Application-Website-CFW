@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-animated-stat',
+    standalone: true,selector: 'app-animated-stat',
+  
     imports: [],
     templateUrl: './animated-stat.component.html',
     styleUrl: './animated-stat.component.css'
@@ -34,3 +35,5 @@ export class AnimatedStatComponent implements OnInit{
     }, stepTime);
   }
 }
+
+

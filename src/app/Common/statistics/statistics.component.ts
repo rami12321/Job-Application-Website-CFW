@@ -2,11 +2,10 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 @Component({
-  selector: 'app-statistics',
+    standalone: true,selector: 'app-statistics',
+  
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css'],
-  standalone:true,
-})
+  styleUrls: ['./statistics.component.css'],})
 export class StatisticsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.loadCharts();
@@ -80,3 +79,5 @@ export class StatisticsComponent implements AfterViewInit {
   }
 
 }
+
+

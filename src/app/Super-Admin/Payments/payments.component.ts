@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-payments',
+    standalone: true,selector: 'app-payments',
+  
     imports: [],
     templateUrl: './payments.component.html',
     styleUrl: './payments.component.css'
@@ -9,3 +10,5 @@ import { Component } from '@angular/core';
 export class PaymentsComponent {
 
 }
+
+

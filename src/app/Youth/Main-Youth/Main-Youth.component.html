@@ -723,7 +723,6 @@
   </div>
 </div>
 
-
 <!-- Attendance Modal -->
 <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="attendanceModalOpen">
   <!-- Modal Overlay -->
@@ -748,14 +747,21 @@
         <tbody class="divide-y divide-gray-200">
           <tr *ngFor="let day of attendanceList; let i = index"
               [ngClass]="{'active-row': i === activeAttendanceIndex && !day?.accepted, 'blurred-row': i !== activeAttendanceIndex || day?.accepted}">
-            <!-- Youth Name -->
-            <td class="px-4 py-2 text-sm text-gray-800">{{ fullName }}</td>
+            <!-- Youth Name: Show only for active or accepted rows -->
+            <td class="px-4 py-2 text-sm text-gray-800">
+              <ng-container *ngIf="day.accepted || i === activeAttendanceIndex; else hiddenYouthName">
+                {{ fullName }}
+              </ng-container>
+              <ng-template #hiddenYouthName>
+                <span class="text-gray-500 text-xs">Not Available</span>
+              </ng-template>
+            </td>
             <!-- Date -->
             <td class="px-4 py-2 text-sm text-gray-800">
-              <ng-container *ngIf="day.date; else pending">
+              <ng-container *ngIf="day.date; else pendingDate">
                 {{ day.date | date:'shortDate' }}
               </ng-container>
-              <ng-template #pending>
+              <ng-template #pendingDate>
                 <span class="text-gray-500 text-xs">Pending</span>
               </ng-template>
             </td>
@@ -770,20 +776,25 @@
             </td>
             <!-- Location Check -->
             <td class="px-4 py-2 text-sm text-gray-800">
-              <ng-container *ngIf="i === activeAttendanceIndex; else notActiveLocation">
-                <button class="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 text-xs"
-                        (click)="checkLocation(i)"
-                        [disabled]="day.locationChecked">
-                  {{ day.locationChecked ? 'Verified' : 'Check Location' }}
-                </button>
+              <ng-container *ngIf="day.locationChecked; else locationCheckAction">
+                <span class="text-green-600 text-xs font-semibold">Verified</span>
               </ng-container>
-              <ng-template #notActiveLocation>
-                <span class="text-gray-500 text-xs">Not Available</span>
+              <ng-template #locationCheckAction>
+                <ng-container *ngIf="i === activeAttendanceIndex; else pendingLocation">
+                  <button class="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 text-xs"
+                          (click)="checkLocation(i)"
+                          [disabled]="day.locationChecked">
+                    Check Location
+                  </button>
+                </ng-container>
+                <ng-template #pendingLocation>
+                  <span class="text-gray-500 text-xs">Pending</span>
+                </ng-template>
               </ng-template>
             </td>
             <!-- Signature -->
             <td class="px-4 py-2 text-sm text-gray-800">
-              <ng-container *ngIf="specificAssignedYouth?.YouthContract?.signature; else noSignature">
+              <ng-container *ngIf="(day.accepted || i === activeAttendanceIndex) && specificAssignedYouth?.YouthContract?.signature; else noSignature">
                 <img [src]="specificAssignedYouth?.YouthContract?.signature" alt="Signature" class="h-8" />
               </ng-container>
               <ng-template #noSignature>
@@ -792,31 +803,36 @@
             </td>
             <!-- Confirm Data -->
             <td class="px-4 py-2 text-sm text-gray-800">
-              <ng-container *ngIf="i === activeAttendanceIndex; else notActiveConfirm">
-                <ng-container *ngIf="!day.confirmed">
+              <ng-container *ngIf="day.confirmed; else confirmAction">
+                <span class="text-green-600 text-xs font-semibold">Confirmed</span>
+              </ng-container>
+              <ng-template #confirmAction>
+                <ng-container *ngIf="i === activeAttendanceIndex; else pendingConfirm">
                   <button class="bg-yellow-600 text-white py-1 px-3 rounded hover:bg-yellow-700 text-xs"
                           (click)="confirmAttendanceRow(i)">
                     Okay
                   </button>
                 </ng-container>
-                <ng-container *ngIf="day.confirmed">
-                  <span class="text-green-600 text-xs font-semibold">Confirmed</span>
-                </ng-container>
-              </ng-container>
-              <ng-template #notActiveConfirm>
-                <span class="text-gray-500 text-xs">Not Available</span>
+                <ng-template #pendingConfirm>
+                  <span class="text-gray-500 text-xs">Pending</span>
+                </ng-template>
               </ng-template>
             </td>
             <!-- Accept Attendance -->
             <td class="px-4 py-2 text-sm text-gray-800">
-              <ng-container *ngIf="i === activeAttendanceIndex; else notActiveCheckbox">
-                <input type="checkbox"
-                       class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                       [(ngModel)]="day.accepted"
-                       [disabled]="!day.confirmed || !day.locationChecked || !specificAssignedYouth?.YouthContract?.signature" />
+              <ng-container *ngIf="day.accepted; else acceptAction">
+                <span class="text-green-600 text-xs font-semibold">Accepted</span>
               </ng-container>
-              <ng-template #notActiveCheckbox>
-                <span class="text-gray-500 text-xs">Not Available</span>
+              <ng-template #acceptAction>
+                <ng-container *ngIf="i === activeAttendanceIndex; else pendingAccept">
+                  <input type="checkbox"
+                         class="h-4 w-4 text-blue-600 border-gray-300 rounded"
+                         [(ngModel)]="day.accepted"
+                         [disabled]="!day.confirmed || !day.locationChecked || !specificAssignedYouth?.YouthContract?.signature" />
+                </ng-container>
+                <ng-template #pendingAccept>
+                  <span class="text-gray-500 text-xs">Pending</span>
+                </ng-template>
               </ng-template>
             </td>
           </tr>
@@ -825,13 +841,11 @@
     </div>
     <!-- Modal Actions -->
     <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
-      <button
-      class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-medium"
-      (click)="submitAttendance()"
-      [disabled]="activeAttendanceIndex === -1 || !attendanceList[activeAttendanceIndex].accepted">
-      Submit Attendance
-    </button>
-    
+      <button class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-medium"
+              (click)="submitAttendance()"
+              [disabled]="activeAttendanceIndex === -1 || !attendanceList[activeAttendanceIndex].accepted">
+        Submit Attendance
+      </button>
       <button class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
               (click)="closeAttendanceModal()">
         Close
@@ -839,6 +853,7 @@
     </div>
   </div>
 </div>
+
 
 
 

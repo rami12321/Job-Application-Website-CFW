@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-about-us',
+    standalone: true,selector: 'app-about-us',
+  
     imports: [],
     templateUrl: './about-us.component.html',
     styleUrl: './about-us.component.css'
@@ -9,3 +10,5 @@ import { Component } from '@angular/core';
 export class AboutUsComponent {
 
 }
+
+

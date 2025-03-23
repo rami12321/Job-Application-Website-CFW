@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/AuthService/auth-service.service';
 @Component({
-    selector: 'app-admin-login',
+    standalone: true,selector: 'app-admin-login',
+  
     imports: [CommonModule, FormsModule, RouterModule],
     templateUrl: './admin-login.component.html',
     styleUrl: './admin-login.component.css'
@@ -47,3 +48,5 @@ export class AdminLoginComponent implements OnInit{
   ngOnInit(): void {}
 
 }
+
+

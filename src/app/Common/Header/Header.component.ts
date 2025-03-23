@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../Services/AuthService/auth-service.service';
 
 @Component({
-    selector: 'app-Header',
+    standalone: true,selector: 'app-Header',
+  
     templateUrl: './Header.component.html',
     styleUrls: ['./Header.component.css'],
     imports: [CommonModule] // Import CommonModule here
@@ -63,3 +64,5 @@ export class HeaderComponent implements OnInit {
   
 
 }
+
+

@@ -7,7 +7,8 @@ import { Router } from '@angular/router';  // Import Router
 
 
 @Component({
-    selector: 'app-Login',
+    standalone: true,selector: 'app-Login',
+  
     templateUrl: './Login.component.html',
     styleUrls: ['./Login.component.css'],
     imports: [CommonModule, FormsModule,] // Import CommonModule here
@@ -62,4 +63,6 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
+
 
