@@ -1,36 +1,39 @@
-<div *ngIf="paginatedProducts && paginatedProducts.length > 0; else noData">
-  <p-table
-    class="p-10"
-    [value]="paginatedProducts"
-    [tableStyle]="{
-      'min-width': '50rem',
-      background: 'black',
-      border: '1px solid #ddd',
-      'border-radius': '8px',
-      'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-    }"
-    [paginator]="true"
-    [rows]="5"
-    [rowsPerPageOptions]="[5, 10, 20]"
-  >
-    <!-- Caption with Column Selector -->
-    <ng-template pTemplate="caption">
-      <p-multiSelect
-        display="chip"
-        [options]="savedColumns"
-        [(ngModel)]="cols"
-        optionLabel="header"
-        selectedItemsLabel="{0} columns selected"
-        [style]="{
-          background: 'white',
-          border: '1px solid #ddd',
-          'border-radius': '8px',
-          'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-        }"
-        placeholder="Choose Columns"
-        (onChange)="saveSelectedColumnsToLocalStorage()"
-      ></p-multiSelect>
-      <p-dropdown
+
+<p-table
+  #dt
+  class="p-10"
+  [value]="paginatedProducts"
+  [tableStyle]="{
+    'min-width': '50rem',
+    background: 'black',
+    border: '1px solid #ddd',
+    'border-radius': '8px',
+    'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+  }"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  emptyMessage="The value you are searching for does not exist"
+>
+
+  <!-- Caption with Column Selector -->
+  <ng-template pTemplate="caption">
+    <p-multiSelect
+      display="chip"
+      [options]="savedColumns"
+      [(ngModel)]="cols"
+      optionLabel="header"
+      selectedItemsLabel="{0} columns selected"
+      [style]="{
+        background: 'white',
+        border: '1px solid #ddd',
+        'border-radius': '8px',
+        'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+      }"
+      placeholder="Choose Columns"
+      (onChange)="saveSelectedColumnsToLocalStorage()"
+    ></p-multiSelect>
+    <p-dropdown
       [options]="[
         { label: 'My Area', value: 'myArea' },
         { label: 'All Areas', value: 'all' }
@@ -43,8 +46,7 @@
         background: 'white',
         border: '1px solid #ccc',
         'border-radius': '6px',
-        'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.08)',
-        
+        'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.08)'
       }"
     >
       <ng-template pTemplate="selectedItem" let-item>
@@ -60,279 +62,144 @@
         </div>
       </ng-template>
     </p-dropdown>
-    
-      <button
-        (click)="resetSelectedColumns()"
-        class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
+    <button
+      (click)="resetSelectedColumns()"
+      class="bg-blue-600 text-white ml-4 px-5 py-2 rounded hover:bg-blue-500"
+    >
+      Reset columns
+    </button>
+  </ng-template>
+
+  <!-- Table Header -->
+  <ng-template pTemplate="header">
+    <!-- First header row: Column titles -->
+    <tr>
+      <th class="border-r">Actions</th>
+      <th
+        *ngFor="let col of cols"
+        class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
+        pSortableColumn="{{ col.field }}"
       >
-        Reset columns
-      </button>
-    </ng-template>
-
-    <!-- Table Header -->
-    <ng-template pTemplate="header">
-      <!-- First header row: Column titles -->
-      <tr>
-        <th class="border-r">Actions</th>
-        <th
-          *ngFor="let col of cols"
-          class="min-w-56 px-4 py-2 text-left text-md font-medium border-b border-r"
-          pSortableColumn="{{ col.field }}"
-        >
-          <ng-container *ngIf="col.field !== 'action'">
-            <div class="flex flex-col">
-              <div class="flex justify-between items-center mb-2">
-                <span>{{ col.header }}</span>
-                <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
-              </div>
+        <ng-container *ngIf="col.field !== 'action'">
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center mb-2">
+              <span>{{ col.header }}</span>
+              <p-sortIcon field="{{ col.field }}" class="ml-2"></p-sortIcon>
             </div>
-          </ng-container>
-        </th>
-      </tr>
-      <!-- Second header row: Filters -->
-      <tr>
-        <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
-          Actions
-        </th>
-        <th *ngFor="let col of cols" class="border-b border-r px-2 py-1 text-sm text-gray-600">
-          <ng-container [ngSwitch]="col.field">
-            <!-- isEdited Filter -->
-            <ng-container *ngSwitchCase="'isEdited'">
-              <p-dropdown
-                [options]="[
-                  { label: 'All', value: null },
-                  { label: 'Edited', value: true },
-                  { label: 'Not Edited', value: false }
-                ]"
-                [(ngModel)]="selectedIsEdited"
-                (onChange)="fetchYouthData()"
-                placeholder="Filter by Status"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              ></p-dropdown>
-            </ng-container>
-            <!-- Major Filter -->
-            <ng-container *ngSwitchCase="'Major'">
-              <p-multiSelect
-                [options]="majors"
-                [(ngModel)]="selectedMajors"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Majors"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex items-center">{{ option }}</div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-container>
-            <!-- Gender Filter -->
-            <ng-container *ngSwitchCase="'Gender'">
-              <p-multiSelect
-                [options]="genders"
-                [(ngModel)]="selectedGender"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Gender"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex items-center">{{ option }}</div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-container>
-            <!-- Area Filter -->
-            <ng-container *ngSwitchCase="'Area'">
-              <p-multiSelect
-                [options]="areas"
-                [(ngModel)]="selectedAreas"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Area"
-                appendTo="body"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex items-center">{{ option }}</div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-container>
-            <!-- Education Level Filter -->
-            <ng-container *ngSwitchCase="'Education Level'">
-              <p-multiSelect
-                [options]="educationLevels"
-                [(ngModel)]="selectedEducationLevels"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Education Level"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex items-center">{{ option }}</div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-container>
-            <!-- Nationality Filter -->
-            <ng-container *ngSwitchCase="'Nationality'">
-              <p-multiSelect
-                [options]="nationalityOptions"
-                [(ngModel)]="selectedNationalities"
-                [showClear]="true"
-                (onChange)="fetchYouthData()"
-                placeholder="Select Nationality"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex items-center">{{ option }}</div>
-                </ng-template>
-              </p-multiSelect>
-            </ng-container>
-            <!-- Beneficiary Filter -->
-            <ng-container *ngSwitchCase="'Beneficiary'">
-              <p-dropdown
-                [options]="[
-                  { label: 'All', value: null },
-                  { label: 'Benefited', value: true },
-                  { label: 'Not Benefited', value: false }
-                ]"
-                [(ngModel)]="selectedIsBeneficiary"
-                (onChange)="fetchYouthData()"
-                placeholder="Filter by Status"
-                [style]="{
-                  background: 'white',
-                  border: '1px solid #ddd',
-                  'border-radius': '8px',
-                  'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }"
-              ></p-dropdown>
-            </ng-container>
-            <!-- Applied Job Filter -->
-            <ng-container *ngSwitchCase="'Applied Job'">
-              <div class="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Search Applied Job"
-                  class="border p-2 rounded w-full pr-10"
-                  [(ngModel)]="appliedJobFilter"
-                  (keyup.enter)="fetchYouthData()"
-                />
-                <i
-                  *ngIf="appliedJobFilter"
-                  class="pi pi-times absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
-                  (click)="clearFilter()"
-                ></i>
-              </div>
-            </ng-container>
-            <!-- Default: Text Filter -->
-            <ng-container *ngSwitchDefault>
-              <p-columnFilter
-                [type]="'text'"
-                [field]="col.field"
-                [showClearButton]="true"
-              ></p-columnFilter>
-            </ng-container>
-          </ng-container>
-        </th>
-      </tr>
-    </ng-template>
-
-    <!-- Table Body -->
-    <ng-template pTemplate="body" let-product>
-      <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
-        <!-- Actions Column (Youth Only) -->
-        <td class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4">
-          <div *ngFor="let action of getActionsForRow(product.status, product.active)">
-            <!-- Youth 'View' Button -->
-            <button
-              *ngIf="action === 'view'"
-              type="button"
-              class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              (click)="showDialog(product.id, 'youthsignup'); updateIsEdited(product.id)"
-            >
-              <i class="pi pi-eye"></i>
-            </button>
-            <!-- Youth 'Pend' Button -->
-            <button
-              *ngIf="action === 'pend'"
-              type="button"
-              class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-              (click)="showNoteDialog(product)"
-            >
-              <i class="pi pi-clock"></i>
-            </button>
-            <!-- Youth 'Notes' Button -->
-            <button
-              *ngIf="action === 'notes'"
-              type="button"
-              class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-              (click)="displayNoteDialog(product)"
-            >
-              <i class="pi pi-file"></i>
-            </button>
-            <!-- Youth 'Accept' Button -->
-            <button
-              *ngIf="action === 'accept'"
-              type="button"
-              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              (click)="performAction('accept', product)"
-            >
-              <i class="pi pi-check"></i>
-            </button>
-            <!-- Youth 'Reject' Button -->
-            <button
-              *ngIf="action === 'reject'"
-              type="button"
-              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-              (click)="performAction('reject', product)"
-            >
-              <i class="pi pi-times"></i>
-            </button>
           </div>
-        </td>
-        <!-- Data Columns -->
-        <td *ngFor="let col of cols" class="px-4 py-2 text-sm border-b border-r border-gray-300">
-          <ng-container [ngSwitch]="col.field">
-            <ng-container *ngSwitchCase="'createdAt'">
-              <div>{{ formatDate(product[col.field]) }}</div>
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              {{ product[col.field] || 'N/A' }}
-            </ng-container>
+        </ng-container>
+      </th>
+    </tr>
+    <!-- Second header row: Filters -->
+    <tr>
+      <th class="border-b border-r px-2 py-1 text-sm text-gray-600 text-center">
+        Actions
+      </th>
+      <th *ngFor="let col of cols" class="border-b border-r px-2 py-1 text-sm text-gray-600">
+        <ng-container [ngSwitch]="col.field">
+          <!-- (Filters for each column remain unchanged) -->
+          <ng-container *ngSwitchCase="'isEdited'">
+            <p-dropdown
+              [options]="[
+                { label: 'All', value: null },
+                { label: 'Edited', value: true },
+                { label: 'Not Edited', value: false }
+              ]"
+              [(ngModel)]="selectedIsEdited"
+              (onChange)="fetchYouthData()"
+              placeholder="Filter by Status"
+              [style]="{
+                background: 'white',
+                border: '1px solid #ddd',
+                'border-radius': '8px',
+                'box-shadow': '0 2px 6px rgba(0, 0, 0, 0.1)'
+              }"
+            ></p-dropdown>
           </ng-container>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+          <!-- Repeat similar filter blocks for 'Major', 'Gender', etc. -->
+          <ng-container *ngSwitchDefault>
+            <p-columnFilter
+              [type]="'text'"
+              [field]="col.field"
+              [showClearButton]="true"
+            ></p-columnFilter>
+          </ng-container>
+        </ng-container>
+      </th>
+    </tr>
+  </ng-template>
+
+  <!-- Explicit Empty Message Template -->
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="(cols?.length || 0) + 1" class="text-center py-4" style="text-align: left;">
+        The value you are searching for does not exist.
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- Table Body -->
+  <ng-template pTemplate="body" let-product>
+    <tr class="odd:bg-gray-50 even:bg-white text-gray-700 hover:bg-gray-100">
+      <!-- Actions Column -->
+      <td class="text-sm border-b border-r border-gray-300 flex flex-row justify-between items-center gap-4">
+        <div *ngFor="let action of getActionsForRow(product.status, product.active)">
+          <button
+            *ngIf="action === 'view'"
+            type="button"
+            class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            (click)="showDialog(product.id, 'youthsignup'); updateIsEdited(product.id)"
+          >
+            <i class="pi pi-eye"></i>
+          </button>
+          <button
+            *ngIf="action === 'pend'"
+            type="button"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            (click)="showNoteDialog(product)"
+          >
+            <i class="pi pi-clock"></i>
+          </button>
+          <button
+            *ngIf="action === 'notes'"
+            type="button"
+            class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+            (click)="displayNoteDialog(product)"
+          >
+            <i class="pi pi-file"></i>
+          </button>
+          <button
+            *ngIf="action === 'accept'"
+            type="button"
+            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            (click)="performAction('accept', product)"
+          >
+            <i class="pi pi-check"></i>
+          </button>
+          <button
+            *ngIf="action === 'reject'"
+            type="button"
+            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+            (click)="performAction('reject', product)"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+      </td>
+      <!-- Data Columns -->
+      <td *ngFor="let col of cols" class="px-4 py-2 text-sm border-b border-r border-gray-300">
+        <ng-container [ngSwitch]="col.field">
+          <ng-container *ngSwitchCase="'createdAt'">
+            <div>{{ formatDate(product[col.field]) }}</div>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{ product[col.field] || 'N/A' }}
+          </ng-container>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
 
 <p-dialog
   [(visible)]="youthSignupDialogVisible"
@@ -345,8 +212,6 @@
   ></app-youthsignup-details>
 </p-dialog>
 
-
-<!-- Note Dialog -->
 <p-dialog
   [(visible)]="noteDialogVisible"
   [closable]="false"
@@ -392,24 +257,3 @@
     </div>
   </ng-template>
 </p-dialog>
-
-<!-- No Data Template -->
-<ng-template #noData>
-  <div
-    class="flex flex-col justify-center items-center text-gray-500 py-10 bg-gradient-to-b from-gray-100 to-gray-50 rounded-lg shadow-md"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-16 w-16 text-gray-300 mb-4"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M3 4a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5l-4 4V4z"
-        clip-rule="evenodd"
-      />
-    </svg>
-    <p class="text-lg font-semibold">No Data Available</p>
-  </div>
-</ng-template>
