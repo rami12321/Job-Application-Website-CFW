@@ -1,0 +1,19 @@
+.btn {
+  @apply px-4 py-2 rounded-md flex items-center transition-colors;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700;
+}
+
+.btn-success:disabled {
+  @apply bg-green-400 cursor-not-allowed;
+}
+
+.alert {
+  @apply p-3 rounded-md;
+}
+
+.alert-danger {
+  @apply bg-red-100 text-red-800 border border-red-200;
+}

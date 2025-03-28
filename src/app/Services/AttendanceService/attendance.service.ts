@@ -37,4 +37,16 @@ uploadSignature(signatureData: string): Observable<{ filePath: string }> {
       params: { youthId, jobRequestId }, // Pass query parameters
     });
   }
+
+// Update the verifyAttendanceDays method to use the correct endpoint
+verifyAttendanceDays(attendanceId: string, dayIndices: number[]): Observable<AttendanceRecord> {
+  return this.http.put<AttendanceRecord>(
+    `${this.baseUrl}/${attendanceId}/verify-days`, // Correct endpoint
+    { dayIndices }
+  );
+}
+
+  getVerifiableDays(attendanceId: string): Observable<{verifiableDays: number[]}> {
+    return this.http.get<{verifiableDays: number[]}>(`${this.baseUrl}/verifiable-days/${attendanceId}`);
+  }
 }

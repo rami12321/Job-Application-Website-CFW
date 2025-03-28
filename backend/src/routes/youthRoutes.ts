@@ -22,6 +22,7 @@ import {
   updateYouthIsEdited,
   getYouthIsEditedStatusById,
   updateYouthWorkStatus,
+  getYouthsByStatusAndWorkStatus,
 
 } from '../controllers/youthController';
 // import { assignYouthToJob } from '../controllers/jobRequestController';
@@ -29,6 +30,7 @@ import {
 const router = Router();
 
 router.get('/', getAllYouth);
+router.get('/byStatus', getYouthsByStatusAndWorkStatus);
 
 router.get('/:id', getYouthById);
 router.patch('/:id/camp', updateYouthCamp);

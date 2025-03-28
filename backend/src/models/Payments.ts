@@ -9,6 +9,8 @@ interface PaymentAttributes {
   totalDaysWorked: number;
   amountPaid: number;
   paymentDate: Date;
+  verificationStatus: 'pending' | 'admin-verified' | 'rejected';
+
 }
 
 interface PaymentCreationAttributes extends Optional<PaymentAttributes, 'id'> {}
@@ -21,6 +23,7 @@ class Payment extends Model<PaymentAttributes, PaymentCreationAttributes> implem
   public totalDaysWorked!: number;
   public amountPaid!: number;
   public paymentDate!: Date;
+  public verificationStatus: 'pending' | 'admin-verified' | 'rejected';
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -59,6 +62,10 @@ Payment.init(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+    },
+    verificationStatus: {
+      type: DataTypes.ENUM('pending' , 'admin-verified' , 'rejected'),
+      allowNull: false,
     },
   },
   {

@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { 
-  getAllAttendances, 
-  createAttendance, 
-  getAttendanceById, 
-  updateAttendance, 
+import {
+  getAllAttendances,
+  createAttendance,
+  getAttendanceById,
+  updateAttendance,
   deleteAttendance,
-  getAttendanceByYouthAndJob 
+  getAttendanceByYouthAndJob,
+  verifyAttendanceDays
 } from '../controllers/attendanceController';
 
 const router: Router = Router();
@@ -15,6 +16,7 @@ router.get('/', getAllAttendances);
 
 // POST a new attendance record
 router.post('/', createAttendance);
+router.put('/:id/verify-days', verifyAttendanceDays);
 
 // NEW: GET an attendance record by youthId and jobRequestId
 // Use query parameters: /attendance/byYouthAndJob?youthId=...&jobRequestId=...

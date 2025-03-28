@@ -1,4 +1,61 @@
-<div>
-  <app-youth-table class="p-10" [status]="'accepted'" [workStatus]="true">
-  </app-youth-table>
+<div class="p-6">
+  <!-- Payment Generation Section -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold text-gray-800">Payment Generation</h2>
+
+      <div class="flex items-center space-x-4">
+        <button
+          *ngIf="eligibleYouths.length > 0"
+          class="btn btn-success"
+          (click)="generateAllPayments()"
+          [disabled]="isGeneratingPayments">
+        
+          {{ isGeneratingPayments ? 'Processing...' : 'Generate All Payments' }}
+          ({{ eligibleYouths.length }})
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-4">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Results Summary -->
+    <div *ngIf="paymentGenerationResult" class="mt-6 bg-gray-50 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold mb-3">Generation Results</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Successful Payments -->
+        <div class="bg-green-50 p-4 rounded border border-green-200">
+          <h4 class="font-medium text-green-800">Successful</h4>
+          <p class="text-2xl font-bold text-green-600">
+            {{ paymentGenerationResult.successfulPayments?.length || 0 }}
+          </p>
+        </div>
+
+        <!-- Failed Payments -->
+        <div class="bg-red-50 p-4 rounded border border-red-200">
+          <h4 class="font-medium text-red-800">Failed</h4>
+          <p class="text-2xl font-bold text-red-600">
+            {{ paymentGenerationResult.failedPayments?.length || 0 }}
+          </p>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="bg-blue-50 p-4 rounded border border-blue-200">
+          <h4 class="font-medium text-blue-800">Total Amount</h4>
+          <p class="text-2xl font-bold text-blue-600">
+            ${{ (paymentGenerationResult.totalAmount || 0).toFixed(2) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Youth Table -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <app-youth-table [status]="'accepted'" [workStatus]="true"></app-youth-table>
+  </div>
 </div>

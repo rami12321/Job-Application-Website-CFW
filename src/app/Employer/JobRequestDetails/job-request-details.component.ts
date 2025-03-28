@@ -1,4 +1,15 @@
-import { AfterViewChecked, AfterViewInit, OnChanges, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  OnChanges,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Job } from '../../Model/JobDetails';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { ActivatedRoute } from '@angular/router';
@@ -24,12 +35,21 @@ interface DailySchedule {
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
-
-export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterViewChecked, OnChanges{
+export class JobRequestDetailsComponent
+  implements AfterViewInit, OnInit, AfterViewChecked, OnChanges
+{
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
   private userId: string | null = null;
-  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
 
   isContractModalOpen = false;
   agreementStartDate: string | null = null;
@@ -39,31 +59,30 @@ export class JobRequestDetailsComponent  implements AfterViewInit, OnInit,AfterV
   isApprovalModalOpen: boolean = false;
   selectedYouth: any | null = null;
   isEmployerContractModalOpen = false;
-isYouthContractModalOpen = false;
-public employer: Employer | undefined;
-// Define an interface if needed:
+  isYouthContractModalOpen = false;
+  public employer: Employer | undefined;
+  // Define an interface if needed:
 
+  // Initialize working schedule for each day
+  workingSchedule: { [day: string]: { workType: string; shift: string } } = {
+    Monday: { workType: 'Office', shift: 'Morning' },
+    Tuesday: { workType: 'Office', shift: 'Morning' },
+    Wednesday: { workType: 'Office', shift: 'Morning' },
+    Thursday: { workType: 'Office', shift: 'Morning' },
+    Friday: { workType: 'Office', shift: 'Morning' },
+    Saturday: { workType: 'Office', shift: 'Morning' },
+    Sunday: { workType: 'Office', shift: 'Morning' },
+  };
 
-// Initialize working schedule for each day
-workingSchedule: { [day: string]: { workType: string; shift: string } } = {
-  Monday: { workType: 'Office', shift: 'Morning' },
-  Tuesday: { workType: 'Office', shift: 'Morning' },
-  Wednesday: { workType: 'Office', shift: 'Morning' },
-  Thursday: { workType: 'Office', shift: 'Morning' },
-  Friday: { workType: 'Office', shift: 'Morning' },
-  Saturday: { workType: 'Office', shift: 'Morning' },
-  Sunday: { workType: 'Office', shift: 'Morning' },
-};
+  averageWorkingHours: number = 8; // default value
+  workingNotes: string = '';
 
-
-averageWorkingHours: number = 8; // default value
-workingNotes: string = '';
-
-selectedContract: any = null;
+  selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
   isSignatureModalOpen = false;
-  @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('signaturePad')
+  signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
   isEditing: { [key: string]: boolean } = {};
   editModels: { [key: string]: any } = {};
@@ -76,9 +95,9 @@ selectedContract: any = null;
   isEditingSignature = false;
   uploadedFileName: string | null = null;
   isDeleteModalOpen = false;
-uploadedFileUrl: string | null = null;
-isAttendanceModalOpen: boolean = false;
-attendanceRecord: AttendanceRecord | null = null;
+  uploadedFileUrl: string | null = null;
+  isAttendanceModalOpen: boolean = false;
+  attendanceRecord: AttendanceRecord | null = null;
   modalAction: string = '';
   selectedYouthName: string | null = null;
   isSubmitModalOpen = false;
@@ -167,14 +186,15 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     private cdr: ChangeDetectorRef,
     private employerService: EmployerService,
     private attendanceService: AttendanceService
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const jobId = params.get('id');
       console.log('Retrieved jobId from route:', jobId);
-      const role = this.route.snapshot.queryParamMap.get('role') || localStorage.getItem('role');
+      const role =
+        this.route.snapshot.queryParamMap.get('role') ||
+        localStorage.getItem('role');
       this.userRole = role;
       console.log('User role:', this.userRole);
 
@@ -185,42 +205,51 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         console.error('Invalid or missing jobId');
       }
 
-
-        if (this.userId) {
-          this.fetchEmployerDetails();}
+      if (this.userId) {
+        this.fetchEmployerDetails();
+      }
     });
     this.updatePagination();
     if (!this.signatureImage) {
       this.showSignatureWarning = true;
       return;
     }
-
   }
 
-
   confirmEmployerAttendance(index: number): void {
-    if (this.attendanceRecord && this.selectedYouth && this.selectedYouth.EmployerContract?.signature) {
-      console.log('Using employer contract signature:', this.selectedYouth.EmployerContract.signature);
+    if (
+      this.attendanceRecord &&
+      this.selectedYouth &&
+      this.selectedYouth.EmployerContract?.signature
+    ) {
+      console.log(
+        'Using employer contract signature:',
+        this.selectedYouth.EmployerContract.signature
+      );
 
       // Mark the day as confirmed by the employer.
       this.attendanceRecord.days[index].employerConfirmed = true;
 
       // Use the signature from the EmployerContract of the selected youth.
-      this.attendanceRecord.days[index].employerSignature = this.selectedYouth.EmployerContract.signature;
+      this.attendanceRecord.days[index].employerSignature =
+        this.selectedYouth.EmployerContract.signature;
 
       // Update the backend with the modified attendance record.
-      this.attendanceService.updateAttendance(this.attendanceRecord.id!, { days: this.attendanceRecord.days })
+      this.attendanceService
+        .updateAttendance(this.attendanceRecord.id!, {
+          days: this.attendanceRecord.days,
+        })
         .subscribe({
-          next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
-          error: (err) => console.error('Error updating attendance:', err)
+          next: (updatedRecord) =>
+            console.log('Attendance updated:', updatedRecord),
+          error: (err) => console.error('Error updating attendance:', err),
         });
     } else {
-      console.error('Employer contract signature not available on the selected youth');
+      console.error(
+        'Employer contract signature not available on the selected youth'
+      );
     }
   }
-
-
-
 
   openAttendanceModal(youth: any): void {
     if (!this.jobRequest || !youth) {
@@ -237,7 +266,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       return;
     }
 
-    this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
+    this.attendanceService
+      .getAttendanceByYouthAndJob(youth.id, jobId)
       .subscribe({
         next: (attendance: AttendanceRecord) => {
           // If days is a string, parse it into an array.
@@ -254,7 +284,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         },
         error: (err) => {
           console.error('Error fetching attendance record:', err);
-        }
+        },
       });
   }
   closeAttendanceModal(): void {
@@ -262,47 +292,47 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   }
 
   // Opens the modal for admin viewing of attendance records
-openAdminAttendanceModal(youth: any): void {
-  if (!this.jobRequest || !youth) {
-    console.error('Missing jobRequest or youth data');
-    return;
-  }
+  openAdminAttendanceModal(youth: any): void {
+    if (!this.jobRequest || !youth) {
+      console.error('Missing jobRequest or youth data');
+      return;
+    }
 
-  // Save the selected youth for later use.
-  this.selectedYouth = youth;
+    // Save the selected youth for later use.
+    this.selectedYouth = youth;
 
-  const jobId = this.jobRequest.jobId;
-  if (!jobId) {
-    console.error('Job ID is undefined');
-    return;
-  }
+    const jobId = this.jobRequest.jobId;
+    if (!jobId) {
+      console.error('Job ID is undefined');
+      return;
+    }
 
-  this.attendanceService.getAttendanceByYouthAndJob(youth.id, jobId)
-    .subscribe({
-      next: (attendance: AttendanceRecord) => {
-        // If days is a string, parse it into an array.
-        if (typeof attendance.days === 'string') {
-          try {
-            attendance.days = JSON.parse(attendance.days);
-          } catch (error) {
-            console.error('Error parsing days:', error);
-            attendance.days = []; // Fallback to empty array
+    this.attendanceService
+      .getAttendanceByYouthAndJob(youth.id, jobId)
+      .subscribe({
+        next: (attendance: AttendanceRecord) => {
+          // If days is a string, parse it into an array.
+          if (typeof attendance.days === 'string') {
+            try {
+              attendance.days = JSON.parse(attendance.days);
+            } catch (error) {
+              console.error('Error parsing days:', error);
+              attendance.days = []; // Fallback to empty array
+            }
           }
-        }
-        this.attendanceRecord = attendance;
-        this.isAdminAttendanceModalOpen = true;
-      },
-      error: (err) => {
-        console.error('Error fetching attendance record:', err);
-      }
-    });
-}
+          this.attendanceRecord = attendance;
+          this.isAdminAttendanceModalOpen = true;
+        },
+        error: (err) => {
+          console.error('Error fetching attendance record:', err);
+        },
+      });
+  }
 
-// Closes the attendance modal
-closeAdminAttendanceModal(): void {
-  this.isAdminAttendanceModalOpen = false;
-}
-
+  // Closes the attendance modal
+  closeAdminAttendanceModal(): void {
+    this.isAdminAttendanceModalOpen = false;
+  }
 
   private fetchEmployerDetails(): void {
     this.employerService.getEmployerById(this.userId!).subscribe({
@@ -324,16 +354,19 @@ closeAdminAttendanceModal(): void {
       }
 
       this.jobRequestService
-        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .updateJob(this.jobId!, {
+          assignedYouths: this.jobRequest!.assignedYouths,
+        })
         .subscribe({
           next: () => {
-            console.log(`Youth status updated to: ${this.selectedYouth.action}`);
+            console.log(
+              `Youth status updated to: ${this.selectedYouth.action}`
+            );
             this.fetchJobRequestDetails();
           },
           error: (err) => console.error('Error updating youth status:', err),
         });
       this.isApprovalModalOpen = false;
-
     }
   }
   submitContract() {
@@ -354,28 +387,32 @@ closeAdminAttendanceModal(): void {
       startDate: this.agreementStartDate,
       signature: this.signatureImage,
       agreementAccepted: this.isTermsAccepted,
-      workingSchedule: this.workingSchedule,          // New: Daily work type & shift data
-      averageWorkingHours: this.averageWorkingHours,    // New: Average working hours per day
-      workingNotes: this.workingNotes                   // New: Notes for many shifts
+      workingSchedule: this.workingSchedule, // New: Daily work type & shift data
+      averageWorkingHours: this.averageWorkingHours, // New: Average working hours per day
+      workingNotes: this.workingNotes, // New: Notes for many shifts
     };
 
     // Update the selected youth in the assignedYouths array with the new contract details
-    this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map((youth) => {
-      if (youth.id === this.selectedYouth.id) {
-        return {
-          ...youth,
-          EmployerContract: contractDetails,
-        };
+    this.jobRequest.assignedYouths = this.jobRequest?.assignedYouths?.map(
+      (youth) => {
+        if (youth.id === this.selectedYouth.id) {
+          return {
+            ...youth,
+            EmployerContract: contractDetails,
+          };
+        }
+        return youth;
       }
-      return youth;
-    });
+    );
 
     // Log to verify the updated job request structure
     console.log('Updated jobRequest:', this.jobRequest);
 
     // Submit the updated job request to the service
     this.jobRequestService
-      .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
+      .updateJob(this.jobId!, {
+        assignedYouths: this.jobRequest.assignedYouths,
+      })
       .subscribe({
         next: (response) => {
           console.log('Contract saved successfully:', response);
@@ -387,10 +424,6 @@ closeAdminAttendanceModal(): void {
         },
       });
   }
-
-
-
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['jobId'] && this.jobId) {
@@ -416,7 +449,6 @@ closeAdminAttendanceModal(): void {
         };
         this.updatePagination();
         this.initializeRowStates();
-
       },
       error: (err) => {
         console.error('Error fetching job request:', err);
@@ -424,28 +456,95 @@ closeAdminAttendanceModal(): void {
     });
   }
 
-
   updateYouthStatus(youth: any, action: 'accepted' | 'rejected'): void {
     if (!this.jobRequest || !this.jobId) return;
 
-
     youth.action = action;
-
 
     const updatedYouth = {
       ...youth,
       status: action === 'accepted' ? 'approved' : 'rejected',
     };
 
-
     this.jobRequestService
       .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
       .subscribe({
-        next: () => console.log(`Youth status updated successfully to: ${action}`),
+        next: () =>
+          console.log(`Youth status updated successfully to: ${action}`),
         error: (err) => console.error('Error updating youth status:', err),
       });
   }
 
+  // job-request-details.component.ts
+
+  // Add these methods to your component
+  verifyAttendanceDays(dayIndices: number[]): void {
+    if (!this.attendanceRecord) return;
+
+    this.attendanceService
+      .verifyAttendanceDays(this.attendanceRecord.id!, dayIndices)
+      .subscribe({
+        next: (updatedRecord) => {
+          // Update local record
+          this.attendanceRecord = updatedRecord;
+          console.log('Days verified successfully');
+        },
+        error: (err) => console.error('Error verifying days:', err),
+      });
+  }
+
+  // Method to verify a single day
+  verifySingleDay(index: number): void {
+    this.verifyAttendanceDays([index]);
+  }
+
+  // Method to get verifiable days (if needed)
+  fetchVerifiableDays(): void {
+    if (!this.attendanceRecord) return;
+
+    this.attendanceService
+      .getVerifiableDays(this.attendanceRecord.id!)
+      .subscribe({
+        next: (response) => {
+          console.log('Verifiable days:', response.verifiableDays);
+          // You can use this to highlight verifiable days in your UI
+        },
+        error: (err) => console.error('Error fetching verifiable days:', err),
+      });
+  }
+
+verifyAllEligibleDays(): void {
+  if (!this.attendanceRecord?.id) {
+    console.error('No attendance record loaded or missing ID');
+    return;
+  }
+
+  const eligibleDays = this.attendanceRecord.days
+    .map((day, index) => ({ ...day, index }))
+    .filter(day => day.employerConfirmed && !day.adminChecked);
+
+  if (eligibleDays.length === 0) {
+    console.log('No eligible days to verify');
+    return;
+  }
+
+  if (confirm(`Are you sure you want to verify ${eligibleDays.length} day(s)?`)) {
+    const dayIndices = eligibleDays.map(day => day.index);
+
+    this.attendanceService.verifyAttendanceDays(this.attendanceRecord.id, dayIndices)
+      .subscribe({
+        next: (updatedRecord) => {
+          this.attendanceRecord = updatedRecord;
+          console.log(`Successfully verified ${eligibleDays.length} day(s)`);
+          // Optional: Show success notification
+        },
+        error: (err) => {
+          console.error('Error verifying days:', err);
+          // Optional: Show error notification
+        }
+      });
+  }
+}
   updateYouthWithWorkStatus(youthId: any, workStatus: boolean): void {
     this.youthService.getYouthById(youthId).subscribe({
       next: (youth) => {
@@ -455,18 +554,24 @@ closeAdminAttendanceModal(): void {
 
           // Update the youth record in the database (in youthdb.json)
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
-            next: () => console.log(`Successfully updated workStatus for youth ID: ${youthId}`),
-            error: (err) => console.error(`Error updating youth workStatus for ID: ${youthId}`, err),
+            next: () =>
+              console.log(
+                `Successfully updated workStatus for youth ID: ${youthId}`
+              ),
+            error: (err) =>
+              console.error(
+                `Error updating youth workStatus for ID: ${youthId}`,
+                err
+              ),
           });
         } else {
           console.error(`Youth record not found for ID: ${youthId}`);
         }
       },
-      error: (err) => console.error(`Error fetching youth data for ID: ${youthId}`, err),
+      error: (err) =>
+        console.error(`Error fetching youth data for ID: ${youthId}`, err),
     });
   }
-
-
 
   updateYouthAppliedJobs(
     youthId: any,
@@ -487,7 +592,8 @@ closeAdminAttendanceModal(): void {
                 return {
                   ...job,
                   status: newStatus,
-                  jobRequestId: newStatus === 'approved' ? approvedJobRequestId : undefined, // Add jobRequestId only for approved jobs
+                  jobRequestId:
+                    newStatus === 'approved' ? approvedJobRequestId : undefined, // Add jobRequestId only for approved jobs
                 };
               } else if (job.status === 'waiting') {
                 console.log(`Marking job: ${job.job} as rejected`);
@@ -504,12 +610,19 @@ closeAdminAttendanceModal(): void {
           // Update the youth record in the database
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () =>
-              console.log(`Successfully updated applied jobs for youth ID: ${youthId}`),
+              console.log(
+                `Successfully updated applied jobs for youth ID: ${youthId}`
+              ),
             error: (err) =>
-              console.error(`Error updating youth record for ID: ${youthId}`, err),
+              console.error(
+                `Error updating youth record for ID: ${youthId}`,
+                err
+              ),
           });
         } else {
-          console.error(`Youth record or applied jobs not found for ID: ${youthId}`);
+          console.error(
+            `Youth record or applied jobs not found for ID: ${youthId}`
+          );
         }
       },
       error: (err) =>
@@ -560,17 +673,27 @@ closeAdminAttendanceModal(): void {
                       beneficiary: true,
                     };
 
-                    this.youthService.updateYouth(youth.id, updatedYouth).subscribe({
-                      next: () =>
-                        console.log(`Updated youth ID: ${youth.id} successfully.`),
-                      error: (err) =>
-                        console.error(`Error updating youth ID: ${youth.id}`, err),
-                    });
+                    this.youthService
+                      .updateYouth(youth.id, updatedYouth)
+                      .subscribe({
+                        next: () =>
+                          console.log(
+                            `Updated youth ID: ${youth.id} successfully.`
+                          ),
+                        error: (err) =>
+                          console.error(
+                            `Error updating youth ID: ${youth.id}`,
+                            err
+                          ),
+                      });
                   }
                 }
               },
               error: (err) =>
-                console.error(`Error fetching youth data for ID: ${youth.id}`, err),
+                console.error(
+                  `Error fetching youth data for ID: ${youth.id}`,
+                  err
+                ),
             });
           });
         }
@@ -582,7 +705,6 @@ closeAdminAttendanceModal(): void {
       error: (err) => console.error('Error updating job request status:', err),
     });
   }
-
 
   openTermsModal() {
     this.isTermsModalOpen = true;
@@ -612,13 +734,13 @@ closeAdminAttendanceModal(): void {
   }
   openPdfModal(fileUrl: string): void {
     this.storedPdfUrl = fileUrl; // Set the URL of the uploaded file
-    this.isPdfModalOpen = true;  // Open the modal
+    this.isPdfModalOpen = true; // Open the modal
   }
 
   // Method to close the modal
   closePdfModal(): void {
     this.isPdfModalOpen = false; // Close the modal
-    this.storedPdfUrl = null;    // Clear the file URL
+    this.storedPdfUrl = null; // Clear the file URL
   }
 
   // Handle file selection and upload logic here
@@ -639,8 +761,7 @@ closeAdminAttendanceModal(): void {
     this.isDeleteModalOpen = true;
     this.selectedYouth = youth;
 
-    this.cdr.detectChanges();  // Manually trigger change detection
-
+    this.cdr.detectChanges(); // Manually trigger change detection
   }
   closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
@@ -660,7 +781,6 @@ closeAdminAttendanceModal(): void {
     this.markAsCompleted();
     this.showConfirmationModal = false; // Close the modal
   }
-
 
   // Accept the Terms
   acceptTerms() {
@@ -687,15 +807,17 @@ closeAdminAttendanceModal(): void {
   }
   confirmRevert(): void {
     if (this.selectedYouth) {
-
       this.selectedYouth.action = 'accepted';
 
-
       this.jobRequestService
-        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .updateJob(this.jobId!, {
+          assignedYouths: this.jobRequest!.assignedYouths,
+        })
         .subscribe({
           next: () => {
-            console.log(`Youth status reverted to: ${this.selectedYouth.action}`);
+            console.log(
+              `Youth status reverted to: ${this.selectedYouth.action}`
+            );
             this.fetchJobRequestDetails();
             this.closeRModal();
           },
@@ -714,7 +836,9 @@ closeAdminAttendanceModal(): void {
   ngAfterViewChecked(): void {
     // Ensure the SignaturePad is initialized when the modal is opened and the view is fully loaded
     if (this.isSignatureModalOpen && !this.isSignaturePadInitialized) {
-      this.signaturePad = new SignaturePad(this.signaturePadElement.nativeElement);
+      this.signaturePad = new SignaturePad(
+        this.signaturePadElement.nativeElement
+      );
       this.isSignaturePadInitialized = true; // Mark as initialized
       this.cdr.detectChanges(); // Trigger change detection
     }
@@ -757,11 +881,12 @@ closeAdminAttendanceModal(): void {
 
     const youthId = youth.id;
 
-      this.jobRequestService.unassignYouthFromJobRequest(jobId, youthId).subscribe({
+    this.jobRequestService
+      .unassignYouthFromJobRequest(jobId, youthId)
+      .subscribe({
         next: () => {
-          this.jobRequest!.assignedYouths = this.jobRequest!.assignedYouths!.filter(
-            (y) => y.id !== youthId
-          ); // Update the list locally
+          this.jobRequest!.assignedYouths =
+            this.jobRequest!.assignedYouths!.filter((y) => y.id !== youthId); // Update the list locally
           this.updatePagination();
         },
         error: (err) => {
@@ -769,7 +894,6 @@ closeAdminAttendanceModal(): void {
           alert('An error occurred while trying to delete the youth.');
         },
       });
-
   }
 
   onAgreementStartDateChange(event: Event): void {
@@ -815,11 +939,11 @@ closeAdminAttendanceModal(): void {
     this.selectedYouth = null;
   }
 
-
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedAssignedYouths = this.jobRequest?.assignedYouths?.slice(startIndex, endIndex) || [];
+    this.paginatedAssignedYouths =
+      this.jobRequest?.assignedYouths?.slice(startIndex, endIndex) || [];
   }
 
   prevPage() {
@@ -837,7 +961,9 @@ closeAdminAttendanceModal(): void {
   }
 
   get totalPages(): number {
-    return Math.ceil((this.jobRequest?.assignedYouths?.length || 0) / this.itemsPerPage);
+    return Math.ceil(
+      (this.jobRequest?.assignedYouths?.length || 0) / this.itemsPerPage
+    );
   }
 
   searchAssignedYouths() {
@@ -864,19 +990,21 @@ closeAdminAttendanceModal(): void {
   }
   updateRowStates(): void {
     if (this.jobRequest) {
+      this.approvedCount =
+        this.jobRequest.assignedYouths?.filter(
+          (youth) => youth.action === 'approved'
+        ).length || 0;
 
-      this.approvedCount = this.jobRequest.assignedYouths?.filter(
-        (youth) => youth.action === 'approved'
-      ).length || 0;
-
-      console.log('Approved Youth Count (updateRowStates):', this.approvedCount);
-
+      console.log(
+        'Approved Youth Count (updateRowStates):',
+        this.approvedCount
+      );
 
       this.jobRequest.assignedYouths?.forEach((youth) => {
         youth.isDisabled =
-          this.approvedCount >= this.jobRequest!.numEmployees && youth.action !== 'approved';
+          this.approvedCount >= this.jobRequest!.numEmployees &&
+          youth.action !== 'approved';
       });
-
 
       this.isSubmitEnabled = this.approvedCount > 0;
       console.log('Is Submit Enabled (updateRowStates):', this.isSubmitEnabled);
@@ -911,7 +1039,9 @@ closeAdminAttendanceModal(): void {
           status: youth.action === 'approved' ? 'approved' : youth.status,
         })) ?? [];
 
-    const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
+    const approvedYouths = updatedYouths.filter(
+      (youth) => youth.status === 'approved'
+    );
 
     // Update the current job request with the approved youths
     const updatedJobRequest = {
@@ -926,47 +1056,56 @@ closeAdminAttendanceModal(): void {
         const safeJobIdForUpdate = this.jobId ?? '';
 
         // Now update the current job request with the new youths
-        this.jobRequestService.updateJob(safeJobIdForUpdate, updatedJobRequest).subscribe({
-          next: () => {
-            console.log('Job request submitted successfully.');
-            updatedYouths.forEach((youth) => {
-              const isApproved = youth.status === 'approved';
+        this.jobRequestService
+          .updateJob(safeJobIdForUpdate, updatedJobRequest)
+          .subscribe({
+            next: () => {
+              console.log('Job request submitted successfully.');
+              updatedYouths.forEach((youth) => {
+                const isApproved = youth.status === 'approved';
 
-              // Update the workStatus directly in the youth record in the youthdb.json file
-              if (isApproved) {
-                this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
-              }
+                // Update the workStatus directly in the youth record in the youthdb.json file
+                if (isApproved) {
+                  this.updateYouthWithWorkStatus(youth.id, true); // Set workStatus to true for approved youth
+                }
 
-              this.updateYouthAppliedJobs(
-                youth.id,
-                this.jobRequest?.job || '',
-                isApproved ? 'approved' : 'rejected',
-                isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
-              );
-            });
+                this.updateYouthAppliedJobs(
+                  youth.id,
+                  this.jobRequest?.job || '',
+                  isApproved ? 'approved' : 'rejected',
+                  isApproved && this.jobId ? this.jobId : undefined // Ensure jobId is a string or undefined
+                );
+              });
 
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          },
-          error: (err) => console.error('Error submitting job request:', err),
-        });
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            },
+            error: (err) => console.error('Error submitting job request:', err),
+          });
       },
       error: (err) => console.error('Error fetching all job requests:', err),
     });
   }
   initializeRowStates(): void {
     if (this.jobRequest) {
-      this.approvedCount = this.jobRequest.assignedYouths?.filter(
-        (youth) => youth.action === 'approved'
-      ).length || 0;
+      this.approvedCount =
+        this.jobRequest.assignedYouths?.filter(
+          (youth) => youth.action === 'approved'
+        ).length || 0;
 
-      console.log('Approved Youth Count (initializeRowStates):', this.approvedCount);
+      console.log(
+        'Approved Youth Count (initializeRowStates):',
+        this.approvedCount
+      );
 
       this.updateRowStates();
 
       this.isSubmitEnabled = this.approvedCount > 0;
-      console.log('Is Submit Enabled (initializeRowStates):', this.isSubmitEnabled);
+      console.log(
+        'Is Submit Enabled (initializeRowStates):',
+        this.isSubmitEnabled
+      );
     }
   }
   toggleYouthStatus(youth: any, action: string | null): void {
@@ -976,10 +1115,11 @@ closeAdminAttendanceModal(): void {
       youth.action = null;
       youth.status = 'waiting';
 
-
       if (this.jobRequest && this.jobId) {
         this.jobRequestService
-          .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
+          .updateJob(this.jobId, {
+            assignedYouths: this.jobRequest.assignedYouths,
+          })
           .subscribe({
             next: () => console.log(`Youth status reset to 'waiting'`),
             error: (err) => console.error('Error resetting youth status:', err),
@@ -996,8 +1136,8 @@ closeAdminAttendanceModal(): void {
         youth.action === 'accepted'
           ? 'assigned'
           : youth.status === 'rejected'
-            ? 'rejected'
-            : youth.status,
+          ? 'rejected'
+          : youth.status,
     }));
 
     const updatedJobRequest = {
@@ -1005,7 +1145,6 @@ closeAdminAttendanceModal(): void {
       assignedYouths: updatedYouths,
       status: 'assigned-E',
     };
-
 
     this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
       next: () => {
@@ -1038,5 +1177,4 @@ closeAdminAttendanceModal(): void {
       },
     });
   }
-
 }

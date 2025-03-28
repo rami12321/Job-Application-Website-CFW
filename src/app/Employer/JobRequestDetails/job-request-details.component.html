@@ -6,13 +6,13 @@
     <h3 class="text-xl font-bold text-[#000000] dark:text-[#ffffff] mb-2 mt-0 pt-1 pb-1">
       Job Request Details
     </h3>
-    
+
     <div class="p-6 bg-gradient-to-r from-[#e6f7ff] to-[#cce4ff] dark:bg-gradient-to-r dark:from-[#6ab5ff] dark:to-[#1e90ff] rounded-lg mb-6 shadow-md border border-[#d4edff]">
       <div class="grid grid-cols-2 gap-6 mt-4">
         <!-- Job Title -->
         <p>
           <strong class="text-lg font-bold text-gray-700 dark:text-gray-300">Job Category:</strong>
-          
+
           <!-- Display current category if not in editing mode -->
           <span
                 class="value text-lg font-medium text-gray-700 dark:text-gray-400 px-4 py-2 bg-blue-100 dark:bg-blue-800 rounded-lg shadow-sm">
@@ -85,13 +85,13 @@
         </span>
       </p>
     </div>
-    
+
   </div>
 
   <div *ngIf="hasAssignedYouths" class="max-w-6xl mx-auto my-8 p-6 bg-blue-50 rounded-lg shadow-lg">
     <!-- Search Input -->
 
-  
+
     <!-- Table -->
     <div class="overflow-x-hidden mt-4">
       <table class="min-w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden">
@@ -131,7 +131,7 @@
                       aria-label="Approved Status"
                       data-tooltip="Approved"
                       disabled
-                      
+
                     >
                       <i class="pi pi-verified text-lg"></i>
                     </button>
@@ -159,8 +159,8 @@ data-tooltip="Read Contract"
   >
     <i class="pi pi-calendar text-lg"></i>
   </button>
-  
-  
+
+
     <!-- Upload Button -->
     <label
       *ngIf="youth.EmployerContract"
@@ -202,10 +202,10 @@ data-tooltip="Read Contract"
 </div>
 </div>
 
-                
-                
+
+
                   </ng-container>
-                
+
                   <!-- Accept and Reject Buttons for Employers (when action is not approved) -->
                   <ng-template #actionButtons>
                     <ng-container *ngIf="youth.action !== 'accepted' && youth.action !== 'rejected' && !youth.EmployerContract; else statusFlag">
@@ -226,7 +226,7 @@ data-tooltip="Read Contract"
                         <i class="pi pi-times text-lg"></i>
                       </button>
                     </ng-container>
-                
+
                     <!-- Status Flag for Accepted or Rejected -->
                     <ng-template #statusFlag>
                       <button
@@ -250,15 +250,15 @@ data-tooltip="Read Contract"
                     </ng-template>
                   </ng-template>
                 </ng-container>
-            
+
 <!-- Non-Employer View -->
 
 
 
 <ng-template #nonEmployerView>
   <!-- Check Approved Status -->
-  <ng-container 
-    class="relative min-h-screen flex flex-col justify-between" 
+  <ng-container
+    class="relative min-h-screen flex flex-col justify-between"
     *ngIf="youth.action === 'approved'; else actionStatus"
   >
   <div class="flex flex-wrap gap-2 max-w-[4.5rem]">
@@ -271,7 +271,7 @@ data-tooltip="Read Contract"
     >
       <i class="pi pi-briefcase text-sm"></i>
     </button>
-  
+
     <button
       *ngIf="youth.YouthContract"
       class="tooltip w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-600 transition-colors"
@@ -281,7 +281,7 @@ data-tooltip="Read Contract"
     >
       <i class="pi pi-user text-sm"></i>
     </button>
-  
+
     <button
       *ngIf="youth.EmployerContract && youth.YouthContract"
       class="tooltip w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-yellow-600 transition-colors"
@@ -292,7 +292,7 @@ data-tooltip="Read Contract"
     >
       <i class="pi pi-calendar text-sm"></i>
     </button>
-  
+
     <button
       *ngIf="youth.action === 'approved' && jobRequest?.status === 'in-progress'"
       class="tooltip w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors"
@@ -309,7 +309,7 @@ data-tooltip="Read Contract"
   >
     <!-- Dark overlay -->
     <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
-  
+
     <!-- Modal Content -->
     <div
       class="bg-white rounded-lg p-6 z-50 w-11/12 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto"
@@ -317,7 +317,7 @@ data-tooltip="Read Contract"
       <h2 class="text-2xl font-semibold mb-4 text-center">
         Admin Attendance Overview
       </h2>
-        
+
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead>
@@ -332,13 +332,15 @@ data-tooltip="Read Contract"
                 </th>
                 <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Signature</th>
                 <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Confirm</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Admin Confirm</th>
+
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
               <tr *ngFor="let day of attendanceRecord?.days; let i = index">
                 <!-- Youth Name -->
                 <td class="px-4 py-2 text-sm text-gray-800">{{ day.youthName }}</td>
-                
+
                 <!-- Date -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.date; else pendingDate">
@@ -348,7 +350,7 @@ data-tooltip="Read Contract"
                     <span class="text-gray-500 text-xs">Pending</span>
                   </ng-template>
                 </td>
-                
+
                 <!-- Day of Week -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.date; else pendingDay">
@@ -358,7 +360,7 @@ data-tooltip="Read Contract"
                     <span class="text-gray-500 text-xs">Pending</span>
                   </ng-template>
                 </td>
-                
+
                 <!-- Location Verified -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.locationChecked; else notChecked">
@@ -368,7 +370,7 @@ data-tooltip="Read Contract"
                     <span class="text-red-500 text-xs">Not Verified</span>
                   </ng-template>
                 </td>
-                
+
                 <!-- Data Confirmed -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.confirmed; else notConfirmed">
@@ -389,15 +391,15 @@ data-tooltip="Read Contract"
                 <!-- Employer Signature -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.employerSignature; else noSignature">
-                    <img [src]="day.employerSignature" 
+                    <img [src]="day.employerSignature"
                          alt="Employer Signature" class="h-16" />
                   </ng-container>
                   <ng-template #noSignature>
                     <span class="text-gray-500 text-xs">Not Provided</span>
                   </ng-template>
                 </td>
-                
-                
+
+
                 <!-- Employer Confirm (View Only) -->
                 <td class="px-4 py-2 text-sm text-gray-800">
                   <ng-container *ngIf="day.employerConfirmed; else notConfirmedText">
@@ -407,13 +409,53 @@ data-tooltip="Read Contract"
                     <span class="text-gray-500 text-xs">Not Confirmed</span>
                   </ng-template>
                 </td>
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.adminChecked; else verifyButton">
+                    <!-- Show green checkmark if admin has verified -->
+                    <i class="fas fa-check-circle text-green-600"></i>
+                    <!-- <span class="ml-1 text-xs text-gray-600">Verified</span> -->
+                  </ng-container>
+
+                  <ng-template #verifyButton>
+                    <!-- Show verify button if all conditions are met -->
+                    <ng-container *ngIf="day.employerConfirmed && day.confirmed && day.locationChecked; else cannotVerify">
+                      <button (click)="verifySingleDay(i)"
+                              class="bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 text-xs flex items-center">
+                        <i class="fas fa-check mr-1"></i> Verify
+                      </button>
+                    </ng-container>
+
+                    <ng-template #cannotVerify>
+                      <!-- Show why verification isn't possible -->
+                      <div class="text-xs text-gray-500">
+                        <!-- <ng-container *ngIf="!day.employerConfirmed">
+                          Employer not confirmed
+                        </ng-container>
+                        <ng-container *ngIf="!day.confirmed && day.employerConfirmed">
+                          Data not confirmed
+                        </ng-container>
+                        <ng-container *ngIf="!day.locationChecked && day.confirmed && day.employerConfirmed">
+                          Location not verified
+                        </ng-container> -->
+                        Not Confirmed
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </td>
+
               </tr>
             </tbody>
           </table>
         </div>
-        
+
         <!-- Modal Actions -->
         <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
+          <button *ngIf="userRole === 'admin'"
+          type="button"
+          class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm font-medium"
+          (click)="verifyAllEligibleDays()">
+    <i class="fas fa-check-circle mr-2"></i> Verify All Eligible Days
+  </button>
           <button type="button"
                   class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
                   (click)="closeAdminAttendanceModal()">
@@ -422,20 +464,20 @@ data-tooltip="Read Contract"
         </div>
       </div>
     </div>
-    
 
-<div 
-  *ngIf="isEmployerContractModalOpen" 
-  id="employer-contract-modal" 
-  tabindex="-1" 
+
+<div
+  *ngIf="isEmployerContractModalOpen"
+  id="employer-contract-modal"
+  tabindex="-1"
   class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
 >
   <div class="bg-white w-full max-w-4xl h-[80vh] overflow-y-auto rounded-lg shadow-2xl">
     <!-- Header -->
     <div class="sticky top-0 flex justify-between items-center px-6 py-4 bg-gradient-to-r from-green-600 to-green-400 text-white rounded-t-lg">
       <h2 class="text-3xl font-extrabold">Employer Contract Details</h2>
-      <button 
-        type="button" 
+      <button
+        type="button"
         class="text-white hover:bg-red-500 p-3 rounded-full transition ease-in-out duration-150"
         (click)="closeEmployerContractModal()"
         aria-label="Close"
@@ -492,9 +534,9 @@ data-tooltip="Read Contract"
           <div class="flex items-center space-x-3">
             <strong class="text-lg">Signature:</strong>
             <div class="mt-2">
-              <img 
-                class="w-40 h-20 border rounded-lg shadow-md object-contain" 
-                [src]="youth.EmployerContract.signature" 
+              <img
+                class="w-40 h-20 border rounded-lg shadow-md object-contain"
+                [src]="youth.EmployerContract.signature"
                 alt="Signature"
               >
             </div>
@@ -505,18 +547,18 @@ data-tooltip="Read Contract"
   </div>
 </div>
 
-<div 
-  *ngIf="isYouthContractModalOpen" 
-  id="youth-contract-modal" 
-  tabindex="-1" 
+<div
+  *ngIf="isYouthContractModalOpen"
+  id="youth-contract-modal"
+  tabindex="-1"
   class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
 >
   <div class="bg-white w-full max-w-4xl h-[80vh] overflow-y-auto rounded-lg shadow-2xl">
     <!-- Header -->
     <div class="sticky top-0 flex justify-between items-center px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-t-lg">
       <h2 class="text-3xl font-bold">Youth Contract Details</h2>
-      <button 
-        type="button" 
+      <button
+        type="button"
         class="text-white hover:bg-red-500 p-3 rounded-full transition ease-in-out duration-150"
         (click)="closeYouthContractModal()"
         aria-label="Close"
@@ -565,9 +607,9 @@ data-tooltip="Read Contract"
           <div class="flex items-center space-x-3">
             <strong class="text-lg">Signature:</strong>
             <div class="mt-2">
-              <img 
-                class="w-40 h-20 border rounded-lg shadow-md object-contain" 
-                [src]="youth.YouthContract.signature" 
+              <img
+                class="w-40 h-20 border rounded-lg shadow-md object-contain"
+                [src]="youth.YouthContract.signature"
                 alt="Signature"
               >
             </div>
@@ -582,14 +624,14 @@ data-tooltip="Read Contract"
 
 
     <!-- Delete Confirmation Modal -->
-    <div 
+    <div
     *ngIf="isDeleteModalOpen"
     id="delete-confirm-modal"
     tabindex="-1"
     [class.hidden]="!isDeleteModalOpen"
     class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"
   >
-  
+
       <div class="relative p-4 w-full max-w-md max-h-full">
         <div
           class="relative bg-white border border-gray-400 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
@@ -655,10 +697,10 @@ data-tooltip="Read Contract"
           </div>
         </div>
       </div>
-    </div>   
+    </div>
 
   </div>
-  
+
 
     <!-- Approved Button -->
     <button
@@ -709,7 +751,7 @@ data-tooltip="Read Contract"
         <i class="pi pi-clock text-lg"></i>
       </div>
     </ng-template>
-    
+
   </ng-template>
 
 </ng-template>
@@ -746,7 +788,7 @@ data-tooltip="Read Contract"
         </svg>
         <span class="sr-only">Close modal</span>
       </button>
-      
+
       <!-- Modal Content -->
       <div class="p-4 md:p-5 text-center">
         <!-- Icon -->
@@ -765,12 +807,12 @@ data-tooltip="Read Contract"
             d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        
+
         <!-- Modal Text -->
         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
           Are you sure you want to mark this youth as "Final Approved"?
         </h3>
-        
+
         <!-- Action Buttons -->
         <div class="flex justify-center gap-4">
           <button
@@ -780,7 +822,7 @@ data-tooltip="Read Contract"
           >
             Yes, Approve
           </button>
-          
+
           <button
             (click)="closeApprovalModal()"
             type="button"
@@ -821,7 +863,7 @@ data-tooltip="Read Contract"
           <button (click)="confirmRevert()" type="button" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
             Yes, Revert
           </button>
-          
+
           <button (click)="closeRModal()" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
             No, Cancel
           </button>
@@ -834,16 +876,16 @@ data-tooltip="Read Contract"
               </div>
 
             </td>
-            
-            
+
+
           </tr>
-          
+
         </tbody>
       </table>
 
     </div>
 
-  
+
     <!-- Pagination Controls -->
     <div class="mt-6 flex justify-between items-center">
       <button
@@ -867,7 +909,7 @@ data-tooltip="Read Contract"
   </div>
 
 </div>
-  
+
 <div>
   <button
     *ngIf="!isEmployer() && jobRequest?.status === 'assigned'"
@@ -1196,7 +1238,7 @@ data-tooltip="Read Contract"
   <!-- Notes -->
   <div>
     <h4 class="text-lg font-semibold text-gray-700 mt-4">
-      Notes - Many Shifts 
+      Notes - Many Shifts
       <span class="text-sm">(ملاحظات حول الدوام المتعدد)</span>
     </h4>
     <textarea
@@ -1238,7 +1280,7 @@ data-tooltip="Read Contract"
         height="200"
         class="border border-gray-300 rounded-md w-full"
       ></canvas>
-      
+
         <div class="flex justify-between mt-3">
           <button
             class="text-sm text-white bg-blue-700 px-4 py-1 rounded-md hover:bg-blue-800"
@@ -1262,7 +1304,7 @@ data-tooltip="Read Contract"
       </div>
     </div>
     <!-- Modal Footer -->
-   
+
 
   <!-- Terms and Agreement Modal -->
 <div
@@ -1366,7 +1408,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
   <!-- Modal Content -->
   <div class="bg-white rounded-lg p-6 z-10 w-11/12 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto">
     <h2 class="text-2xl font-semibold mb-4 text-center">Attendance Overview</h2>
-    
+
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead>
@@ -1378,13 +1420,14 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Confirmed</th>
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Signature</th>
             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Confirm</th>
+
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr *ngFor="let day of attendanceRecord?.days; let i = index">
             <!-- Youth Name -->
             <td class="px-4 py-2 text-sm text-gray-800">{{ day.youthName }}</td>
-            
+
             <!-- Date -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.date; else pendingDate">
@@ -1394,7 +1437,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
                 <span class="text-gray-500 text-xs">Pending</span>
               </ng-template>
             </td>
-            
+
             <!-- Day of Week -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.date; else pendingDay">
@@ -1404,7 +1447,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
                 <span class="text-gray-500 text-xs">Pending</span>
               </ng-template>
             </td>
-            
+
             <!-- Location Verified -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.locationChecked; else notChecked">
@@ -1414,7 +1457,7 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
                 <span class="text-red-500 text-xs">Not Verified</span>
               </ng-template>
             </td>
-            
+
             <!-- Data Confirmed -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.confirmed; else notConfirmed">
@@ -1424,19 +1467,19 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
                 <span class="text-gray-500 text-xs">Not Confirmed</span>
               </ng-template>
             </td>
-            
+
             <!-- Employer Signature Column -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.employerSignature || (selectedYouth && selectedYouth.EmployerContract?.signature); else noSignature">
-                <img [src]="day.employerSignature ? day.employerSignature : selectedYouth.EmployerContract.signature" 
+                <img [src]="day.employerSignature ? day.employerSignature : selectedYouth.EmployerContract.signature"
                      alt="Employer Signature" class="h-16" />
               </ng-container>
               <ng-template #noSignature>
                 <span class="text-gray-500 text-xs">Not Provided</span>
               </ng-template>
             </td>
-            
-            
+
+
             <!-- Employer Confirm -->
             <td class="px-4 py-2 text-sm text-gray-800">
               <ng-container *ngIf="day.employerConfirmed; else confirmButton">
@@ -1454,11 +1497,13 @@ class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h
                 </ng-container>
               </ng-template>
             </td>
+
+
           </tr>
         </tbody>
       </table>
     </div>
-    
+
     <!-- Modal Actions -->
     <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
       <button type="button" class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"

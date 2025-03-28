@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Attendance from '../models/Attendance';
+import {Attendance, DayRecord} from '../models/Attendance';
 
 // Get all attendance records
 export const getAllAttendances = async (req: Request, res: Response): Promise<void> => {
@@ -122,3 +122,73 @@ export const getAttendanceByYouthAndJob = async (req: Request, res: Response): P
   }
 };
 
+// Verify attendance days (admin endpoint)
+// attendance.controller.ts
+
+// Add this new endpoint
+export const verifyAttendanceDays = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // Get ID from URL params
+    const { dayIndices } = req.body;
+
+    const attendance = await Attendance.findByPk(id);
+    if (!attendance) {
+      res.status(404).json({ message: 'Attendance record not found' });
+      return;
+    }
+
+    // Parse days if it's a string
+    const days = typeof attendance.days === 'string'
+      ? JSON.parse(attendance.days)
+      : attendance.days;
+
+    // Verify each requested day
+    dayIndices.forEach(index => {
+      if (index >= 0 && index < days.length && days[index].employerConfirmed) {
+        days[index].adminChecked = true;
+      }
+    });
+
+    await attendance.update({ days });
+    res.status(200).json(attendance);
+  } catch (error) {
+    console.error('Error verifying days:', error);
+    res.status(500).json({ message: 'Error verifying days', error });
+  }
+};
+// Get days eligible for admin verification
+export const getVerifiableDays = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { attendanceId } = req.params;
+
+    const attendance = await Attendance.findByPk(attendanceId);
+    if (!attendance) {
+      res.status(404).json({ message: 'Attendance record not found' });
+      return;
+    }
+
+    const daysArray = typeof attendance.days === 'string'
+      ? JSON.parse(attendance.days)
+      : attendance.days;
+
+    const verifiableDays = daysArray
+      .map((day: DayRecord, index: number) => ({
+        index,
+        ...day,
+        verifiable: day.employerConfirmed && !day.adminChecked
+      }))
+      .filter((day: any) => day.verifiable);
+
+    res.status(200).json({
+      totalDays: daysArray.length,
+      verifiableDays,
+      count: verifiableDays.length
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching verifiable days',
+      error: error instanceof Error ? error.message : String(error)
+    });
+  }
+};
