@@ -6,7 +6,8 @@ import {
   updateAttendance,
   deleteAttendance,
   getAttendanceByYouthAndJob,
-  verifyAttendanceDays
+  verifyAttendanceDays,
+  hasAdminVerifiedAttendance,
 } from '../controllers/attendanceController';
 
 const router: Router = Router();
@@ -30,5 +31,7 @@ router.put('/:id', updateAttendance);
 
 // DELETE an attendance record by ID
 router.delete('/:id', deleteAttendance);
+
+router.get('/verified/:youthId/:jobRequestId', hasAdminVerifiedAttendance);
 
 export default router;

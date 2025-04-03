@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // This makes the service available application-wide
@@ -23,24 +23,25 @@ export class PaymentService {
    * @returns An observable with the list of payment records.
    */
   getPaymentsByYouth(youthId: number): Observable<any> {
-    const url = `${this.apiUrl}/payments/${youthId}`;
-    return this.http.get(url);
+    return this.http.get(`${this.apiUrl}/payments/${youthId}`);
   }
- // In payment.service.ts
-
-generatePaymentsForMultipleYouth(youthJobPairs: any[]): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/generate-multiple`, {
-    youthJobPairs
-  }).pipe(
+// In payment.service.ts
+generatePaymentsForMultipleYouth(youthJobPairs: {youthId: string, jobRequestId: string}[]): Observable<any> {
+  console.log('Final payload being sent:', youthJobPairs); // Debug log
+  return this.http.post(`${this.apiUrl}/generate-multiple`, youthJobPairs).pipe(
     catchError(error => {
-      // Handle different error types
-      let errorMsg = 'Payment generation failed';
-      if (error.error?.message) {
-        errorMsg = error.error.message;
-      } else if (error.status === 404) {
-        errorMsg = 'Payment endpoint not found';
-      }
-      return throwError(() => new Error(errorMsg));
+      console.error('Payment generation error:', error);
+      return throwError(() => error);
+    })
+  );
+}
+ // In payment.service.ts
+getPaymentsByYouthIds(youthIds: string[]): Observable<any[]> {
+  const params = new HttpParams().set('youthIds', youthIds.join(','));
+  return this.http.get<any[]>(`${this.apiUrl}/by-youths`, { params }).pipe(
+    catchError(error => {
+      console.error('Error checking existing payments:', error);
+      return of([]); // Return empty array on error
     })
   );
 }

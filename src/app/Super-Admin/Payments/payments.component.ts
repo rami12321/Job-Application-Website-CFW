@@ -4,26 +4,24 @@ import { YouthTableComponent } from '../../Common/youth-table/youth-table.compon
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { PaymentService } from '../../Services/PaymentService/payment.service';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-payments',
   standalone: true,
-  imports: [
-    CommonModule,
-    YouthTableComponent,
-    JobRequestDetailsComponent,
-
-  ],
+  imports: [CommonModule, YouthTableComponent, JobRequestDetailsComponent],
   templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.css']
+  styleUrls: ['./payments.component.css'],
 })
 export class PaymentsComponent implements OnInit {
-  // Font Awesome icons
-
   isGeneratingPayments = false;
+  isCheckingPayments = false;
   paymentGenerationResult: any = null;
   eligibleYouths: any[] = [];
   errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  showErrorDetails = false;
+  staticJobRequestId = 'J-93425324';
 
   constructor(
     private paymentService: PaymentService,
@@ -36,91 +34,136 @@ export class PaymentsComponent implements OnInit {
 
   loadEligibleYouths(): void {
     this.errorMessage = null;
+    this.infoMessage = null;
 
-    // Get youths with status 'accepted' and workStatus true
     this.youthService.getYouthsByStatus('accepted', true).subscribe({
       next: (youths) => {
         this.eligibleYouths = youths;
+        if (youths.length === 0) {
+          this.infoMessage =
+            'No eligible youths found with accepted status and active work status.';
+        }
       },
       error: (err) => {
         console.error('Error loading eligible youths:', err);
-        this.errorMessage = err.message || 'Failed to load eligible youths. Please try again.';
-      }
-    });
-  }
-
- // In payments.component.ts
-
-generateAllPayments(): void {
-  if (this.eligibleYouths.length === 0) {
-    this.errorMessage = 'No eligible youths found';
-    return;
-  }
-
-  if (!confirm(`Generate payments for ${this.eligibleYouths.length} youth?`)) {
-    return;
-  }
-
-  this.isGeneratingPayments = true;
-  this.errorMessage = null;
-
-  // Prepare youth-job pairs with only those having admin-checked days
-  const youthJobPairs = this.eligibleYouths
-    .filter(youth => youth.id && this.hasAdminCheckedDays(youth))
-    .map(youth => ({
-      youthId: youth.id,
-      jobRequestId: this.getJobRequestId(youth)
-    }));
-
-  if (youthJobPairs.length === 0) {
-    this.isGeneratingPayments = false;
-    this.errorMessage = 'No youth with admin-verified attendance days found';
-    return;
-  }
-
-  this.paymentService.generatePaymentsForMultipleYouth(youthJobPairs)
-    .subscribe({
-      next: (result) => {
-        this.paymentGenerationResult = result;
-        this.isGeneratingPayments = false;
-
-        this.showPaymentResults(result);
-        this.loadEligibleYouths(); // Refresh data
+        this.errorMessage =
+          err.message || 'Failed to load eligible youths. Please try again.';
       },
-      error: (err) => {
-        console.error('Payment error:', err);
-        this.isGeneratingPayments = false;
-        this.errorMessage = err.error?.message || 'Payment generation failed';
-      }
     });
-}
+  }
 
-private hasAdminCheckedDays(youth: any): boolean {
-  // Implement logic to check if youth has any admin-checked days
-  // This might require an additional API call to check attendance records
-  return true; // Placeholder - implement actual check
-}
+  async generateAllPayments(): Promise<void> {
+    if (this.eligibleYouths.length === 0) {
+      this.errorMessage = 'No eligible youths found';
+      return;
+    }
 
-private showPaymentResults(result: any): void {
-  const successCount = result.successfulPayments?.length || 0;
-  const failedCount = result.failedPayments?.length || 0;
-  const totalAmount = result.totalAmount || 0;
-  const totalDays = result.totalDaysPaid || 0;
+    this.isGeneratingPayments = true;
+    this.errorMessage = null;
+    this.infoMessage = 'Preparing payment data...';
 
-  const message = `Payments generated:
-    \n- Successful: ${successCount} youth
-    \n- Days paid: ${totalDays}
-    \n- Total amount: $${totalAmount.toFixed(2)}
-    \n- Failed: ${failedCount}`;
+    try {
+      // Create properly formatted youthJobPairs
+      const youthJobPairs = this.eligibleYouths.map((youth) => ({
+        youthId: youth.id,
+        jobRequestId: this.staticJobRequestId,
+      }));
 
-  alert(message);
-}
+      // Validate the pairs before sending
+      if (!youthJobPairs.every((pair) => pair.youthId && pair.jobRequestId)) {
+        throw new Error('Invalid youth-job pairs format');
+      }
 
-  // Helper to get job request ID from youth's applied jobs
-  private getJobRequestId(youth: any): string | null {
-    if (!youth.appliedJob || !Array.isArray(youth.appliedJob)) return null;
+      this.infoMessage = 'Generating payments...';
 
-    const acceptedJob = youth.appliedJob.find((job: any) => job.status === 'accepted');
-    return acceptedJob?.jobRequestId || null;
+      this.paymentService
+        .generatePaymentsForMultipleYouth(youthJobPairs)
+        .pipe(
+          finalize(() => {
+            this.isGeneratingPayments = false;
+          })
+        )
+        .subscribe({
+          next: (result) => {
+            this.paymentGenerationResult = result; // Store result in component state
+            this.showPaymentResults(result);
+          },
+          error: (err) => {
+            this.handlePaymentError(err); // Properly call error handler
+          },
+        });
+    } catch (error) {
+      this.isGeneratingPayments = false;
+      this.errorMessage =
+        error instanceof Error ? error.message : 'Failed to prepare payments';
+      console.error('Payment preparation error:', error);
+    }
+  }
+
+  private handlePaymentError(err: any): void {
+    console.error('Payment error:', err);
+    this.errorMessage = err.message || 'Payment generation failed';
+
+    if (err.error) {
+      if (err.error.failedPayments) {
+        this.paymentGenerationResult = {
+          failedPayments: err.error.failedPayments // Ensure this is set
+        };
+
+        const failedCount = err.error.failedPayments.length;
+        this.errorMessage = `${failedCount} payments failed`;
+
+        if (err.error.message) {
+          this.errorMessage = err.error.message;
+        }
+      } else if (err.error.message) {
+        this.errorMessage = err.error.message;
+      }
+    }
+  }
+
+
+  private async checkExistingPayments(
+    pairs: any[]
+  ): Promise<{ hasExisting: boolean; message: string }> {
+    try {
+      const youthIds = pairs.map((p) => p.youthId);
+      const existingPayments = await this.paymentService
+        .getPaymentsByYouthIds(youthIds)
+        .toPromise();
+
+      // Now existingPayments will always be an array (never undefined)
+      if (existingPayments && existingPayments.length > 0) {
+        const existingIds = existingPayments.map((p) => p.youthId).join(', ');
+        return {
+          hasExisting: true,
+          message: `These youths already have payments: ${existingIds}`,
+        };
+      }
+      return { hasExisting: false, message: '' };
+    } catch (error) {
+      console.error('Check existing payments error:', error);
+      return {
+        hasExisting: false,
+        message: 'Error checking for existing payments',
+      };
+    }
+  }
+
+  private showPaymentResults(result: any): void {
+    const successCount = result.successfulPayments?.length || 0;
+    const failedCount = result.failedPayments?.length || 0;
+
+    if (successCount > 0) {
+      this.infoMessage = `Successfully processed ${successCount} payments`;
+    }
+
+    if (failedCount > 0) {
+      this.errorMessage = `${failedCount} payments failed`;
+    }
+  }
+
+  toggleErrorDetails(): void {
+    this.showErrorDetails = !this.showErrorDetails;
   }
 }

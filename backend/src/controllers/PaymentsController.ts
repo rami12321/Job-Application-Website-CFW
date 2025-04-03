@@ -1,137 +1,89 @@
 import { Request, Response } from 'express';
-import {Attendance, DayRecord} from '../models/Attendance';
+import { Attendance } from '../models/Attendance';
 import Payment from '../models/Payments';
+import sequelize from '../../config/database';
 
-const DAILY_RATE = 15; // Change this based on your payment rate
+const DAILY_RATE = 15; // Your daily rate
+const MAX_BATCH_SIZE = 100; // Maximum payments to process at once
 
-// Generate payment based on attendance
-export const generatePayment = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const { youthId, jobRequestId } = req.body;
-
-    if (!youthId || !jobRequestId) {
-      res
-        .status(400)
-        .json({ message: 'Missing required fields: youthId, jobRequestId' });
-      return;
-    }
-
-    // Find attendance record
-    const attendance = await Attendance.findOne({
-      where: { youthId, jobRequestId },
-    });
-
-    if (!attendance) {
-      res.status(404).json({ message: 'Attendance record not found' });
-      return;
-    }
-
-    const daysArray =
-      typeof attendance.days === 'string'
-        ? JSON.parse(attendance.days)
-        : attendance.days;
-
-    if (!Array.isArray(daysArray)) {
-      res.status(500).json({ message: 'Attendance days data is corrupted' });
-      return;
-    }
-
-    // Count accepted workdays
-    const totalDaysWorked = daysArray.filter(
-      (day) => day.accepted && day.adminChecked // Only count admin-verified days
-    ).length;
-    const amountPaid = totalDaysWorked * DAILY_RATE; // Example rate
-
-    // Save payment
-    const payment = await Payment.create({
-      jobRequestId,
-      employerId: attendance.employerId,
-      youthId,
-      totalDaysWorked,
-      amountPaid,
-      paymentDate: new Date(),
-    });
-
-    res.status(201).json(payment);
-  } catch (error) {
-    console.error('Error generating payment:', error);
-    res
-      .status(500)
-      .json({ message: 'Error generating payment', error: error.message });
-  }
-};
-
-// Get payment records for a specific youth
-export const getPaymentsByYouth = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const { youthId } = req.params;
-
-    const payments = await Payment.findAll({
-      where: { youthId },
-    });
-
-    res.status(200).json(payments);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching payment records', error });
-  }
-};
-
-// In your payment.controller.ts
+// Helper function to check existing payments
+async function checkExistingPayments(youthIds: string[], transaction?: any): Promise<Payment[]> {
+  return await Payment.findAll({
+    where: { youthId: youthIds },
+    ...(transaction && { transaction })
+  });
+}
 
 export const generatePaymentsForMultipleYouth = async (req: Request, res: Response): Promise<void> => {
+  const transaction = await sequelize.transaction();
   try {
-    const { youthJobPairs } = req.body;
+    // Accept array directly instead of { youthJobPairs }
+    const youthJobPairs = req.body;
 
-    if (!Array.isArray(youthJobPairs)) {
+    // Validate input format
+    // if (!Array.isArray(youthJobPairs)) {
+    //   await transaction.rollback();
+    //   res.status(400).json({
+    //     success: false,
+    //     message: 'Expected array of { youthId, jobRequestId } objects'
+    //   });
+    //   return;
+    // }
+
+    // Check batch size limit
+    if (youthJobPairs.length > MAX_BATCH_SIZE) {
+      await transaction.rollback();
       res.status(400).json({
-        message: 'Expected array of { youthId, jobRequestId } objects'
+        success: false,
+        message: `Maximum batch size is ${MAX_BATCH_SIZE}`
       });
       return;
     }
 
+    // Check for existing payments
+    const existingPayments = await checkExistingPayments(
+      youthJobPairs.map(p => p.youthId),
+      transaction
+    );
+
+    // if (existingPayments.length > 0) {
+    //   await transaction.rollback();
+    //   res.status(400).json({
+    //     success: false,
+    //     message: 'Some youths already have payments',
+    //     existingYouthIds: existingPayments.map(p => p.youthId)
+    //   });
+    //   return;
+    // }
+
     const results = [];
     const errors = [];
     let totalDaysCounted = 0;
+    let totalAmount = 0;
 
+    // Process each payment
     for (const pair of youthJobPairs) {
       try {
         const { youthId, jobRequestId } = pair;
 
-        // Check for existing payment first
-        const existingPayment = await Payment.findOne({
-          where: { youthId, jobRequestId }
-        });
-
-        if (existingPayment) {
-          errors.push({
-            youthId,
-            jobRequestId,
-            error: 'Payment already exists'
-          });
-          continue;
-        }
-
         // Get attendance record
         const attendance = await Attendance.findOne({
           where: { youthId, jobRequestId },
+          transaction,
+          lock: transaction.LOCK.UPDATE
         });
 
         if (!attendance) {
           errors.push({
             youthId,
             jobRequestId,
-            error: 'Attendance record not found'
+            error: 'Attendance record not found',
+            code: 'ATTENDANCE_NOT_FOUND'
           });
           continue;
         }
 
-        // Parse days data
+        // Parse and validate days
         const daysArray = typeof attendance.days === "string"
           ? JSON.parse(attendance.days)
           : attendance.days;
@@ -140,21 +92,25 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
           errors.push({
             youthId,
             jobRequestId,
-            error: 'Invalid attendance days format'
+            error: 'Invalid attendance days format',
+            code: 'INVALID_DAYS_FORMAT'
           });
           continue;
         }
 
-        // Filter for admin-checked AND accepted days
-        const eligibleDays = daysArray.filter(day =>
-          day.accepted && day.adminChecked
-        );
+        // Find eligible days
+        const eligibleDays = daysArray
+          .map((day, index) => ({ ...day, index }))
+          .filter(day => day.accepted && day.adminChecked && !day.paid);
 
         if (eligibleDays.length === 0) {
           errors.push({
             youthId,
             jobRequestId,
-            error: 'No admin-verified days found'
+            error: 'No eligible days found',
+            code: 'NO_ELIGIBLE_DAYS',
+            totalDays: daysArray.length,
+            eligibleDaysCount: 0
           });
           continue;
         }
@@ -163,6 +119,7 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
         const daysWorked = eligibleDays.length;
         const amountPaid = daysWorked * DAILY_RATE;
         totalDaysCounted += daysWorked;
+        totalAmount += amountPaid;
 
         // Create payment record
         const payment = await Payment.create({
@@ -173,39 +130,171 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
           amountPaid,
           paymentDate: new Date(),
           verificationStatus: 'admin-verified',
+          paidDaysIndices: eligibleDays.map(d => d.index)
+        }, { transaction });
+
+        // Mark days as paid
+        const updatedDays = daysArray.map((day, index) =>
+          eligibleDays.some(d => d.index === index)
+            ? { ...day, paid: true }
+            : day
+        );
+
+        await attendance.update({ days: updatedDays }, { transaction });
+
+        results.push({
+          paymentId: payment.id,
+          youthId,
+          jobRequestId,
+          daysPaid: daysWorked,
+          amountPaid,
+          paidDaysIndices: eligibleDays.map(d => d.index)
         });
 
-        await attendance.update({ days: daysArray.map(day => {
-          if (day.accepted && day.adminChecked) {
-            return { ...day, paid: true };
-          }
-          return day;
-        })});
-
-        results.push(payment);
       } catch (error) {
         errors.push({
           youthId: pair.youthId,
           jobRequestId: pair.jobRequestId,
-          error: error.message
+          error: error instanceof Error ? error.message : 'Unknown error',
+          code: 'PROCESSING_ERROR'
         });
       }
     }
 
+    // Finalize transaction
+    if (results.length === 0) {
+      await transaction.rollback();
+      res.status(400).json({
+        success: false,
+        message: 'No payments were processed',
+        failedPayments: errors
+      });
+      return;
+    }
+
+    await transaction.commit();
     res.status(201).json({
-      success: results.length > 0,
+      success: true,
       successfulPayments: results,
       failedPayments: errors,
-      totalAmount: results.reduce((sum, p) => sum + p.amountPaid, 0),
+      totalAmount,
       totalDaysPaid: totalDaysCounted,
       totalYouthsPaid: results.length
     });
 
   } catch (error) {
+    await transaction.rollback();
     console.error('Payment generation error:', error);
     res.status(500).json({
-      message: 'Error generating payments',
-      error: error.message
+      success: false,
+      message: 'Internal server error during payment generation',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
+
+// Get payments for multiple youth
+export const getPaymentsByYouthIds = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthIds } = req.query;
+
+    if (!youthIds) {
+      res.status(400).json({ message: 'youthIds parameter is required' });
+      return;
+    }
+
+    const ids = (youthIds as string).split(',');
+    const payments = await checkExistingPayments(ids);
+
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching payments',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
+
+// Generate single payment
+export const generatePayment = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthId, jobRequestId } = req.body;
+
+    if (!youthId || !jobRequestId) {
+      res.status(400).json({ message: 'Missing required fields: youthId, jobRequestId' });
+      return;
+    }
+
+    // Check for existing payment first
+    const existingPayment = await Payment.findOne({
+      where: { youthId, jobRequestId }
+    });
+
+    if (existingPayment) {
+      res.status(400).json({
+        message: 'Payment already exists for this youth and job request'
+      });
+      return;
+    }
+
+    // Find attendance record
+    const attendance = await Attendance.findOne({
+      where: { youthId, jobRequestId }
+    });
+
+    if (!attendance) {
+      res.status(404).json({ message: 'Attendance record not found' });
+      return;
+    }
+
+    const daysArray = typeof attendance.days === 'string'
+      ? JSON.parse(attendance.days)
+      : attendance.days;
+
+    if (!Array.isArray(daysArray)) {
+      res.status(500).json({ message: 'Attendance days data is corrupted' });
+      return;
+    }
+
+    // Count eligible days
+    const totalDaysWorked = daysArray.filter(
+      day => day.accepted && day.adminChecked
+    ).length;
+    const amountPaid = totalDaysWorked * DAILY_RATE;
+
+    // Create payment
+    const payment = await Payment.create({
+      jobRequestId,
+      employerId: attendance.employerId,
+      youthId,
+      totalDaysWorked,
+      amountPaid,
+      paymentDate: new Date(),
+      verificationStatus: 'admin-verified'
+    });
+
+    res.status(201).json(payment);
+  } catch (error) {
+    console.error('Error generating payment:', error);
+    res.status(500).json({
+      message: 'Error generating payment',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
+
+// Get payment records for a specific youth
+export const getPaymentsByYouth = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthId } = req.params;
+    const payments = await Payment.findAll({
+      where: { youthId }
+    });
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching payment records',
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 };

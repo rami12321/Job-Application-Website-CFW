@@ -49,4 +49,8 @@ verifyAttendanceDays(attendanceId: string, dayIndices: number[]): Observable<Att
   getVerifiableDays(attendanceId: string): Observable<{verifiableDays: number[]}> {
     return this.http.get<{verifiableDays: number[]}>(`${this.baseUrl}/verifiable-days/${attendanceId}`);
   }
+
+  hasAdminVerifiedAttendance(youthId: string, jobRequestId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/verified/${youthId}/${jobRequestId}`);
+  }
 }
