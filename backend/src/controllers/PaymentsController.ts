@@ -50,128 +50,120 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
     let totalAmount = 0;
 
     // Process each payment
-    for (const pair of youthJobPairs) {
-      try {
-        const { youthId, jobRequestId } = pair;
+    // Process each payment
+for (const pair of youthJobPairs) {
+  try {
+    const { youthId, jobRequestId } = pair;
 
-        // Get attendance record
-        const attendance = await Attendance.findOne({
-          where: { youthId, jobRequestId },
-          transaction,
-          lock: transaction.LOCK.UPDATE
-        });
+    // Get attendance record
+    const attendance = await Attendance.findOne({
+      where: { youthId, jobRequestId },
+      transaction,
+      lock: transaction.LOCK.UPDATE
+    });
 
-        if (!attendance) {
-          errors.push({
-            youthId,
-            jobRequestId,
-            error: 'Attendance record not found',
-            code: 'ATTENDANCE_NOT_FOUND'
-          });
-          continue;
-        }
-
-        // Parse and validate days
-        const daysArray = typeof attendance.days === "string"
-          ? JSON.parse(attendance.days)
-          : attendance.days;
-
-        if (!Array.isArray(daysArray)) {
-          errors.push({
-            youthId,
-            jobRequestId,
-            error: 'Invalid attendance days format',
-            code: 'INVALID_DAYS_FORMAT'
-          });
-          continue;
-        }
-
-        const eligibleDays = daysArray
-        .map((day, index) => ({ ...day, index }))
-        .filter(day => day.accepted && day.adminChecked && !day.paid);
-
-      // Ensure youth does not exceed 40 workdays
-      const alreadyPaidDays = daysArray.filter(day => day.paid).length;
-      const remainingDaysAllowed = 40 - alreadyPaidDays;
-
-      // Limit payments to remaining allowed days
-      const daysToPay = eligibleDays.slice(0, remainingDaysAllowed);
-
-      if (daysToPay.length === 0) {
-        errors.push({
-          youthId,
-          jobRequestId,
-          error: 'No eligible days found or 40-day limit reached',
-          code: 'NO_ELIGIBLE_DAYS',
-          totalDays: daysArray.length,
-          eligibleDaysCount: eligibleDays.length,
-          alreadyPaidDays
-        });
-        continue;
-      }
-
-      // Calculate payment based on limited days
-      const daysWorked = daysToPay.length;
-      const amountPaid = daysWorked * DAILY_RATE;
-      totalDaysCounted += daysWorked;
-      totalAmount += amountPaid;
-
-      // Store paid indices
-      const paidDaysIndices = daysToPay.map(d => d.index);
-        if (eligibleDays.length === 0) {
-          errors.push({
-            youthId,
-            jobRequestId,
-            error: 'No eligible days found',
-            code: 'NO ELIGIBLE DAYS',
-            totalDays: daysArray.length,
-            eligibleDaysCount: 0
-          });
-          continue;
-        }
-
-        totalDaysCounted += daysWorked;
-        totalAmount += amountPaid;
-
-        // Create payment record
-        const payment = await Payment.create({
-          jobRequestId,
-          employerId: attendance.employerId,
-          youthId,
-          totalDaysWorked: daysWorked,
-          amountPaid,
-          paymentDate: new Date(),
-          verificationStatus: 'admin-verified',
-          paidDaysIndices: eligibleDays.map(d => d.index)
-        }, { transaction });
-
-        // Mark days as paid
-        const updatedDays = daysArray.map((day, index) =>
-          eligibleDays.some(d => d.index === index)
-            ? { ...day, paid: true }
-            : day
-        );
-
-        await attendance.update({ days: updatedDays }, { transaction });
-
-        results.push({
-          paymentId: payment.id,
-          youthId,
-          jobRequestId,
-          daysPaid: daysWorked,
-          amountPaid,
-          paidDaysIndices: eligibleDays.map(d => d.index)
-        });
-
-      } catch (error) {
-        errors.push({
-          youthId: pair.youthId,
-          jobRequestId: pair.jobRequestId,
-          error: error instanceof Error ? error.message : 'Unknown error',
-          code: 'PROCESSING_ERROR'
-        });
-      }
+    if (!attendance) {
+      errors.push({
+        youthId,
+        jobRequestId,
+        error: 'Attendance record not found',
+        code: 'ATTENDANCE_NOT_FOUND'
+      });
+      continue;
     }
+
+    // Parse and validate days
+    const daysArray = typeof attendance.days === "string"
+      ? JSON.parse(attendance.days)
+      : attendance.days;
+
+    if (!Array.isArray(daysArray)) {
+      errors.push({
+        youthId,
+        jobRequestId,
+        error: 'Invalid attendance days format',
+        code: 'INVALID_DAYS_FORMAT'
+      });
+      continue;
+    }
+
+    // Get eligible days with their indices
+    const eligibleDays = daysArray
+      .map((day, index) => ({ ...day, index }))
+      .filter(day => day.accepted && day.adminChecked && !day.paid);
+
+    // Check if youth has already reached 40 workdays
+    const alreadyPaidDays = daysArray.filter(day => day.paid).length;
+    if (alreadyPaidDays >= 40) {
+      errors.push({
+        youthId,
+        jobRequestId,
+        error: 'Youth has already reached 40 paid workdays',
+        code: 'MAX_DAYS_REACHED'
+      });
+      continue;
+    }
+
+    // Calculate remaining days allowed
+    const remainingDaysAllowed = 40 - alreadyPaidDays;
+    const daysToPay = eligibleDays.slice(0, remainingDaysAllowed);
+
+    if (daysToPay.length === 0) {
+      errors.push({
+        youthId,
+        jobRequestId,
+        error: 'No eligible days found',
+        code: 'NO_ELIGIBLE_DAYS',
+        totalDays: daysArray.length,
+        eligibleDaysCount: eligibleDays.length,
+        alreadyPaidDays
+      });
+      continue;
+    }
+
+    // Calculate payment
+    const daysWorked = daysToPay.length;
+    const amountPaid = daysWorked * DAILY_RATE;
+    totalDaysCounted += daysWorked;
+    totalAmount += amountPaid;
+
+    // Create payment record
+    const payment = await Payment.create({
+      jobRequestId,
+      employerId: attendance.employerId,
+      youthId,
+      totalDaysWorked: daysWorked,
+      amountPaid,
+      paymentDate: new Date(),
+      verificationStatus: 'admin-verified',
+      paidDaysIndices: daysToPay.map(d => d.index)
+    }, { transaction });
+
+    // Mark days as paid in the attendance record
+    const updatedDays = daysArray.map((day, index) =>
+      daysToPay.some(d => d.index === index) ? { ...day, paid: true } : day
+    );
+
+    await attendance.update({ days: updatedDays }, { transaction });
+
+    results.push({
+      paymentId: payment.id,
+      youthId,
+      jobRequestId,
+      daysPaid: daysWorked,
+      amountPaid,
+      paidDaysIndices: daysToPay.map(d => d.index)
+    });
+
+  } catch (error) {
+    errors.push({
+      youthId: pair.youthId,
+      jobRequestId: pair.jobRequestId,
+      error: error instanceof Error ? error.message : 'Unknown error',
+      code: 'PROCESSING_ERROR'
+    });
+  }
+}
 
     // Finalize transaction
     if (results.length === 0) {
