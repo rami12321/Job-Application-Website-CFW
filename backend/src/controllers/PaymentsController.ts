@@ -19,18 +19,6 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
   try {
     // Accept array directly instead of { youthJobPairs }
     const youthJobPairs = req.body;
-
-    // Validate input format
-    // if (!Array.isArray(youthJobPairs)) {
-    //   await transaction.rollback();
-    //   res.status(400).json({
-    //     success: false,
-    //     message: 'Expected array of { youthId, jobRequestId } objects'
-    //   });
-    //   return;
-    // }
-
-    // Check batch size limit
     if (youthJobPairs.length > MAX_BATCH_SIZE) {
       await transaction.rollback();
       res.status(400).json({
@@ -98,26 +86,50 @@ export const generatePaymentsForMultipleYouth = async (req: Request, res: Respon
           continue;
         }
 
-        // Find eligible days
         const eligibleDays = daysArray
-          .map((day, index) => ({ ...day, index }))
-          .filter(day => day.accepted && day.adminChecked && !day.paid);
+        .map((day, index) => ({ ...day, index }))
+        .filter(day => day.accepted && day.adminChecked && !day.paid);
 
+      // Ensure youth does not exceed 40 workdays
+      const alreadyPaidDays = daysArray.filter(day => day.paid).length;
+      const remainingDaysAllowed = 40 - alreadyPaidDays;
+
+      // Limit payments to remaining allowed days
+      const daysToPay = eligibleDays.slice(0, remainingDaysAllowed);
+
+      if (daysToPay.length === 0) {
+        errors.push({
+          youthId,
+          jobRequestId,
+          error: 'No eligible days found or 40-day limit reached',
+          code: 'NO_ELIGIBLE_DAYS',
+          totalDays: daysArray.length,
+          eligibleDaysCount: eligibleDays.length,
+          alreadyPaidDays
+        });
+        continue;
+      }
+
+      // Calculate payment based on limited days
+      const daysWorked = daysToPay.length;
+      const amountPaid = daysWorked * DAILY_RATE;
+      totalDaysCounted += daysWorked;
+      totalAmount += amountPaid;
+
+      // Store paid indices
+      const paidDaysIndices = daysToPay.map(d => d.index);
         if (eligibleDays.length === 0) {
           errors.push({
             youthId,
             jobRequestId,
             error: 'No eligible days found',
-            code: 'NO_ELIGIBLE_DAYS',
+            code: 'NO ELIGIBLE DAYS',
             totalDays: daysArray.length,
             eligibleDaysCount: 0
           });
           continue;
         }
 
-        // Calculate payment
-        const daysWorked = eligibleDays.length;
-        const amountPaid = daysWorked * DAILY_RATE;
         totalDaysCounted += daysWorked;
         totalAmount += amountPaid;
 
@@ -294,6 +306,39 @@ export const getPaymentsByYouth = async (req: Request, res: Response): Promise<v
   } catch (error) {
     res.status(500).json({
       message: 'Error fetching payment records',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};
+
+export const getPaymentHistory = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthId, employerId, jobRequestId, page = 1, limit = 10 } = req.query;
+
+    const filters: any = {};
+    if (youthId) filters.youthId = youthId;
+    if (employerId) filters.employerId = employerId;
+    if (jobRequestId) filters.jobRequestId = jobRequestId;
+
+    const offset = (Number(page) - 1) * Number(limit);
+
+    const { count, rows } = await Payment.findAndCountAll({
+      where: filters,
+      limit: Number(limit),
+      offset,
+      order: [['paymentDate', 'DESC']]
+    });
+
+    res.status(200).json({
+      success: true,
+      payments: rows,
+      totalRecords: count,
+      currentPage: Number(page),
+      totalPages: Math.ceil(count / Number(limit))
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching payment history',
       error: error instanceof Error ? error.message : 'Unknown error'
     });
   }

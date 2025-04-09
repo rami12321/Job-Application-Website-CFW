@@ -309,6 +309,15 @@
               <i class="pi pi-money-bill"></i>
               <!-- Payment icon -->
             </button>
+            <button
+              *ngIf="action === 'history'"
+              type="button"
+              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              (click)="showPaymentHistory(product)"
+              >
+              <i class="pi pi-history"></i>
+            </button>
+
             <!-- Youth 'Pend' Button -->
             <button
               *ngIf="action === 'pend'"
@@ -430,6 +439,94 @@
   </ng-template>
 </p-dialog>
 
+<!-- Add this at the bottom of your youth-table.component.html -->
+<p-dialog
+  [(visible)]="paymentHistoryDialogVisible"
+  header=" "
+  [modal]="true"
+  [style]="{ width: '80vw', maxWidth: '1000px', borderRadius: '12px' }"
+  [closable]="false"
+  [contentStyle]="{ padding: '0' }"
+>
+  <!-- Header and Top Bar -->
+  <div
+  class="flex justify-between items-center px-6 pt-5 pb-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg"
+>
+  <h2 class="text-xl font-semibold">Payment History</h2>
+  <button
+    pButton
+    icon="pi pi-times"
+    class="p-button-rounded p-button-text text-white hover:text-gray-200"
+    (click)="paymentHistoryDialogVisible = false"
+  ></button>
+</div>
+
+  <!-- Dialog Content -->
+  <div class="p-6 bg-white rounded-b-lg">
+    <!-- Loading -->
+    <div *ngIf="paymentHistoryLoading" class="flex flex-col items-center justify-center py-10">
+      <i class="pi pi-spinner pi-spin text-3xl text-blue-500"></i>
+      <p class="mt-2 text-gray-500">Loading payment history...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="paymentHistoryError" class="text-red-600 bg-red-100 border border-red-300 p-4 rounded-lg mb-4">
+      {{ paymentHistoryError }}
+    </div>
+
+    <!-- Table -->
+    <p-table
+      *ngIf="!paymentHistoryLoading && !paymentHistoryError"
+      [value]="paymentHistory"
+      [paginator]="true"
+      [rows]="paymentHistoryPagination.itemsPerPage"
+      [totalRecords]="paymentHistoryPagination.totalRecords"
+      [rowsPerPageOptions]="[5,10,20]"
+      (onPage)="onPaymentHistoryPageChange($event)"
+      [loading]="paymentHistoryLoading"
+      class="shadow-md rounded-lg"
+    >
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-100 text-gray-700 text-sm">
+          <th class="py-2 px-3">Payment Date</th>
+          <th class="py-2 px-3">Job Request ID</th>
+          <th class="py-2 px-3">Employer ID</th>
+          <th class="py-2 px-3">Days Worked</th>
+          <th class="py-2 px-3">Amount Paid</th>
+          <th class="py-2 px-3">Status</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-payment>
+        <tr class="text-sm text-gray-800 hover:bg-gray-50 transition-all">
+          <td class="py-2 px-3">{{ payment.paymentDate | date:'mediumDate' }}</td>
+          <td class="py-2 px-3">{{ payment.jobRequestId }}</td>
+          <td class="py-2 px-3">{{ payment.employerId }}</td>
+          <td class="py-2 px-3">{{ payment.totalDaysWorked }}</td>
+          <td class="py-2 px-3">${{ payment.amountPaid }}</td>
+          <td class="py-2 px-3">
+            <span
+              class="inline-block px-3 py-1 rounded-full text-xs font-semibold"
+              [ngClass]="{
+                'bg-green-100 text-green-800': payment.verificationStatus === 'verified',
+                'bg-yellow-100 text-yellow-800': payment.verificationStatus === 'pending',
+                'bg-red-100 text-red-800': payment.verificationStatus === 'rejected'
+              }"
+            >
+              {{ payment.verificationStatus | titlecase }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center text-gray-500 py-6">No payment records found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-dialog>
+
+
 <p-dialog
   [(visible)]="paymentDialogVisible"
   [modal]="true"
@@ -455,7 +552,7 @@
     >
       Close
     </button>
-   
+
   </div>
 </p-dialog>
 <!-- No Data Template -->

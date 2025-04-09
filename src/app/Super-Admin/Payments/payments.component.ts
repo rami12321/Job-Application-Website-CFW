@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { YouthTableComponent } from '../../Common/youth-table/youth-table.component';
 import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job-request-details.component';
 import { PaymentService } from '../../Services/PaymentService/payment.service';
@@ -22,26 +22,33 @@ export class PaymentsComponent implements OnInit {
   infoMessage: string | null = null;
   showErrorDetails = false;
   staticJobRequestId = 'J-93425324';
-
+activeAdminTab: string = 'working';
   constructor(
     private paymentService: PaymentService,
-    private youthService: YouthServiceService
+    private youthService: YouthServiceService,
+    private cdr: ChangeDetectorRef
+
   ) {}
 
   ngOnInit(): void {
-    this.loadEligibleYouths();
+    this.loadEligibleYouths(true); // Default to working status
   }
 
-  loadEligibleYouths(): void {
+// Update the setActiveTab method
+setActiveTab(tab: 'working' | 'finished'): void {
+  this.activeAdminTab = tab;
+  this.loadEligibleYouths(tab === 'working');
+  this.cdr.detectChanges(); // Force change detection
+}
+  loadEligibleYouths(workStatus: boolean): void {
     this.errorMessage = null;
     this.infoMessage = null;
 
-    this.youthService.getYouthsByStatus('accepted', true).subscribe({
+    this.youthService.getYouthsByStatus('accepted', workStatus).subscribe({
       next: (youths) => {
         this.eligibleYouths = youths;
         if (youths.length === 0) {
-          this.infoMessage =
-            'No eligible youths found with accepted status and active work status.';
+          this.infoMessage = `No ${workStatus ? 'working' : 'finished'} youths found with accepted status.`;
         }
       },
       error: (err) => {

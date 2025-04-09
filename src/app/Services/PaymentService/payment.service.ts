@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root', // This makes the service available application-wide
@@ -45,4 +45,41 @@ getPaymentsByYouthIds(youthIds: string[]): Observable<any[]> {
     })
   );
 }
+getPaymentHistory(
+  filters: {
+    youthId?: string;
+    employerId?: string;
+    jobRequestId?: string;
+  },
+  pagination: {
+    page?: number;
+    limit?: number;
+  } = {}
+): Observable<any> {
+  let params = new HttpParams();
+
+  // Add filters
+  if (filters.youthId) params = params.set('youthId', filters.youthId);
+  if (filters.employerId) params = params.set('employerId', filters.employerId);
+  if (filters.jobRequestId) params = params.set('jobRequestId', filters.jobRequestId);
+
+  // Add pagination
+  params = params.set('page', pagination.page?.toString() || '1');
+  params = params.set('limit', pagination.limit?.toString() || '10');
+
+  return this.http.get<any>(`${this.apiUrl}/history`, { params }).pipe(
+    catchError(error => {
+      console.error('Error fetching payment history:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
+getPaymentsByYouthId(youthId: string): Observable<any[]> {
+  return this.getPaymentHistory({ youthId }, { limit: 100 }).pipe(
+    map(response => response.payments)
+  );
+}
+
+
 }

@@ -22,6 +22,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { PaymentService } from '../../Services/PaymentService/payment.service';
 import { PaymentJobRequestDetailsComponent } from '../../components/payment-job-request-details/payment-job-request-details.component';
 import { AttendanceService } from '../../Services/AttendanceService/attendance.service';
+import { Payment } from '../../Model/Payments';
 
 interface Column {
   field: string;
@@ -101,11 +102,13 @@ export class YouthTableComponent implements OnInit {
     { label: 'My Area Data', value: 'myArea' },
     { label: 'All Data', value: 'all' },
   ];
+  totalRecords: number = 0;
 
   paymentDialogVisible: boolean = false; // Controls payment dialog visibility
+  paymentHistoryDialogVisible: boolean = false; // Controls payment dialog visibility
+
   selectedYouthForPayment: any = null; // Stores the selected youth for payment
   selectedJobRequestId: string | null = null; // Stores the selected job request ID
-  paymentHistory: any[] = []; // Stores payment history for the selected youth
   attendanceRecord: any = null; // Add this property
 
   selectedDataScope = 'myArea';
@@ -160,6 +163,17 @@ export class YouthTableComponent implements OnInit {
   ];
   filteredCols: Column[] = []; // New array to hold filtered columns
   jobRequestDetails: any = null; // To store job request details
+
+    // Payment history related properties
+    selectedYouthForPayments: any = null;
+    paymentHistory: Payment[] = [];
+    paymentHistoryLoading = false;
+    paymentHistoryError: string | null = null;
+    paymentHistoryPagination = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalRecords: 0
+    };
 
   private appliedJobFilterSubject = new Subject<string>();
 
@@ -387,6 +401,58 @@ export class YouthTableComponent implements OnInit {
       }
     );
   }
+  showPaymentHistory(youth: any): void {
+    this.selectedYouthForPayments = youth;
+    this.paymentHistoryDialogVisible = true;
+    this.loadPaymentHistory();
+  }
+
+  loadPaymentHistory(): void {
+    if (!this.selectedYouthForPayments) return;
+
+    this.paymentHistoryLoading = true;
+    this.paymentHistoryError = null;
+
+    this.paymentService.getPaymentHistory(
+      {
+        youthId: this.selectedYouthForPayments.id,
+        // Add these if needed:
+        // employerId: 'some-employer-id',
+        // jobRequestId: 'some-job-request-id'
+      },
+      {
+        page: this.paymentHistoryPagination.currentPage,
+        limit: this.paymentHistoryPagination.itemsPerPage
+      }
+    ).subscribe({
+      next: (response) => {
+        this.paymentHistory = response.payments;
+        this.paymentHistoryPagination.totalRecords = response.totalRecords;
+        this.paymentHistoryLoading = false;
+      },
+      error: (err) => {
+        this.paymentHistoryError = err.message || 'Failed to load payment history';
+        this.paymentHistoryLoading = false;
+      }
+    });
+  }
+  getStatusSeverity(status: string): string {
+    switch(status.toLowerCase()) {
+      case 'verified':
+      case 'admin-verified':
+        return 'success';
+      case 'pending':
+        return 'warning';
+      case 'rejected':
+        return 'danger';
+      default:
+        return 'info';
+    }
+  }
+  onPaymentHistoryPageChange(event: any): void {
+    this.paymentHistoryPagination.currentPage = event.page + 1; // PrimeNG paginator is 0-based
+    this.loadPaymentHistory();
+  }
 
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input
@@ -460,8 +526,8 @@ export class YouthTableComponent implements OnInit {
       return ['view', 'activate'];
     } else {
       // Check for specific case: status is 'accepted' and workStatus is true
-      if (status === 'accepted' && workStatus === true) {
-        return ['view', 'payments']; // Specific actions for accepted and workStatus true
+      if (status === 'accepted' && (workStatus === true || workStatus===false)) {
+        return ['view', 'payments','history']; // Specific actions for accepted and workStatus true
       }
 
       // Default cases based on status
@@ -549,6 +615,18 @@ export class YouthTableComponent implements OnInit {
   showPaymentDialog(youth: any): void {
     this.selectedYouthForPayment = youth; // Store the selected youth
     this.paymentDialogVisible = true; // Open the payment dialog
+
+    console.log('Selected Youth:', youth); // Debugging
+
+    // Fetch job request details using the youth ID
+    this.fetchJobRequestByYouthId(youth.id);
+
+    // Fetch payment history for the selected youth
+    this.fetchPaymentsByYouth(youth.id);
+  }
+  showPaymentHistoryDialog(youth: any): void {
+    this.selectedYouthForPayment = youth; // Store the selected youth
+    this.paymentHistoryDialogVisible = true; // Open the payment dialog
 
     console.log('Selected Youth:', youth); // Debugging
 
