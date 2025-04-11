@@ -1,0 +1,232 @@
+<!-- Job Request Details Section -->
+<div *ngIf="jobRequestDetails" class="p-8">
+  <h3 class="text-xl font-bold mb-4">Job Request Details</h3>
+
+  <div class="grid grid-cols-2 gap-4">
+    <!-- Job Title -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Job Title:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.title }}
+      </span>
+    </p>
+
+    <!-- Job Category -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Job Category:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.category }}
+      </span>
+    </p>
+
+    <!-- Number of Employees -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Number of Employees:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.numEmployees }}
+      </span>
+    </p>
+
+    <!-- Job Level -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Job Level:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.level }}
+      </span>
+    </p>
+
+    <!-- Location -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Location:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.location }}
+      </span>
+    </p>
+
+    <!-- Type of Job -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Type of Job:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.typeOfJob }}
+      </span>
+    </p>
+
+    <!-- Supervisor Name -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Supervisor Name:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.supervisorName }}
+      </span>
+    </p>
+
+    <!-- Supervisor Position -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Supervisor Position:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.supervisorPosition }}
+      </span>
+    </p>
+
+    <!-- Supervisor Email -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Supervisor Email:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.supervisorEmail }}
+      </span>
+    </p>
+
+    <!-- Supervisor Phone -->
+    <p>
+      <strong class="text-lg font-bold text-gray-700">Supervisor Phone:</strong>
+      <span class="text-lg font-medium text-gray-700">
+        {{ jobRequestDetails.supervisorPhone }}
+      </span>
+    </p>
+  </div>
+</div>
+
+<!-- Attendance Overview Section -->
+<div *ngIf="attendanceRecord" class="">
+  <div
+      class="bg-white rounded-lg p-6 z-50 w-11/12 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-center">
+        Admin Attendance Overview
+      </h2>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Youth Name</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Day</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Location Verified</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Data Confirmed</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                  Youth Signature
+                </th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Signature</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Employer Confirm</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Admin Confirm</th>
+
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr *ngFor="let day of attendanceRecord?.days; let i = index">
+                <!-- Youth Name -->
+                <td class="px-4 py-2 text-sm text-gray-800">{{ day.youthName }}</td>
+
+                <!-- Date -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.date; else pendingDate">
+                    {{ day.date | date:'shortDate' }}
+                  </ng-container>
+                  <ng-template #pendingDate>
+                    <span class="text-gray-500 text-xs">Pending</span>
+                  </ng-template>
+                </td>
+
+                <!-- Day of Week -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.date; else pendingDay">
+                    {{ day.date | date:'EEEE' }}
+                  </ng-container>
+                  <ng-template #pendingDay>
+                    <span class="text-gray-500 text-xs">Pending</span>
+                  </ng-template>
+                </td>
+
+                <!-- Location Verified -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.locationChecked; else notChecked">
+                    <span class="text-green-600 text-xs">Verified</span>
+                  </ng-container>
+                  <ng-template #notChecked>
+                    <span class="text-red-500 text-xs">Not Verified</span>
+                  </ng-template>
+                </td>
+
+                <!-- Data Confirmed -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.confirmed; else notConfirmed">
+                    <span class="text-green-600 text-xs">Confirmed</span>
+                  </ng-container>
+                  <ng-template #notConfirmed>
+                    <span class="text-gray-500 text-xs">Not Confirmed</span>
+                  </ng-template>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.signature && day.confirmed; else noYouthSignature">
+                    <img [src]="day.signature" alt="Youth Signature" class="h-16" />
+                  </ng-container>
+                  <ng-template #noYouthSignature>
+                    <span class="text-gray-500 text-xs">Not Provided</span>
+                  </ng-template>
+                </td>
+                <!-- Employer Signature -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.employerSignature; else noSignature">
+                    <img [src]="day.employerSignature"
+                         alt="Employer Signature" class="h-16" />
+                  </ng-container>
+                  <ng-template #noSignature>
+                    <span class="text-gray-500 text-xs">Not Provided</span>
+                  </ng-template>
+                </td>
+
+
+                <!-- Employer Confirm (View Only) -->
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.employerConfirmed; else notConfirmedText">
+                    <i class="fas fa-check-circle text-green-600"></i>
+                  </ng-container>
+                  <ng-template #notConfirmedText>
+                    <span class="text-gray-500 text-xs">Not Confirmed</span>
+                  </ng-template>
+                </td>
+                <td class="px-4 py-2 text-sm text-gray-800">
+                  <ng-container *ngIf="day.adminChecked; else verifyButton">
+                    <!-- Show green checkmark if admin has verified -->
+                    <i class="fas fa-check-circle text-green-600"></i>
+                    <!-- <span class="ml-1 text-xs text-gray-600">Verified</span> -->
+                  </ng-container>
+
+                  <ng-template #verifyButton>
+                    <!-- Show verify button if all conditions are met -->
+
+                    <span class="text-gray-500 text-xs">Not Confirmed</span>
+                    <ng-template #cannotVerify>
+                      <!-- Show why verification isn't possible -->
+                      <div class="text-xs text-gray-500">
+                        <!-- <ng-container *ngIf="!day.employerConfirmed">
+                          Employer not confirmed
+                        </ng-container>
+                        <ng-container *ngIf="!day.confirmed && day.employerConfirmed">
+                          Data not confirmed
+                        </ng-container>
+                        <ng-container *ngIf="!day.locationChecked && day.confirmed && day.employerConfirmed">
+                          Location not verified
+                        </ng-container> -->
+
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="mt-6 flex flex-col sm:flex-row justify-end gap-2">
+
+          <button type="button"
+                  class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm font-medium"
+                  (click)="closeAttendanceModal()">
+            Close
+          </button>
+        </div>
+
+</div>

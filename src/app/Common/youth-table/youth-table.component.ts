@@ -21,48 +21,54 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { debounceTime, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { PaymentService } from '../../Services/PaymentService/payment.service';
+import { PaymentJobRequestDetailsComponent } from '../../components/payment-job-request-details/payment-job-request-details.component';
+import { AttendanceService } from '../../Services/AttendanceService/attendance.service';
+import { Payment } from '../../Model/Payments';
 
 interface Column {
   field: string;
   header: string;
 }
 @Component({
-    standalone: true,selector: 'app-youth-table',imports: [
-        CommonModule,
-        FormsModule,
-        DropdownModule,
-        MatTableModule,
-        TableModule,
-        CheckboxModule,
-        InputTextModule,
-        PaginatorModule,
-        MultiSelectModule,
-        DialogModule,
-        ButtonModule,
-        YouthSignupDetailsComponent,
-        TableModule,
-        CommonModule,
-        TableModule,
-        MultiSelectModule,
-    ],
-    providers: [YouthServiceService], templateUrl: './youth-table.component.html',
-    styleUrl: './youth-table.component.css'
+  selector: 'app-youth-table',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    TableModule,
+    CheckboxModule,
+    InputTextModule,
+    PaginatorModule,
+    MultiSelectModule,
+    DialogModule,
+    ButtonModule,
+    YouthSignupDetailsComponent,
+    JobRequestDetailsComponent,
+    PaymentJobRequestDetailsComponent,
+    TableModule,
+    CommonModule,
+    TableModule,
+    MultiSelectModule,
+  ],
+  providers: [YouthServiceService],
+  templateUrl: './youth-table.component.html',
+  styleUrl: './youth-table.component.css',
 })
-
 export class YouthTableComponent implements OnInit {
   @Input() status: string | undefined;
   @Input() region: string = '';
-
+  @Input() workStatus: boolean | undefined; // Add this line
   @Input() active: boolean | undefined;
   @Input() fetchedData: string | undefined;
   youthsNotes: { name: string; notes: string }[] = [];
   youthDialogVisible = false; // Controls dialog visibility
-  assignedYouthDialogVisible=false;
+  assignedYouthDialogVisible = false;
   youths: any[] = []; // Stores fetched youths
   selectedYouths: any[] = []; // Selected youths for assignment
   assignedYouths: any[] = []; // Youths fetched from the backend
   unassignedYouths: any[] = []; // Youths fetched from the backend
-  activeTab:string=''
+  activeTab: string = '';
   combinedYouths: any[] = []; // Combination of assigned and selected
   selectedJob: string = '';
   currentEmployerId: string = '';
@@ -96,9 +102,17 @@ export class YouthTableComponent implements OnInit {
   appliedJobFilter: string = '';
   dataScopeOptions = [
     { label: 'My Area Data', value: 'myArea' },
-    { label: 'All Data', value: 'all' }
+    { label: 'All Data', value: 'all' },
   ];
-  
+  totalRecords: number = 0;
+
+  paymentDialogVisible: boolean = false; // Controls payment dialog visibility
+  paymentHistoryDialogVisible: boolean = false; // Controls payment dialog visibility
+
+  selectedYouthForPayment: any = null; // Stores the selected youth for payment
+  selectedJobRequestId: string | null = null; // Stores the selected job request ID
+  attendanceRecord: any = null; // Add this property
+
   selectedDataScope = 'myArea';
   excludedColumns: string[] = [
     'workStatus',
@@ -150,31 +164,47 @@ export class YouthTableComponent implements OnInit {
     'prcsProof',
   ];
   filteredCols: Column[] = []; // New array to hold filtered columns
+  jobRequestDetails: any = null; // To store job request details
+
+    // Payment history related properties
+    selectedYouthForPayments: any = null;
+    paymentHistory: Payment[] = [];
+    paymentHistoryLoading = false;
+    paymentHistoryError: string | null = null;
+    paymentHistoryPagination = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalRecords: 0
+    };
+
   private appliedJobFilterSubject = new Subject<string>();
 
   constructor(
     private youthService: YouthServiceService,
-    private employerService: EmployerService,
-    private JobRequestService: JobRequestService,
-    private lookupService: LookupService
-
+    private lookupService: LookupService,
+    private paymentService: PaymentService, // Inject the PaymentService
+    private jobRequestService: JobRequestService, // Inject the PaymentService
+    private attendanceService: AttendanceService // Inject the PaymentService
   ) {
-    this.appliedJobFilterSubject.pipe(debounceTime(300)).subscribe((filterValue) => {
-      this.appliedJobFilter = filterValue;
-      this.fetchYouthData();
-    });
+    this.appliedJobFilterSubject
+      .pipe(debounceTime(300))
+      .subscribe((filterValue) => {
+        this.appliedJobFilter = filterValue;
+        this.fetchYouthData();
+      });
   }
-
+  ngOnChanges(): void {
+    console.log('Attendance Record (Child):', this.attendanceRecord); // Debugging
+  }
   ngOnInit(): void {
     this.loadSelectedColumnsFromLocalStorage();
     this.setActiveTabFromLocalStorage();
-    this.region = localStorage.getItem('adminArea') || ''; 
-    console.log("Admin region set from localStorage:", this.region);
+    this.region = localStorage.getItem('adminArea') || '';
+    console.log('Admin region set from localStorage:', this.region);
     console.log(this.savedColumns);
 
+    this.fetchYouthData();
 
-      this.fetchYouthData();
-   
     this.lookupService.getLookupData().subscribe(
       (data) => {
         console.log('Lookup Data:', data); // Log the entire response
@@ -198,7 +228,6 @@ export class YouthTableComponent implements OnInit {
     );
   }
 
-
   setActiveTabFromLocalStorage(): void {
     const activeTab = localStorage.getItem('activeTab');
     if (activeTab) {
@@ -209,10 +238,7 @@ export class YouthTableComponent implements OnInit {
   resetSelectedColumns() {
     localStorage.removeItem('selectedColumns');
 
-   
-   
-      this.fetchYouthData();
-   
+    this.fetchYouthData();
   }
   loadSelectedColumnsFromLocalStorage() {
     const storedColumns = JSON.parse(
@@ -247,10 +273,10 @@ export class YouthTableComponent implements OnInit {
     this.youthService.getAllYouth().subscribe(
       (data: any[]) => {
         console.log('Fetched Youth Data:', data);
-  
+
         // Save all data for use in filters
         this.allProducts = data;
-  
+
         this.youthList = data.map((item) => ({
           ...item,
           appliedJobText: Array.isArray(item.appliedJob)
@@ -258,24 +284,36 @@ export class YouthTableComponent implements OnInit {
             : '',
         }));
         console.log('Processed Youth List:', this.youthList);
-  
+
         // Step 1: Filter by `status` if provided
         let filteredData = this.status
           ? data.filter((item) => item.status === this.status)
           : data;
-  
-          if (this.selectedDataScope === 'myArea' && this.region && this.region.trim() !== '') {
-            filteredData = filteredData.filter((item) => {
-              return (
-                item.area &&
-                item.area.toLowerCase() === this.region.toLowerCase()
-              );
-            });
-          } else if (this.selectedDataScope === 'all') {
-            console.log('Admin selected to view all data. No region filtering applied.');
-          }
-  
-        // Step 2: Apply other filters for gender, major, area, education levels, etc.
+
+        // Step 2: Filter by `workStatus` if provided
+        if (this.workStatus !== undefined) {
+          filteredData = filteredData.filter(
+            (item) => item.workStatus === this.workStatus
+          );
+        }
+
+        if (
+          this.selectedDataScope === 'myArea' &&
+          this.region &&
+          this.region.trim() !== ''
+        ) {
+          filteredData = filteredData.filter((item) => {
+            return (
+              item.area && item.area.toLowerCase() === this.region.toLowerCase()
+            );
+          });
+        } else if (this.selectedDataScope === 'all') {
+          console.log(
+            'Admin selected to view all data. No region filtering applied.'
+          );
+        }
+
+        // Step 3: Apply other filters for gender, major, area, education levels, etc.
         filteredData = filteredData.filter((item) => {
           const matchesGender =
             this.selectedGender.length === 0 ||
@@ -303,9 +341,11 @@ export class YouthTableComponent implements OnInit {
           const matchesAppliedJob =
             !this.appliedJobFilter ||
             (item.appliedJob || []).some((job: any) =>
-              (job.job || '').toLowerCase().includes(this.appliedJobFilter.toLowerCase())
+              (job.job || '')
+                .toLowerCase()
+                .includes(this.appliedJobFilter.toLowerCase())
             );
-  
+
           return (
             matchesGender &&
             matchesMajor &&
@@ -317,7 +357,7 @@ export class YouthTableComponent implements OnInit {
             matchesAppliedJob
           );
         });
-  
+
         // Configure columns dynamically if filtered data is available
         if (filteredData.length > 0) {
           const filteredColumns = Object.keys(filteredData[0]).filter(
@@ -327,11 +367,11 @@ export class YouthTableComponent implements OnInit {
             field: key,
             header: this.capitalize(key),
           }));
-  
+
           // 1) Also set savedColumns so your <p-multiSelect [options]="savedColumns"> has something to show
           this.savedColumns = [...this.cols];
           console.log('Populated savedColumns:', this.savedColumns);
-  
+
           // 2) Check local storage for previously selected columns
           const savedColumns = localStorage.getItem('selectedColumns');
           if (savedColumns) {
@@ -348,28 +388,84 @@ export class YouthTableComponent implements OnInit {
           this.cols = [];
           this.savedColumns = [];
         }
-  
+
         // Update the youth list and pagination
         this.youthList = filteredData;
         this.filteredData = [...this.youthList];
         this.paginatedProducts = this.youthList;
-        console.log('Final paginatedProducts length:', this.paginatedProducts.length);
+        console.log(
+          'Final paginatedProducts length:',
+          this.paginatedProducts.length
+        );
       },
       (error) => {
         console.error('Error fetching youth data:', error);
       }
     );
   }
-  
-  
+  showPaymentHistory(youth: any): void {
+    this.selectedYouthForPayments = youth;
+    this.paymentHistoryDialogVisible = true;
+    this.loadPaymentHistory();
+  }
+
+  loadPaymentHistory(): void {
+    if (!this.selectedYouthForPayments) return;
+
+    this.paymentHistoryLoading = true;
+    this.paymentHistoryError = null;
+
+    this.paymentService.getPaymentHistory(
+      {
+        youthId: this.selectedYouthForPayments.id,
+        // Add these if needed:
+        // employerId: 'some-employer-id',
+        // jobRequestId: 'some-job-request-id'
+      },
+      {
+        page: this.paymentHistoryPagination.currentPage,
+        limit: this.paymentHistoryPagination.itemsPerPage
+      }
+    ).subscribe({
+      next: (response) => {
+        this.paymentHistory = response.payments;
+        this.paymentHistoryPagination.totalRecords = response.totalRecords;
+        this.paymentHistoryLoading = false;
+      },
+      error: (err) => {
+        this.paymentHistoryError = err.message || 'Failed to load payment history';
+        this.paymentHistoryLoading = false;
+      }
+    });
+  }
+  getStatusSeverity(status: string): string {
+    switch(status.toLowerCase()) {
+      case 'verified':
+      case 'admin-verified':
+        return 'success';
+      case 'pending':
+        return 'warning';
+      case 'rejected':
+        return 'danger';
+      default:
+        return 'info';
+    }
+  }
+  onPaymentHistoryPageChange(event: any): void {
+    this.paymentHistoryPagination.currentPage = event.page + 1; // PrimeNG paginator is 0-based
+    this.loadPaymentHistory();
+  }
+
   clearFilter(): void {
     this.appliedJobFilter = ''; // Clear the filter input
     this.fetchYouthData(); // Reload the data without the filter
   }
   filterAppliedJob(event: Event): void {
-    console.log('event'+event)
+    console.log('event' + event);
     const inputElement = event.target as HTMLInputElement;
-    const keyword = inputElement?.value ? String(inputElement.value).toLowerCase() : ''; // Ensure it's a string
+    const keyword = inputElement?.value
+      ? String(inputElement.value).toLowerCase()
+      : ''; // Ensure it's a string
 
     console.log('Keyword:', keyword); // Debugging
 
@@ -420,39 +516,45 @@ export class YouthTableComponent implements OnInit {
     );
   }
 
-  getActionsForRow(status: string ,active:boolean): string[] {
-    // Return different actions based on the row's status
-    if(active==true){
-      return ['view','deactivate']
-    }else if(active==false){
-      return ['view','activate']
+  getActionsForRow(
+    status: string,
+    active: boolean,
+    workStatus: boolean
+  ): string[] {
+    // Return different actions based on the row's status and workStatus
+    if (active === true) {
+      return ['view', 'deactivate'];
+    } else if (active === false) {
+      return ['view', 'activate'];
+    } else {
+      // Check for specific case: status is 'accepted' and workStatus is true
+      if (status === 'accepted' && (workStatus === true || workStatus===false)) {
+        return ['view', 'payments','history']; // Specific actions for accepted and workStatus true
+      }
 
-    }else{
-
-    switch (status) {
-      case 'accepted':
-        return ['view', 'pend'];
-      case 'rejected':
-        return ['view', 'pend'];
-      case 'pending':
-        return ['view', 'accept', 'reject', 'notes'];
-      case 'waiting':
-        return ['view', 'accept', 'reject', 'pend'];
-      case 'waiting-E':
-        return ['view', 'assign', 'reject'];
-      case 'assigned':
-        return ['view', 'assign'];
-      default:
-        return ['view', 'delete'];
+      // Default cases based on status
+      switch (status) {
+        case 'accepted':
+          return ['view', 'pend'];
+        case 'rejected':
+          return ['view', 'pend'];
+        case 'pending':
+          return ['view', 'accept', 'reject', 'notes'];
+        case 'waiting':
+          return ['view', 'accept', 'reject', 'pend'];
+        case 'waiting-E':
+          return ['view', 'assign', 'reject'];
+        case 'assigned':
+          return ['view', 'assign'];
+        default:
+          return ['view', 'delete'];
+      }
     }
-  }
-
   }
 
   performAction(action: string, item: any): void {
     if (action === 'view') {
       console.log('View action for:', item);
-
     } else if (action === 'pend') {
       this.updateStatus(item.id, 'pending');
     } else if (action === 'accept') {
@@ -461,7 +563,6 @@ export class YouthTableComponent implements OnInit {
       this.updateStatus(item.id, 'rejected');
     }
   }
-
 
   note: string = '';
   selectedYouth: any;
@@ -484,7 +585,6 @@ export class YouthTableComponent implements OnInit {
       }
     );
   }
-
 
   //youth dialog
   youthDialog: boolean = false;
@@ -513,12 +613,132 @@ export class YouthTableComponent implements OnInit {
   noteDialogVisible: boolean = false; // To show/hide the dialog
   noYouthMessage: string = '';
   selectedYouthId: number | null = null;
+
+  showPaymentDialog(youth: any): void {
+    this.selectedYouthForPayment = youth; // Store the selected youth
+    this.paymentDialogVisible = true; // Open the payment dialog
+
+    console.log('Selected Youth:', youth); // Debugging
+
+    // Fetch job request details using the youth ID
+    this.fetchJobRequestByYouthId(youth.id);
+
+    // Fetch payment history for the selected youth
+    this.fetchPaymentsByYouth(youth.id);
+  }
+  showPaymentHistoryDialog(youth: any): void {
+    this.selectedYouthForPayment = youth; // Store the selected youth
+    this.paymentHistoryDialogVisible = true; // Open the payment dialog
+
+    console.log('Selected Youth:', youth); // Debugging
+
+    // Fetch job request details using the youth ID
+    this.fetchJobRequestByYouthId(youth.id);
+
+    // Fetch payment history for the selected youth
+    this.fetchPaymentsByYouth(youth.id);
+  }
+
+  fetchJobRequestByYouthId(youthId: string): void {
+    this.jobRequestService.getJobRequestByYouthId(youthId).subscribe(
+      (response) => {
+        console.log('Job request details fetched successfully:', response);
+        this.jobRequestDetails = response;
+
+        // Extract jobId from the response
+        const jobId = response.jobId;
+        console.log('Job ID from response:', jobId); // Debugging
+
+        // Convert youthId from string to number
+        const youthIdNumber = Number(youthId);
+
+        // Fetch attendance records using the jobId
+        if (jobId) {
+          this.fetchAttendanceRecords(youthIdNumber, jobId);
+        } else {
+          console.error(
+            'Job ID is missing in the job request details:',
+            response
+          );
+        }
+      },
+      (error) => {
+        console.error('Error fetching job request details:', error);
+      }
+    );
+  }
+  fetchPaymentsByYouth(youthId: number): void {
+    this.paymentService.getPaymentsByYouth(youthId).subscribe(
+      (response) => {
+        console.log('Payment records fetched successfully:', response);
+        this.paymentHistory = response;
+      },
+      (error) => {
+        console.error('Error fetching payment records:', error);
+      }
+    );
+  }
+
+  fetchAttendanceRecords(youthId: number, jobId: number): void {
+    const youthIdStr = youthId.toString();
+    const jobIdStr = jobId.toString();
+
+    console.log(
+      'Fetching attendance records for youthId:',
+      youthIdStr,
+      'and jobId:',
+      jobIdStr
+    ); // Debugging
+
+    this.attendanceService
+      .getAttendanceByYouthAndJob(youthIdStr, jobIdStr)
+      .subscribe({
+        next: (attendance) => {
+          if (typeof attendance.days === 'string') {
+            try {
+              attendance.days = JSON.parse(attendance.days);
+            } catch (error) {
+              console.error('Error parsing days:', error);
+              attendance.days = [];
+            }
+          }
+          this.attendanceRecord = attendance;
+          console.log('Attendance Record (Parent):', this.attendanceRecord); // Debugging
+        },
+        error: (err) => {
+          console.error('Error fetching attendance records:', err);
+        },
+      });
+  }
+  /**
+   * Generate a payment for the selected youth.
+   */
+  isValueNaN(value: any): boolean {
+    return isNaN(value);
+  }
+  generatePayment(youthId: number, jobRequestId: number): void {
+    this.paymentService.generatePayment(youthId, jobRequestId).subscribe(
+      (response) => {
+        console.log('Payment generated successfully:', response);
+        this.fetchPaymentsByYouth(youthId); // Refresh payment history
+      },
+      (error) => {
+        console.error('Error generating payment:', error);
+        alert('Error generating payment. Please try again.');
+      }
+    );
+  }
+
+  /**
+   * Fetch payment records for the selected youth.
+   */
+
   showDialog(youthId: number, activeTab: string): void {
     this.selectedYouthId = youthId;
 
     // Reset all dialog visibility states
     this.youthSignupDialogVisible = false;
-    
+
     switch (activeTab) {
       case 'employer':
         this.employerDialogVisible = true;
@@ -531,11 +751,10 @@ export class YouthTableComponent implements OnInit {
         break;
     }
   }
-  
+
   clearSelectedYouthId(): void {
     this.selectedYouthId = null;
   }
-  
 
   updateNotes(youthId: any, newNotes: string): void {
     // Check if new notes are not empty
@@ -571,7 +790,6 @@ export class YouthTableComponent implements OnInit {
     );
   }
 
-
   displayNoteDialog(youth: any): void {
     this.selectedYouth = youth;
     this.fetchNotesById(youth.id); // Fetch notes when opening the dialog
@@ -586,7 +804,9 @@ export class YouthTableComponent implements OnInit {
         console.log('Response from getYouthByJob:', response); // Log the response for debugging
 
         // Filter youths with workStatus === false
-        const filteredYouths = (response.youths || []).filter((youth: any) => !youth.workStatus);
+        const filteredYouths = (response.youths || []).filter(
+          (youth: any) => !youth.workStatus
+        );
 
         // Transform youths to include a label for display
         this.youths = filteredYouths.map((youth: any) => ({
@@ -606,7 +826,6 @@ export class YouthTableComponent implements OnInit {
       },
     });
   }
-
 }
 
 

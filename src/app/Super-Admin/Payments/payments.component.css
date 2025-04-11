@@ -1,0 +1,27 @@
+.alert {
+  @apply p-3 rounded border;
+}
+
+.alert-info {
+  @apply bg-blue-50 border-blue-200 text-blue-800;
+}
+
+.alert-danger {
+  @apply bg-red-50 border-red-200 text-red-800;
+}
+
+.btn {
+  @apply px-4 py-2 rounded font-medium transition-colors;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white;
+}
+
+.btn-success:disabled {
+  @apply bg-green-400 cursor-not-allowed;
+}
+
+.font-mono {
+  font-family: monospace;
+}

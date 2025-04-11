@@ -1,4 +1,15 @@
-import { AfterViewChecked, AfterViewInit, OnChanges, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  OnChanges,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Job } from '../../Model/JobDetails';
 import { JobRequestService } from '../../Services/JobRequestService/job-request-service.service';
 import { ActivatedRoute } from '@angular/router';
@@ -28,12 +39,21 @@ interface DailySchedule {
   templateUrl: './job-request-details.component.html',
   styleUrl: './job-request-details.component.css',
 })
-
-export class JobRequestDetailsComponent implements AfterViewInit, OnInit, AfterViewChecked, OnChanges {
+export class JobRequestDetailsComponent
+ implements AfterViewInit, OnInit,  AfterViewChecked, OnChanges 
+{
   @Input() jobId: string | null = null;
   public jobRequest: Job | undefined;
   private userId: string | null = null;
-  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
 
   isContractModalOpen = false;
   agreementStartDate: string | null = null;
@@ -64,10 +84,12 @@ export class JobRequestDetailsComponent implements AfterViewInit, OnInit, AfterV
   workingNotes: string = '';
 
   selectedContract: any = null;
+  selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
   isSignatureModalOpen = false;
-  @ViewChild('signaturePad') signaturePadElement!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('signaturePad')
+  signaturePadElement!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
   isEditing: { [key: string]: boolean } = {};
   editModels: { [key: string]: any } = {};
@@ -80,6 +102,9 @@ export class JobRequestDetailsComponent implements AfterViewInit, OnInit, AfterV
   isEditingSignature = false;
   uploadedFileName: string | null = null;
   isDeleteModalOpen = false;
+  uploadedFileUrl: string | null = null;
+  isAttendanceModalOpen: boolean = false;
+  attendanceRecord: AttendanceRecord | null = null;
   uploadedFileUrl: string | null = null;
   isAttendanceModalOpen: boolean = false;
   attendanceRecord: AttendanceRecord | null = null;
@@ -171,14 +196,15 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     private cdr: ChangeDetectorRef,
     private employerService: EmployerService,
     private attendanceService: AttendanceService
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const jobId = params.get('id');
       console.log('Retrieved jobId from route:', jobId);
-      const role = this.route.snapshot.queryParamMap.get('role') || localStorage.getItem('role');
+      const role =
+        this.route.snapshot.queryParamMap.get('role') ||
+        localStorage.getItem('role');
       this.userRole = role;
       console.log('User role:', this.userRole);
 
@@ -189,7 +215,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         console.error('Invalid or missing jobId');
       }
 
-
+      if (this.userId) {
+        this.fetchEmployerDetails();
+      }
       if (this.userId) {
         this.fetchEmployerDetails();
       }
@@ -199,7 +227,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       this.showSignatureWarning = true;
       return;
     }
-
   }
 
 
@@ -216,11 +243,14 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
       this.attendanceService.updateAttendance(this.attendanceRecord.id!, { days: this.attendanceRecord.days })
         .subscribe({
-          next: (updatedRecord) => console.log('Attendance updated:', updatedRecord),
-          error: (err) => console.error('Error updating attendance:', err)
+          next: (updatedRecord) =>
+            console.log('Attendance updated:', updatedRecord),
+          error: (err) => console.error('Error updating attendance:', err),
         });
     } else {
-      console.error('Employer contract signature not available on the selected youth');
+      console.error(
+        'Employer contract signature not available on the selected youth'
+      );
     }
   }
 
@@ -235,6 +265,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
 
     this.selectedYouth = youth;
+
 
     const jobId = this.jobRequest.jobId;
     if (!jobId) {
@@ -259,7 +290,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         },
         error: (err) => {
           console.error('Error fetching attendance record:', err);
-        }
+        },
       });
   }
 
@@ -476,16 +507,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
 
       this.jobRequestService
-        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .updateJob(this.jobId!, {
+          assignedYouths: this.jobRequest!.assignedYouths,
+        })
         .subscribe({
           next: () => {
-            console.log(`Youth status updated to: ${this.selectedYouth.action}`);
+            console.log(
+              `Youth status updated to: ${this.selectedYouth.action}`
+            );
             this.fetchJobRequestDetails();
           },
           error: (err) => console.error('Error updating youth status:', err),
         });
       this.isApprovalModalOpen = false;
-
     }
   }
   submitContract() {
@@ -527,7 +561,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
 
     this.jobRequestService
-      .updateJob(this.jobId!, { assignedYouths: this.jobRequest.assignedYouths })
+      .updateJob(this.jobId!, {
+        assignedYouths: this.jobRequest.assignedYouths,
+      })
       .subscribe({
         next: (response) => {
           console.log('Contract saved successfully:', response);
@@ -568,7 +604,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         };
         this.updatePagination();
         this.initializeRowStates();
-
       },
       error: (err) => {
         console.error('Error fetching job request:', err);
@@ -576,28 +611,95 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     });
   }
 
-
   updateYouthStatus(youth: any, action: 'accepted' | 'rejected'): void {
     if (!this.jobRequest || !this.jobId) return;
 
-
     youth.action = action;
-
 
     const updatedYouth = {
       ...youth,
       status: action === 'accepted' ? 'approved' : 'rejected',
     };
 
-
     this.jobRequestService
       .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
       .subscribe({
-        next: () => console.log(`Youth status updated successfully to: ${action}`),
+        next: () =>
+          console.log(`Youth status updated successfully to: ${action}`),
         error: (err) => console.error('Error updating youth status:', err),
       });
   }
 
+  // job-request-details.component.ts
+
+  // Add these methods to your component
+  verifyAttendanceDays(dayIndices: number[]): void {
+    if (!this.attendanceRecord) return;
+
+    this.attendanceService
+      .verifyAttendanceDays(this.attendanceRecord.id!, dayIndices)
+      .subscribe({
+        next: (updatedRecord) => {
+          // Update local record
+          this.attendanceRecord = updatedRecord;
+          console.log('Days verified successfully');
+        },
+        error: (err) => console.error('Error verifying days:', err),
+      });
+  }
+
+  // Method to verify a single day
+  verifySingleDay(index: number): void {
+    this.verifyAttendanceDays([index]);
+  }
+
+  // Method to get verifiable days (if needed)
+  fetchVerifiableDays(): void {
+    if (!this.attendanceRecord) return;
+
+    this.attendanceService
+      .getVerifiableDays(this.attendanceRecord.id!)
+      .subscribe({
+        next: (response) => {
+          console.log('Verifiable days:', response.verifiableDays);
+          // You can use this to highlight verifiable days in your UI
+        },
+        error: (err) => console.error('Error fetching verifiable days:', err),
+      });
+  }
+
+verifyAllEligibleDays(): void {
+  if (!this.attendanceRecord?.id) {
+    console.error('No attendance record loaded or missing ID');
+    return;
+  }
+
+  const eligibleDays = this.attendanceRecord.days
+    .map((day, index) => ({ ...day, index }))
+    .filter(day => day.employerConfirmed && !day.adminChecked);
+
+  if (eligibleDays.length === 0) {
+    console.log('No eligible days to verify');
+    return;
+  }
+
+  if (confirm(`Are you sure you want to verify ${eligibleDays.length} day(s)?`)) {
+    const dayIndices = eligibleDays.map(day => day.index);
+
+    this.attendanceService.verifyAttendanceDays(this.attendanceRecord.id, dayIndices)
+      .subscribe({
+        next: (updatedRecord) => {
+          this.attendanceRecord = updatedRecord;
+          console.log(`Successfully verified ${eligibleDays.length} day(s)`);
+          // Optional: Show success notification
+        },
+        error: (err) => {
+          console.error('Error verifying days:', err);
+          // Optional: Show error notification
+        }
+      });
+  }
+}
   updateYouthWithWorkStatus(youthId: any, workStatus: boolean): void {
     this.youthService.getYouthById(youthId).subscribe({
       next: (youth) => {
@@ -607,18 +709,24 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
 
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
-            next: () => console.log(`Successfully updated workStatus for youth ID: ${youthId}`),
-            error: (err) => console.error(`Error updating youth workStatus for ID: ${youthId}`, err),
+            next: () =>
+              console.log(
+                `Successfully updated workStatus for youth ID: ${youthId}`
+              ),
+            error: (err) =>
+              console.error(
+                `Error updating youth workStatus for ID: ${youthId}`,
+                err
+              ),
           });
         } else {
           console.error(`Youth record not found for ID: ${youthId}`);
         }
       },
-      error: (err) => console.error(`Error fetching youth data for ID: ${youthId}`, err),
+      error: (err) =>
+        console.error(`Error fetching youth data for ID: ${youthId}`, err),
     });
   }
-
-
 
   updateYouthAppliedJobs(
     youthId: any,
@@ -656,12 +764,19 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
           this.youthService.updateYouth(youthId, updatedYouth).subscribe({
             next: () =>
-              console.log(`Successfully updated applied jobs for youth ID: ${youthId}`),
+              console.log(
+                `Successfully updated applied jobs for youth ID: ${youthId}`
+              ),
             error: (err) =>
-              console.error(`Error updating youth record for ID: ${youthId}`, err),
+              console.error(
+                `Error updating youth record for ID: ${youthId}`,
+                err
+              ),
           });
         } else {
-          console.error(`Youth record or applied jobs not found for ID: ${youthId}`);
+          console.error(
+            `Youth record or applied jobs not found for ID: ${youthId}`
+          );
         }
       },
       error: (err) =>
@@ -712,17 +827,27 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
                       beneficiary: true,
                     };
 
-                    this.youthService.updateYouth(youth.id, updatedYouth).subscribe({
-                      next: () =>
-                        console.log(`Updated youth ID: ${youth.id} successfully.`),
-                      error: (err) =>
-                        console.error(`Error updating youth ID: ${youth.id}`, err),
-                    });
+                    this.youthService
+                      .updateYouth(youth.id, updatedYouth)
+                      .subscribe({
+                        next: () =>
+                          console.log(
+                            `Updated youth ID: ${youth.id} successfully.`
+                          ),
+                        error: (err) =>
+                          console.error(
+                            `Error updating youth ID: ${youth.id}`,
+                            err
+                          ),
+                      });
                   }
                 }
               },
               error: (err) =>
-                console.error(`Error fetching youth data for ID: ${youth.id}`, err),
+                console.error(
+                  `Error fetching youth data for ID: ${youth.id}`,
+                  err
+                ),
             });
           });
         }
@@ -734,7 +859,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       error: (err) => console.error('Error updating job request status:', err),
     });
   }
-
 
   openTermsModal() {
     this.isTermsModalOpen = true;
@@ -839,15 +963,17 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   }
   confirmRevert(): void {
     if (this.selectedYouth) {
-
       this.selectedYouth.action = 'accepted';
 
-
       this.jobRequestService
-        .updateJob(this.jobId!, { assignedYouths: this.jobRequest!.assignedYouths })
+        .updateJob(this.jobId!, {
+          assignedYouths: this.jobRequest!.assignedYouths,
+        })
         .subscribe({
           next: () => {
-            console.log(`Youth status reverted to: ${this.selectedYouth.action}`);
+            console.log(
+              `Youth status reverted to: ${this.selectedYouth.action}`
+            );
             this.fetchJobRequestDetails();
             this.closeRModal();
           },
@@ -967,11 +1093,11 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
     this.selectedYouth = null;
   }
 
-
   updatePagination() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedAssignedYouths = this.jobRequest?.assignedYouths?.slice(startIndex, endIndex) || [];
+    this.paginatedAssignedYouths =
+      this.jobRequest?.assignedYouths?.slice(startIndex, endIndex) || [];
   }
 
   prevPage() {
@@ -989,7 +1115,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
   }
 
   get totalPages(): number {
-    return Math.ceil((this.jobRequest?.assignedYouths?.length || 0) / this.itemsPerPage);
+    return Math.ceil(
+      (this.jobRequest?.assignedYouths?.length || 0) / this.itemsPerPage
+    );
   }
 
   searchAssignedYouths() {
@@ -1014,28 +1142,28 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       queryParams: { role },
     });
   }
-
   updateRowStates(): void {
     if (this.jobRequest) {
+      this.approvedCount =
+        this.jobRequest.assignedYouths?.filter(
+          (youth) => youth.action === 'approved'
+        ).length || 0;
 
-      this.approvedCount = this.jobRequest.assignedYouths?.filter(
-        (youth) => youth.action === 'approved'
-      ).length || 0;
-
-      console.log('Approved Youth Count (updateRowStates):', this.approvedCount);
-
+      console.log(
+        'Approved Youth Count (updateRowStates):',
+        this.approvedCount
+      );
 
       this.jobRequest.assignedYouths?.forEach((youth) => {
         youth.isDisabled =
-          this.approvedCount >= this.jobRequest!.numEmployees && youth.action !== 'approved';
+          this.approvedCount >= this.jobRequest!.numEmployees &&
+          youth.action !== 'approved';
       });
-
 
       this.isSubmitEnabled = this.approvedCount > 0;
       console.log('Is Submit Enabled (updateRowStates):', this.isSubmitEnabled);
     }
   }
-
   checkSubmitCondition(): void {
     if (this.approvedCount >= this.jobRequest!.numEmployees) {
       this.submitJobRequests();
@@ -1043,16 +1171,13 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       this.showConfirmationModal = true;
     }
   }
-
   confirmSubmit(): void {
     this.showConfirmationModal = false;
     this.submitJobRequests();
   }
-
   cancelSubmit(): void {
     this.showConfirmationModal = false;
   }
-
   submitJobRequests(): void {
     if (!this.jobRequest || !this.jobId) {
       console.error('Job request or job ID is undefined.');
@@ -1068,7 +1193,9 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
           status: youth.action === 'approved' ? 'approved' : youth.status,
         })) ?? [];
 
-    const approvedYouths = updatedYouths.filter((youth) => youth.status === 'approved');
+    const approvedYouths = updatedYouths.filter(
+      (youth) => youth.status === 'approved'
+    );
 
 
     const updatedJobRequest = {
@@ -1076,6 +1203,7 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       assignedYouths: approvedYouths,
       status: 'in-progress',
     };
+
 
     this.jobRequestService.getAllJobRequests().subscribe({
       next: () => {
@@ -1116,20 +1244,25 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
 
   initializeRowStates(): void {
     if (this.jobRequest) {
-      this.approvedCount = this.jobRequest.assignedYouths?.filter(
-        (youth) => youth.action === 'approved'
-      ).length || 0;
+      this.approvedCount =
+        this.jobRequest.assignedYouths?.filter(
+          (youth) => youth.action === 'approved'
+        ).length || 0;
 
-      console.log('Approved Youth Count (initializeRowStates):', this.approvedCount);
+      console.log(
+        'Approved Youth Count (initializeRowStates):',
+        this.approvedCount
+      );
 
       this.updateRowStates();
 
       this.isSubmitEnabled = this.approvedCount > 0;
-      console.log('Is Submit Enabled (initializeRowStates):', this.isSubmitEnabled);
+      console.log(
+        'Is Submit Enabled (initializeRowStates):',
+        this.isSubmitEnabled
+      );
     }
   }
-
-
   toggleYouthStatus(youth: any, action: string | null): void {
     if (action) {
       this.updateYouthStatus(youth, action as 'accepted' | 'rejected');
@@ -1137,10 +1270,11 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       youth.action = null;
       youth.status = 'waiting';
 
-
       if (this.jobRequest && this.jobId) {
         this.jobRequestService
-          .updateJob(this.jobId, { assignedYouths: this.jobRequest.assignedYouths })
+          .updateJob(this.jobId, {
+            assignedYouths: this.jobRequest.assignedYouths,
+          })
           .subscribe({
             next: () => console.log(`Youth status reset to 'waiting'`),
             error: (err) => console.error('Error resetting youth status:', err),
@@ -1148,9 +1282,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       }
     }
   }
-
-
-
   submitJobRequest(): void {
     if (!this.jobRequest || !this.jobId) return;
 
@@ -1160,8 +1291,8 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
         youth.action === 'accepted'
           ? 'assigned'
           : youth.status === 'rejected'
-            ? 'rejected'
-            : youth.status,
+          ? 'rejected'
+          : youth.status,
     }));
 
     const updatedJobRequest = {
@@ -1169,7 +1300,6 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       assignedYouths: updatedYouths,
       status: 'assigned-E',
     };
-
 
     this.jobRequestService.updateJob(this.jobId, updatedJobRequest).subscribe({
       next: () => {
@@ -1179,17 +1309,12 @@ The Employer shall agree on the Terms and Conditions of the Agreement and perfor
       error: (err) => console.error('Error submitting job request:', err),
     });
   }
-
-
   isEmployer(): boolean {
     return this.userRole === 'Employer';
   }
-
   isAdmin(): boolean {
     return this.userRole === 'Admin' || !this.userRole;
   }
-
-
   saveChanges(): void {
     if (!this.editModels) return;
 

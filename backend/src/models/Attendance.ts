@@ -1,7 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../config/database';
 
-
 interface DayRecord {
   day: string;
   date: Date | null;
@@ -10,8 +9,11 @@ interface DayRecord {
   locationChecked: boolean;
   confirmed: boolean;
   accepted: boolean;
-}
+  employerConfirmed: boolean;
+  adminChecked: boolean;
+  paid: boolean; // Add this new field
 
+}
 
 interface AttendanceAttributes {
   id: string;
@@ -21,16 +23,18 @@ interface AttendanceAttributes {
   days: DayRecord[];
 }
 
+interface AttendanceCreationAttributes
+  extends Optional<AttendanceAttributes, 'id'> {}
 
-interface AttendanceCreationAttributes extends Optional<AttendanceAttributes, 'id'> { }
-
-class Attendance extends Model<AttendanceAttributes, AttendanceCreationAttributes> implements AttendanceAttributes {
+class Attendance
+  extends Model<AttendanceAttributes, AttendanceCreationAttributes>
+  implements AttendanceAttributes
+{
   public id!: string;
   public jobRequestId!: string;
   public employerId!: string;
   public youthId!: string;
   public days!: DayRecord[];
-
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -59,17 +63,16 @@ Attendance.init(
       type: DataTypes.JSON,
       allowNull: false,
       defaultValue: Array.from({ length: 40 }, () => ({
-        day: "",
+        day: '',
         date: null,
-        youthName: "",
-        signature: "",
+        youthName: '',
+        signature: '',
         locationChecked: false,
         confirmed: false,
         accepted: false,
         employerConfirmed: false,
         employerSignature: '',
-
-
+        adminChecked: false, // Add default value
       })),
     },
   },
@@ -80,4 +83,9 @@ Attendance.init(
   }
 );
 
-export default Attendance;
+export {
+  Attendance,
+  DayRecord,
+  AttendanceAttributes,
+  AttendanceCreationAttributes,
+};

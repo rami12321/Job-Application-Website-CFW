@@ -382,6 +382,47 @@ export const updateJobRequestStatus = async (req: Request, res: Response): Promi
     res.status(500).json({ message: 'Error updating job request status', error });
   }
 };
+// Get job request by youth ID
+export const getJobRequestByYouthId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthId } = req.params;
+
+    if (!youthId) {
+      res.status(400).json({ message: 'Youth ID is required' });
+      return;
+    }
+
+    // Fetch all job requests
+    const jobRequests = await Job.findAll();
+
+    // Find the job request that has the youth assigned
+    const jobRequest = jobRequests.find((job) => {
+      let assignedYouths = job.assignedYouths || [];
+
+      // Parse assignedYouths if it's a string
+      if (typeof assignedYouths === 'string') {
+        try {
+          assignedYouths = JSON.parse(assignedYouths);
+        } catch (error) {
+          console.error('Error parsing assignedYouths:', error);
+          return false;
+        }
+      }
+
+      // Check if the youth is assigned to this job
+      return assignedYouths.some((youth: any) => youth.id === youthId);
+    });
+
+    if (!jobRequest) {
+      res.status(404).json({ message: `No job request found for youth with ID ${youthId}` });
+      return;
+    }
+
+    res.status(200).json(jobRequest);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching job request by youth ID', error });
+  }
+};
 
 // Helper function to generate a unique ID
 function generateUniqueId(): string {

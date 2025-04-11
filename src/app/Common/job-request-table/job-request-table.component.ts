@@ -22,6 +22,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { debounceTime, Subject, forkJoin} from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { PaymentService } from '../../Services/PaymentService/payment.service';
 
 interface Column {
   field: string;
@@ -95,7 +96,8 @@ export class JobRequestTableComponent implements OnInit {
   selectedIsBeneficiary: string[] = [];
   allProducts: any[] = []; // Array to hold all data
   appliedJobFilter: string = '';
-
+  isGeneratingPayments = false;
+  paymentGenerationResult: any = null;
   excludedColumns: string[] = [
     'workStatus',
     'active',
@@ -114,7 +116,8 @@ export class JobRequestTableComponent implements OnInit {
   constructor(
     private youthService: YouthServiceService,
     private JobRequestService: JobRequestService,
-    private lookupService: LookupService
+    private lookupService: LookupService,
+    private paymentService:PaymentService
 
   ) {
     this.appliedJobFilterSubject.pipe(debounceTime(300)).subscribe((filterValue) => {
@@ -628,6 +631,7 @@ export class JobRequestTableComponent implements OnInit {
       },
     });
   }
+
 }
 
 

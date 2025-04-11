@@ -11,32 +11,33 @@
     max-height: 300px; /* Prevent the panel from being too tall */
     overflow-y: auto; /* Add scroll if needed */
     width: -webkit-fill-available;
-  
+
   }
-  
+
   ::ng-deep .p-multiselect-item {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-  
+
   }
-  
+
+
   ::ng-deep .p-multiselect-item:hover {
     background-color: #e0f7fa;
-  
+
   }
   ::ng-deep p-table {
     overflow: visible !important;
   }
-  
+
   ::ng-deep .p-table-wrapper {
     overflow: visible !important;
   }
-  
+
   ::ng-deep .p-multiselect-panel {
     overflow: visible !important;
     z-index: 1050 !important;
   }
-  
+
   .parent-container {
     position: relative !important;
   }
@@ -49,7 +50,7 @@
   :host ::ng-deep .p-dialog .p-dialog-footer {
     padding: 0 !important;
   }
-  
+
   :host ::ng-deep .youth .p-dialog .p-dialog-header {
     padding: 15px !important;
   }
@@ -59,5 +60,28 @@
   :host ::ng-deep .youth .p-dialog .p-dialog-footer {
     padding: 15px !important;
   }
-  
-  
+
+/* Add to youth-table.component.css */
+.badge-success {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.badge-warning {
+  background-color: #FFC107;
+  color: black;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.badge-danger {
+  background-color: #F44336;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}

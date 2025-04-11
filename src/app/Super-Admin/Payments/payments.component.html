@@ -1,1 +1,222 @@
-<p>payments works!</p>
+<div class="p-6">
+  <!-- Payment Generation Section -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <!-- <h2 class="text-2xl font-bold text-gray-800">Payment Generation</h2> -->
+      <div class="flex gap-4">
+        <!-- Working Tab -->
+        <button
+          class="rounded-full px-5 py-2.5 text-base font-medium focus:outline-none transition-all duration-300 transform hover:shadow-md hover:scale-105"
+          [ngClass]="{
+            'bg-green-500 hover:bg-green-600 text-white':
+              activeAdminTab === 'working',
+            'bg-gray-200 text-gray-800 hover:bg-gray-300':
+              activeAdminTab !== 'working'
+          }"
+          (click)="setActiveTab('working')"
+        >
+          Working
+        </button>
+
+        <!-- Finished Tab -->
+        <button
+          class="rounded-full px-5 py-2.5 text-base font-medium focus:outline-none transition-all duration-300 transform hover:shadow-md hover:scale-105"
+          [ngClass]="{
+            'bg-red-500 hover:bg-red-600 text-white':
+              activeAdminTab === 'finished',
+            'bg-gray-200 text-gray-800 hover:bg-gray-300':
+              activeAdminTab !== 'finished'
+          }"
+          (click)="setActiveTab('finished')"
+        >
+          Finished
+        </button>
+      </div>
+      <div class="flex items-center space-x-4"></div>
+      <button
+        *ngIf="eligibleYouths.length > 0"
+        class="btn btn-primary px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
+        (click)="generateAllPayments()"
+        [disabled]="isGeneratingPayments || isCheckingPayments"
+      >
+        <span *ngIf="!isGeneratingPayments && !isCheckingPayments">
+          Generate All Payments ({{ eligibleYouths.length }})
+        </span>
+
+        <span
+          *ngIf="isGeneratingPayments || isCheckingPayments"
+          class="flex items-center"
+        >
+          <svg
+            *ngIf="isGeneratingPayments || isCheckingPayments"
+            class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          {{ isCheckingPayments ? "Checking..." : "Processing..." }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Info Message -->
+    <div
+      *ngIf="infoMessage"
+      class="mt-4 p-4 rounded-md bg-blue-50 border border-blue-200 text-blue-800"
+    >
+      <div class="flex items-start">
+        <svg
+          class="flex-shrink-0 h-5 w-5 text-blue-600 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <div>{{ infoMessage }}</div>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="errorMessage"
+      class="mt-4 p-4 rounded-md bg-red-50 border border-red-200 text-red-800"
+    >
+      <div class="flex justify-between items-start">
+        <div class="flex items-start">
+          <svg
+            class="flex-shrink-0 h-5 w-5 text-red-600 mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <div>{{ errorMessage }}</div>
+        </div>
+        <button
+          *ngIf="paymentGenerationResult?.failedPayments"
+          (click)="toggleErrorDetails()"
+          class="text-red-600 hover:text-red-800 ml-2 flex items-center"
+        >
+          Details
+          <svg
+            class="ml-1 h-4 w-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              *ngIf="!showErrorDetails"
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+            <path
+              *ngIf="showErrorDetails"
+              fill-rule="evenodd"
+              d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Error Details -->
+      <div
+        *ngIf="showErrorDetails && paymentGenerationResult?.failedPayments"
+        class="mt-3 pl-7 border-l-2 border-red-200 space-y-2"
+      >
+        <div
+          *ngFor="let error of paymentGenerationResult.failedPayments"
+          class="py-2"
+        >
+          <p class="font-medium">Youth {{ error.youthId }}:</p>
+          <p class="text-sm">{{ error.error }}</p>
+          <p *ngIf="error.code" class="text-xs text-red-700 opacity-75 mt-1">
+            {{ error.code }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Summary -->
+    <div *ngIf="paymentGenerationResult" class="mt-6 bg-gray-50 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold mb-3">Results Summary</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <!-- Successful Payments -->
+        <div class="p-4 rounded border border-green-200 bg-green-50">
+          <h4 class="font-medium text-green-800">Successful</h4>
+          <p class="text-2xl font-bold text-green-600">
+            {{ paymentGenerationResult.successfulPayments?.length || 0 }}
+          </p>
+        </div>
+
+        <!-- Failed Payments -->
+        <div class="p-4 rounded border border-red-200 bg-red-50">
+          <h4 class="font-medium text-red-800">Failed</h4>
+          <p class="text-2xl font-bold text-red-600">
+            {{ paymentGenerationResult.failedPayments?.length || 0 }}
+          </p>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="p-4 rounded border border-blue-200 bg-blue-50">
+          <h4 class="font-medium text-blue-800">Total Amount</h4>
+          <p class="text-2xl font-bold text-blue-600">
+            ${{ (paymentGenerationResult.totalAmount || 0).toFixed(2) }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Job Request Info -->
+      <div class="mt-4 p-3 bg-gray-100 rounded">
+        <h4 class="font-medium text-gray-700">Job Request:</h4>
+        <p class="font-mono bg-white p-2 rounded text-sm mt-1">
+          {{ staticJobRequestId }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Youth Table -->
+   @if(activeAdminTab =="working"){
+
+     <div class="bg-white rounded-lg shadow-md p-6">
+       <app-youth-table
+         [status]="'accepted'"
+         [workStatus]="true"
+       ></app-youth-table>
+     </div>
+   }@else {
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <app-youth-table
+        [status]="'accepted'"
+        [workStatus]="false"
+      ></app-youth-table>
+    </div>
+   }
+</div>

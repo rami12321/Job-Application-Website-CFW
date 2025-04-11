@@ -11,6 +11,7 @@ import {
   updateJobRequestStatus,
   getAssignedYouthsByJobId,
   unassignYouthFromJobRequest,
+  getJobRequestByYouthId,
 } from '../controllers/jobRequestController';
 
 const router: Router = Router();
@@ -26,6 +27,7 @@ router.put('/:id/youths', assignYouthToJobRequest); //assign youth to job reques
 router.put('/:id/status', updateJobRequestStatus);
 router.get('/assigned-youths/:id', getAssignedYouthsByJobId);
 router.delete('/:id/unassignYouth/:youthId', unassignYouthFromJobRequest); //unassign youth from job request
+router.get('/youth/:youthId', getJobRequestByYouthId);
 
 
 export default router;

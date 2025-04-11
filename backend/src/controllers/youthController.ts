@@ -460,3 +460,64 @@ export const getYouthIsEditedStatusById = async (req: Request, res: Response): P
     res.status(500).json({ message: 'Error fetching isEdited status', error });
   }
 };
+
+export const getYouthsByStatusAndWorkStatus = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { status, workStatus } = req.query;
+
+    // Validate and parse query parameters
+    if (typeof status !== 'string' || typeof workStatus !== 'string') {
+      res.status(400).json({
+        message: 'Both status and workStatus query parameters are required and must be strings'
+      });
+      return;
+    }
+
+    // Convert workStatus to boolean
+    const workStatusBool = workStatus === 'true';
+
+    // Validate status against possible values
+    const validStatuses = ['accepted', 'rejected', 'pending', 'waiting'];
+    if (!validStatuses.includes(status)) {
+      res.status(400).json({
+        message: `Invalid status. Must be one of: ${validStatuses.join(', ')}`
+      });
+      return;
+    }
+
+    const youths = await Youth.findAll({
+      where: {
+        status: status as 'accepted' | 'rejected' | 'pending' | 'waiting',
+        workStatus: workStatusBool
+      }
+    });
+
+    // Format the appliedJob field consistently
+    const formattedYouths = youths.map(youth => {
+      let appliedJob = [];
+      if (typeof youth.appliedJob === 'string') {
+        try {
+          appliedJob = JSON.parse(youth.appliedJob);
+        } catch (e) {
+          console.error(`Error parsing appliedJob for youth ${youth.id}:`, e);
+          appliedJob = [];
+        }
+      } else if (Array.isArray(youth.appliedJob)) {
+        appliedJob = youth.appliedJob;
+      }
+
+      return {
+        ...youth.toJSON(),
+        appliedJob
+      };
+    });
+
+    res.status(200).json(formattedYouths);
+  } catch (error) {
+    console.error('Error in getYouthsByStatusAndWorkStatus:', error);
+    res.status(500).json({
+      message: 'Error fetching youths by status and work status',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+};

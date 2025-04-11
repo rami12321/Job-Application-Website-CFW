@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Youth } from '../../Model/Youth';
 
 @Injectable({
@@ -109,4 +109,30 @@ export class YouthServiceService {
     const url = `${this.apiUrl}/${id}/work-status`;
     return this.http.put(url, { workStatus });
   }
+  // Add this to your youth.service.ts
+  getYouthsByStatus(status: string, workStatus: boolean): Observable<any[]> {
+    // Validate status
+    const validStatuses = ['accepted', 'rejected', 'pending', 'waiting'];
+    if (!validStatuses.includes(status)) {
+      return throwError(() => new Error(`Invalid status. Must be one of: ${validStatuses.join(', ')}`));
+    }
+
+    return this.http.get<any[]>(`${this.apiUrl}/byStatus`, {
+      params: {
+        status,
+        workStatus: workStatus.toString()
+      }
+    }).pipe(
+      catchError(error => {
+        console.error('Error in getYouthsByStatus:', error);
+        return throwError(() => new Error('Failed to fetch youths by status'));
+      })
+    );
+  }
+  // In youth.service.ts
+hasAdminVerifiedDays(youthId: string, jobRequestId: string): Observable<boolean> {
+  return this.http.get<boolean>(
+    `${this.apiUrl}/has-admin-verified/${youthId}/${jobRequestId}`
+  );
+}
 }
