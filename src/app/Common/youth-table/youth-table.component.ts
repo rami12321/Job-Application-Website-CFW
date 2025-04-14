@@ -44,7 +44,6 @@ interface Column {
     DialogModule,
     ButtonModule,
     YouthSignupDetailsComponent,
-    JobRequestDetailsComponent,
     PaymentJobRequestDetailsComponent,
     TableModule,
     CommonModule,

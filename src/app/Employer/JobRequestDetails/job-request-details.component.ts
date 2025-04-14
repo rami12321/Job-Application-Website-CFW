@@ -84,7 +84,6 @@ export class JobRequestDetailsComponent
   workingNotes: string = '';
 
   selectedContract: any = null;
-  selectedContract: any = null;
   showConfirmationModal = false;
   public signatureImage: string | null = null;
   isSignatureModalOpen = false;
@@ -105,9 +104,7 @@ export class JobRequestDetailsComponent
   uploadedFileUrl: string | null = null;
   isAttendanceModalOpen: boolean = false;
   attendanceRecord: AttendanceRecord | null = null;
-  uploadedFileUrl: string | null = null;
-  isAttendanceModalOpen: boolean = false;
-  attendanceRecord: AttendanceRecord | null = null;
+
   modalAction: string = '';
   selectedYouthName: string | null = null;
   isSubmitModalOpen = false;
