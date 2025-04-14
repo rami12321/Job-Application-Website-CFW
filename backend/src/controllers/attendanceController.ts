@@ -11,6 +11,41 @@ export const getAllAttendances = async (req: Request, res: Response): Promise<vo
   }
 };
 
+// Add this to your attendance.controller.ts
+export const getAttendanceByYouthId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { youthId } = req.params;
+
+    if (!youthId) {
+      res.status(400).json({ message: 'Missing required parameter: youthId' });
+      return;
+    }
+
+    const attendances = await Attendance.findAll({
+      where: { youthId },
+      order: [['createdAt', 'DESC']] // Get most recent first
+    });
+
+    if (!attendances || attendances.length === 0) {
+      res.status(404).json({
+        message: `No attendance records found for youth ${youthId}`,
+        attendances: []
+      });
+      return;
+    }
+
+    res.status(200).json({
+      count: attendances.length,
+      attendances
+    });
+  } catch (error) {
+    console.error(`Error fetching attendances for youth ${req.params.youthId}:`, error);
+    res.status(500).json({
+      message: 'Error fetching attendance records',
+      error: error instanceof Error ? error.message : String(error)
+    });
+  }
+};
 // Create a new attendance record (40-day archive)
 export const createAttendance = async (req: Request, res: Response): Promise<void> => {
   try {

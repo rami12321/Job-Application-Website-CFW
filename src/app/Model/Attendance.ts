@@ -11,6 +11,12 @@ export interface DayRecord {
   adminChecked?: boolean;
 }
 
+// Update your AttendanceRecord interface to match the actual response
+export interface AttendanceResponse {
+  count: number;
+  attendances: AttendanceRecord[];
+}
+
 export interface AttendanceRecord {
   id?: string;
   jobRequestId: string;

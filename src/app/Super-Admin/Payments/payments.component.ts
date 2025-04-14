@@ -5,6 +5,7 @@ import { JobRequestDetailsComponent } from '../../Employer/JobRequestDetails/job
 import { PaymentService } from '../../Services/PaymentService/payment.service';
 import { YouthServiceService } from '../../Services/YouthService/youth-service.service';
 import { finalize } from 'rxjs/operators';
+import { AttendanceService } from '../../Services/AttendanceService/attendance.service';
 
 @Component({
   selector: 'app-payments',
@@ -26,6 +27,7 @@ activeAdminTab: string = 'working';
   constructor(
     private paymentService: PaymentService,
     private youthService: YouthServiceService,
+    private attendanceService: AttendanceService,
     private cdr: ChangeDetectorRef
 
   ) {}
@@ -59,6 +61,7 @@ setActiveTab(tab: 'working' | 'finished'): void {
     });
   }
 
+
   async generateAllPayments(): Promise<void> {
     if (this.eligibleYouths.length === 0) {
       this.errorMessage = 'No eligible youths found';
@@ -67,42 +70,70 @@ setActiveTab(tab: 'working' | 'finished'): void {
 
     this.isGeneratingPayments = true;
     this.errorMessage = null;
-    this.infoMessage = 'Preparing payment data...';
+    this.infoMessage = 'Fetching attendance records...';
 
     try {
-      // Create properly formatted youthJobPairs
-      const youthJobPairs = this.eligibleYouths.map((youth) => ({
-        youthId: youth.id,
-        jobRequestId: this.staticJobRequestId,
-      }));
+      const youthJobPairs: { youthId: string; jobRequestId: string }[] = [];
+      const skippedYouths: string[] = [];
 
-      // Validate the pairs before sending
-      if (!youthJobPairs.every((pair) => pair.youthId && pair.jobRequestId)) {
-        throw new Error('Invalid youth-job pairs format');
+      for (const youth of this.eligibleYouths) {
+        try {
+          // Fetch attendance records for this youth
+          const response = await this.attendanceService
+            .getAttendanceByYouthId(youth.id)
+            .toPromise();
+
+          if (!response || !response.attendances || response.attendances.length === 0) {
+            console.warn(`No attendance records found for youth ${youth.id}`);
+            skippedYouths.push(youth.id);
+            continue;
+          }
+
+          // Get the most recent attendance (first item in the array)
+          const mostRecentAttendance = response.attendances[0];
+
+          if (!mostRecentAttendance?.jobRequestId) {
+            console.warn(`No jobRequestId found for youth ${youth.id}`);
+            skippedYouths.push(youth.id);
+            continue;
+          }
+
+          youthJobPairs.push({
+            youthId: youth.id,
+            jobRequestId: mostRecentAttendance.jobRequestId,
+          });
+        } catch (err) {
+          console.error(`Error fetching attendance for youth ${youth.id}:`, err);
+          skippedYouths.push(youth.id);
+        }
       }
 
-      this.infoMessage = 'Generating payments...';
+      if (youthJobPairs.length === 0) {
+        throw new Error(
+          skippedYouths.length > 0
+            ? `No valid attendance records found for ${skippedYouths.length} youths`
+            : 'No valid attendance records found for any youth'
+        );
+      }
 
-      this.paymentService
-        .generatePaymentsForMultipleYouth(youthJobPairs)
-        .pipe(
-          finalize(() => {
-            this.isGeneratingPayments = false;
-          })
-        )
+      // Generate payments
+      this.infoMessage = 'Generating payments...';
+      this.paymentService.generatePaymentsForMultipleYouth(youthJobPairs)
+        .pipe(finalize(() => { this.isGeneratingPayments = false; }))
         .subscribe({
           next: (result) => {
-            this.paymentGenerationResult = result; // Store result in component state
-            this.showPaymentResults(result);
+            this.paymentGenerationResult = {
+              ...result,
+              skippedYouths,
+              totalYouths: this.eligibleYouths.length,
+            };
+            this.showPaymentResults(this.paymentGenerationResult);
           },
-          error: (err) => {
-            this.handlePaymentError(err); // Properly call error handler
-          },
+          error: (err) => this.handlePaymentError(err),
         });
     } catch (error) {
       this.isGeneratingPayments = false;
-      this.errorMessage =
-        error instanceof Error ? error.message : 'Failed to prepare payments';
+      this.errorMessage = error instanceof Error ? error.message : 'Failed to prepare payments';
       console.error('Payment preparation error:', error);
     }
   }

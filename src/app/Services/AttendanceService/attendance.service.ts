@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AttendanceRecord } from '../../Model/Attendance';
+import { AttendanceRecord, AttendanceResponse } from '../../Model/Attendance';
 
 @Injectable({
   providedIn: 'root'
@@ -53,4 +53,9 @@ verifyAttendanceDays(attendanceId: string, dayIndices: number[]): Observable<Att
   hasAdminVerifiedAttendance(youthId: string, jobRequestId: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/verified/${youthId}/${jobRequestId}`);
   }
+  // In your AttendanceService
+// In your AttendanceService
+getAttendanceByYouthId(youthId: string): Observable<AttendanceResponse> {
+  return this.http.get<AttendanceResponse>(`${this.baseUrl}/by-youth/${youthId}`);
+}
 }

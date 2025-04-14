@@ -8,6 +8,7 @@ import {
   getAttendanceByYouthAndJob,
   verifyAttendanceDays,
   hasAdminVerifiedAttendance,
+  getAttendanceByYouthId,
 } from '../controllers/attendanceController';
 
 const router: Router = Router();
@@ -34,4 +35,6 @@ router.delete('/:id', deleteAttendance);
 
 router.get('/verified/:youthId/:jobRequestId', hasAdminVerifiedAttendance);
 
+// In your attendance.routes.ts
+router.get('/by-youth/:youthId', getAttendanceByYouthId);
 export default router;
